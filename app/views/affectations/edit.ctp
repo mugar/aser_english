@@ -1,0 +1,34 @@
+<div class="affectations form">
+<?php echo $this->Form->create('Affectation');?>
+	<fieldset>
+ 		<legend class="edit"><?php printf(__('Edit %s', true), __('Affectation', true)); ?></legend>
+	<?php
+		echo $this->Form->input('id');
+		echo $this->Form->input('reservation_id');
+		echo $this->Form->input('chambre_id');
+		echo $this->Form->input('tier_id');
+		echo $this->Form->input('etat');
+		echo $this->Form->input('heure_arrivee');
+	?>
+	</fieldset>
+<?php echo $this->Form->end(__('Envoyer', true));?>
+</div>
+<div class="actions">
+	<h3><?php __('Actions'); ?></h3>
+	<ul>
+
+		<li><?php echo $this->Html->link(__('Effacer', true), array('action' => 'delete', $this->Form->value('Affectation.id')), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $this->Form->value('Affectation.id'))); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Affectations', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Reservations', true)), array('controller' => 'reservations', 'action' => 'index')); ?> </li>
+		
+		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Chambres', true)), array('controller' => 'chambres', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Chambre', true)), array('controller' => 'chambres', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister/Créer %s', true), __('Tiers', true)), array('controller' => 'tiers', 'action' => 'index')); ?> </li>
+		
+		 
+		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Ventes', true)), array('controller' => 'ventes', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Vente', true)), array('controller' => 'ventes', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Sortideservices', true)), array('controller' => 'sortideservices', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Sortideservice', true)), array('controller' => 'sortideservices', 'action' => 'add')); ?> </li>
+	</ul>
+</div>

@@ -1,0 +1,158 @@
+2015-02-09 10:54:52 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-02-09 10:54:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-02-09 10:54:52 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-02-09 10:54:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-02-09 10:54:53 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-02-09 10:54:53 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-02-09 10:54:53 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-02-09 10:54:53 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-02-09 12:20:25 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-02-09 12:20:25 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-02-13 12:01:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-13 12:01:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-13 12:02:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-13 12:02:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-13 12:02:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-13 12:02:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-13 12:03:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-13 12:03:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-14 14:16:40 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-14 14:16:41 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-14 14:16:44 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-02-14 14:16:45 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-04 07:14:20 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-03-04 07:15:29 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-03-04 07:17:51 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [actif] => oui
+            [identifiant] => armand
+            [last_action] => 2015-03-04 07:15:29
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-03-04 07:15:29
+        )
+
+)
+
+Aco: Operations/mass_modification in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2015-03-04 07:19:28 Warning: Warning (2): Illegal string offset 'Operation' in [/var/www/aser/app/controllers/operations_controller.php, line 859]
+2015-03-11 09:23:43 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-11 09:23:44 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-11 09:28:25 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-11 09:28:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-11 09:29:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-11 09:29:18 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-11 09:34:34 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-11 09:34:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-18 09:55:49 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Array' in 'where clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-03-18 09:55:49 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/factures_controller.php, line 641]
+2015-03-18 13:31:02 Warning: Warning (2): min() [<a href='http://php.net/function.min'>function.min</a>]: When only one parameter is given, it must be an array in [/var/www/aser/app/controllers/factures_controller.php, line 56]
+2015-03-23 12:10:33 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [actif] => oui
+            [identifiant] => armand
+            [last_action] => 2015-03-23 10:15:15
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-03-23 10:15:15
+        )
+
+)
+
+Aco: Reservations/last_reservation in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2015-03-23 12:10:38 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [actif] => oui
+            [identifiant] => armand
+            [last_action] => 2015-03-23 10:15:15
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-03-23 10:15:15
+        )
+
+)
+
+Aco: Reservations/last_reservation in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2015-03-26 22:52:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-03-26 22:52:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-02 20:33:25 Warning: Warning (2): chmod() [<a href='http://php.net/function.chmod'>function.chmod</a>]: No such file or directory in [/var/www/aser/app/views/factures/excel_view.ctp, line 23]
+2015-04-02 21:28:06 Warning: Warning (2): chmod() [<a href='http://php.net/function.chmod'>function.chmod</a>]: No such file or directory in [/var/www/aser/app/controllers/components/product.php, line 35]
+2015-04-02 21:56:00 Warning: Warning (2): imagecreatefromjpeg(/var/www/aser/app/webroot//img/logo.jpg) [<a href='http://php.net/function.imagecreatefromjpeg'>function.imagecreatefromjpeg</a>]: failed to open stream: No such file or directory in [/var/www/aser/app/controllers/components/product.php, line 33]
+2015-04-02 21:56:00 Warning: Warning (2): imagesx() expects parameter 1 to be resource, boolean given in [/var/www/aser/app/vendors/excel/PHPExcel/Worksheet/MemoryDrawing.php, line 134]
+2015-04-02 21:56:00 Warning: Warning (2): imagesy() expects parameter 1 to be resource, boolean given in [/var/www/aser/app/vendors/excel/PHPExcel/Worksheet/MemoryDrawing.php, line 135]
+2015-04-02 21:56:00 Warning: Warning (2): Division by zero in [/var/www/aser/app/vendors/excel/PHPExcel/Worksheet/BaseDrawing.php, line 369]
+2015-04-02 21:56:00 Warning: Warning (2): imagejpeg() expects parameter 1 to be resource, boolean given in [/var/www/aser/app/vendors/excel/PHPExcel/Writer/Excel2007.php, line 388]
+2015-04-02 21:56:00 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-02 21:56:00 Warning: Warning (2): imagecreatefromjpeg(/var/www/aser/app/webroot//img/logo.jpg) [<a href='http://php.net/function.imagecreatefromjpeg'>function.imagecreatefromjpeg</a>]: failed to open stream: No such file or directory in [/var/www/aser/app/controllers/components/product.php, line 33]
+2015-04-02 21:56:00 Warning: Warning (2): imagesx() expects parameter 1 to be resource, boolean given in [/var/www/aser/app/vendors/excel/PHPExcel/Worksheet/MemoryDrawing.php, line 134]
+2015-04-02 21:56:00 Warning: Warning (2): imagesy() expects parameter 1 to be resource, boolean given in [/var/www/aser/app/vendors/excel/PHPExcel/Worksheet/MemoryDrawing.php, line 135]
+2015-04-02 21:56:00 Warning: Warning (2): Division by zero in [/var/www/aser/app/vendors/excel/PHPExcel/Worksheet/BaseDrawing.php, line 369]
+2015-04-02 21:56:00 Warning: Warning (2): imagejpeg() expects parameter 1 to be resource, boolean given in [/var/www/aser/app/vendors/excel/PHPExcel/Writer/Excel2007.php, line 388]
+2015-04-02 21:56:00 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-03 08:33:55 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/components/product.php, line 44]
+2015-04-03 08:33:55 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-03 08:47:32 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/components/product.php, line 51]
+2015-04-03 08:47:32 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-03 08:53:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/components/product.php, line 51]
+2015-04-03 08:53:10 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-03 08:54:33 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-03 09:41:29 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-03 18:50:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-03 18:50:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-03 19:00:23 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-03 19:00:23 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-03 19:11:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-03 19:11:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-03 21:20:07 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-03 21:20:08 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-07 13:26:38 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-08 13:15:04 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-10 11:12:37 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-10 11:27:34 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-10 11:28:01 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-10 11:28:05 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-04-10 11:31:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-10 11:31:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-10 11:36:02 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-10 11:36:03 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-10 11:36:08 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-10 11:36:08 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-10 11:36:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-10 11:36:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:34:04 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:34:05 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:34:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:34:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:43:29 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:43:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:44:13 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-13 10:44:14 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-14 16:39:17 Warning: Warning (2): min() [<a href='http://php.net/function.min'>function.min</a>]: When only one parameter is given, it must be an array in [/var/www/aser/app/controllers/factures_controller.php, line 57]
+2015-04-20 13:13:17 Warning: Warning (2): Missing argument 1 for VentesController::_addCheckings(), called in /var/www/aser/app/controllers/ventes_controller.php on line 2413 and defined in [/var/www/aser/app/controllers/ventes_controller.php, line 2355]
+2015-04-20 13:30:01 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'updateBillStatus' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-04-20 13:35:15 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1305: FUNCTION aser.vente does not exist</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-04-20 14:08:47 Warning: Warning (2): Missing argument 4 for VentesController::_createPaiement(), called in /var/www/aser/app/controllers/ventes_controller.php on line 1999 and defined in [/var/www/aser/app/controllers/ventes_controller.php, line 1908]
+2015-04-20 19:13:14 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-20 19:13:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-20 19:16:07 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-20 19:16:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-20 19:16:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-20 19:16:23 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]

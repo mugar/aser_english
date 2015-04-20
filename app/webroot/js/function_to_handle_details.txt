@@ -1,0 +1,219 @@
+function produit_details(nom,action,details_form) {
+	var	info=jQuery('form[name="'+nom+'"]').attr('id');
+	info=info.split('_');//to get the model and the controller
+	var caissier=jQuery('h2#produits').attr('caissier');
+	var serveur=jQuery('h2#produits').attr('serveur');
+	var fonction=jQuery('h2#produits').attr('fonction');
+	if(!jQuery.inArray(fonction,[caissier,serveur])){ //ca semble etre plutot l'inverse mais ca marche comme ça !'
+		alert('Accès Interdit !');
+	}
+	else if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length==1)) {
+		var produitId=jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').val();
+		var tr =jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked').parents('tr');
+		
+	switch(action){
+		case 'index':
+            //hiding or showing other rows
+    		jQuery('tr:not(tr[id="first"],div#quick_add tr, tr[id="'+jQuery(tr).attr('id')+'"])').toggle('fade');
+    		jQuery('div#pagination').toggle('fade');
+    		jQuery("#produit_details").toggle('fade')
+            jQuery("#produit_details").html('<span id="loading">Chargement...</span>')
+    		jQuery('#produit_details').load(getBase()+'produits/detail_index/'+produitId);
+    		jQuery('#produit_details_links').slideToggle();
+    		
+			break;
+			
+		case 'add':
+			jQuery('#detail_boxe').dialog({
+  	 			 modal:true, 
+    			width:390,
+    			position:'top',
+    		//	show:'bounce',
+    			buttons: { "Créer": function() {
+    				//validation stuff
+    			var test=jQuery("#detailAdd").validate({
+ 					rules:{
+ 						 'data[ProduitDetail][quantite]': {required:true,number:true},
+ 						 'data[ProduitDetail][PA]': {number:true,required:true},
+ 						 'data[ProduitDetail][date]': {date:true,required:true},
+ 					}
+				});
+				if(test.form()){
+    				var date=jQuery('#Date').val();
+    				var pa=parseFloat(jQuery('#pu').val());
+    				var quantite=parseFloat(jQuery('#quan').val());
+    				jQuery('#detailAdd').ajaxSubmit({
+						beforeSend:function(){ jQuery('#message_detail').html('<span id="loading">Création ...</span>')},
+						complete:function(){ jQuery('#message_detail').html('')},
+						data:{'data[ProduitDetail][produit_id]':produitId,
+							'data[ProduitDetail][quantite]':quantite,
+							'data[ProduitDetail][PA]':pa,
+							'data[ProduitDetail][date]':date,
+								},
+						global:false,
+						dataType:'json',
+						success:function(ans){
+							if(ans.success){
+							//updating the product
+							jQuery(tr).children('td[name="pamp"]').text(ans.PAMP);
+							jQuery(tr).children('td[name="total"]').text(ans.total);
+							jQuery(tr).children('td[name="quantite"]').text(ans.quantite);
+							jQuery(tr).children('td[name="pvmp"]').text(ans.PVMP);
+							if(ans.PV!=undefined){
+								jQuery(tr).children('td[name="pv"]').text(ans.PV);
+							}
+							
+							//updating the bundle to which belongs the item (if any)
+							
+							jQuery('tr#'+ans.bundle.id).children('td[name="pamp"]').text(ans.bundle.PAMP);
+							jQuery('tr#'+ans.bundle.id).children('td[name="total"]').text(ans.bundle.total);
+							jQuery('tr#'+ans.bundle.id).children('td[name="quantite"]').text(ans.bundle.quantite);
+							jQuery('tr#'+ans.bundle.id).children('td[name="pvmp"]').text(ans.bundle.PVMP);
+							if(ans.bundle.PV!=undefined){
+								jQuery('tr#'+ans.bundle.id).children('td[name="pv"]').text(ans.bundle.PV);
+							}
+
+							
+							jQuery('#detail_boxe').dialog('close');
+							jQuery("#produit_details").html('<span id="loading">Chargement...</span>')
+    						jQuery('#produit_details').load(getBase()+'produits/detail_index/'+produitId);
+    						}
+    						else {
+    							alert(ans.msg)
+    							jQuery('#detail_boxe').dialog('close');
+    						}
+	    				},
+    					error:function(jqXHR, textStatus, errorThrown){
+    						alert(textStatus+'<br>'+errorThrown);
+	    					jQuery('#detail_boxe').dialog('close');
+    					}
+    				});
+    			}
+    					},
+    					"Annuler": function() { jQuery(this).dialog("close"); }
+    			}
+		   });
+	   		break;
+    	case 'delete':
+			if((jQuery('form[name="produit_details_form"] input[type="checkbox"]:checked').length==1)) {
+				var detailId=jQuery('form[name="produit_details_form"] input[type="checkbox"]:checked').val();
+				var row =jQuery('form[name="produit_details_form"] input[type="checkbox"]:checked').parents('tr');
+            	jQuery('<div id="effacer" title="Message">Voulez vous vraiment effacer le détail ?</div>').insertAfter('body')
+     			jQuery('#effacer').dialog({ modal:true, 
+    					show:'slide',
+    					hide:'clip',
+    					buttons: { "Effacer": function() { 
+    							jQuery.ajax({
+    							type:'GET',
+    							url:getBase()+'produits/detail_delete/'+produitId+'/'+detailId,
+    							beforeSend:function(){jQuery('#effacer').html('<span id="loading">Effacement...</span>')},
+    						//	complete:function(){jQuery('#effacer').html('')},
+    							dataType:'json',
+    							error:function(xhr,status,error){jQuery('body').html(error)},
+    							success:function(ans){
+    							//	jQuery('body').html(responseText)
+    								//updating the product
+							jQuery(tr).children('td[name="pamp"]').text(ans.PAMP);
+							jQuery(tr).children('td[name="total"]').text(ans.total);
+							jQuery(tr).children('td[name="quantite"]').text(ans.quantite);
+							jQuery(tr).children('td[name="pvmp"]').text(ans.PVMP);
+							if(ans.PV!=undefined){
+								jQuery(tr).children('td[name="pv"]').text(ans.PV);
+							}
+							
+							//updating the bundle to which belongs the item (if any)
+							
+							jQuery('tr#'+ans.bundle.id).children('td[name="pamp"]').text(ans.bundle.PAMP);
+							jQuery('tr#'+ans.bundle.id).children('td[name="total"]').text(ans.bundle.total);
+							jQuery('tr#'+ans.bundle.id).children('td[name="quantite"]').text(ans.bundle.quantite);
+							jQuery('tr#'+ans.bundle.id).children('td[name="pvmp"]').text(ans.bundle.PVMP);
+							if(ans.bundle.PV!=undefined){
+								jQuery('tr#'+ans.bundle.id).children('td[name="pv"]').text(ans.bundle.PV);
+							}
+    									jQuery('#effacer').dialog('close');
+    									jQuery('#effacer').remove();
+    								jQuery(row).hide('fade')
+    						        jQuery(row).remove();
+    	                               
+    							}
+    							})
+    							},
+    							"Annuler": function() { jQuery(this).dialog("close"); }
+    							  }
+    				} );
+			}
+	        else {
+		        jQuery(document).ready(function(){
+    	        jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément dans la liste des details !</div>')
+    	        .dialog({modal:true, show:'slide',hide:'clip',
+    							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
+    							});
+    	               });
+	        }
+			break;
+		case 'perte':
+			if((jQuery('form[name="produit_details_form"] input[type="checkbox"]:checked').length==1)) {
+				var detailId=jQuery('form[name="produit_details_form"] input[type="checkbox"]:checked').val();
+				var row =jQuery('form[name="produit_details_form"] input[type="checkbox"]:checked').parents('tr');
+     			jQuery('#perte_boxe').dialog({ modal:true, 
+    					show:'slide',
+    					width:420,
+    					hide:'clip',
+    					buttons: { "Enregistrer": function() { 
+    						var test=jQuery("#perteAdd").validate({
+ 								rules:{
+ 									 'data[Perte][quantite]': {required:true,number:true},
+ 						 			'data[Perte][date]': {date:true,required:true},
+ 								}
+							});
+							
+							if(test.form()){
+    							jQuery('#perteAdd').ajaxSubmit({
+    							beforeSend:function(){jQuery('#effacer').html('<span id="loading">Enregistrement...</span>')},
+    						//	complete:function(){jQuery('#effacer').html('')},	
+    							data:{ 'data[id]':detailId},
+    							dataType:'json',
+    							error:function(xhr,status,error){jQuery('body').html(error)},
+    							success:function(ans){
+    								if(ans.success){
+    									if(ans.qte==0)
+    										jQuery(row).remove();
+    									else 
+    										jQuery(row).children('td[name="quantite"]').text(ans.qte);
+    										
+    									jQuery(tr).children('td[name="quantite"]').text(ans.pamp.quantite);
+    									jQuery(tr).children('td[name="total"]').text(ans.pamp.total);
+    									jQuery('#perte_boxe').dialog("close")
+    								}
+    								else {
+    									alert(ans.msg)
+    								}
+    							}
+    							})
+    							}
+    							},
+    							"Annuler": function() { jQuery(this).dialog("close"); }
+    							  }
+    				} );
+			}
+	        else {
+		        jQuery(document).ready(function(){
+    	        jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément dans la liste des details !</div>')
+    	        .dialog({modal:true, show:'slide',hide:'clip',
+    							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
+    							});
+    	               });
+	        }
+			break;
+			
+		}
+	}
+	else {
+		jQuery(document).ready(function(){
+    	jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément !</div>')
+    	.dialog({modal:true, show:'slide',hide:'clip',
+    							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
+    							});
+    	});
+	}
+}

@@ -1,0 +1,3 @@
+<?php
+    exit(debug($produits)); 
+?>

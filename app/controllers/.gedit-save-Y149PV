@@ -1,0 +1,308 @@
+<?php
+class ProduitsController extends AppController {
+
+	var $name = 'Produits';   
+	function rapport() {
+		$this->autoRender=true;
+			$conditions=array();
+		if(!empty($this->data)) {
+		//Building conditions
+			if($this->data['Produit']['name']!='toutes') {
+				$conditions['Produit.name LIKE']='%'.$this->data['Produit']['name'].'%';
+			}
+			if($this->data['Produit']['section_id']!=0) {
+		 		$conditions['Produit.section_id']=$this->data['Produit']['section_id'];
+		 	}
+			if($this->data['Produit']['stock_id']!=0) {
+		 		$conditions['Produit.stock_id']=$this->data['Produit']['stock_id'];
+		 	}
+		 	
+		 	if($this->data['Produit']['groupe_id']!=0) {
+		 		$conditions['Produit.groupe_id']=$this->data['Produit']['groupe_id'];
+		 	}
+		 	if($this->data['Produit']['quantite']!='toutes') {
+		 		$conditions['Produit.quantite <=']=$this->data['Produit']['quantite'];
+			}
+			if(($this->data['Produit']['perime']==1)&&(!empty($this->data['Produit']['date_expiration']))) {
+				$date_expiration=''.$this->data['Produit']['date_expiration']['year'].'-'.$this->data['Produit']['date_expiration']['month'].'-'.$this->data['Produit']['date_expiration']['day'].'';
+				$conditions['Produit.date_expiration <']=$date_expiration;
+				$conditions['Produit.date_expiration !=']='0000-00-00';
+				$conditions['Produit.quantite !=']=0;
+			}
+		}
+		$groupProduits=$this->Produit->find('all',array('fields'=>array('Produit.*','Section.name','Groupe.name','Stock.name'),
+													'conditions'=>$conditions,
+													'recursive'=>0
+													)
+										);
+		$sumProduits=$this->Produit->find('all',array('fields'=>array('sum(Produit.total) as total',
+																	'sum(Produit.quantite) as quantite'),
+												'conditions'=>$conditions,
+													'recursive'=>-1
+												)
+									);
+		$sections=$this->Produit->Section->find('list',array('fields'=>array('Section.id','Section.name')));
+		$sections[0]='Toutes';
+    $groupes =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name')));
+    $groupes[0]='toutes';	
+    $stocks =$this->Produit->Stock->find('list',array('fields'=>array('Stock.id','Stock.name')));
+    $stocks[0]='toutes';		
+		$this->set(compact('groupProduits','sumProduits','sections','groupes','stocks'));
+		
+		if(!empty($this->data['Produit']['xls'])){
+			$this->layout='export_xls';
+			$this->render('rapport_xls');
+		}
+	}
+
+
+	function index() {
+		$ID=$this->Produit->Section->find('first',array('fields'=>array('Section.id','Section.name')));
+		$sections=$this->Produit->Section->find('list',array('fields'=>array('Section.id','Section.name')));
+		$sections[0]='Toutes';
+    $groupes =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name')));
+    $groupes[0]='toutes';
+    $stocks =$this->Produit->Stock->find('list',array('fields'=>array('Stock.id','Stock.name')));
+    $stocks[0]='toutes';
+		$this->set(compact('sections','groupes','selected','stocks'));
+		$this->Produit->recursive =0;
+		if (empty($this->data)) {
+		$this->set('produits', $this->paginate());
+		}
+		else {	
+		//Building conditions
+			$conditions=array();
+			if($this->data['Produit']['name']!='toutes') {
+				$conditions['Produit.name LIKE']='%'.$this->data['Produit']['name'].'%';
+			}
+			if($this->data['Produit']['stock_id']!=0) {
+		 		$conditions['Produit.stock_id']=$this->data['Produit']['stock_id'];
+		 	}
+			if($this->data['Produit']['section_id']!=0) {
+		 		$conditions['Produit.section_id']=$this->data['Produit']['section_id'];
+		 	}
+		 	
+		 	if($this->data['Produit']['groupe_id']!=0) {
+		 		$conditions['Produit.groupe_id']=$this->data['Produit']['groupe_id'];
+		 	}
+		 	if($this->data['Produit']['quantite']!='toutes') {
+		 		$conditions['Produit.quantite <=']=$this->data['Produit']['quantite'];
+			}
+			if(($this->data['Produit']['perime']==1)&&(!empty($this->data['Produit']['date_expiration']))) {
+				$date_expiration=''.$this->data['Produit']['date_expiration']['year'].'-'.$this->data['Produit']['date_expiration']['month'].'-'.$this->data['Produit']['date_expiration']['day'].'';
+				$conditions['Produit.date_expiration <']=$date_expiration;
+				$conditions['Produit.date_expiration !=']='0000-00-00';
+				$conditions['Produit.quantite !=']=0;
+			}
+			$produits=$this->paginate($conditions);
+			$this->set('produits',$produits);
+		}
+	}
+	
+
+	function view($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(sprintf(__('Id pour %s incorrecte !', true), 'produit'));
+			$this->redirect(array('action' => 'index'));
+		}
+		$this->set('produit', $this->Produit->read(null, $id));
+	}
+	function updateSelect()
+    {
+				$this->autoRender=true;
+        $sectionId = $this->data['Produit']['section_id'];
+        if (!empty( $sectionId )) {
+            $options =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name'),
+																																'conditions'=>array('Groupe.section_id'=>$sectionId)
+																									));
+            // these are the combo box options to be used in the view file
+						$this->set('options',$options);
+        }
+    }
+	function updateSelect2()
+    {
+				$this->autoRender=true;
+        $sectionId = $this->data['Produit']['section_id'];
+        if ((!empty( $sectionId ))&&($sectionId!=0)) {
+            $groupes =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name'),
+																																'conditions'=>array('Groupe.section_id'=>$sectionId)
+																									));
+            // these are the combo box options to be used in the view file
+            $groupes[0]='toutes';
+						$this->set('groupes',$groupes);
+        }
+        else { 
+        		 $groupes =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name')));
+            $groupes[0]='toutes';
+						$this->set('groupes',$groupes);
+						}
+    }
+    
+	function updateIndex()
+    {
+				$this->autoRender=true;
+        $sectionId = $this->data['Produit']['section_id'];
+        $tmp=$sectionId;
+        if ((!empty( $sectionId ))&&($sectionId!=0)) {
+        		 $options =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name'),
+																																'conditions'=>array('Groupe.section_id'=>$sectionId)
+																									));
+						$this->set(compact('options'));
+						$this->set('produits',$this->Paginate(array('Produit.section_id'=>$sectionId)));
+        }
+        else { 
+        		 $options =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name')));
+        		 $this->set(compact('options'));
+						$this->set('produits', $this->paginate());
+						}
+    }
+	function updateIndex2()
+    {
+				$this->autoRender=true;
+        $groupeId = $this->data['Produit']['groupe_id'];
+        if ((!empty( $groupeId ))&&($groupeId!=0)) {
+        		 $options =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name')
+																									));
+						$this->set(compact('options'));
+						$this->set('produits',$this->Paginate(array('Produit.groupe_id'=>$groupeId)));
+        }
+        else { 
+        		 $options =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name')));
+        		 $this->set(compact('options'));
+						$this->set('produits', $this->paginate());
+						}
+    }
+
+	function add() {
+	
+		$this->autoRender=true;
+		$ID=$this->Produit->Section->find('first',array('fields'=>array('Section.id','Section.name')));
+		$selected=$ID['Section']['name'];
+		$sections=$this->Produit->Section->find('list',array('fields'=>array('Section.id','Section.name')));
+		$options=$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name'),'conditions'=>array('Groupe.section_id'=>$ID['Section']['id'])));
+		$this->set(compact('sections','options','selected'));
+		
+		if (!empty($this->data)) {
+			$this->Produit->create();
+			if ($this->Produit->save($this->data)) {
+				$this->data['Produit']['total']=$this->data['Produit']['PV']*$this->data['Produit']['quantite'];
+			if($this->data['Produit']['perime']==1) {
+				$this->data['Produit']['date_expiration']='0000-00-00';
+			}
+				$this->Produit->save($this->data);
+				$this->Session->setFlash(sprintf(__('Informations enregistrées', true), 'produit'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(sprintf(__('Impossible d\'enregistrer. Réessayer S.V.P.', true), 'produit'));
+			}
+		}
+		$sections = $this->Produit->Section->find('list');
+		$groupes = $this->Produit->Groupe->find('list');
+		$stocks = $this->Produit->Stock->find('list');
+		$this->set(compact('sections', 'groupes','stocks'));
+	}
+
+	function edit($id = null) {
+		$options=$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name')));
+		$this->set(compact('options'));
+		if (!$id && empty($this->data)) {
+			$this->Session->setFlash(sprintf(__('Id pour %s incorrecte !', true), 'produit'));
+			$this->redirect(array('action' => 'index'));
+		}
+		if (!empty($this->data)) {
+			if ($this->Produit->save($this->data)) {
+				$this->data['Produit']['total']=$this->data['Produit']['PV']*$this->data['Produit']['quantite'];
+			if($this->data['Produit']['perime']==1) {
+				$this->data['Produit']['date_expiration']='0000-00-00';
+			}
+				$this->Produit->save($this->data);
+				$this->Session->setFlash(sprintf(__('Informations enregistrées', true), 'produit'));
+				$this->redirect(array('action' => 'index'));
+			} else {
+				$this->Session->setFlash(sprintf(__('Impossible d\'enregistrer. Réessayer S.V.P.', true), 'produit'));
+			}
+		}
+		if (empty($this->data)) {
+			$this->data = $this->Produit->read(null, $id);
+		}
+		$stocks = $this->Produit->Stock->find('list');
+		$sections = $this->Produit->Section->find('list');
+		$groupes = $this->Produit->Groupe->find('list');
+		$this->set(compact('sections', 'groupes','stocks'));
+	}
+	
+	function delete($id = null) {
+		if (!$id) {
+			$this->Session->setFlash(sprintf(__('Invalid id for %s', true), 'produit'));
+			$this->redirect(array('action'=>'index'));
+		}
+		if ($this->Produit->delete($id)) {
+			$this->Session->setFlash(sprintf(__('Enregistrement effacé', true), 'Produit'));
+			$this->redirect(array('action'=>'index'));
+		}
+		$this->Session->setFlash(sprintf(__('Impossible d\'effacer !', true), 'Produit'));
+		$this->redirect(array('action' => 'index'));
+	}
+	
+	function copy() {
+		$this->autoRender=false;
+		if (!empty($this->data)) {
+			}
+		}	
+	function deleteall() {
+		$this->autoRender=false;
+		if(!empty($this->params['form'])) {
+			$i=0;
+			foreach($this->params['form'] as $value ) {
+				if ($value!=0) {
+					$this->Produit->delete($value);
+					$i++;
+				}
+			}
+			$this->Session->setFlash(sprintf(__('%s are deleted', true), ''.$i.' produit(s)'));
+			$this->redirect(array('action'=>'index'));
+		}
+	}
+	
+	function upload() {
+		set_time_limit(240);    //4minutes
+		ini_set('memory_limit', '64M');
+
+		App::import('Vendor', 'Spreadsheet_Excel_Reader', array('file' => 'excelreader/reader.php'));
+      $data = new Spreadsheet_Excel_Reader();
+      // Set output Encoding.
+      $data->setOutputEncoding('CP1251');
+		if(!empty($this->data)) {
+      $data->read($this->data['Produit']['file']['tmp_name']);
+      //debug($data->sheets);
+      //die();
+      $headings = array();
+			$xls_data = array();
+			for ($i = 1; $i <= $data->sheets[0]['numRows']; $i++) {
+    		$row_data = array();
+    		for ($j = 1; $j <= $data->sheets[0]['numCols']; $j++) {
+        	if($i == 1) {
+       	    //this is the headings row, each column (j) is a header
+            $headings[$j] = $data->sheets[0]['cells'][$i][$j];
+       		 } else {
+            //column of data
+            $row_data[$headings[$j]] = isset($data->sheets[0]['cells'][$i][$j]) ? $data->sheets[0]['cells'][$i][$j] : '';
+  	 	     }
+  	 	     if($i!=1) {
+  	 	     	$row_data['date']=date('y-m-d');
+  	 	    	$xls_data[$i]['Produit']=$row_data;
+  	 	    }
+    		}
+		}
+ 		if($this->Produit->saveAll($xls_data, array('validate'=>false))) {
+    $this->Session->setFlash('Success. Imported '. count($xls_data) .' records.');
+			$this->redirect(array('action'=>'index'));
+} else {
+    $this->Session->setFlash('Error.  Unable to import records. Please try again.');
+			$this->redirect(array('action'=>'index'));
+}
+
+		}
+	}
+}
+?>

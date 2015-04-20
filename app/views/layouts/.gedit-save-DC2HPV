@@ -1,0 +1,166 @@
+<?php
+/**
+ *
+ * PHP versions 4 and 5
+ *
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ *
+ * Licensed under The MIT License
+ * Redistributions of files must retain the above copyright notice.
+ *
+ * @copyright     Copyright 2005-2010, Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
+ * @package       cake
+ * @subpackage    cake.cake.libs.view.templates.layouts
+ * @since         CakePHP(tm) v 0.10.0.1076
+ * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
+ */
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<?php echo $html->charset(); ?>
+	<title>
+		Aser Manager ::
+		<?php echo $title_for_layout; ?>
+	</title>
+	<?php
+		echo $this->Html->meta('icon');
+
+		echo $this->Html->css('cake.generic');
+		echo $this->Html->css('style');
+		 if (isset($javascript)) {
+     		echo $javascript->link('prototype.js');
+      	echo $javascript->link('scriptaculous.js');
+      	echo $javascript->link('checkall');
+      	echo $javascript->link('toggle');
+			}
+
+		echo $scripts_for_layout;
+	?>
+</head>
+<body>
+	<div id="container">
+		<div id="menu">
+			<ul id="nav">
+				<li><?php echo $html->link(__('Gestion du Stock', true), '#'); ?>
+					<ul>
+				<li class="folder"><?php echo $this->Html->link(__('Gestion des Produits', true), '#'); ?>
+					<ul>	
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des stocks', true), '/stocks/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des sections', true), '/sections/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des groupes', true), '/groupes/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des produits', true), '/produits/index'); ?>
+				      <ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/produits/rapport'); ?></li>
+								<li class="upload"><?php echo $this->Html->link(__('Importer des produits', true), '/produits/upload'); ?></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li class="folder"><?php echo $this->Html->link(__('Gestion des Mouvements', true), '#'); ?>			
+					<ul>
+						<li  class="folder"><?php echo $this->Html->link(__('Gestion des Ventes', true), '/ventes/index'); ?>
+							<ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/Ventes/rapport'); ?></li>
+							</ul>
+						</li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des Commandes', true), '/commandes/index'); ?>
+							<ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/commandes/rapport'); ?></li>
+							</ul>
+						</li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des Tiers', true), '/tiers/index'); ?>
+							<ul><li class="folder"><?php echo $this->Html->link(__('Gestion des Dettes', true), '/dettes/index'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/dettes/rapport'); ?></li>
+							</ul>
+						</li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des Tiers', true), '/tiers/index'); ?>
+							<ul>
+								<li class="folder"><?php echo $this->Html->link(__('Gestion des Creances', true), '/creances/index'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/creances/rapport'); ?></li>
+							</ul>
+						</li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des Pertes', true), '/pertes/index'); ?>
+							<ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/pertes/rapport'); ?></li>
+							</ul>
+						</li>
+				</ul>
+					</ul>
+				</li>
+				<li><?php echo $html->link(__('Gestion Cuisine', true), '#'); ?>
+					<ul>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des categories', true), '/categories/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des plats', true), '/plats/index'); ?></li>
+					</ul>
+				</li>
+				<li><?php echo $html->link(__('Gestion des Services', true), '#'); ?>
+					<ul>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des locations', true), '/locations/index'); ?>
+							<ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/locations/rapport'); ?></li>
+							</ul>
+						</li>
+					</ul>
+				</li>
+				<li><?php echo $this->Html->link(__('Gestion Trésorerie', true), '#'); ?>
+					<ul>
+						<li class="money"><?php echo $this->Html->link(__('Gestion des caisses', true), '/caisses/index'); ?>
+							<ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/caisses/rapport'); ?></li>
+							</ul>
+						</li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des ajouts', true), '/ajouts/index'); ?>	
+							<ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/ajouts/rapport'); ?></li>
+							</ul>
+						</li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des retraits', true), '/retraits/index'); ?>	
+							<ul>
+								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/retraits/rapport'); ?></li>
+							</ul>
+						</li>
+						<li class="folder"><?php echo $this->Html->link(__('Gestion des types', true), '/types/index'); ?></li>
+					</ul>
+				</li>
+					<li><?php echo $this->Html->link(__('Gestion du Personnel', true), '#'); ?>	
+						<ul>
+							<li class="folder"><?php echo $this->Html->link(__('Gestion des travailleurs', true), '/travailleurs/index'); ?></li>
+				      <li class="folder"><?php echo $this->Html->link(__('Gestion des typeChambres', true), '/typeChambres/index'); ?></li>
+				      <li class="folder"><?php echo $this->Html->link(__('Gestion des salaires', true), '/salaires/index'); ?>
+				      	<ul>
+									<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/salaires/rapport'); ?></li>	
+								</ul>
+							</li>
+						</ul>						
+				</li>
+				<li><?php echo $this->Html->link(__('Gestion des Accès', true), '#'); ?>
+					<ul>
+						<li class="user"><?php echo $this->Html->link(__('Gestion des Utilisateurs', true), '/users/index'); ?></li>
+						<li class="group"><?php echo $this->Html->link(__('Gestion des Groupes', true), '/groups/index'); ?></li>
+						<li class="home_min"><?php echo $this->Html->link(__('Page d\'accueil', true), '/'); ?></li>
+						<li class="delete"><?php echo $this->Html->link(__('Déconnexion', true), '/users/logout'); ?></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+	<div id="wraper">
+		<div id="wraper1">
+			
+			<?php echo $this->Session->flash();
+			      echo $session->flash('auth');
+			 ?>
+
+			<?php echo $content_for_layout; ?>
+			<div style="clear:both;"></div>
+		</div>
+	</div>
+		<div id="footer">
+			Logiciel <b>Aser Manager</b> par Mugabo Armand | Tél: +25779853419 | Email:<?php echo $this->Html->link(__('armug@yahoo.fr', true), 'mailto:armug@yahoo.fr'); ?> | Tous droits réservés © 2010
+		</div>
+	</div>
+	<?php echo $this->element('sql_dump'); ?>
+</body>
+</html>

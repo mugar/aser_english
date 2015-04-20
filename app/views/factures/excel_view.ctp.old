@@ -1,0 +1,170 @@
+<?php
+
+header('Content-type: application/excel');
+$filename = 'filename.xls';
+header('Content-Disposition: attachment; filename='.$filename);
+
+?>
+<html xmlns:x="urn:schemas-microsoft-com:office:excel">
+<!-- <html> -->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <!--[if gte mso 9]>
+    <xml>
+        <x:ExcelWorkbook>
+            <x:ExcelWorksheets>
+                <x:ExcelWorksheet>
+                    <x:Name>Sheet 1</x:Name>
+                    <x:WorksheetOptions>
+                        <x:Print>
+                            <x:ValidPrinterInfo/>
+                        </x:Print>
+                    </x:WorksheetOptions>
+                </x:ExcelWorksheet>
+            </x:ExcelWorksheets>
+        </x:ExcelWorkbook>
+    </xml>
+    <![endif]-->
+</head>
+
+<body>
+<div class="left" >
+		<?php echo $this->element('company'); ?>
+	</div>
+	<div id="facture_details">
+			<?php echo 'Créée le : '.$this->MugTime->toFrench($facture['Facture']['date']);?>	<br />
+			<?php if(!in_array($facture['Facture']['date_emission'],array('0000-00-00','',null))) echo 'Emise le : '.$this->MugTime->toFrench($facture['Facture']['date_emission']).'<br />';?>	
+			<?php 
+				$etat=($type=='proforma')?'proforma':$facture['Facture']['etat'];
+				echo 'Etat :  <span id="etat">'.$etat.'</span>';
+			?>	<br />
+			<?php if(!empty($facture['Facture']['observation']))
+					echo 'Motif : '.$facture['Facture']['observation'];
+					echo '<br/>';
+			?>
+			<?php if(!empty($facture['Personnel']['name']))
+					echo 'Serveur : '.$facture['Personnel']['name'];
+			?><br />
+		</div>
+	<div class="right">
+	<?php  
+		if(!in_array($facture['Facture']['date_emission'],array('0000-00-00','',null)))  echo '<span id="dateId">Date : '.$this->MugTime->toFrench($facture['Facture']['date_emission']).'</span><br/>';
+		else  echo '<span id="dateId">Date : '.$this->MugTime->toFrench($facture['Facture']['date']).'</span><br/>';
+		echo '<br/><br/><br/><br/>';
+		echo $this->element('../tiers/details',array('client'=>$facture['Tier']));
+		if(!empty($facture['Facture']['bon_commande'])) echo '<br/> Bon de commande : '.$facture['Facture']['bon_commande'].'<br/>';
+		if(!empty($facture['Facture']['beneficiaire'])&&(Configure::read('aser.beneficiaires'))) echo '<br/> Béneficiaire : '.$facture['Facture']['beneficiaire'].'<br/>';
+		?>
+		 <br/>
+	</div>
+	<div style="clear:both"></div>
+</div>
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br />
+<br/>
+<br/>
+<div id="billView">
+<span class="titre">Facture 
+	<?php echo $nature;?>
+		 <span id="displayed_num">
+			<?php echo ' n° '.$facture['Facture']['numero'];?>
+		</span>
+	 </span>
+<br>
+	<?php if(($nature=='Proforma')&&(!empty($facture['Facture']['date_validite']))) {
+			echo '<h4>(valide jusqu\'au '.$this->MugTime->toFrench($facture['Facture']['date_validite']).')</h4>';
+		}
+	?>
+<br/>
+<br/>
+<br/><br />
+<?php if($model=='Location') :?>
+<table cellpadding="0" cellspacing="0">
+	<tr>
+			<th>Libellé</th>
+			<th>Quantité</th>
+			<th>PU</th>
+			<th>Montant (<?php echo $facture['Facture']['monnaie']; ?>)</th>
+	</tr>
+		<?php
+	$i = 0;
+	foreach ($modelInfos as $location):
+		$class = null;
+		if ($i++ % 2 == 0) {
+			$class = ' class="altrow"';
+		}
+	?>
+	<tr>
+			<?php if((!is_null($location['LocationExtra']['heure']))&&($location['LocationExtra']['extra']=='non')):?>
+				<td><?php echo  $location['LocationExtra']['name'];
+						if(!empty($location['LocationExtra']['heure'])) echo ' à '.$location['LocationExtra']['heure']; 
+					?>
+				</td>
+			<?php else: ?>
+					<td><?php echo  $location['LocationExtra']['name']; ?></td>
+			<?php endif;?>
+			<td><?php echo  $number->format($location['LocationExtra']['quantite'],$formatting); ?></td>
+			<td><?php echo  $number->format($location['LocationExtra']['PU'],$formatting); ?></td>
+			<td><?php echo  $number->format($location['LocationExtra']['montant'],$formatting); ?></td>
+	</tr>
+<?php endforeach; ?>
+<?php
+	foreach ($ventes as $vente):
+		
+	?>
+	<tr>
+			<td><?php echo  $vente['Produit']['name']; ?></td>
+			<td><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
+			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
+			<td><?php echo  $number->format($vente['Vente']['montant'],$formatting); ?></td>
+	</tr>
+<?php endforeach; ?>
+
+<?php
+	foreach ($services as $service):
+		
+	?>
+	<tr>
+			<td><?php echo  $service['Service']['description']; ?></td>
+			<td><?php echo  1;?></td>
+			<td><?php echo  $number->format($service['Service']['montant'],$formatting); ?></td>
+			<td><?php echo  $number->format($service['Service']['montant'],$formatting); ?></td>
+	</tr>
+<?php endforeach; ?>
+<?php if($facture['Facture']['tva']!=0) :?>
+	<tr class="strong">
+		<td>HTVA</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0,$formatting); ?></span></td>
+	<tr>
+	<tr class="strong">
+		<td>TVA</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td><span ><?php echo ''.$number->format($facture['Facture']['tva']+0,$formatting); ?></span></td>
+	<tr>
+<?php endif;?>
+	<tr class="strong">
+		<td>TOTAL <?php if($facture['Facture']['tva']!=0) echo '(TTC)';?></td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td><span id="a_payer" total="<?php echo $facture['Facture']['montant']; ?>"><?php echo ''.$number->format($facture['Facture']['montant']+0,$formatting); ?></span></td>
+	<tr>
+<?php if(!in_array($type,array('proforma','globale'))):?>
+	<tr class="strong">
+		<td>RESTE A PAYER</td>
+		<td>&nbsp;</td>
+		<td>&nbsp;</td>
+		<td><span id="reste_a_payer"><?php echo ''.$number->format($facture['Facture']['reste']+0,$formatting); ?></span></td>
+	<tr>
+<?php endif; ?>
+</table>
+<?php endif;?>
+</body></html>

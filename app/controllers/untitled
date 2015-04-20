@@ -1,0 +1,31 @@
+function stuff(){
+		$this->loadModel('Paiement');
+		set_time_limit(240);    //4minutes
+		ini_set('memory_limit', '64M');
+		$paiements = $this->Paiement->find('all',array('fields'=>array('Facture.montant','Facture.client_id',
+																	'sum(Paiement.montant) as montant','Facture.etat',
+																	'Facture.date','Facture.journal_id'
+																	),
+													'conditions'=>array('Facture.client_id'=>array(0,NULL),
+																		'Facture.etat'=>$this->etat_classes,
+																		),
+													'group'=>array('Paiement.facture_id')
+													));
+		exit(debug($paiements));
+		foreach($paiements as $paiement){
+		    if($paiement['Facture']['montant']!=$paiement['Paiement']['montant']){
+				$diff=$paiement['Facture']['montant']-$paiement['Paiement']['montant'];
+				//create a new payment for adjustement.
+				$newPyt['montant']=$diff;
+				$newPyt['montant_equivalent']=NULL;
+				$newPyt['mode_paiement']=($diff>0)?'cash':'remboursement';
+				$newPyt['journal_id']=$paiement['Facture']['journal_id'];
+				$newPyt['facture_id']=$paiement['Facture']['facture_id'];
+				$newPyt['reference']='ajustement';
+				$newPyt['date']=$paiement['Facture']['date'];
+				if(!$this->Paiement->save($paiement)){
+					exit(debug($paiement));
+				}
+		    }
+		}
+	}
