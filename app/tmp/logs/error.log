@@ -156,3 +156,4 @@ Aco: Reservations/last_reservation in [/var/www/aser/cake/libs/controller/compon
 2015-04-20 19:16:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
 2015-04-20 19:16:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
 2015-04-20 19:16:23 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-04-21 16:59:04 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Facture.' in 'where clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]

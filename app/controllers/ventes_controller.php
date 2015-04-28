@@ -479,7 +479,7 @@ class VentesController extends AppController {
 		$facture['direct_reduction']=1;
 		$facture['id']=$id;
 		if($this->Vente->Facture->save(array('Facture'=>$facture)))
-			exit(json_encode(array('success'=>true,'reduction'=>$facture['Facture']['reduction'])));
+			exit(json_encode(array('success'=>true,'reduction'=>$facture['reduction'])));
 		else 
 			exit(json_encode(array('success'=>false,'msg'=>'Failed to save the reduction.')));
 
@@ -545,15 +545,20 @@ class VentesController extends AppController {
 	
 	function ungroup($factureId){
 		$ventes=$this->Vente->find('all',array(
-												'conditions'=>array('Vente.facture_id'=>$factureId),
-												'fields'=>array('Vente.*','Facture.date')
-												));	
+											'conditions'=>array('Vente.facture_id'=>$factureId),
+											'fields'=>array('Vente.*','Facture.date')
+											));	
 		$this->loadModel('Historique');
 		foreach($ventes as $vente){
 			if($vente['Vente']['quantite']>1){
 				//deleting the history and the old vente
-				$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique');
-				$this->Vente->delete($vente['Vente']['id']);
+				if(!empty($vente['Vente']['historique_id'])){
+					if(!$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique'))
+						exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement du stock.")));
+				}
+				if(!$this->Vente->delete($vente['Vente']['id']))
+					exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement de l'un des produits")));
+				
 				$qty=$vente['Vente']['quantite']; 
 				for($i=0; $i<$qty;$i++){
 					//setting up the new values
@@ -561,10 +566,17 @@ class VentesController extends AppController {
 					$vente['Vente']['quantite']=1;
 					$vente['Vente']['printed']=($vente['Vente']['printed']>0)?1:0;
 					$vente['Vente']['montant']=$vente['Vente']['quantite']*$vente['Vente']['PU'];
-					//history recording
-					$this->Product->stock($vente,'credit');
+					//stock recording
+					if(!empty($vente['Vente']['historique_id'])){
+						$return=$this->Product->stock($vente,'credit');
+						if(!$return['success'])
+							exit(json_encode(array('success'=>false,'msg'=>$return["msg"])));
+					}   
+					else //this means that the stock is was not activated at the creation time. so remove this field.
+						unset($vente['Vente']['historique_id']);
 					//saving
-					$this->Vente->save($vente);
+					if(!$this->Vente->save($vente))
+						exit(json_encode(array('success'=>false,'msg'=>"un produit n'a pas été enregistré")));
 				}
 			}
 		}
@@ -573,44 +585,68 @@ class VentesController extends AppController {
 	
 	function separator($factureId,$list){
 		//searching the bill details
-		$new_facture=$facture=$this->Vente->Facture->find('first',array('conditions'=>array('Facture.id'=>$factureId),
+		$facture=$this->Vente->Facture->find('first',array('conditions'=>array('Facture.id'=>$factureId),
 																		'fields'=>array('Facture.*',
-																				)
+																				),
+																		'recursive'=> -1
 																));
 		//update the old bill by putting the linked id
 		$update['Facture']['id']=$factureId;
 		$update['Facture']['linked']=$factureId;
-		$this->Vente->Facture->save($update);
+		if(!$this->Vente->Facture->save($update))
+			exit(json_encode(array('success'=>false,'msg'=>"L'ancienne facture n'a pas été enregistrée.")));
 		
 		//creating the new bill
-		$new_facture['Facture']['id']=null;
-		$new_facture['Facture']['linked']=$factureId;
-		$this->Vente->Facture->save($new_facture);
-		$newFactureId=$new_facture['Facture']['id']=$this->Vente->Facture->id;
-		$new_facture['Facture']['numero']=$this->Product->facture_number($newFactureId,'Vente');
+		$newFacture=$facture;
+		$newFacture['Facture']['id']=null;
+		$newFacture['Facture']['linked']=$factureId;
+		$newFacture['Facture']['original']=$newFacture['Facture']['montant']=0;
+		$newFacture['Facture']['reste']=$newFacture['Facture']['tva']=$newFacture['Facture']['pyts']=0;
+		if(!$this->Vente->Facture->save($newFacture))
+			exit(json_encode(array('success'=>false,'msg'=>"La nouvelle facture n'a pas été enregistrée.")));
+
+		$newFactureId=$this->Vente->Facture->id;
+		//$new_facture['Facture']['numero']=$this->Product->facture_number($newFactureId,'Vente');
 			
 		//moving consos to the new bill
 		$list=explode(',',$list);
 		$ventes=$this->Vente->find('all',array('recursive'=>-1,
 											'conditions'=>array('Vente.id'=>$list),
-											'fields'=>array('Vente.id','Vente.acc')
+											'fields'=>array('Vente.id','Vente.acc','Vente.produit_id','Vente.facture_id')
 											));
+		$failureMsg="Un des produits n'a pas été enregistré.";
 		foreach($ventes as $vente){
 			$vente['Vente']['facture_id']=$newFactureId;
 			if($vente['Vente']['acc']){
 				$acc['Vente']['id']=$vente['Vente']['acc'];
 				$acc['Vente']['facture_id']=$newFactureId;
-				$this->Vente->save($acc);
+				if(!$this->Vente->save($acc))
+					exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
 			}
-			$this->Vente->save($vente);
+			if(!$this->Vente->save($vente))
+				exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
 		}
-		//calculating the total for the new bill
-		$new_totals=$this->Product->bill_total($newFactureId, $new_facture['Facture']['reduction']);
+		//updating the old bill for the new bill
+		//$new_totals=$this->Product->bill_total($newFactureId, $new_facture['Facture']['reduction']);
+		$this->Vente->Facture->updateMontant($facture['Facture']);
+		//fetching the info of the old bill
+		$oldFacture=$this->Vente->Facture->find('first',array('conditions'=>array('Facture.id'=>$factureId),
+																		'fields'=>array('Facture.original',
+																						'Facture.montant',
+																						'Facture.reste'
+																				),
+																		'recursive'=> -1
+																));
 		
-		//calculating the total for the old bill
-		$old_totals=$this->Product->bill_total($factureId, $facture['Facture']['reduction']);
+		//$old_totals=$this->Product->bill_total($factureId, $newfacture['Facture']['reduction']);
+		//fetching the info of the new bill
+		$newFacture=$this->Vente->Facture->find('first',array('conditions'=>array('Facture.id'=>$newFactureId),
+																		'fields'=>array('Facture.*',
+																				),
+																		'recursive'=> -1
+																));
 		
-		exit(json_encode(array('success'=>true,'nyu'=>$new_totals,'old'=>$old_totals,'Facture'=>$new_facture['Facture'])));
+		exit(json_encode(array('success'=>true,'Facture'=>$newFacture['Facture'],'old'=>$oldFacture)));
 	}
 	
 	function detailed_products_names(){
@@ -1743,6 +1779,8 @@ class VentesController extends AppController {
 																'Vente.printed',
 																'Vente.acc',
 																'Vente.id',
+																'Vente.facture_id',
+																'Vente.produit_id'
 																),
 													'conditions'=>$conditions,
 													'order'=>array('Vente.id desc')
@@ -1762,7 +1800,8 @@ class VentesController extends AppController {
 				}
 				if(($test=='false')&&($msg!='COMMANDE ANNULEE')){
 					$vente['Vente']['printed']+=$diff;
-					$this->Vente->save($vente);
+					if(!$this->Vente->save($vente))
+						exit(json_encode(array('success'=>false,'msg'=>'Probleme avec l enregistrement des quantites imprimes')));
 				}
 				if($vente['Vente']['print_qty']>0){
 					$printed[$key]=$vente;
@@ -1936,15 +1975,11 @@ class VentesController extends AppController {
 			}
 			//*/
 			
-			//checking if the paiement do not exceed the remaining amount to be paid
-			if($data['Paiement']['montant']>$factureInfo['Facture']['reste']){
-				exit(json_encode(array('success'=>false,'msg'=>'Déjà payée !')));
-			}
 			// saving the paiement
 			$data['Paiement']['facture_id']=$data['Vente']['factureId'];
 
 			if(!$this->Vente->Facture->Paiement->save($data))
-				exit(json_encode(array('success'=>false,'msg'=>'Payment failed to save!')));
+				exit(json_encode(array('success'=>false,'msg'=>"Le paiement a echoué! vérifié si la facture n'a pas d'autre paiements.")));
 		}
 		else exit(json_encode(array('success'=>false,'msg'=>"Montant de Paiement incorrecte: $amountPaid")));
 	}
@@ -1955,35 +1990,27 @@ class VentesController extends AppController {
 		return $tierInfo;
 	}
 
-	function _closeAndSaveTheBill(&$factureInfo,$etat=null){
+	function _closeAndSaveTheBill(&$factureInfo,$saveTheBill=true){
 		//etat and reste for some cases like payee/avance is not saved at this stage but after the payement is actually done.
-		if(!is_null($etat)) {
-			$factureInfo['Facture']['etat']=$etat;
-			$factureInfo['Facture']['classee']=1;
+		if($saveTheBill) {
+			if(!$this->Vente->Facture->save($factureInfo)) exit(json_encode(array('success'=>false,'msg'=>'Bill failed to save!')));
+			
 		}
-		else {
-			unset($factureInfo['Facture']['etat']);
-			unset($factureInfo['Facture']['reste']);
-		}
-		
-		if($this->Vente->Facture->save($factureInfo)){
-			//etat is null in case of an avance or payee. so we fetch a fresh copy .
-			if(is_null($etat)) 
-				$factureInfo=$this->Vente->Facture->find('first',array('fields'=>array('Facture.id','Facture.original',
+		else  {
+			$factureInfo=$this->Vente->Facture->find('first',array('fields'=>array('Facture.id','Facture.original',
 																			'Facture.date','Facture.journal_id','Facture.montant',
-																			'Facture.reste','Facture.etat'
+																			'Facture.reste','Facture.etat','Facture.reduction'
 																			),
 													'conditions'=>array('Facture.id'=>$factureInfo['Facture']['id'])
 													));
-			//trace stuff
-			$trace['Trace']['model_id']=$factureInfo['Facture']['id'];
-			$trace['Trace']['model']='Facture';
-			$trace['Trace']['operation']='Changement l\'état de "en_cours" à "'.$factureInfo['Facture']['etat'].'"';
-			$this->Vente->Facture->Trace->save($trace);
-
-			exit(json_encode(array('success'=>true)+$factureInfo['Facture']));		
 		}
-		else exit(json_encode(array('success'=>false,'msg'=>'Bill failed to save!')));
+			//trace stuff
+		$trace['Trace']['model_id']=$factureInfo['Facture']['id'];
+		$trace['Trace']['model']='Facture';
+		$trace['Trace']['operation']='Changement l\'état de "en_cours" à "'.$factureInfo['Facture']['etat'].'"';
+		$this->Vente->Facture->Trace->save($trace);
+
+		exit(json_encode(array('success'=>true)+$factureInfo['Facture']));		
 	}
 
 	function paiement(){
@@ -1998,6 +2025,7 @@ class VentesController extends AppController {
 		
 		// calculating reduction
 		$tierInfo=$this->_reduction($this->data['Vente'],$factureInfo);
+
 		//starting treatement based on status.
 		if(in_array($this->data['Vente']['etat'],array('payee','avance'))){
 			$amountPaid=$factureInfo['Facture']['montant'];
@@ -2006,18 +2034,27 @@ class VentesController extends AppController {
 				$reste=$factureInfo['Facture']['montant']-$amountPaid;
 				$this->_checkMaxDette($tierInfo,$reste,$this->data['Vente']);
 			}
+			//saving to modification made to the bill like the reduction/discount.
+			if(!$this->Vente->Facture->save($factureInfo)) exit(json_encode(array('success'=>false,'msg'=>'Bill failed to save!')));
+
 			$this->_createPaiement($this->data,$amountPaid,$journal,$factureInfo);
 
+			$this->_closeAndSaveTheBill($factureInfo,false);
+		}
+		elseif(in_array($this->data['Vente']['etat'],array('credit','bonus'))) {
+			if($this->data['Vente']['etat']=='credit'){
+				$this->_checkMaxDette($tierInfo,$factureInfo['Facture']['reste'],$this->data['Vente']);
+			}
+			else {
+				//make sure we have a client/tier first.
+				$this->_checkTier($this->data['Vente']); 
+				$factureInfo['Facture']['reste']=0;
+			}
+			//putting the state of the bill
+			$factureInfo['Facture']['etat']=$this->data['Vente']['etat'];
 			$this->_closeAndSaveTheBill($factureInfo);
 		}
-		elseif($this->data['Vente']['etat']=='credit') {
-			$this->_checkMaxDette($tierInfo,$factureInfo['Facture']['reste'],$this->data['Vente']);
-			$this->_closeAndSaveTheBill($factureInfo,$this->data['Vente']['etat']);
-		}
-		else { //this last if is for bonus
-			$factureInfo['Facture']['reste']=0;
-			$this->_closeAndSaveTheBill($factureInfo,$this->data['Vente']['etat']);
-		}
+		
 	}
 
 	function old_paiement(){
@@ -2169,6 +2206,7 @@ class VentesController extends AppController {
 	}
 	
 	function removal($factureId,$consoId,$quantite,$reduction,$obs=''){
+		$stockFailureMsg="";
 		if($consoId=='facture'){
 			$ventes=$this->Vente->find('all',array('fields'=>array('Vente.historique_id','Vente.acc'),
 													'conditions'=>array('Vente.facture_id'=>$factureId)
@@ -2177,17 +2215,26 @@ class VentesController extends AppController {
 			//product stuff
 			foreach($ventes as $vente){
 				if(Configure::read('aser.connexion')){
-					$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique');
-					$this->Product->productHistoryDelete($vente['Vente']['acc'],'Vente');
+					if(!empty($vente['Vente']['historique_id'])){
+						if(!$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+
+						if(!$this->Product->productHistoryDelete($vente['Vente']['acc'],'Vente'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+					}
 				}
 			}
 			//annulation de la facture 
-			$this->Vente->Facture->save(array('Facture'=>array('id'=>$factureId,
+			if(!$this->Vente->Facture->save(array('Facture'=>array('id'=>$factureId,
 																'observation'=>$obs,
 																'classee'=>1,
 																'etat'=>'annulee'
 																)
-										));
+										)))
+			{ 
+				exit(json_encode(array('success'=>false,'msg'=>'Problème avec l\'enregistrement de la facture!')));
+			}
+
 			//trace stuff
 			$trace['Trace']['model_id']=$factureId;
 			$trace['Trace']['model']='Facture';
@@ -2203,6 +2250,7 @@ class VentesController extends AppController {
 			$fields=array('Vente.id',
 						'Vente.produit_id',
 						'Vente.stock_id',
+						'Vente.facture_id',
 						'Vente.quantite',
 						'Vente.acc',
 						'Vente.PU',
@@ -2222,7 +2270,10 @@ class VentesController extends AppController {
 			if(($old_quantite-$quantite)>0){
 				if(Configure::read('aser.connexion')){		
 					//stock part
-					$this->Product->stock($vente,'credit');
+					$return=$this->Product->stock($vente,'credit');
+					if(!$return['success'])
+						exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+
 					//acc
 					if(!empty($vente['Vente']['acc'])){
 						$acc=$this->Vente->find('first',array('fields'=>$fields,
@@ -2230,35 +2281,53 @@ class VentesController extends AppController {
 															)
 													);
 						if(!empty($acc)){
-							$this->Product->stock($acc,'credit');
+							$return=$this->Product->stock($acc,'credit');
+							if(!$return['success'])
+								exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
 						}
 					}
 				}
 					//vente part
-				$this->Vente->save($vente);
+				if(!$this->Vente->save($vente))
+					exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'enregistrement du produit")));
 			}
 			else {
 				if(Configure::read('aser.connexion')){
-					$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique');
-					$this->Product->productHistoryDelete($vente['Vente']['acc'],'Vente');
+					if(!empty($vente['Vente']['historique_id'])){
+						if(!$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+
+						if(!$this->Product->productHistoryDelete($vente['Vente']['acc'],'Vente'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+					}
 				}
+				$deleteMsg="Problème avec l'effacement du produit.";
 				//vente part
-				$this->Vente->delete($consoId);	
+				if(!$this->Vente->delete($consoId))
+					exit(json_encode(array('success'=>false,'msg'=>$deleteMsg)));		
 				//gestion des accompagnents
 				if(!is_null($vente['Vente']['acc'])){
-					$this->Vente->delete($vente['Vente']['acc']);
+					if(!$this->Vente->delete($vente['Vente']['acc']))
+						exit(json_encode(array('success'=>false,'msg'=>$deleteMsg)));	
 				}
 			}
-			//resuming the bill
-			$sum=$this->Product->bill_total($factureId, $reduction);
+			//$sum=$this->Product->bill_total($factureId, $reduction);
+			//fetching the info of the updated bill
+			$facture=$this->Vente->Facture->find('first',array('conditions'=>array('Facture.id'=>$factureId),
+																		'fields'=>array('Facture.original',
+																						'Facture.montant',
+																						'Facture.reste',
+																						'Facture.avance_beneficiaire as avance'
+																				),
+																		'recursive'=> -1
+																));
 			
 			exit(json_encode(array('success'=>true,
-								'montant'=>$sum['montant'],
-								'quantite'=>$vente['Vente']['quantite'],
-								'PT'=>$vente['Vente']['montant'],
-								'original'=>$sum['original'],
-								'avance'=>$sum['avance_beneficiaire'],
-								)
+									'quantite'=>$vente['Vente']['quantite'],
+									'PT'=>$vente['Vente']['montant'],
+									)
+									+
+							$facture['Facture']
 						)
 			);
 		}

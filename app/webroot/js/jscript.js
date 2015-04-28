@@ -221,7 +221,7 @@ function serveur_changer(factureId){
 
 function cloturer(id,personnel_id){
 	var closed=jQuery('#etat_journal').attr('closed');
-	if(id==''){
+	if(id===''){
 		alert('Aucun Rapport séléctionné !');
 	}
 	else if(closed=='1'){

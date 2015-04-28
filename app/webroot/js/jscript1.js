@@ -1255,9 +1255,13 @@ function separator(factureId){
  			dataType:'json',
  			success:function(ans){
  				if(ans.success){
- 					activated(jQuery('table#list_factures tr[id="'+factureId+'"]'));
  					ungrouped=1;
  				}
+                else {
+                    ungrouped=0;
+                    alert(ans.msg);
+                }
+                activated(jQuery('table#list_factures tr[id="'+factureId+'"]'));
  			}
  		});
 	}
@@ -1271,31 +1275,36 @@ function separator(factureId){
  		url:getBase()+'ventes/separator/'+factureId+'/'+list,
  		dataType:'json',
  		success:function(ans){
- 		//	jQuery('body').html(ans);
- 			ungrouped=0;
- 			jQuery('table#list_produits input[type="checkbox"]:checked').each(function(i){
-				jQuery(this).parents('tr').remove();	
-			});
-			addFacture(ans.Facture.id,
-						ans.Facture.numero,
-						ans.Facture.journal_id,
-						ans.Facture.beneficiaire,
-						ans.Facture.table,
-						ans.nyu.original,
-						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text(),
-						ans.nyu.montant,
-						ans.nyu.reste,
-						ans.Facture.etat,
-						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="waiter"]').text(),
-						ans.Facture.date
-						);
-			
-			//update the old bill
-			jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(ans.old.montant);
- 			jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(ans.old.original);
- 			jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reste"]').text(ans.old.reste);
- 			jQuery('.active').removeClass('active');
- 			jQuery('table#list_factures tr[id="'+factureId+'"]').children().attr('class','active');
+            if(ans.success){
+     		//	jQuery('body').html(ans);
+     			ungrouped=0;
+     			jQuery('table#list_produits input[type="checkbox"]:checked').each(function(i){
+    				jQuery(this).parents('tr').remove();	
+    			});
+    			addFacture(ans.Facture.id,
+    						ans.Facture.numero,
+    						ans.Facture.journal_id,
+    						ans.Facture.beneficiaire,
+    						ans.Facture.table,
+    						ans.nyu.original,
+    						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text(),
+    						ans.nyu.montant,
+    						ans.nyu.reste,
+    						ans.Facture.etat,
+    						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="waiter"]').text(),
+    						ans.Facture.date
+    						);
+    			
+    			//update the old bill
+    			jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(ans.old.montant);
+     			jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(ans.old.original);
+     			jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reste"]').text(ans.old.reste);
+     			jQuery('.active').removeClass('active');
+     			jQuery('table#list_factures tr[id="'+factureId+'"]').children().attr('class','active');
+            }
+            else {
+                alert(ans.msg);
+            }
  		},
  		error:function(a,b,c){
  			jQuery('body').html(c);
@@ -1589,7 +1598,7 @@ function paiement_touch(factureId,moveOn){
  			success:function(response){
  				if(response.success) {
  					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text(response.etat);
- 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(response.total);
+ 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(response.montant);
  					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(response.original);
  					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text(response.reduction);
  					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reste"]').text(response.reste);

@@ -39,7 +39,7 @@ class Vente extends AppModel {
 			'numeric' => array(
 				'rule' => array('numeric'),
 				'message' => 'Valeurs numériques seulement !',
-				'allowEmpty' => false,
+				'allowEmpty' => true,
 				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
@@ -50,7 +50,7 @@ class Vente extends AppModel {
 				'rule' => array('numeric'),
 				'message' => 'Valeurs numériques seulement !',
 				'allowEmpty' => false,
-				'required' => true,
+				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -96,14 +96,24 @@ class Vente extends AppModel {
 
 	function beforeSave(){
 		if(!empty($this->data['Vente']['id'])){
-			$venteInfo = $this->find('first',array('fields'=>array(
+			$oldVenteInfo = $this->find('first',array('fields'=>array(
+																'Vente.facture_id',
 																'Facture.etat',
 																'Facture.classee',
+																'Facture.reduction',
+																'Facture.tva_incluse',
 																	),
 													'conditions'=>array('Vente.id'=>$this->data['Vente']['id'])
 													));
-			if(($venteInfo['Facture']['etat']=='en_cours')&&(($venteInfo['Facture']['classee']==0)))
-				return true;
+			if(($oldVenteInfo['Facture']['etat']=='en_cours')&&(($oldVenteInfo['Facture']['classee']==0))){
+				/*
+				if(!empty($this->data['Vente']['facture_id'])){
+					if(($this->data['Vente']['facture_id']!=$oldVenteInfo['Vente']['facture_id'])){
+						$this->Facture->updateMontant($oldVenteInfo['Facture'],$this->data['Vente']['id']);
+					}
+				}*/
+				return true;	
+			}
 			else 
 				return false;
 		}

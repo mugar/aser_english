@@ -131,7 +131,8 @@ class Facture extends AppModel {
 	}
 	
 	
-	function updateBillStatus($facture,$idToIgnore){
+	function updateBillStatus($paiementInfo,$idToIgnore){
+		$facture=$paiementInfo['Facture'];
 		//fetching all the payments.
 		$paiements=$this->Paiement->find('all',array('fields'=>array('sum(Paiement.montant) as montant'),
 										'conditions'=>array('Paiement.facture_id'=>$facture['id'],
@@ -144,9 +145,11 @@ class Facture extends AppModel {
 		$facture['reste']=$facture['montant']-$facture['pyts'];
 		//calcul de l'etat
 		if($facture['reste']==0) $facture['etat']='payee';
-		elseif (($facture['reste']>0)&&($facture['reste']<$facture['montant'])) $facture['etat']='avance';
 		elseif ($facture['reste']==$facture['montant']) $facture['etat']='credit';
-		elseif ($facture['reste']<0) $facture['etat']='excedent'; //ce cas est a evite. il faut mettre une barriere au niveau de la creation du paiement.
+		elseif (($facture['reste']>0)&&($facture['reste']<$facture['montant'])) $facture['etat']='avance';
+		elseif ($facture['reste']<0) {
+			$facture['etat']='excedent'; 
+		}
 		//save the bill now
 		$facture['classee']=1; //when a pyt is made it closes the bill automatically.
 		if(!$this->save(array('Facture'=>$facture))) exit('failed to update the status of this bill : '.$id);

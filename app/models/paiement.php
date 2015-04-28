@@ -84,6 +84,27 @@ class Paiement extends AppModel {
 	);
 
 	/**
+	* the role of this function is to check if already made payments of this bill do not exceed 
+	* its amount.
+	*/
+	function beforeSave($options){
+		if(!empty($this->data['Paiement']['facture_id'])){
+			$factureInfo = $this->Facture->find('first',array('fields'=>array(
+																	'Facture.operation',
+																	'Facture.montant'
+																	),
+													'conditions'=>array('Facture.id'=>$this->data['Paiement']['facture_id'])
+													));
+			if(!empty($factureInfo['Facture']['operation'])&&($factureInfo['Facture']['operation']=='Vente')){
+				$totalPyts=$this->Facture->pyts($this->data['Paiement']['facture_id']);
+				if(($totalPyts+$this->data['Paiement']['montant'])>$factureInfo['Facture']['montant'])
+					return false;
+			}
+		}
+		return true;
+	}
+
+	/**
 	* this function's job is to update the bill to which this paiement is attached.
 	* it does it on aftersave and on beforedelete.
 	*/
@@ -91,13 +112,15 @@ class Paiement extends AppModel {
 		if($this->id){
 			$paiementInfo = $this->find('first',array('fields'=>array(
 																	'Facture.montant',
-																	'Facture.id'
+																	'Facture.operation',
+																	'Facture.id',
+																	'Paiement.id'
 																	),
 													'conditions'=>array('Paiement.id'=>$this->id)
 													));
 			if(!empty($paiementInfo['Facture']['id'])){
 				$idToIgnore=($callback=='beforeDelete')?$this->id:null;
-				$this->Facture->updateBillStatus($paiementInfo['Facture'],$idToIgnore);
+				$this->Facture->updateBillStatus($paiementInfo,$idToIgnore);
 			}
 			else return false;
 		}

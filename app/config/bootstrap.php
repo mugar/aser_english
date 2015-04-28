@@ -58,7 +58,7 @@
 								 'POS'=>1, // Point of Sale, a activer s'ils ont besion du module de point de vente 
 								 'services'=>1, //a activer seulement pour les hotels
 								 'sama'=>0,//sama café mode when serveur get access to computer,
-								 'bon'=>0, //impression des bons par l'ordinateur
+								 'bon'=>1, //impression des bons par l'ordinateur
 								 'magasin'=>0, // a activer si c'est pas un restaurant
 								 'connexion'=>0, // a activer s'ils desirent une synchronisation entre le point de vente et le stock
 								 'multi_resto'=>0, //a activer pour les restaurants avec plusieurs point de vente
