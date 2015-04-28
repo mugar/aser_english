@@ -105,6 +105,12 @@
 			</td>
 		<?php endif; ?>
 	</tr>
+	<?php if(!empty($other_people_pyts['total'])):?>
+		<tr>
+			<td>PAIEMENTS CREES PAR D'AUTRES</td>
+			<td><?php echo  $number->format($other_people_pyts['total']+0,$formatting); ?></td>
+		</tr>
+	<?php endif; ?>
 </table>
 
 <div id="journal_details">
@@ -221,6 +227,30 @@
 	 	?>
 	
 </table>
+<?php if(!empty($other_people_pyts['pyts'])):?>
+	<span class="titre">Paiements Créés par d'autres</span>
+
+	<table cellpadding="0" cellspacing="0" id="pytTab">
+	<tr>	
+			<th>Date de Paiement</th>
+			<th>Date de Facturation</th>
+			<th>N° Facture</th>
+			<th>Type De Facture</th>
+			<th>Montant</th>
+			<th>Montant Equivalent</th>
+			<th>Mode de Paiement</th>
+			<th>Réference</th>
+			<th>Personnel</th>
+	</tr>
+		<?php
+		foreach ($other_people_pyts['pyts'] as $pyt){
+			echo $this->element('../paiements/add',array('paiement'=>$pyt,'facture'=>true));
+		}
+		
+	 	?>
+	
+</table>
+<?php endif; ?>
 <span class="titre">Dépenses</span>
 <br>
 <table cellpadding="0" cellspacing="0">

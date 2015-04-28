@@ -780,7 +780,10 @@ class VentesController extends AppController {
 												)
 									);
 		//	die(debug($factures));
-		$total_factures['resto']=$total_credits['resto']=0;
+		$total_factures['resto']=$total_credits['resto']=$total_cash['resto']=0;
+		//this variable holds the total of pyts not made by the person to whom belong this journal.
+		$other_people_pyts['total']=0; 
+		$other_people_pyts['pyts']=array();
 		$bonus=0;
 		$facturesIds=array();
 		
@@ -798,15 +801,29 @@ class VentesController extends AppController {
 			}
 			if(!empty($journalInfo)&&($journalInfo['Journal']['closed']==1)){
 				$pytConds['Paiement.facture_id']=$facturesIds;
-				$pyts=$this->Vente->Facture->Paiement->find('all',array('fields'=>array('Paiement.montant',
+				$pyts=$this->Vente->Facture->Paiement->find('all',array('fields'=>array('Paiement.*',
 																						'Facture.operation',
+																						'Facture.date',
+																						'Facture.numero',
+																						'Facture.id',
+																						'Facture.monnaie',
+																						'Personnel.id',
+																						'Personnel.name'
+
 																						),
 																		'conditions'=>$pytConds
 																		)
 																);
-				$total_cash['resto']=0;
+				
 				foreach($pyts as $key=>$pyt){
-					$total_cash['resto']+=$pyt['Paiement']['montant'];
+					if($pyt['Paiement']['personnel_id']==$journalInfo['Personnel']['id']){
+						$total_cash['resto']+=$pyt['Paiement']['montant'];
+					}
+					else {
+						$other_people_pyts['total']+=$pyt['Paiement']['montant'];
+						$other_people_pyts['pyts'][]=$pyt;
+					}	
+					
 				}
 				$total_credits['resto']=$total_factures['resto']-$total_cash['resto']-$bonus;
 			}
@@ -947,7 +964,8 @@ class VentesController extends AppController {
 								'model1',
 								'model2',
 								'sums',
-								'journalData'
+								'journalData',
+								'other_people_pyts'
 								)
 						);
 		if($mensuelle){

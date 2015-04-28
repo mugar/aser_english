@@ -27,9 +27,11 @@
 			<?php echo $journal['Personnel']['name']; ?>
 		</td>
 		<td><?php echo $journal['Journal']['closed']; ?>&nbsp;</td>
+		
 		<td class="actions">
-			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $journal['Journal']['id'])); ?>
+			<?php //echo $this->Html->link(__('Edit', true), array('action' => 'edit', $journal['Journal']['id'])); ?>
 		</td>
+		
 	</tr>
 <?php endforeach; ?>
 	</table>

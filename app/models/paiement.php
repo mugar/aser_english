@@ -88,6 +88,8 @@ class Paiement extends AppModel {
 	* its amount.
 	*/
 	function beforeSave($options){
+		parent::beforeSave($options);
+		
 		if(!empty($this->data['Paiement']['facture_id'])){
 			$factureInfo = $this->Facture->find('first',array('fields'=>array(
 																	'Facture.operation',
@@ -101,6 +103,7 @@ class Paiement extends AppModel {
 					return false;
 			}
 		}
+
 		return true;
 	}
 

@@ -52,12 +52,16 @@ class AppModel extends Model {
 	
 	
 	function beforeSave(){
+		/*if($this->alias=='Paiement')
+					exit(debug($this->data));*/
+
 		$skip=array('CaisseInterdite','Facture','Journal','Salaire','Paie','Abscence');
 		//saves who made the save operation on the entire app
 		$personnelId=$this->sessionRead('Auth.Personnel.id');
 		if($this->who&&!empty($personnelId)&&!in_array($this->alias,$skip)){
 			if( !(($this->alias=='Trace')&&!empty($this->data[$this->alias]['personnel_id'])) ){ //ne pas enregistrer automatique lq personne si le model est trace et que le personnel est deja fournie
 				$this->data[$this->alias]['personnel_id']=$personnelId;
+				
 			}
 		}
 		return true;

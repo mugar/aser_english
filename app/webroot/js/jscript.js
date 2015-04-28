@@ -721,11 +721,11 @@ function getBase(){
  						var montant=response.montant;
  						var produit_id=jQuery('table#list_produits tr[id="'+consoId+'"] td[name="produit"]').attr('id');
 	 				  	var produitName=jQuery('table#list_produits tr[id="'+consoId+'"] td[name="produit"]').text();
-						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(montant);
 						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(response.original);
-						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text(response.reste);
+						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(montant);
+						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reste"]').text(response.reste);
 						jQuery('span#montant').text(montant);
-						jQuery('#reste').text(montant);
+						jQuery('#reste').text(response.reste);
 						
 						//commande d'annulation'
 	 				  	var printedQty=parseInt(jQuery('table#list_produits tr[id="'+consoId+'"]').attr('printed'));
