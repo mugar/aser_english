@@ -94,7 +94,7 @@ class Vente extends AppModel {
 
 
 
-	function beforeSave(){
+	function beforeSave($options){
 		if(!empty($this->data['Vente']['id'])){
 			$oldVenteInfo = $this->find('first',array('fields'=>array(
 																'Vente.facture_id',

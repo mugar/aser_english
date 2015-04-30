@@ -2039,10 +2039,14 @@ class VentesController extends AppController {
 																			),
 													'conditions'=>array('Facture.id'=>$this->data['Vente']['factureId'])
 													));
+		//setting the customer.
+		$factureInfo['Facture']['tier_id']=(!empty($this->data['Vente']['tier_id']))?$this->data['Vente']['tier_id']:null;
+
 		$journal=$this->_checkJournal($factureInfo);
 		
 		// calculating reduction
 		$tierInfo=$this->_reduction($this->data['Vente'],$factureInfo);
+
 
 		//starting treatement based on status.
 		if(in_array($this->data['Vente']['etat'],array('payee','avance'))){
@@ -2060,12 +2064,12 @@ class VentesController extends AppController {
 			$this->_closeAndSaveTheBill($factureInfo,false);
 		}
 		elseif(in_array($this->data['Vente']['etat'],array('credit','bonus'))) {
+			//make sure we have a client/tier first.
+			$this->_checkTier($this->data['Vente']); 
 			if($this->data['Vente']['etat']=='credit'){
 				$this->_checkMaxDette($tierInfo,$factureInfo['Facture']['reste'],$this->data['Vente']);
 			}
 			else {
-				//make sure we have a client/tier first.
-				$this->_checkTier($this->data['Vente']); 
 				$factureInfo['Facture']['reste']=0;
 			}
 			//putting the state of the bill

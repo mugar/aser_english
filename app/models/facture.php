@@ -6,6 +6,8 @@ class Facture extends AppModel {
 	var $displayField = 'numero';
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
+	//The Associations below have been created with all possible keys, those that are not needed can be removed
+	
 	var $belongsTo = array(
 		'Personnel' => array(
     	  'className' => 'Personnel',
@@ -163,7 +165,7 @@ class Facture extends AppModel {
 			$search=$this->Config->find('first',array('fields'=>array('value'),
 													'conditions'=>array('Config.key'=>'tva'))
 										);
-			$taux=(empty($search))?$taux:$search['Config']['tva'];
+			$taux=(empty($search['Config']['tva']))?$taux:$search['Config']['tva'];
 		}
 		if($taux){
 			$facture['tva']=(isset($facture['tva_incluse'])&&($facture['tva_incluse']>1))?
@@ -214,6 +216,27 @@ class Facture extends AppModel {
 			if(!$this->save(array('Facture'=>$facture)))
 				exit('failed to update this bill : '.$id);
 		}
+	}
+
+	/* this function's job is to make sure that a bill with state credit is 
+	 not saved without specifying a customer.
+	 */
+
+	function beforeSave($options){
+		if(!empty($this->data['Facture']['etat'])&&in_array($this->data['Facture']['etat'],array('credit'))){
+			if(!isset($this->data['Facture']['tier_id'])&&!empty($this->data['Facture']['id'])){
+				$factureInfo=$this->find('first',array('fields'=>array('Facture.tier_id'),
+										'conditions'=>array('Facture.id'=>$this->data['Facture']['id'])
+										));
+				$this->data['Facture']['tier_id']=$factureInfo['Facture']['tier_id'];
+			}
+			if(!empty($this->data['Facture']['tier_id']))
+				return true;
+			else 
+				return false;
+
+		}
+		return true;
 	}
 }
 ?>
