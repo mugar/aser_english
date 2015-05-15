@@ -8,11 +8,13 @@ echo $this->Html->image($logo['name'], array('alt'=>'test logo', 'border' => '0'
 			<?php if(!empty($company['address1'])) echo $company['address1'].'<br/>';?>	
 			<?php if(!empty($company['address2'])) echo $company['address2'].'<br/>';?>	
 			<?php if(!empty($company['tel'])) echo 'Tél : '.$company['tel'].'<br/>';?>	
-			<?php if(!empty($company['compte_BIF'])) echo 'Compte BIF : '.$company['compte_BIF'].'<br/>';?>	
-			<?php if(!empty($company['compte_USD'])) echo 'Compte USD : '.$company['compte_USD'].'<br/>';?>	
-			<?php if(!empty($company['compte_EUR'])) echo 'Compte EUR : '.$company['compte_EUR'].'<br/>';?>	
-			<?php if(!empty($company['nif'])) echo 'NIF : '.$company['nif'].'<br/>';?>
-			<?php if(!empty($company['email'])) echo 'E-mail : '.$company['email'].'<br/>';?>
-			<?php if(!empty($company['bp'])) echo 'BP : '.$company['bp'].'<br/>';?>
+			<?php if(isset($short_version)):?>
+				<?php if(!empty($company['compte_BIF'])) echo 'Compte BIF : '.$company['compte_BIF'].'<br/>';?>	
+				<?php if(!empty($company['compte_USD'])) echo 'Compte USD : '.$company['compte_USD'].'<br/>';?>	
+				<?php if(!empty($company['compte_EUR'])) echo 'Compte EUR : '.$company['compte_EUR'].'<br/>';?>	
+				<?php if(!empty($company['nif'])) echo 'NIF : '.$company['nif'].'<br/>';?>
+				<?php if(!empty($company['email'])) echo 'E-mail : '.$company['email'].'<br/>';?>
+				<?php if(!empty($company['bp'])) echo 'BP : '.$company['bp'].'<br/>';?>
+			<?php endif;?>
 		</div>
 <?php endif; ?>

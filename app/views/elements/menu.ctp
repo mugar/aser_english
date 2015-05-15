@@ -82,6 +82,9 @@
 								<?php if(in_array(Configure::read('aser.name'),array('aserb','belair'))||Configure::read('aser.silhouette')):?>
 									<li class="rapport"><?php echo $this->Html->link(__('Impression Journalière', true), '/factures/show_bills'); ?></li>
 								<?php endif;?>	
+								<?php if($config['POS']):?>
+									<li class="rapport"><?php echo $this->Html->link(__('Factures Débloquées', true), '/ventes/unlocked_bills'); ?></li>
+								<? endif;?>	
 							</ul>
 							
 						</li>	
@@ -91,6 +94,7 @@
 						<?php if($config['ebenezer']):?>
 							<li class="folder"><?php echo $this->Html->link(__('Gestion des Dettes', true), '/dettes/index'); ?></li>
 						<?php endif;?>
+						
 					</ul>
 				</li>
 				
@@ -116,6 +120,9 @@
 								<li class="rapport"><?php echo $this->Html->link(__('Synthèse des ventes journalières', true), '/ventes/syntheseCptableDVente'); ?></li>
 								<li class="rapport"><?php echo $this->Html->link(__('Détail des crédits journaliers', true), '/ventes/creditCptable'); ?></li>
 							<? endif;?>
+							<?php if($config['bon']):?>
+								<li class="rapport"><?php echo $this->Html->link(__('Commandes Non envoyés', true), '/ventes/unprinted_orders'); ?></li>
+							<? endif;?>	
 							</ul>
 				</li>
 				<?php endif; ?>

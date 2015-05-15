@@ -124,7 +124,7 @@
 		</div>
 	</div>
 		<div id="footer">
-			Logiciel <b>Aser Manager</b> par Mugabo Armand | Tél: +257 78 165 514 | Email:<?php echo $this->Html->link(__('mugarmug@gmail.com', true), 'mailto:mugarmug@gmail.com'); ?> | Tous droits réservés © <?php echo '2012 - '.date('Y');?>
+			Logiciel <b>Aser Manager</b> par Mugabo Armand | Tél: 75 854 201/ 79 853 419 | Email:<?php echo $this->Html->link(__('mugarmug@gmail.com', true), 'mailto:mugarmug@gmail.com'); ?> | Tous droits réservés © <?php echo '2012 - '.date('Y');?>
 		</div>
 	</div>
 	<?php echo $this->element('sql_dump'); ?>

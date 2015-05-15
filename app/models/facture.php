@@ -4,6 +4,8 @@ class Facture extends AppModel {
 	var $order = 'Facture.id desc';
 	var $recursive = 0;
 	var $displayField = 'numero';
+
+	
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed

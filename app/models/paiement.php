@@ -6,16 +6,7 @@ class Paiement extends AppModel {
 	
 
 	var $validate = array(
-		'journal_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Valeurs numériques seulement !',
-				'allowEmpty' => false,
-				'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
+		
 		'facture_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -46,12 +37,12 @@ class Paiement extends AppModel {
 		),
 		'mode_paiement' => array(
 			'alphaNumeric' => array(
-                'rule' => 'alphaNumeric',
-               'allowEmpty' => false,
-				'required' => true,
-                'message' => 'mode de Paiement obligatoire'
+          'rule' => 'alphaNumeric',
+          'allowEmpty' => false,
+					'required' => true,
+          'message' => 'mode de Paiement obligatoire',
 				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
+				  'on' => 'create' // Limit validation to 'create' or 'update' operations
 			),
 			
 		),
@@ -89,8 +80,8 @@ class Paiement extends AppModel {
 	*/
 	function beforeSave($options){
 		parent::beforeSave($options);
-		
-		if(!empty($this->data['Paiement']['facture_id'])){
+		//to execute only when creating a new record.
+		if(!empty($this->data['Paiement']['facture_id'])&&empty($this->data['Paiement']['id'])){
 			$factureInfo = $this->Facture->find('first',array('fields'=>array(
 																	'Facture.operation',
 																	'Facture.montant'

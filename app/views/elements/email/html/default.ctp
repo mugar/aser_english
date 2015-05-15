@@ -3,16 +3,13 @@ $logo=Configure::read('logo');
 $html='<div id="view">
 <div class="document">
 <div id="entete">
-	<div class="left">
-		'.$this->Html->image($logo['name'], array('alt'=>'test logo', 'border' => '0','width'=>$logo['width'],'height'=>$logo['height'])).'<br/>
+	<div class="left">'.$this->element('company',array('short_version')).'
 	</div>
 	<div class="right"> 
 		Date : <span id="dateId">'.date('d/m/Y').'</span><br/>
 	</div>
 	<div style="clear:both"></div>
 </div>
-<br />
-<br />
 <br />
 <br />
 <span class="titre">CONFIRMATION DE RESERVATION N° '.$id.'</span>

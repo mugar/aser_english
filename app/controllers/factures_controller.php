@@ -314,7 +314,7 @@ class FacturesController extends AppController {
 					if(!empty($data['id'])){
 						$this->Facture->$model->setDataSource('aserb');
 						if(!$this->Facture->$model->save(array($model=>$data))){
-							exit('Failed to save '.$model);
+							exit('IN saveBBill Failed to save '.$model);
 						}
 					}
 				}
@@ -323,9 +323,8 @@ class FacturesController extends AppController {
 						case 'Paiement':
 							foreach($data as $row){
 								$this->Facture->$model->setDataSource('aserb');
-								$this->Facture->$model->save(array($model=>$row));
 								if(!$this->Facture->$model->save(array($model=>$row))){
-									exit('Failed to save paiement');
+									exit('IN saveBBill Failed to save paiement');
 								}
 							}
 							break;
@@ -333,12 +332,12 @@ class FacturesController extends AppController {
 							foreach($data as $row){
 								$this->Facture->$model->setDataSource('aserb');
 								if(!$this->Facture->$model->save(array($model=>$row))){
-									exit('Failed to save vente');
+									exit('IN saveBBill Failed to save vente');
 								}
 								//saving produit
 								$this->Facture->$model->Produit->setDataSource('aserb');
 								if(!$this->Facture->$model->Produit->save($row)){
-									exit('Failed to save produit');
+									exit('IN saveBBill Failed to save produit');
 								}
 							}
 							break;
@@ -347,12 +346,12 @@ class FacturesController extends AppController {
 							foreach($data as $row){
 								$this->Facture->$model->setDataSource('aserb');
 								if(!$this->Facture->$model->save(array($model=>$row))){
-									exit('Failed to save Reservation');
+									exit('IN saveBBill Failed to save Reservation');
 								}
-								//saving produit
+								//saving chambre
 								$this->Facture->$model->Chambre->setDataSource('aserb');
 								if(!$this->Facture->$model->Chambre->save($row)){
-									exit('Failed to save chambre');
+									exit('IN saveBBill Failed to save chambre');
 								}
 							}
 							break;
@@ -360,12 +359,12 @@ class FacturesController extends AppController {
 							foreach($data as $row){
 								$this->Facture->$model->setDataSource('aserb');
 								if(!$this->Facture->$model->save(array($model=>$row))){
-									exit('Failed to save Location');
+									exit('IN saveBBill Failed to save Location');
 								}
-								//saving produit
+								//saving salle
 								$this->Facture->$model->Salle->setDataSource('aserb');
 								if(!$this->Facture->$model->Salle->save($row)){
-									exit('Failed to save salle');
+									exit('IN saveBBill Failed to save salle');
 								}
 							}
 							break;
@@ -373,12 +372,12 @@ class FacturesController extends AppController {
 							foreach($data as $row){
 								$this->Facture->$model->setDataSource('aserb');
 								if(!$this->Facture->$model->save(array($model=>$row))){
-									exit('Failed to save service');
+									exit('IN saveBBill Failed to save service');
 								}
-								//saving produit
+								//saving service
 								$this->Facture->$model->TypeService->setDataSource('aserb');
 								if(!$this->Facture->$model->TypeService->save($row)){
-									exit('Failed to save type service');
+									exit('IN saveBBill Failed to save type service');
 								}
 							}
 							break;

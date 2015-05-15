@@ -440,6 +440,7 @@ class VentesController extends AppController {
 		//*/
 	}
 	
+
 	function unlock($factureId,$old_state){
 		//delete the payments
 		$this->Vente->Facture->Paiement->deleteAll(array('Paiement.facture_id'=>$factureId));
@@ -451,6 +452,7 @@ class VentesController extends AppController {
 															'etat'=>'en_cours',
 															'reste'=>$facture['Facture']['montant'],
 															'printed'=>0,
+															'debloquer'=>$this->Auth->user('id'),
 															'classee'=>0,
 															'observation'=>''
 															)));
@@ -471,7 +473,42 @@ class VentesController extends AppController {
 		
 		exit(json_encode(array('success'=>true,'msg'=>'ok')));
 	}
-	
+
+	function unprinted_orders(){
+		$date1= (!empty($this->data['Vente']['date1']))?$this->data['Vente']['date1']:date('Y-m').'-01';
+		$date2= (!empty($this->data['Vente']['date2']))?$this->data['Vente']['date2']:date('Y-m').'-31';
+		$ventes = $this->Vente->find('all',array('fields'=>array('Facture.date','Vente.quantite',
+																													'Vente.printed','Facture.id','Facture.numero',
+																													'Produit.name'
+																													),
+																						'conditions'=>array('date(Vente.created) >=' => $date1,
+																																'date(Vente.created) <=' => $date2,
+																																'Vente.quantite > Vente.printed'
+																															),
+																						'order'=>array('Facture.date')
+																						));
+		$this->set(compact('ventes','date2','date1'));
+	}
+
+	function unlocked_bills(){
+		$date1= (!empty($this->data['Vente']['date1']))?$this->data['Vente']['date1']:date('Y-m').'-01';
+		$date2= (!empty($this->data['Vente']['date2']))?$this->data['Vente']['date2']:date('Y-m').'-31';
+
+		$factures = $this->Vente->Facture->find('all',array('fields'=>array('Facture.date','Facture.id','Facture.montant',
+																															'Facture.reste','Facture.numero','Facture.etat',
+																															'Personnel.name','Facture.monnaie','Facture.debloquer'
+																															),
+																								'conditions'=>array('Facture.operation' => 'Vente',
+																																	'Facture.debloquer >=' => 1,
+																																	'Facture.date >=' => $date1,
+																																	'Facture.date <=' => $date2 
+																																	),
+																								'order'=>array("Facture.date")
+																								));
+		$personnels = $this->Personnel->find('list');
+		$this->set(compact('factures','date1','date2','personnels'));
+	}
+
 	function direct_reduction($new,$old,$id){
 		$facture['reduction']=round(100*($old-$new)/$old,3);
 		$facture['original']=$old;
@@ -2079,6 +2116,7 @@ class VentesController extends AppController {
 		
 	}
 
+	/*
 	function old_paiement(){
 	//	exit(debug($this->data));
 		//gettin tier info if any
@@ -2191,7 +2229,7 @@ class VentesController extends AppController {
 				$data['Paiement']['journal_id']=$factureInfo['Facture']['journal_id'];
 				$data['Paiement']['date']=$factureInfo['Facture']['date'];
 			}
-			//*/
+			
 			
 			//checking if the paiement do not exceed the remaining amount to be paid
 			//first we look for any already made paiement.
@@ -2226,7 +2264,7 @@ class VentesController extends AppController {
 							)
 				));
 	}
-	
+	*/
 	function removal($factureId,$consoId,$quantite,$reduction,$obs=''){
 		$stockFailureMsg="";
 		if($consoId=='facture'){
@@ -2616,7 +2654,7 @@ class VentesController extends AppController {
 					$facture['Facture']['employeur']=$this->data['Vente']['employeur'];
 				}
 			}
-			if(!$this->Vente->Facture->save($facture)) exit(json_encode(array('success'=>false,'msg'=>"Fail to create the bill.")));
+			if(!$this->Vente->Facture->save($facture)) exit(json_encode(array('success'=>false,'msg'=>"Vente Add F(x) : Fail to create the bill.")));
 			$factureId=$this->Vente->Facture->id;
 			//determining the facture's display number
 			$factureNum=$this->Product->facture_number($factureId,'Vente');

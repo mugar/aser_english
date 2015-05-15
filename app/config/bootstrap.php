@@ -88,7 +88,7 @@
 								 'billetage'=>0,
 								 'caissier_serveur'=>1, // a activer les serveurs jouent aussi le role des caissiers
 								 'tables'=>22, // le nombre total de table dont dispose leur restaurant
-								 'cloturer'=>0, // if on cloture automatique le journal at the beginning of each day
+								 'cloturer'=>1, // if on cloture automatique le journal at the beginning of each day
 								 'multi_pv'=>0, // dsi le produit peut avoir plusieurs prix differents,
 								 'pharmacie'=>0, // si l'entreprise est une pharmacie active les batch number & date d'expiration
 								 'default_currency'=>'BIF',
