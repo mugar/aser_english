@@ -196,18 +196,6 @@ class AppController extends Controller {
 			}
     	}
 	//*/
-		//end tracker 
-		$personnelId=$this->Auth->user('id');
-		//online checking 
-		if(!empty($personnelId)){
-			$this->loadModel('Personnel');
-			$update['Personnel']['id']=$personnelId;
-			$update['Personnel']['last_action']=date('Y-m-d H:i:s', time());
-			$this->Personnel->save($update);	
-		}
-		
-	
-		
     	// specifying which layout menu to use. enabled==true for an enabled menu and false for login layout.
     	$this->set('enabled',(in_array($this->params['action'],array('login','swipe')))?(false):(true));
 		

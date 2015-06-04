@@ -91,13 +91,13 @@
  *
  * [Note Routing.admin is deprecated in 1.3.  Use Routing.prefixes instead]
  */
-	Configure::write('Routing.prefixes', array('admin'));
+//	Configure::write('Routing.prefixes', array('admin'));
 
 /**
  * Turn off all caching application-wide.
  *
  */
-	Configure::write('Cache.disable',true);
+	Configure::write('Cache.disable',false);
 
 /**
  * Enable cache checking.
@@ -108,7 +108,7 @@
  * or in each action using $this->cacheAction = true.
  *
  */
-	Configure::write('Cache.check', false);
+	Configure::write('Cache.check', true);
 
 /**
  * Defines the default error type when using the log() function. Used for
@@ -264,17 +264,17 @@
      'prefix' => 'cache_short_'
     ));
  //*/
- /**
- * APC (http://pecl.php.net/package/APC)
- *
- * 	 Cache::config('default', array(
- *		'engine' => 'Apc', //[required]
- *		'duration'=> 3600, //[optional]
- *		'probability'=> 100, //[optional]
- * 		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
- *	));
- *
- * Xcache (http://xcache.lighttpd.net/)
+ //**
+  //APC (http://pecl.php.net/package/APC)
+ 
+  Cache::config('default', array(
+ 		'engine' => 'Apc', //[required]
+ 		'duration'=> 3600, //[optional]
+ 		'probability'=> 100, //[optional]
+  		'prefix' => Inflector::slug(APP_DIR) . '_', //[optional]  prefix every cache file with this string
+ 	));
+ 
+ /* Xcache (http://xcache.lighttpd.net/)
  *
  * 	 Cache::config('default', array(
  *		'engine' => 'Xcache', //[required]
@@ -284,7 +284,7 @@
  *		'personnel' => 'personnel', //personnel from xcache.admin.personnel settings
  *      'password' => 'password', //plaintext password (xcache.admin.pass)
  *	));
- *
+ */
  /*
  * Memcache (http://www.danga.com/memcached/)
  *

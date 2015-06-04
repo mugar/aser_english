@@ -852,7 +852,9 @@ class ReservationsController extends AppController {
 			$devise['USD']=1;
 			$total_usd=0;
 			foreach($sums as $sum){
-				$total_usd+=round($sum['Facture']['reste']/$devise[$sum['Facture']['monnaie']]);
+				if(isset($devise[$sum['Facture']['monnaie']])){
+					$total_usd+=round($sum['Facture']['reste']/$devise[$sum['Facture']['monnaie']]);
+				}
 			}
 			$taux_tva=$this->Conf->find('tva');
 			$modePaiements=$this->modePaiements;

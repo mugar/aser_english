@@ -121,8 +121,9 @@
 								<li class="rapport"><?php echo $this->Html->link(__('Détail des crédits journaliers', true), '/ventes/creditCptable'); ?></li>
 							<? endif;?>
 							<?php if($config['bon']):?>
-								<li class="rapport"><?php echo $this->Html->link(__('Commandes Non envoyés', true), '/ventes/unprinted_orders'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Commandes Non envoyées', true), '/ventes/unprinted_orders'); ?></li>
 							<? endif;?>	
+							<li class="rapport"><?php echo $this->Html->link(__('Commandes Effacées', true), '/ventes/removed_orders'); ?></li>
 							</ul>
 				</li>
 				<?php endif; ?>

@@ -73,7 +73,7 @@
 								 'name'=>'aser', // nom du dossier qui contient le logiciel ,
 								 'upload'=>0, // a activer pour ceux qui ulitise la version touchscreen du point de vente
 								 'swipe'=>0, // a activer si on ulitilse les cartes magnetiques pour la connexion
-								 'touchscreen'=>1, // a activer pour ceux qui ulitise la version touchscreen du point de vente
+								 'touchscreen'=>0, // a activer pour ceux qui ulitise la version touchscreen du point de vente
 								 'alerts'=>1, //  a activer pour les pharmacies ou autres entreprises qui desirent des alertes
 								 'tresorerie'=>1, // a activer s'ils utilisent le module tresorerie
 								 'stock'=>1,  // a activer s'ils utilisent le module stock

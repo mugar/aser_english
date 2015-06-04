@@ -829,7 +829,7 @@ class FacturesController extends AppController {
 		}
 		//conds
 		$pytCond['Facture.monnaie !=']='';
-		$pytCond['Facture.etat']=array('payee','credit','avance','excedent');
+		$pytCond['Facture.etat']=array('en_cours','cloturer','payee','credit','avance','excedent');
 		$factCond=$pytCond;
 		$pytCond['Paiement.date']=$date;
 		$pytCond['NOT']=array('Paiement.mode_paiement'=>array('','transfer'));
@@ -857,7 +857,7 @@ class FacturesController extends AppController {
 		}
 		
 		$this->Product->cash($persCond,$pytCond,$factCond,$date);		
-		$personnels=$this->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>2)));
+		$personnels=$this->Facture->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>2)));
 		$personnels[0]='';
 		$this->set('personnels',$personnels);
 	}
@@ -1379,7 +1379,7 @@ class FacturesController extends AppController {
 				$factureConditions['Tier.compagnie']=$this->data['Tier']['compagnie'];
 			}
 			if(($this->data['Facture']['etat']!='')&&($this->data['Facture']['etat']!='non_nul')) {
-				$factureConditions['Facture.etat']=$this->data['Facture']['etat'];
+				$factureConditions['Facture.etat']=($this->data['Facture']['etat']=='en_cours')?array('en_cours','cloturer'):$this->data['Facture']['etat'];
 			}
 			elseif($this->data['Facture']['etat']=='non_nul'){
 				$factureConditions['Facture.etat !=']='annulee';

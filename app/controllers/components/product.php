@@ -1721,6 +1721,7 @@ class ProductComponent extends Object {
 		$model=$data['Document']['model'];
 		$this->Model=ClassRegistry::init($model);
 		$montantTotal=$montantDette=$montantCaisse=0;
+		$failedMsg = 'Product facture create: Failed To create the Bill';
 		//facture date equals paiement date;
 		$data['Paiement']['date']=$data['Facture']['date'];
 		
@@ -1739,6 +1740,7 @@ class ProductComponent extends Object {
 				$modelInfos[]=$modelInfo;
 			}
 		}
+		$data['Facture']['tier_id']=$modelInfo[$model]['tier_id'];
 		if($model!='Proforma'){
 			$montantPayee=(!empty($data['Paiement']['montant']))?($data['Paiement']['montant']):(0);
 			//payment  stuff
@@ -1753,23 +1755,31 @@ class ProductComponent extends Object {
 			}
 			
 			//pyt needs the facture id 
-			$this->Model->Facture->save($data);
-			$factureId=$this->Model->Facture->id;
-			//dette stuff
-			if(!is_null($modelInfo[$model]['tier_id'])){
-				//caisse stuff & pyt stuff
-				if($montantCaisse>0){
-					//caisse stuff
-					$data['Paiement']['montant']=$montantCaisse;
-					$data['Paiement']['facture_id']=$factureId;
-					$this->Model->Facture->Paiement->save($data);
-				}
-			}	
+			if($this->Model->Facture->save($data)){
+				$factureId=$this->Model->Facture->id;
+				//dette stuff
+				if(!is_null($modelInfo[$model]['tier_id'])){
+					//caisse stuff & pyt stuff
+					if($montantCaisse>0){
+						//caisse stuff
+						$data['Paiement']['montant']=$montantCaisse;
+						$data['Paiement']['facture_id']=$factureId;
+						$this->Model->Facture->Paiement->save($data);
+					}
+				}	
+			}
+			else {
+				exit(json_encode(array('success'=>false,'msg'=>$failedMsg)));
+			}
 		}
 		else {
 			//the facture id 
-			$this->Model->Facture->save($data['Facture']);
-			$factureId=$this->Model->Facture->id;
+			if($this->Model->Facture->save($data['Facture'])){
+				$factureId=$this->Model->Facture->id;
+			}
+			else {
+					exit(json_encode(array('success'=>false,'msg'=>$failedMsg)));
+			}
 			
 			$montantCaisse=$montantTotal;
 			$data['Facture']['etat']='proforma';
@@ -1785,7 +1795,8 @@ class ProductComponent extends Object {
 		$data['Facture']['operation']=$model;
 		$this->facture_number($factureId,$model,$data['Facture']['date']);
 		$data['Facture']['id']=$factureId;
-		$this->Model->Facture->save($data);
+
+		if(!$this->Model->Facture->save($data)) exit(json_encode(array('success'=>false,'msg'=>$failedMsg)));
 		
 		//updating the model info 
 		foreach($modelInfos as $modelInfo){
@@ -2112,6 +2123,9 @@ class ProductComponent extends Object {
 		$datas=array();
 		$rubriques=array('ca','credit','bonus');
 		
+		$default_currency = Configure::read('aser.default_currency'); //BIF in general.
+		$en_cours=0;
+
 		//initialisation du tableau des paiements
 		foreach($this->Controller->modePaiements as $mode=>$modeName){
 			foreach($this->Controller->monnaies as $monnaie){
@@ -2150,6 +2164,7 @@ class ProductComponent extends Object {
 		$ca['ca_USD']=$ca['ca_BIF']=$ca['credit_BIF']=$ca['credit_USD']=$ca['deposit_USD']=$ca['deposit_BIF']=0;
 		$ca['consumed_BIF']=$ca['consumed_USD']=0;
 		$list=array();
+		$en_cours_ids=  array();
 		$factures=$this->Facture->find('all',array('fields'=>array('Facture.montant',
 																	'Facture.reste',
 																	'Facture.monnaie',
@@ -2161,6 +2176,16 @@ class ProductComponent extends Object {
 																	));
 	//	exit(debug($factures));	
 			foreach($factures as $key=>$facture){
+				//getting the total des factures en cours et cloturer
+				if(($facture['Facture']['monnaie']==$default_currency)
+					&&in_array($facture['Facture']['etat'], array('en_cours','cloturer'))
+					){
+
+					$en_cours+=$facture['Facture']['montant'];
+					$en_cours_ids[]=$facture['Facture']['id'].' '.$facture['Facture']['montant'].' '.$facture['Facture']['date'].' '.$facture['Facture']['etat'];
+					continue;
+				}
+
 				$facture['Facture']['deposit']=$facture['Facture']['consumed']=0;
 				if($facture['Facture']['operation']=='Reservation'){
 					$this->extract_amount($facture,$date,$date);
@@ -2169,6 +2194,7 @@ class ProductComponent extends Object {
 					}
 					else {
 						unset($factures[$key]);
+						continue;
 					}
 				}
 				
@@ -2315,7 +2341,6 @@ class ProductComponent extends Object {
 			$montantPayee['BIF']=($montantPayee['BIF']<0)?0:$montantPayee['BIF'];
 			$credit['BIF']=$ca['ca_BIF']-$montantPayee['BIF'];
 		}
-	//	die(debug($factures));
 		$this->Controller->set(compact(
 									'consumed',
 									'credit',
@@ -2330,7 +2355,8 @@ class ProductComponent extends Object {
 									'datas',
 									'total',
 									'date',
-									'remb'
+									'remb',
+									'en_cours'
 								));	
 	}
 	

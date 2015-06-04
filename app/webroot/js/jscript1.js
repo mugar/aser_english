@@ -1286,10 +1286,10 @@ function separator(factureId){
     						ans.Facture.journal_id,
     						ans.Facture.beneficiaire,
     						ans.Facture.table,
-    						ans.nyu.original,
+    						ans.Facture.original,
     						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text(),
-    						ans.nyu.montant,
-    						ans.nyu.reste,
+    						ans.Facture.montant,
+    						ans.Facture.reste,
     						ans.Facture.etat,
     						jQuery('table#list_factures tr[id="'+factureId+'"] td[id="waiter"]').text(),
     						ans.Facture.date

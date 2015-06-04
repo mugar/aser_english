@@ -38,6 +38,13 @@
 			<th>BIF</th>
 			<th>USD</th>
 	</tr>
+	<?php if($en_cours>0):?>
+		<tr class="strong">
+			<td>MONTANT EN COURS</td>
+			<td><?php echo  $number->format($en_cours,$formatting); ?></td>
+			<td colspan="3"></td>
+		</tr>
+	<?php endif;?>
 	<tr class="strong">
 		<td>MONTANT PAYEE</td>
 		<td><?php echo  $number->format($montantPayee['BIF'],$formatting); ?></td>

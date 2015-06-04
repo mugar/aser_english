@@ -667,7 +667,7 @@ function getBase(){
 
  if(goOn){
  		var obs='';
- 		if((consoId=='facture')){ //le motif est requis seuleemnt lors de l'annulation de la facture.
+ 		if((consoId=='facture')||(printed>0)){ //le motif est requis seuleemnt lors de l'annulation de la facture.
  			obs=prompt('Veuillez mentioné le motif de l\'annulation ');
  		}
  		if(((obs=='')||(obs==undefined)||(obs==null))&&(consoId=='facture')){

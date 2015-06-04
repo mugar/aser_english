@@ -474,6 +474,8 @@ class VentesController extends AppController {
 		exit(json_encode(array('success'=>true,'msg'=>'ok')));
 	}
 
+	
+
 	function unprinted_orders(){
 		$date1= (!empty($this->data['Vente']['date1']))?$this->data['Vente']['date1']:date('Y-m').'-01';
 		$date2= (!empty($this->data['Vente']['date2']))?$this->data['Vente']['date2']:date('Y-m').'-31';
@@ -505,7 +507,7 @@ class VentesController extends AppController {
 																																	),
 																								'order'=>array("Facture.date")
 																								));
-		$personnels = $this->Personnel->find('list');
+		$personnels = $this->Vente->Personnel->find('list');
 		$this->set(compact('factures','date1','date2','personnels'));
 	}
 
@@ -643,7 +645,8 @@ class VentesController extends AppController {
 			exit(json_encode(array('success'=>false,'msg'=>"La nouvelle facture n'a pas été enregistrée.")));
 
 		$newFactureId=$this->Vente->Facture->id;
-		//$new_facture['Facture']['numero']=$this->Product->facture_number($newFactureId,'Vente');
+		//setting up the display number
+		$newfacture['Facture']['numero']=$this->Product->facture_number($newFactureId,'Vente',$newFacture['Facture']['date']);
 			
 		//moving consos to the new bill
 		$list=explode(',',$list);
@@ -2307,14 +2310,7 @@ class VentesController extends AppController {
 			);
 		}
 		elseif($consoId!=0) {
-			$fields=array('Vente.id',
-						'Vente.produit_id',
-						'Vente.stock_id',
-						'Vente.facture_id',
-						'Vente.quantite',
-						'Vente.acc',
-						'Vente.PU',
-						'Vente.historique_id',
+			$fields=array('Vente.*',
 						'Facture.date'
 						);
 			$vente=$this->Vente->find('first',array('fields'=>$fields,
@@ -2325,8 +2321,22 @@ class VentesController extends AppController {
 			if($old_quantite<$quantite){
 				exit(json_encode(array('success'=>false,'msg'=>'Impossible quantitée trop élevée !')));
 			}
+			//useful to track orders deleted after being sent to the kitchen.
+			if($vente['Vente']['quantite']<$vente['Vente']['printed']){
+				$this->_create_vente_efface($vente,$quantite,$obs);
+			}
+
 			$vente['Vente']['quantite']-=$quantite;
 			$vente['Vente']['montant']=$vente['Vente']['quantite']*$vente['Vente']['PU'];
+			
+			//useful to track orders deleted after being sent to the kitchen.
+			if($vente['Vente']['quantite']<$vente['Vente']['printed']){
+				$old_printed=$vente['Vente']['printed'];
+				$vente['Vente']['printed']=$vente['Vente']['quantite'];
+				$qte_printed_removed=	$old_printed-$vente['Vente']['printed'];
+				$this->_create_vente_efface($vente,$qte_printed_removed,$obs);
+			}
+	
 			if(($old_quantite-$quantite)>0){
 				if(Configure::read('aser.connexion')){		
 					//stock part
@@ -2400,8 +2410,39 @@ class VentesController extends AppController {
 		}
 	}
 	
+	/*le role de cette fonction est d'enregistrer une historique de toutes les ventes/commandes
+	effacer apres impression/envoie des commandes a la cuisine.
+	*/
+
+	function _create_vente_efface($vente,$qte_enlevee,$obs=''){
+		$vente_efface=$vente['Vente'];
+		$vente_efface['id']=null;
+		$vente_efface['quantite']=$qte_enlevee;
+		$vente_efface['personnel_id']=$this->Auth->user('id');
+		$vente_efface['montant']=$vente_efface['quantite']*$vente_efface['PU'];
+		$vente_efface['date']=date('Y-m-d');
+		$vente_efface['observation']=$obs;
+		$this->loadModel('VenteEfface');
+		$this->VenteEfface->save(array('VenteEfface'=>$vente_efface));
+	}
 	
-	
+	function removed_orders(){
+		$date1= (!empty($this->data['Vente']['date1']))?$this->data['Vente']['date1']:date('Y-m').'-01';
+		$date2= (!empty($this->data['Vente']['date2']))?$this->data['Vente']['date2']:date('Y-m').'-31';
+		$this->loadModel('VenteEfface');
+		$vente_effaces = $this->VenteEfface->find('all',array('fields'=>array('VenteEfface.*',
+																																				'Facture.id','Facture.numero',
+																																				'Produit.name',
+																																				'Personnel.name'
+																																					),
+																													'conditions'=>array('VenteEfface.date >=' => $date1,
+																																							'VenteEfface.date <=' => $date2,
+																																						),
+																													'order'=>array('VenteEfface.date')
+																							));
+		$this->set(compact('vente_effaces','date2','date1'));
+	}
+
 	function list_produits($factureId){
 		$ventes_old=$this->Vente->find('all',array('fields'=>array('Produit.name',
 																'Produit.id',

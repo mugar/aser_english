@@ -10,6 +10,7 @@
 			echo $this->Form->input('tier_id',array('selected'=>0,'options'=>$tiers1,'label'=>'Nom Du Client'));
 			echo $this->Form->input('Tier.compagnie');
 			echo $this->Form->input('Facture.etat',array('options'=>array(''=>'',
+																		'en_cours'=>'en_cours',
 																		'payee'=>'payee',
 																		'credit'=>'credit',
 																		'avance'=>'avance',
