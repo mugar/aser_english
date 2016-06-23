@@ -142,7 +142,14 @@ class PertesController extends AppController {
 		//	exit(json_encode(array('success'=>false,'msg'=>'Seul le créateur peut effectuer la modification!')));	
 		}
 		
-		$data['Perte']['PU']=$this->Product->productPrice($data['Perte']['produit_id']);
+		$produitInfo=$this->Perte->Produit->find('first',array('fields'=>array('Produit.expiration',
+																					'Produit.type',
+																					'Produit.PV',
+																					'Produit.PA'		
+																					),
+																	'conditions'=>array('id'=>$data['Perte']['produit_id']),
+																	'recursive'=>-1));
+		$data['Perte']['PU']=$produitInfo['Produit']['PA'];
 		$data['Perte']['montant']=$data['Perte']['PU']*$data['Perte']['quantite'];
 		$this->Perte->save($data);
 		$this->Perte->Produit->save($data);

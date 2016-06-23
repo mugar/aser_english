@@ -22,7 +22,7 @@
 			<th rowspan="2">Stock Initiale</th>
 			<th colspan="4">Mouvements</th>
 			<th rowspan="2">Stock Finale</th>
-			<th rowspan="2">Valeur (PV)</th>
+			<th rowspan="2">Valeur (PA)</th>
 		
 	</tr>
 	<tr class="border">
@@ -56,7 +56,7 @@
 																'id'=>$historique['Produit']['id'],
 																)); 
 			?></td>
-			<td name="pv" pv="<?php echo  $historique['Produit']['PV']; ?>"><?php echo  $historique['total_pv']; ?></td>
+			<td name="pv" pv="<?php echo  $historique['Produit']['PA']; ?>"><?php echo  $historique['total_pa']; ?></td>
 	</tr>
 <?php endforeach; ?>
 <tr class="strong">
@@ -67,7 +67,7 @@
 			<td><?php echo  $out['Sorti']; ?></td>
 			<td id="total_perte"><?php echo  $out['Perte']; ?></td>
 			<td id="total_sf"><?php echo  $solde; ?></td>
-			<td id="total_pv"><?php echo  $pv; ?></td>
+			<td id="total_pv"><?php echo  $pa; ?></td>
 	</tr>
 </table>
 <br />

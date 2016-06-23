@@ -66,6 +66,7 @@
 			echo $this->Form->input('Service.tier_id',array('selected'=>0,'label'=>'Nom du client'));
 			echo $this->Form->input('type_service_id',array('selected'=>0,'multiple'=>true));
 			echo $this->Form->input('Facture.numero',array('value'=>'toutes','label'=>'N° facture'));
+			echo $this->Form->input('Facture.monnaie',array('label'=>'Monnaie','options'=>$monnaies1));
 			echo $this->element('paiement',array('toutes'=>true));
 			
 		?>

@@ -128,7 +128,7 @@ class Facture extends AppModel {
 	* this function's job is to return the amount of payments of a given bill
 	*/
 	function pyts($id){
-		$pyts=$this->Paiement->find('all',array('fields'=>array('(Paiement.montant) as montant'),
+		$pyts=$this->Paiement->find('all',array('fields'=>array('sum(Paiement.montant) as montant'),
 																'conditions'=>array('Paiement.facture_id'=>$id)
 																		));
 		return (isset($pyts[0]))? $pyts[0]['Paiement']['montant']:0;
@@ -136,7 +136,9 @@ class Facture extends AppModel {
 	
 	
 	function updateBillStatus($paiementInfo,$idToIgnore){
+		$old_facture = $paiementInfo['Facture'];
 		$facture=$paiementInfo['Facture'];
+		
 		//fetching all the payments.
 		$paiements=$this->Paiement->find('all',array('fields'=>array('sum(Paiement.montant) as montant'),
 										'conditions'=>array('Paiement.facture_id'=>$facture['id'],
@@ -156,7 +158,15 @@ class Facture extends AppModel {
 		}
 		//save the bill now
 		$facture['classee']=1; //when a pyt is made it closes the bill automatically.
-		if(!$this->save(array('Facture'=>$facture))) exit('failed to update the status of this bill : '.$id);
+		//exit(debug($facture));
+		if(!$this->save(array('Facture'=>$facture))) exit('failed to update the status of this bill : '.$facture['id']);
+		else {
+					//trace stuff
+			$trace['Trace']['model_id']=$facture['id'];
+			$trace['Trace']['model']='Facture';
+			$trace['Trace']['operation']='Changement l\'état de "'.$old_facture['etat'].'" à "'.$facture['etat'].'"';
+			$this->Trace->save($trace);
+		}
 	}
 
 	function tva(&$facture){
@@ -167,12 +177,23 @@ class Facture extends AppModel {
 			$search=$this->Config->find('first',array('fields'=>array('value'),
 													'conditions'=>array('Config.key'=>'tva'))
 										);
-			$taux=(empty($search['Config']['tva']))?$taux:$search['Config']['tva'];
+		//	exit(debug($search));
+			if(!empty($search['Config']['value'])&&($search['Config']['value']>0)){
+				$taux=$search['Config']['value'];
+			}
+			else {
+				exit(json_encode(array("success"=>false, "msg"=>"le taux pour la tva n'est pas definie")));
+			}
+			
 		}
-		if($taux){
-			$facture['tva']=(isset($facture['tva_incluse'])&&($facture['tva_incluse']>1))?
-							round($facture['montant']*$taux/(100+$taux)):
-							($facture['montant']*$taux/100);
+		if($taux>0){
+			//this part is removed because to allow two ways of calculating tvas will force to alot of things.
+			// $facture['tva']=(isset($facture['tva_incluse'])&&($facture['tva_incluse']!=0))?
+			// 				round(($facture['montant']*$taux)/(100+$taux)):
+			// 				($facture['montant']*$taux/100);
+			// 				//exit(debug($facture));
+			$facture['tva']=round(($facture['montant']*$taux)/(100+$taux));
+			$facture['tva_incluse']=1;
 		}
 		else {
 			$facture['tva']=0;

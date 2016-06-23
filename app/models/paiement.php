@@ -84,7 +84,8 @@ class Paiement extends AppModel {
 		if(!empty($this->data['Paiement']['facture_id'])&&empty($this->data['Paiement']['id'])){
 			$factureInfo = $this->Facture->find('first',array('fields'=>array(
 																	'Facture.operation',
-																	'Facture.montant'
+																	'Facture.montant',
+																	'Facture.etat'
 																	),
 													'conditions'=>array('Facture.id'=>$this->data['Paiement']['facture_id'])
 													));
@@ -105,9 +106,7 @@ class Paiement extends AppModel {
 	function _sharedLogic($callback){
 		if($this->id){
 			$paiementInfo = $this->find('first',array('fields'=>array(
-																	'Facture.montant',
-																	'Facture.operation',
-																	'Facture.id',
+																	'Facture.*',
 																	'Paiement.id'
 																	),
 													'conditions'=>array('Paiement.id'=>$this->id)

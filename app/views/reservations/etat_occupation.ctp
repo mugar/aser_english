@@ -159,8 +159,11 @@
 	$persTotal=0;
 	foreach ($chambres as $chambre):
 		$class = null;
-		if (isset($chambre['Reservation']['arrivee'])&&($chambre['Reservation']['arrivee']==$date)) {
+		if (isset($chambre['Reservation']['arrivee'])&&($chambre['Reservation']['arrivee']==date('Y-m-d'))) {
 			$class = 'active';
+		}
+		if(!empty($chambre['Reservation']['pax'])){
+			$persTotal+=$chambre['Reservation']['pax'];
 		}
 	?>
 	<?php if(($mode!='tiny')||
@@ -169,7 +172,7 @@
 			  !in_array($chambre['Reservation']['etat'],array('en_attente','partie'))
 			)):
 		if($mode=='tiny'){
-			$persTotal+=$chambre['Reservation']['pax'];
+			//$persTotal+=$chambre['Reservation']['pax'];
 		}
 	?>
 		<tr class="<?php echo $class;?>">
@@ -201,7 +204,9 @@
 <?php endforeach; ?>
 <? if($mode=='full'):?>
 	<tr class="strong">
-		<td colspan="8"></td>
+		<td colspan="3">TOTAL</td>
+		<td><?php echo $persTotal; ?></td>
+		<td colspan="4"></td>
 		<td><?php echo $usd.'_USD, '.$bif.'_BIF'; ?></td>
 		<td colspan="5"></td>
 	</tr>
@@ -210,6 +215,12 @@
 		<td colspan="3">TOTAL des personnes</td>
 		<td><?php echo $persTotal; ?></td>
 		<td colspan="3"></td>
+	</tr>
+<?php elseif($mode=='simple'):?>
+	<tr class="strong">
+		<td colspan="3">TOTAL</td>
+		<td><?php echo $persTotal; ?></td>
+		<td colspan="9"></td>
 	</tr>
 <?php endif;?>
 </table>
@@ -228,10 +239,12 @@
 		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
 		<li><?php echo $this->Html->link('Gestion des Réservations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 		<? if($mode=='full'):?>
-		<li><?php echo $this->Html->link(__('Version Simplifiée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/simple/'.$date)); ?> </li>
-		<li><?php echo $this->Html->link(__('Version Très Simplifiée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/tiny/'.$date)); ?> </li>
+			<li><?php echo $this->Html->link(__('Version Simplifiée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/simple/'.$date)); ?> </li>
+			<?php if(Configure::read('aser.kcc')):?>
+				<li><?php echo $this->Html->link(__('Version Très Simplifiée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/tiny/'.$date)); ?> </li>
+			<? endif;?>
 		<? else :?>
-		<li><?php echo $this->Html->link(__('Version Détaillée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/full/'.$date)); ?> </li>
+			<li><?php echo $this->Html->link(__('Version Détaillée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/full/'.$date)); ?> </li>
 		<? endif;?>
 	</ul>
 </div>

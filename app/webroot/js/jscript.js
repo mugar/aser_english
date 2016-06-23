@@ -481,6 +481,7 @@ function getBase(){
  	}
  }
  var mode=''; var ref=''; var equi=''; var monnaie='';
+
  function paiement(factureId,moveOn){
  	if(factureId!=0){
  		var goOn=true;
@@ -574,7 +575,7 @@ function getBase(){
  						if(response.success) {
  							//updating the bill row view
  							jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text(response.etat);
- 							jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(response.total);
+ 							jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(response.montant);
  							jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(response.original);
  							jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text(response.reduction);
  							jQuery('span#montant').text(response.total);
@@ -769,6 +770,7 @@ function getBase(){
  	jQuery(tr).children().attr('class','active');
  	factureId=jQuery(tr).attr('id');
  	consoId=0;
+ 	ungrouped=(parseInt(factureId)!=ungrouped)?0:ungrouped;
  	
  	var classee=jQuery(tr).attr('name');
  	var printed=jQuery(tr).attr('printed');
@@ -790,7 +792,8 @@ function getBase(){
  	else if(printed=='1'){
  		jQuery('span[name="disable"]').attr('class','boutton_disabled').removeAttr('onclick').unbind('click');
  		jQuery('span#paiement_facture').unbind('click').bind('click',function(){paiement(factureId);}).attr('class','boutton');
- 		jQuery('span#separator').unbind('click').bind('click',function(){separator(factureId);}).attr('class','boutton');
+ 		//jQuery('span#separator').unbind('click').bind('click',function(){separator(factureId);}).attr('class','boutton');
+ 		//jQuery('span#separator').attr('class','boutton_disabled').unbind('click');
  		jQuery('span#paiement_facture_touch').unbind('click').bind('click',function(){paiement_touch(factureId);}).attr('class','boutton');
  		jQuery('span#remove_facture').unbind('click').bind('click',function(){facture_removal(factureId,'facture');}).attr('class','boutton');
  	}
@@ -817,7 +820,7 @@ function getBase(){
  			vente_details(factureId,
  						ans.Facture.numero,
 						ans.Facture.montant,
-						ans.Facture.montant,
+						ans.Facture.reste,
 						ans.avance,
 						ans.Facture.observation,
 						ans.Facture.beneficiaire,
@@ -865,6 +868,7 @@ function getBase(){
  		tr=tr+'</tr>';
  		jQuery('.active').removeClass('active');
  		jQuery(tr).insertAfter('table#list_factures tr:first').children().attr('class','active');
+ 		ungrouped = 0;
  	}
  }
  
@@ -893,6 +897,7 @@ function getBase(){
  	tr=tr+'<td id="quantite_vente">'+quantite+'</td>';
  	tr=tr+'<td>'+PU+'</td>';
  	tr=tr+'<td id="prix">'+PT+'</td>';
+  tr=tr+'<td id="created_time"></td>';
  	tr=tr+'</tr>';
  	if(jQuery('table#list_produits tr[id="'+venteId+'"]').length!=0){
  		var quantite_vente=parseInt(jQuery('table#list_produits tr[id="'+venteId+'"] td[id="quantite_vente"]').text());
@@ -952,10 +957,12 @@ function getBase(){
  		serveurId=jQuery('select#VentePersonnelId option:selected').val();
  		table=jQuery('#VenteTable').val();
  		PU=jQuery('#VentePU').val();
- 		var reduction=0;
+ 		var reduction=-1;
  		var beneficiaire=jQuery('#VenteBeneficiaire').val();
  	}
  	else {
+ 		//alert(jQuery('span#client').attr('name'));
+ 		clientId=(jQuery('span#client').attr('name')!=undefined)?parseInt(jQuery('span#client').attr('name')):null;
  		PU=jQuery('#VentePU').val();
  		var beneficiaire=jQuery('span#ben').text();
  		var reduction=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text());
@@ -973,6 +980,7 @@ function getBase(){
  		alert('Le serveur n\'est pas spécifié !');
  	}
  	else {
+ 	//	alert(clientId);
  		jQuery('#vente_add').ajaxSubmit({
 			data:{ 'data[Vente][quantite]':quantite,
 				'data[Vente][tier_id]':clientId,
@@ -1862,6 +1870,8 @@ function resAdd(){
 function locationAdd(){
     								var tier=jQuery('select[id="principal"] option:selected').html();
     								var tier_id=jQuery('select[id="principal"] option:selected').val();
+
+    								var autre_date_depart=jQuery('#Date_autre_depart').val();
     								var state='en_attente';
     								
     							jQuery('form#location-extras input').each(function(){
@@ -1906,11 +1916,14 @@ function locationAdd(){
     										
     										alert('Location créée');
     										jQuery('#location_boxe').dialog('close');
-    							           	}
-    							           	else { 
-    							           		alert(response.msg);
-    							           		jQuery('#message_res').html('<strong>'+response.msg+'</br></br></strong>');
-    							           	}
+    										if(autre_date_depart != '' && autre_date_depart != undefined){
+    											document.location.reload();
+    										}
+    							   	}
+    							    else { 
+    							    	alert(response.msg);
+    							    	jQuery('#message_res').html('<strong>'+response.msg+'</br></br></strong>');
+    							    }
     							           	//*/
     							           
     							         },
@@ -2142,6 +2155,7 @@ function mass_pyt(reservation){
 }
 
 function pyt(factureId,type){
+  var action = getBase()+'paiements/add';
 	if(factureId==undefined){
 		if(jQuery('form[name="checkbox"] input[type="checkbox"]:checked:not(input[name="master"])').length==1){
 			factureId=jQuery('form[name="checkbox"] input[type="checkbox"]:checked:not(input[name="master"])').val();
@@ -2150,10 +2164,16 @@ function pyt(factureId,type){
 			factureId=jQuery('#facture_num').attr('facture');
 		}
 	}
-	if(type==undefined){
+  // alert(type)
+	if(type==undefined || type=='standard' || type =='globale'){
 		var boxe='#pyt_boxe';
 		var form='#pytAdd';
-		type='pyt';
+    if(type=='globale'){
+      action = getBase()+'paiements/globale_bill_pyt'
+    }
+    else {
+      type='pyt';
+    }
 	}
 	else if(type=='transfer') {
 		var boxe='#transfer_boxe';
@@ -2184,7 +2204,7 @@ function pyt(factureId,type){
 				});
 				if(test.form()){
     				jQuery(form).
-    				attr('action',getBase()+'paiements/add').
+    				attr('action',action).
     				ajaxSubmit({
 						data:{'data[Paiement][facture_id]':factureId,
 							'data[Paiement][type]':type,
@@ -3450,14 +3470,17 @@ function effacer(nom) {
     							} );
    }
 }
-function print_documents(closed){
-	if((closed!='')&&(closed=='0')){
+function print_documents(action,redirect_url){
+ // alert("action = "+action+" , url = "+url+", "+getBase()+redirect_url);
+	if((action!='')&&(action=='0')){
 		alert(" clôturer d'abord le journal !");
 	}
 	else {
 		if(jQuery.browser.mozilla){
 			
 			var list=jsPrintSetup.getPrintersList().split(',');
+      var xls_copy=jQuery('span#displayed_num').attr('xls_copy')
+      var type = jQuery('span#displayed_num').attr('type');
 			var options='';
 		 	jQuery.each(list,function(i,val){
 		 		
@@ -3472,7 +3495,12 @@ function print_documents(closed){
     		    buttons: { "GO": function() {
     		    					jsPrintSetup.setPrinter(jQuery('#printing').val());
     		   
-									var url=document.location.href;
+                //  alert(url)
+                  if(xls_copy=='1' && type!= 'aserb'){
+                    jQuery('span#displayed_num').hide();
+                    jQuery('div#client_details').hide();
+                  }
+                  
 									jQuery('body').html(jQuery('#view').html()).removeClass('body');
 		
 									jQuery('.document').css({'float':'none','width':'1300px','margin-right':0,'margin':'0px auto','border':'none'});
@@ -3487,7 +3515,7 @@ function print_documents(closed){
 										doc_fontsize=doc_fontsize - Math.round(doc_fontsize*(closed/100));
 										th_fontsize=th_fontsize - Math.round(th_fontsize*(closed/100));
 									}
-									alert(doc_fontsize+' '+th_fontsize);
+								//	alert(doc_fontsize+' '+th_fontsize);
 									jQuery('.document,#lettre').css({'font-weight':'bold',
 									'font-size':doc_fontsize+'px',
 									});	
@@ -3514,32 +3542,21 @@ function print_documents(closed){
 												});		
 									aserPrint(false,55);
 									jQuery('<div id="indicator">Impression ...</div>').prependTo('body').show();
-								if((closed!=undefined)&&(closed==0)){
-										var time=5;
-										setTimeout(function(){
-											jQuery('div#indicator').html('Déconnexion dans <span id="timing">('+time+' sec)</span>');
- 										},
- 										1000
- 										);
- 										setInterval(function(){
- 											if(time>0){
- 												time--;
- 												jQuery('span#timing').text(time);
- 											}
- 											else {
- 												document.location.href=getBase()+'personnels/logout';
- 											}
- 										},
- 										1000
- 									);
- 								}
- 								else {
- 				
-								setTimeout(function(){
- 									document.location.href=url;
- 									},
-								500);
-							}
+								
+  								setTimeout(function(){
+                    if(action=='export' && redirect_url!= undefined && redirect_url!= null){
+   									  document.location.href=getBase()+redirect_url;
+                      // alert(document.location.href)
+                      setTimeout(function(){
+                        document.location.reload();
+                      },5000)
+                    }
+                    else {
+                       document.location.reload();
+                    }
+   								},
+  								500);
+  							
 						},
 						"annuler":function(){jQuery(this).dialog('close');}
 					}
@@ -3639,7 +3656,7 @@ function cleaner(etat){
 }
 
 
-function disable(){
+function disable(action){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
     	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
@@ -3650,7 +3667,7 @@ function disable(){
     	jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').each(function(i){
     		 rows[i]=jQuery(this).parents('tr');
     	});
-    	jQuery('form[name="'+nom+'"]').attr('action',getBase()+'tiers/disable')
+    	jQuery('form[name="'+nom+'"]').attr('action',getBase()+action)
     			jQuery('form[name="'+nom+'"]').ajaxSubmit({
     				global:true,
     				dataType:'json',

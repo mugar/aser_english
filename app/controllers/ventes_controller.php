@@ -2,6 +2,85 @@
 class VentesController extends AppController {
 
 	var $name = 'Ventes';
+
+	/**
+	* generer un rapport de tous les ventes effectuer dans une periode par produits
+	* et par groupe comptable.
+	*/
+	function par_produits_groupe_cptable(){
+		$conditions=$ventes=$gpeCptableCond=array();
+		$date1=$date2=null;
+			
+		if(!empty($this->data['Vente']['groupe_comptable_id'])&&($this->data['Vente']['groupe_comptable_id'][0]!=0)) {
+			$gpeCptableCond['GroupeComptable.id']=$this->data['Vente']['groupe_comptable_id'];
+		}
+		$groupeComptables = $this->Vente->Produit->GroupeComptable->find('all',array('fields'=>array('GroupeComptable.id','GroupeComptable.name'),
+																																									'conditions'=>$gpeCptableCond,
+																																									'order'=>array('GroupeComptable.name')
+																																										));
+
+			$conditions['Facture.date >=']=$date1=(!empty($this->data['Facture']['date1']))?
+																							$this->data['Facture']['date1']:
+																							date('Y-m-d',strtotime(' - 7 days'));
+		
+			$conditions['Facture.date <=']=$date2=(!empty($this->data['Facture']['date2']))?
+																						$this->data['Facture']['date2']:
+																						date('Y-m-d');
+		
+		$conditions['Facture.etat !=']='annulee';
+		
+		$totals['total']=$totals['quantite']=$totals['ben']=0;	
+		foreach ($groupeComptables as $i => $groupeComptable) {
+			$total=$quantite=$ben=0;
+			$conditions['Produit.groupe_comptable_id']=$groupeComptable['GroupeComptable']['id'];
+
+			$ventes=$this->Vente->find('all',array('fields'=>array(
+																	'Produit.name',
+																	'Produit.PA',
+																	'Produit.id',
+																	'sum(Vente.quantite) as quantite',
+																	'sum(Vente.montant) as montant',
+																	'Vente.PU',
+																	'Vente.PA',
+																	'Facture.reduction'
+																	),
+														'conditions'=>$conditions,
+														'recursive'=>1,
+														'group'=>array('Vente.produit_id','Vente.PU'),
+														'order'=>array('Produit.name')
+														)
+											);
+			
+			if(!empty($ventes)){
+				foreach($ventes as $j=>$vente){
+					$total+=$vente['Vente']['montant']-($vente['Vente']['montant']*$vente['Facture']['reduction']/100);
+					$quantite+=$vente['Vente']['quantite'];
+					$ventes[$j]['Vente']['PA']=($vente['Vente']['PA']==0)?$vente['Produit']['PA']:$vente['Vente']['PA'];
+					$ventes[$j]['Vente']['BEN']=($vente['Vente']['PU']-$ventes[$j]['Vente']['PA'])*$vente['Vente']['quantite'];
+					$ben+=$ventes[$j]['Vente']['BEN'];
+				}
+				$groupeComptables[$i]['ventes']=$ventes;
+				$groupeComptables[$i]['total']=$total;
+				$groupeComptables[$i]['quantite']=$quantite;
+				$groupeComptables[$i]['ben']=$ben;
+
+				$totals['total']+=$groupeComptables[$i]['total'];
+				$totals['quantite']+=$groupeComptables[$i]['quantite'];
+				$totals['ben']+=$groupeComptables[$i]['ben'];
+			}
+			else {
+				unset($groupeComptables[$i]);
+			}
+		}
+		//exit(debug($groupeComptables));
+		$this->set(compact('groupeComptables',
+											'date1',
+											'date2',
+											'totals'
+											)
+						);
+	
+	}
 	
 	/**
 	 * to find the stock to use
@@ -115,7 +194,10 @@ class VentesController extends AppController {
 		if(in_array($this->params['action'],array('print_facture','journal'))){
 			$caissiers=$this->Vente->Facture->Personnel->find('list',
 															array('conditions'=>
-																	array('Personnel.fonction_id'=>array(2,4))));
+																	array('Personnel.fonction_id'=>array(2,4),
+																				'Personnel.actif'=>'oui'
+																	)
+																));
 			$this->set('caissiers',$caissiers);
 		}
 		parent::beforeFilter();
@@ -444,7 +526,7 @@ class VentesController extends AppController {
 	function unlock($factureId,$old_state){
 		//delete the payments
 		$this->Vente->Facture->Paiement->deleteAll(array('Paiement.facture_id'=>$factureId));
-		$facture=$this->Vente->Facture->find('first',array('fields'=>array('Facture.montant','Facture.id'),
+		$facture=$this->Vente->Facture->find('first',array('fields'=>array('Facture.montant','Facture.id','Facture.numero'),
 		                                                   'conditions'=>array('Facture.id'=>$factureId)
 		                                                    ));
 		
@@ -459,7 +541,7 @@ class VentesController extends AppController {
 		//trace stuff
 		$trace['Trace']['model_id']=$factureId;
 		$trace['Trace']['model']='Facture';
-		$trace['Trace']['operation']='Déblocage de la facture. De l\'etat "'.$old_state.'" à "en_cours".';
+		$trace['Trace']['operation']='Déblocage de la facture '.$facture['Facture']['numero'].'. De l\'etat "'.$old_state.'" à "en_cours".';
 		$trace['Trace']['operation'].=' Ancien montant : '.$facture['Facture']['montant'];
 		//look for the items contained in the bill .
 		$ventes = $this->Vente->find('all',array('fields'=>array('Produit.name'),
@@ -583,43 +665,52 @@ class VentesController extends AppController {
 	}
 	
 	function ungroup($factureId){
-		$ventes=$this->Vente->find('all',array(
-											'conditions'=>array('Vente.facture_id'=>$factureId),
-											'fields'=>array('Vente.*','Facture.date')
-											));	
-		$this->loadModel('Historique');
-		foreach($ventes as $vente){
-			if($vente['Vente']['quantite']>1){
-				//deleting the history and the old vente
-				if(!empty($vente['Vente']['historique_id'])){
-					if(!$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique'))
-						exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement du stock.")));
-				}
-				if(!$this->Vente->delete($vente['Vente']['id']))
-					exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement de l'un des produits")));
-				
-				$qty=$vente['Vente']['quantite']; 
-				for($i=0; $i<$qty;$i++){
-					//setting up the new values
-					$vente['Vente']['id']=$vente['Vente']['historique_id']=null;
-					$vente['Vente']['quantite']=1;
-					$vente['Vente']['printed']=($vente['Vente']['printed']>0)?1:0;
-					$vente['Vente']['montant']=$vente['Vente']['quantite']*$vente['Vente']['PU'];
-					//stock recording
+		$facture = $this->Vente->Facture->find('first',array('fields'=>array('Facture.printed'),
+																								'conditions'=>array('Facture.id'=>$factureId),
+																								'recursive'=>-1
+																			));
+		if($facture['Facture']['printed']==0){
+			$ventes=$this->Vente->find('all',array(
+												'conditions'=>array('Vente.facture_id'=>$factureId),
+												'fields'=>array('Vente.*','Facture.date')
+												));	
+			$this->loadModel('Historique');
+			foreach($ventes as $vente){
+				if($vente['Vente']['quantite']>1){
+					//deleting the history and the old vente
 					if(!empty($vente['Vente']['historique_id'])){
-						$return=$this->Product->stock($vente,'credit');
-						if(!$return['success'])
-							exit(json_encode(array('success'=>false,'msg'=>$return["msg"])));
-					}   
-					else //this means that the stock is was not activated at the creation time. so remove this field.
-						unset($vente['Vente']['historique_id']);
-					//saving
-					if(!$this->Vente->save($vente))
-						exit(json_encode(array('success'=>false,'msg'=>"un produit n'a pas été enregistré")));
+						if(!$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique'))
+							exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement du stock.")));
+					}
+					if(!$this->Vente->delete($vente['Vente']['id']))
+						exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement de l'un des produits")));
+					
+					$qty=$vente['Vente']['quantite']; 
+					for($i=0; $i<$qty;$i++){
+						//setting up the new values
+						$vente['Vente']['id']=$vente['Vente']['historique_id']=null;
+						$vente['Vente']['quantite']=1;
+						$vente['Vente']['printed']=($vente['Vente']['printed']>0)?1:0;
+						$vente['Vente']['montant']=$vente['Vente']['quantite']*$vente['Vente']['PU'];
+						//stock recording
+						if(!empty($vente['Vente']['historique_id'])){
+							$return=$this->Product->stock($vente,'credit');
+							if(!$return['success'])
+								exit(json_encode(array('success'=>false,'msg'=>$return["msg"])));
+						}   
+						else //this means that the stock is was not activated at the creation time. so remove this field.
+							unset($vente['Vente']['historique_id']);
+						//saving
+						if(!$this->Vente->save($vente))
+							exit(json_encode(array('success'=>false,'msg'=>"un produit n'a pas été enregistré")));
+					}
 				}
 			}
+			exit(json_encode(array('success'=>true)));
+		}	
+		else {
+			exit(json_encode(array('success'=>false,'msg'=>'Impossible de séparer la facture car elle déjà imprimée')));
 		}
-		exit(json_encode(array('success'=>true)));
 	}
 	
 	function separator($factureId,$list){
@@ -630,10 +721,10 @@ class VentesController extends AppController {
 																		'recursive'=> -1
 																));
 		//update the old bill by putting the linked id
-		$update['Facture']['id']=$factureId;
-		$update['Facture']['linked']=$factureId;
-		if(!$this->Vente->Facture->save($update))
-			exit(json_encode(array('success'=>false,'msg'=>"L'ancienne facture n'a pas été enregistrée.")));
+		 $facture['Facture']['linked']=$factureId;
+		 if(!$this->Vente->Facture->save($facture))
+		 	exit(json_encode(array('success'=>false,'msg'=>"L'ancienne facture n'a pas été enregistrée.")));
+		unset($this->Vente->Facture->id);
 		
 		//creating the new bill
 		$newFacture=$facture;
@@ -643,32 +734,38 @@ class VentesController extends AppController {
 		$newFacture['Facture']['reste']=$newFacture['Facture']['tva']=$newFacture['Facture']['pyts']=0;
 		if(!$this->Vente->Facture->save($newFacture))
 			exit(json_encode(array('success'=>false,'msg'=>"La nouvelle facture n'a pas été enregistrée.")));
-
+		
 		$newFactureId=$this->Vente->Facture->id;
+		unset($this->Vente->Facture->id);
+
 		//setting up the display number
 		$newfacture['Facture']['numero']=$this->Product->facture_number($newFactureId,'Vente',$newFacture['Facture']['date']);
 			
 		//moving consos to the new bill
 		$list=explode(',',$list);
+		$fields= array('Vente.*');
 		$ventes=$this->Vente->find('all',array('recursive'=>-1,
 											'conditions'=>array('Vente.id'=>$list),
-											'fields'=>array('Vente.id','Vente.acc','Vente.produit_id','Vente.facture_id')
+											'fields'=> $fields
 											));
 		$failureMsg="Un des produits n'a pas été enregistré.";
 		foreach($ventes as $vente){
 			$vente['Vente']['facture_id']=$newFactureId;
 			if($vente['Vente']['acc']){
-				$acc['Vente']['id']=$vente['Vente']['acc'];
+				$acc = $this->Vente->find('first',array('recursive'=>-1,
+											'conditions'=>array('Vente.id'=>$vente['Vente']['acc']),
+											'fields'=>$fields
+											));
 				$acc['Vente']['facture_id']=$newFactureId;
 				if(!$this->Vente->save($acc))
-					exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
+					exit(json_encode(array('success'=>false,'msg'=>"Un des accompagnement n'a pas été enregistré.")));
 			}
 			if(!$this->Vente->save($vente))
 				exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
 		}
 		//updating the old bill for the new bill
-		//$new_totals=$this->Product->bill_total($newFactureId, $new_facture['Facture']['reduction']);
 		$this->Vente->Facture->updateMontant($facture['Facture']);
+
 		//fetching the info of the old bill
 		$oldFacture=$this->Vente->Facture->find('first',array('conditions'=>array('Facture.id'=>$factureId),
 																		'fields'=>array('Facture.original',
@@ -686,7 +783,7 @@ class VentesController extends AppController {
 																		'recursive'=> -1
 																));
 		
-		exit(json_encode(array('success'=>true,'Facture'=>$newFacture['Facture'],'old'=>$oldFacture)));
+		exit(json_encode(array('success'=>true,'Facture'=>$newFacture['Facture'],'old'=>$oldFacture['Facture'])));
 	}
 	
 	function detailed_products_names(){
@@ -808,6 +905,11 @@ class VentesController extends AppController {
 																			'order'=>array('Journal.id desc') //fetching the last one
 																			)
 															);
+			if(!empty($journalInfo)){
+				$factureConds['Journal.id']=$journalInfo['Journal']['id'];
+				$pytConds['Journal.id']=$journalInfo['Journal']['id'];
+				$caisseConds['Journal.id']=$journalInfo['Journal']['id'];
+			}
 			$journals=$this->Vente->Facture->Journal->find('all',array('fields'=>array('Journal.*'),
 																			'conditions'=>array('Journal.personnel_id'=>$journalConds['Journal.personnel_id'],
 																								'Journal.date'=>$journalConds['Journal.date'],
@@ -839,7 +941,8 @@ class VentesController extends AppController {
 					$facturesIds[]=$facture['Facture']['id'];
 				}
 			}
-			if(!empty($journalInfo)&&($journalInfo['Journal']['closed']==1)){
+		//	if(!empty($journalInfo)&&($journalInfo['Journal']['closed']==1)){
+			if(!empty($journalInfo)){
 				$pytConds['Paiement.facture_id']=$facturesIds;
 				$pyts=$this->Vente->Facture->Paiement->find('all',array('fields'=>array('Paiement.*',
 																						'Facture.operation',
@@ -912,7 +1015,11 @@ class VentesController extends AppController {
 			}
 			else {
 				$this->loadModel('Operation');
+				if(Configure::read('caisse.caisse_id')){
+					$caisseConds['Operation.element_id']=Configure::read('caisse.caisse_id');
+				}
 				$caisseConds['Operation.model']='Caiss';
+				$caisseConds['Operation.credit >']=0;
 				$caisseConds['Operation.credit >']=0;
 				$caisseConds['Operation.monnaie']='BIF';
 				$model1='Operation';
@@ -1065,6 +1172,7 @@ class VentesController extends AppController {
 				}
 				else if(!in_array($facture['Facture']['etat'],array('annulee','bonus'))){
 					$pyts=$this->Vente->Facture->pyts($facture['Facture']['id']);
+				//	exit(debug($pyts));
 					if(($facture['Facture']['montant']-$facture['Facture']['reste'])!=$pyts){
 						exit(json_encode(array('success'=>false,'msg'=>'Vérifier les paiements de la facture n° '.$facture['Facture']['numero'])));		
 					}
@@ -1256,7 +1364,7 @@ class VentesController extends AppController {
 	
 	function consommations($sectionId=null,$date1=null,$date2=null,$data=null){
 		$conditions=$ventes=$jourCond=array();
-		$total=$quantite=$totalReduit=$ben=0;
+		$total=$quantite=$totalReduit=$ben=$pa=0;
 		$caissier=null;
 		$group=array('Vente.produit_id','Vente.PU');
 		$order=array('Produit.name');
@@ -1343,6 +1451,7 @@ class VentesController extends AppController {
 				$ventes[$key]['Vente']['PA']=($vente['Vente']['PA']==0)?$vente['Produit']['PA']:$vente['Vente']['PA'];
 				$ventes[$key]['Vente']['BEN']=($vente['Vente']['PU']-$ventes[$key]['Vente']['PA'])*$vente['Vente']['quantite'];
 				$ben+=$ventes[$key]['Vente']['BEN'];
+				$pa+=$ventes[$key]['Vente']['PA'];
 			}
 		
 			//*
@@ -1359,7 +1468,7 @@ class VentesController extends AppController {
 			}
 		//*/
 		}
-		$personnels = $this->Vente->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(2,4))));
+		$personnels = $this->Vente->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(2,4),'Personnel.actif'=>'oui')));
 		$personnels[0]='';
 		$produits = $this->Vente->Produit->find('list',array('conditions'=>array('Produit.actif'=>'oui'),
 														'order'=>array('Produit.name')
@@ -1374,6 +1483,7 @@ class VentesController extends AppController {
 						'personnels',
 						'quantite',
 						'ben',
+						'pa',
 						'serveurs',
 						'produits1')
 						);
@@ -1903,7 +2013,7 @@ class VentesController extends AppController {
 		$this->set(compact('orders','thermal','factureId'));
 	}
 	
-	function print_facture($factureId){
+	function print_facture($factureId,$show_aserb_num=0){
 	//*
 		$facture=$this->Vente->Facture->find('first',array('fields'=>array('Facture.*',
 																		'Tier.name','Tier.telephone',
@@ -1955,7 +2065,8 @@ class VentesController extends AppController {
 						'footer',
 						'header',
 						'tel',
-						'web'
+						'web',
+						'show_aserb_num'
 						));
 		$this->Product->company_info();
 		$this->layout='printing';
@@ -1976,7 +2087,7 @@ class VentesController extends AppController {
 			
 			if($factureInfo['Facture']['journal_id']!=$journal['id']){
 				$factureInfo['Facture']['journal_id']=$journal['id'];
-				$factureInfo['Facture']['date']=$journal['date'];
+				//$factureInfo['Facture']['date']=$journal['date'];
 			}
 		}
 		else if(empty($factureInfo['Facture']['journal_id'])){
@@ -2086,7 +2197,8 @@ class VentesController extends AppController {
 		
 		// calculating reduction
 		$tierInfo=$this->_reduction($this->data['Vente'],$factureInfo);
-
+		// marking the facture as classee
+		$factureInfo['Facture']['classee']=1;
 
 		//starting treatement based on status.
 		if(in_array($this->data['Vente']['etat'],array('payee','avance'))){
@@ -2269,7 +2381,7 @@ class VentesController extends AppController {
 	}
 	*/
 	function removal($factureId,$consoId,$quantite,$reduction,$obs=''){
-		$stockFailureMsg="";
+		$stockFailureMsg="Erreur de stock";
 		if($consoId=='facture'){
 			$ventes=$this->Vente->find('all',array('fields'=>array('Vente.historique_id','Vente.acc'),
 													'conditions'=>array('Vente.facture_id'=>$factureId)
@@ -2453,6 +2565,7 @@ class VentesController extends AppController {
 																'Vente.id',
 																'Vente.acc',
 																'Vente.printed',
+																'Vente.created'
 																),
 													'conditions'=>array('Vente.facture_id'=>$factureId),
 													'order'=>array('Vente.id desc'),
@@ -2467,21 +2580,7 @@ class VentesController extends AppController {
 
 	function activated($factureId){
 		$facture=$this->Vente->Facture->find('first',array('fields'=>array(
-																'Facture.observation',
-																'Facture.montant',
-																'Facture.original',
-																'Facture.reduction',
-																'Facture.reste',
-																'Facture.date',
-																'Facture.numero',
-																'Facture.etat',
-																'Facture.beneficiaire',
-																'Facture.classee',
-																'Facture.printed',
-																'Facture.journal_id',
-																'Facture.matricule',
-																'Facture.liasse',
-																'Facture.employeur',
+																'Facture.*',
 																'Tier.id','Tier.name',
 																'Personnel.id','Personnel.name',
 																),
@@ -2491,7 +2590,7 @@ class VentesController extends AppController {
 
 		$facture['Tier']['name']=(empty($facture['Tier']['name']))?'':$facture['Tier']['name'];
 		if(($facture['Facture']['classee']==0)&&Configure::read('aser.beneficiaires')){
-			$facture['avance']=$sum['avance_beneficiaire'];
+			$facture['avance']=$facture['Facture']['avance_beneficiaire'];
 		}
 		else {
 			$facture['avance']=$facture['Facture']['montant']-$facture['Facture']['reste'];
@@ -2521,7 +2620,7 @@ class VentesController extends AppController {
 		else return $info;
 	}
 	
-	function _addCheckings($data){
+	function _addCheckings(&$data){
 		//stop add users from creating bills except caissiers and serveurs.
 		if(!in_array($this->Auth->user('fonction_id'),array(1,2))&&($data['Vente']['factureId']=='creation')){
 			exit(json_encode(array('success'=>false,
@@ -2544,14 +2643,16 @@ class VentesController extends AppController {
 			exit(json_encode(array('success'=>false,'msg'=>'Stock non spécifié!')));
 		}
 	}
-	function _addJournalHandler($nembeteplus){
+	function _addJournalHandler($nembeteplus,$data){
+		
 		$journal['date']=date('Y-m-d'); //default initialization.
 		//handle this only when creating a new bill.
-		if($this->data['Vente']['factureId']=='creation'){
+		if($data['Vente']['factureId']=='creation'){
 			//if it is a cassier creating the bill.
 			if($this->Auth->user('fonction_id')==2){
 				//the nembeteplus variable is true if the user has chosen to use an old journal/report.
-				if($nembeteplus){
+				//exit(debug($nembeteplus));
+				if($nembeteplus==1){
 					$this->Session->write('nembeteplus',1);
 					exit(json_encode(array('success'=>true,
 					'msg'=>'ok!')));
@@ -2577,11 +2678,14 @@ class VentesController extends AppController {
 		return $journal;
 	}
 
-	function add($nembeteplus=false){
+	
+	function add($nembeteplus=0){
+		//exit(debug($this->data));
+		//journal/report handling
+		$journal=$this->_addJournalHandler($nembeteplus,$this->data);
+
 		//basic checkings.
 		$this->_addCheckings($this->data);
-		//journal/report handling
-		$journal=$this->_addJournalHandler($nembeteplus);
 		//initializing some variables.
 		$failToSaveMsg="Fail to save this vente.";
 		//find the Point of sale we are working on.
@@ -2603,8 +2707,20 @@ class VentesController extends AppController {
 																	'conditions'=>array('Produit.id'=>$this->data['Vente']['produit_id'])
 																	)
 													);
-		if(empty($this->data['Vente']['PU'])){											
-			$this->data['Vente']['PU']=$this->Product->productPrice($produitInfo['Produit']['id'],$produitInfo['Produit']['PV'],$pos);
+		if(empty($this->data['Vente']['PU'])){	
+			if(Configure::read('aser.gestion_reduction')){
+					$this->loadModel('Reduction');
+					$search = $this->Reduction->find('first',array('conditions'=>array('Reduction.tier_id'=>$this->data['Vente']['tier_id'],
+																																			'Reduction.produit_id'=>$this->data['Vente']['produit_id'],
+																																			),
+																									'recursive'=>-1
+																									));
+				$this->data['Vente']['PU']=(!empty($search))?$search['Reduction']['PU']:null;	
+			}	
+			if(empty($this->data['Vente']['PU'])){									
+				$this->data['Vente']['PU']=$this->Product->productPrice($produitInfo['Produit']['id'],$produitInfo['Produit']['PV'],$pos);
+			}
+			//	exit(debug($this->data['Vente']['PU']));
 		}
 		$montant=$this->data['Vente']['montant']=$this->data['Vente']['PU']*$this->data['Vente']['quantite'];
 		$this->data['Vente']['PA']=$produitInfo['Produit']['PA']; //saving the current PA.helpful when calculating the benefice per item
@@ -2669,6 +2785,7 @@ class VentesController extends AppController {
 
 		//decreasing now the stock
 		if(Configure::read('aser.connexion')){
+			//exit(debug($this->data));
 			$return=$this->Product->stock($this->data,'credit',$produitInfo);
 			if(!$return['success']) exit(json_encode($return));
 		}
@@ -2678,8 +2795,10 @@ class VentesController extends AppController {
 		if($this->data['Vente']['factureId']=='creation'){
 			$facture['Facture']['journal_id']=$journal['id'];
 			$facture['Facture']['etat']='en_cours';
+			$facture['Facture']['tva_incluse']=1;
 			$facture['Facture']['date']=$journal['date'];
-			$facture['Facture']['tier_id']=$this->data['Vente']['tier_id'];
+			$facture['Facture']['tier_id']=($this->data['Vente']['tier_id']=='null')?NULL:$this->data['Vente']['tier_id'];
+			$facture['Facture']['reduction']=$this->data['Vente']['reduction'];
 			$facture['Facture']['monnaie']=Configure::read('aser.default_currency');
 			$facture['Facture']['operation']='Vente';
 			$facture['Facture']['pos']=$pos;
@@ -2732,7 +2851,7 @@ class VentesController extends AppController {
 		
 
 		//fetching the bill with updated totals for display.
-		$facture=$this->Vente->Facture->find('first',array('fields'=>array('Facture.original','Facture.montant',
+		$facture=$this->Vente->Facture->find('first',array('fields'=>array('Facture.original','Facture.montant','Facture.reduction',
 																		'Facture.reste','Facture.avance_beneficiaire'
 																			),
 															'conditions'=>array('Facture.id'=>$factureId)
@@ -2748,7 +2867,7 @@ class VentesController extends AppController {
 						'date'=>$this->Product->formatDate($journal['date']),
 						'consoId'=>$consoId,
 						'original'=>$facture['Facture']['original'],
-						'reduction'=>$this->data['Vente']['reduction'],
+						'reduction'=>$facture['Facture']['reduction'],
 						'avance'=>$facture['Facture']['avance_beneficiaire'],
 						'printed'=>$printed,
 						);

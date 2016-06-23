@@ -5,7 +5,7 @@ class CaisseInterditesController extends AppController {
 	
 	function beforeFilter(){
 		parent::beforeFilter();
-		$personnels = $this->CaisseInterdite->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(3,5),
+		$personnels = $this->CaisseInterdite->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(2,3,4,5),
 																							'Personnel.actif'=>'oui'
 																							)));
 		$caisses = $this->CaisseInterdite->Caiss->find('list');

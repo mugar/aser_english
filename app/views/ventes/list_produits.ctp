@@ -16,5 +16,6 @@
 					<td id="quantite_vente"><?php echo $produit['Vente']['quantite']; ?>&nbsp;</td>
 					<td id="PU"><?php echo $produit['Vente']['PU']; ?>&nbsp;</td>
 					<td id="prix"><?php echo $produit['Vente']['montant']; ?>&nbsp;</td>
+					<td id="created_time"><?php echo $produit['Vente']['created']; ?>&nbsp;</td>
 				</tr>
 				<?php endforeach; ?>

@@ -42,5 +42,22 @@ class Operation extends AppModel {
 			'order' => ''
 		),
 	);
+
+	function soldeCaisse($caisseId){
+		$conditions['Operation.element_id']=$caisseId;
+		$conditions['Operation.model']='Caiss';
+
+		$operations=$this->find('all',array('fields'=>array('sum(Operation.debit) as debit',
+																		'sum(Operation.credit) as credit',
+																		'Operation.monnaie',
+																		'Operation.mode_paiement'
+						                        							),
+					                        				'conditions'=>$conditions,
+																));
+		$solde = ($operations[0]['Operation'])?
+							$operations[0]['Operation']['debit']-$operations[0]['Operation']['credit']:
+							0;
+		return $solde;
+	}
 }
 ?>

@@ -63,6 +63,7 @@ class ProductComponent extends Object {
 		if(!empty($data['Tier']['telephone'])) {$sheet->setCellValueByColumnAndRow(3, $parallelRow, 'Tél : '.$data['Tier']['telephone']); $parallelRow++; }	
 		$row+=1;
 
+		//putting the bill number
 		$sheet->setCellValueByColumnAndRow(0, $row, 'Facture '.$data['nature'].' N° '.$data['Facture']['numero']);	
 		$sheet->mergeCells($this->cellsToMergeByColsRow(0,3,$row));
 		$style = array(
@@ -79,46 +80,73 @@ class ProductComponent extends Object {
 
     	$fontStyle=array('bold'=>true);
     	$borderStyle=array('allborders' => array('style' => PHPExcel_Style_Border::BORDER_THIN));
+		//putting the table headers
 		$row+=2;
 		$headers=array('Libellé','Quantité','PU','Montant');
 		foreach($headers as $j=>$header){
 			$sheet->setCellValueByColumnAndRow($j, $row, $header);		
 		}
 		$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('font'=>$fontStyle,'borders'=>$borderStyle));
+		
 		//adding the locationsextras to the excel bill
 		$row++;
-		foreach ($data['modelInfos'] as $location){
-			if((!is_null($location['LocationExtra']['heure']))&&($location['LocationExtra']['extra']=='non')){
-				$value=$location['LocationExtra']['name'];
-				if(!empty($location['LocationExtra']['heure'])) $value.=' à '.$location['LocationExtra']['heure']; 
+		if($data['model']=='Location'){
+			foreach ($data['modelInfos'] as $location){
+				if((!is_null($location['LocationExtra']['heure']))&&($location['LocationExtra']['extra']=='non')){
+					$value=$location['LocationExtra']['name'];
+					if(!empty($location['LocationExtra']['heure'])) $value.=' à '.$location['LocationExtra']['heure']; 
+				}
+				else {
+					$value=$location['LocationExtra']['name'];
+				}
+				$sheet->setCellValueByColumnAndRow(0, $row, $value);
+				$sheet->setCellValueByColumnAndRow(1, $row, $location['LocationExtra']['quantite']);
+				$sheet->setCellValueByColumnAndRow(2, $row,$location['LocationExtra']['PU']);
+				$sheet->setCellValueByColumnAndRow(3, $row,$location['LocationExtra']['montant']);
+				$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
+				$row++;
 			}
-			else {
-				$value=$location['LocationExtra']['name'];
+			//adding eventual ventes in case of a global bill.
+			foreach ($data['ventes'] as $vente){
+				$sheet->setCellValueByColumnAndRow(0, $row, $vente['Produit']['name']); 
+				$sheet->setCellValueByColumnAndRow(1, $row, $vente['Vente']['quantite']); 
+				$sheet->setCellValueByColumnAndRow(2, $row, $vente['Vente']['PU']);
+				$sheet->setCellValueByColumnAndRow(3, $row, $vente['Vente']['montant']);
+				$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
+				$row++;
 			}
-			$sheet->setCellValueByColumnAndRow(0, $row, $value);
-			$sheet->setCellValueByColumnAndRow(1, $row, $location['LocationExtra']['quantite']);
-			$sheet->setCellValueByColumnAndRow(2, $row,$location['LocationExtra']['PU']);
-			$sheet->setCellValueByColumnAndRow(3, $row,$location['LocationExtra']['montant']);
-			$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
-			$row++;
+			//adding eventual ventes in case of a global bill.
+			foreach ($data['services'] as $service){
+				$sheet->setCellValueByColumnAndRow(0, $row, $service['Service']['description']); 
+				$sheet->setCellValueByColumnAndRow(1, $row, 1); 
+				$sheet->setCellValueByColumnAndRow(2, $row, $service['Service']['montant']);
+				$sheet->setCellValueByColumnAndRow(3, $row, $service['Service']['montant']);
+				$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
+				$row++;
+			}
 		}
-		//adding eventual ventes in case of a global bill.
-		foreach ($data['ventes'] as $vente){
-			$sheet->setCellValueByColumnAndRow(0, $row, $vente['Produit']['name']); 
-			$sheet->setCellValueByColumnAndRow(1, $row, $vente['Vente']['quantite']); 
-			$sheet->setCellValueByColumnAndRow(2, $row, $vente['Vente']['PU']);
-			$sheet->setCellValueByColumnAndRow(3, $row, $vente['Vente']['montant']);
-			$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
-			$row++;
+		else if($data['model']=='Vente'){
+				//adding eventual ventes in case of a global bill.
+			foreach ($data['modelInfos'] as $vente){
+				$sheet->setCellValueByColumnAndRow(0, $row, $vente['Produit']['name']); 
+				$sheet->setCellValueByColumnAndRow(1, $row, $vente['Vente']['quantite']); 
+				$sheet->setCellValueByColumnAndRow(2, $row, $vente['Vente']['PU']);
+				$sheet->setCellValueByColumnAndRow(3, $row, $vente['Vente']['montant']);
+				$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
+				$row++;
+			}
 		}
-		//adding eventual ventes in case of a global bill.
-		foreach ($data['services'] as $service){
-			$sheet->setCellValueByColumnAndRow(0, $row, $service['Service']['description']); 
-			$sheet->setCellValueByColumnAndRow(1, $row, 1); 
-			$sheet->setCellValueByColumnAndRow(2, $row, $service['Service']['montant']);
-			$sheet->setCellValueByColumnAndRow(3, $row, $service['Service']['montant']);
-			$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
-			$row++;
+		else if($data['model']=='Reservation'){
+				//adding eventual ventes in case of a global bill.
+			foreach ($data['modelInfos'] as $reservation){
+				$sheet->setCellValueByColumnAndRow(0, $row, 'Chambre N° '.$reservation['Chambre']['name']); 
+				$sheet->setCellValueByColumnAndRow(1, $row, ($this->diff($reservation['Reservation']['arrivee'],$reservation['Reservation']['depart'])+1).' nuitée(s)'); 
+				$sheet->setCellValueByColumnAndRow(2, $row, $reservation['Reservation']['PU']);
+				$sheet->setCellValueByColumnAndRow(3, $row, $reservation['Reservation']['montant']);
+				$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
+				$row++;
+			}
+		
 		}
 
 		if($data['Facture']['tva']!=0) {
@@ -133,9 +161,45 @@ class ProductComponent extends Object {
 			$row++;
 		}
 		$sheet->setCellValueByColumnAndRow(0, $row, 'TOTAL');
-		$sheet->setCellValueByColumnAndRow(3, $row, $data['Facture']['montant']);
+		$sheet->setCellValueByColumnAndRow(3, $row, $data['Facture']['montant'].' '.$data['Facture']['monnaie']);
 			$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('font'=>$fontStyle,'borders'=>$borderStyle));
 
+		//showing some extras if any
+			if(!empty($data['extras'])){
+				//putting the extras title
+				$row+=2;
+				$sheet->setCellValueByColumnAndRow(0, $row, 'EXTRAS');	
+				$sheet->mergeCells($this->cellsToMergeByColsRow(0,3,$row));
+				$style = array(
+					'font' => array(
+		        		'bold' => true,
+		        		'size'=>16
+		    		),
+		        	'alignment' => array(
+		            	'horizontal' => PHPExcel_Style_Alignment::HORIZONTAL_CENTER,
+		        	)
+		    );
+		    $sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray($style);
+		    $sheet->getRowDimension($row)->setRowHeight(20);
+
+		    //display the list of extras
+		    $row+=2;
+		    $headers=array('Date','Numéro','Montant','Monnaie');
+				foreach($headers as $j=>$header){
+					$sheet->setCellValueByColumnAndRow($j, $row, $header);		
+				}
+				$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('font'=>$fontStyle,'borders'=>$borderStyle));
+				//listing the extras
+				$row++;
+				foreach ($data['extras'] as $extra_facture){
+					$sheet->setCellValueByColumnAndRow(0, $row, $this->toFrench($extra_facture['Facture']['date'])); 
+					$sheet->setCellValueByColumnAndRow(1, $row, $extra_facture['Facture']['numero']); 
+					$sheet->setCellValueByColumnAndRow(2, $row, $extra_facture['Facture']['reste']);
+					$sheet->setCellValueByColumnAndRow(3, $row, $extra_facture['Facture']['monnaie']);
+					$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
+					$row++;
+				}
+			}
 		//signature
 		$row+=4;
 		foreach(explode(',',$data['signature']) as $line){
@@ -156,7 +220,7 @@ class ProductComponent extends Object {
     	$sheet->getStyle('D1:D256')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_RIGHT);
     	$sheet->getDefaultRowDimension()->setRowHeight(18);
 		$writer = new PHPExcel_Writer_Excel2007($workbook);
-		$filename='factures.xlsx';
+		$filename='facture_'.$data['Facture']['date'].'_'.$data['Facture']['numero'].'_'.$data['Facture']['operation'].'.xlsx';
 		$path=WWW_ROOT .'/files/'.$filename;
 		$writer->save($path);
 		chmod($path, 0777);
@@ -216,6 +280,8 @@ class ProductComponent extends Object {
 	 	$this->data=$data;
 	 	$this->Operation=ClassRegistry::init('Operation'); 
 			$this->Operation->create();
+			
+
 			if(($this->data['Operation']['model1']==$this->data['Operation']['model2'])
 				&&
 				($this->data['Operation']['element1']==$this->data['Operation']['element2'])
@@ -229,6 +295,13 @@ class ProductComponent extends Object {
 			)
 			{
 				exit('failure_Erreur! Opération incorrecte.');
+			}
+			//exit(debug($this->data));
+			if($this->data['Operation']['model1']=='caisses'){
+
+				if(($this->Operation->soldeCaisse($this->data['Operation']['element1'])-$this->data['Operation']['montant'])<0){
+					exit('failure_Erreur! La caisse source n\'a pas assez d\'argent!');
+				}
 			}
 			//adding ...
 				$userInfo=$this->Auth->user();
@@ -245,7 +318,7 @@ class ProductComponent extends Object {
 			//op_num
 			$this->data['Operation']['op_num']=$this->caisse_op_num('Operation');
 			
-			if($this->data['Operation']['mode']=='report'){
+			if(false && $this->data['Operation']['mode']=='report'){
 				//for search
 				$this->data['Operation']['common']=$this->data['Operation']['element1']
 													.'_'.$this->model($this->data['Operation']['model1']);
@@ -945,11 +1018,16 @@ class ProductComponent extends Object {
 				}
 			}
 			else if(!empty($modelInfo[$model]['historique_id'])){
-				if(!$this->productHistoryDelete($modelInfo[$model]['historique_id'],'Historique')){
+				//update that same historique with the id stored in $modelInfo[$model]['historique_id']
+				$historiqueId=$modelInfo[$model]['historique_id'];
+				$ignoreIds[]=$historiqueId; // when updating the same historique don't count while evaluating the remain stock.
+			
+				//for now not sure it is a good idea to delete the stock record if is supplied. instead update it.
+				/*if(!$this->productHistoryDelete($modelInfo[$model]['historique_id'],'Historique')){
 					$return['success']=false;
 					$return['msg']='Erreur dans l\'effacement de l\'historique du stock!';
 					return $return;
-				}
+				}*/
 			}
 			
 			//getting the stock id
@@ -1075,9 +1153,7 @@ class ProductComponent extends Object {
 		}
 		
 		foreach(explode(',',$historyId) as $id_to_delete){
-			if(!$this->Historique->delete($id_to_delete)){
-				return false;
-			}
+			$this->Historique->delete($id_to_delete);
 		}
 		return true;
 	}
@@ -1618,6 +1694,7 @@ class ProductComponent extends Object {
 		$update['Facture']['numero']=$no;
 		$update['Facture']['id']=$id;
 		$this->Facture->save($update);
+		unset($this->Facture->id);
 		
 		return $no;
 	}
@@ -1925,6 +2002,8 @@ class ProductComponent extends Object {
 		return $tva;
 	}
 	
+	
+
 	/**
 	 *  increase a given date according to the given parameters :
 	 * days, months, and years

@@ -252,7 +252,7 @@
 		<?php
 			echo $this->Form->input('nombre',array('onchange'=>'proforma_qty(this)','label'=>'Nombre de personnes','id'=>'pers'));
 			echo $this->Form->input('jours',array('label'=>'','disabled'=>'disabled','id'=>'jours','style'=>'display:none;'));
-			echo $this->Form->input('tva_incluse',array('type'=>'checkbox','checked'=>'checked','label'=>'TVA_incluse'));
+			echo $this->Form->input('Facture.tva_incluse',array('type'=>'checkbox','checked'=>'checked','label'=>'TVA_incluse'));
 			echo $this->Form->input('type',array('type'=>'hidden','value'=>'proforma'));
 		?>
 	</span>
@@ -345,14 +345,16 @@
 		<?php
 			echo $this->Form->input('PU',array('label'=>'Autre Prix'));
 		?>
+		<button onclick="extra_row();return false;">Ajouter/Enlever une ligne</button>
 	</span>
 	<span class="right">
 		<?php
+			echo $this->Form->input('autre_date_depart',array('id'=>'Date_autre_depart','type'=>'text','title'=>'Autre Date de départ'));
 			echo $this->Form->input('date',array('type'=>'text','title'=>'Date de la facture','value'=>date('Y-m-d')));
 			?>
 	</span>
 	<div style="clear:both"></div>
-	<button onclick="extra_row();return false;">Ajouter/Enlever une ligne</button>
+	
 	<div style="clear:both"></div>
 	<table id="extras_table" >
 		<tr>

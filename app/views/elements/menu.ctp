@@ -28,9 +28,12 @@
 												<li class="rapport"><?php echo $this->Html->link(__('Rapport Des Produits', true), '/produits/rapport'); ?></li>
 												<li class="rapport"><?php echo $this->Html->link(__('Mouvements Des Produits', true), '/produits/balance'); ?></li>
 												<li class="rapport"><?php echo $this->Html->link(__('Evolution journalière', true), '/produits/monthly'); ?></li>
-												<li class="rapport"><?php echo $this->Html->link(__('Etat journalier', true), '/produits/shifts'); ?></li>
-												<li class="rapport"><?php echo $this->Html->link(__('Conso Théoriques', true), '/produits/conso_theorique'); ?></li>
-												<!--	<li class="upload"><?php echo $this->Html->link(__('Importer des produits', true), '/produits/upload_xls'); ?></li>-->
+												
+												<!-- <li class="rapport"><?php echo $this->Html->link(__('Etat journalier', true), '/produits/shifts'); ?></li>
+												<li class="rapport"><?php echo $this->Html->link(__('Conso Théoriques', true), '/produits/conso_theorique'); ?></li> -->
+												<?php if($session->read('Auth.Personnel.fonction_id') == 3):?>
+												<li class="upload"><?php echo $this->Html->link(__('Importer des produits', true), '/produits/upload_xls'); ?></li>
+												<?php endif;?>
 											</ul>
 										<?endif;?>
 									</li>
@@ -64,6 +67,9 @@
 				<li><?php echo $this->Html->link(__('Clients & Fournisseurs', true), '#'); ?>
 					<ul>
 						<li class="folder"><?php echo $this->Html->link(__('Clients & Fournisseurs', true), '/tiers/index'); ?></li>
+						<?php if(Configure::read('aser.gestion_reduction')):?>
+							<li class="folder"><?php echo $this->Html->link(__('Gestion des Réductions', true), '/reductions'); ?></li>
+						<?php endif;?>
 						<li class="folder"><?php echo $this->Html->link(__('Gestion des Factures', true), '/factures/index'); ?>
 							<ul>	
 								<li class="rapport"><?php echo $this->Html->link(__('Rapport des Factures', true), '/factures/rapport'); ?></li>
@@ -77,13 +83,20 @@
 									<li class="rapport"><?php echo $this->Html->link(__('Liste des Clients', true), '/factures/declaration'); ?></li>
 								<?php endif;?>
 								<?php if(Configure::read('aser.silhouette')):?>
-									<li class="rapport"><?php echo $this->Html->link(__('Listes Des Factures', true), '/factures/silhouette'); ?></li>
+									<li class="rapport"><?php echo $this->Html->link(__('Listes Des Factures', true), '/factures/silhouette'); ?>
+										<ul>
+											<li class="rapport"><?php echo $this->Html->link(__('Limites', true), '/limits'); ?></li>
+										</ul>
+									</li>
 								<?php endif;?>
 								<?php if(in_array(Configure::read('aser.name'),array('aserb','belair'))||Configure::read('aser.silhouette')):?>
 									<li class="rapport"><?php echo $this->Html->link(__('Impression Journalière', true), '/factures/show_bills'); ?></li>
 								<?php endif;?>	
 								<?php if($config['POS']):?>
 									<li class="rapport"><?php echo $this->Html->link(__('Factures Débloquées', true), '/ventes/unlocked_bills'); ?></li>
+								<? endif;?>	
+								<?php if(Configure::read('aser.xls_copy')):?>
+									<li class="rapport"><?php echo $this->Html->link(__('Factures envoyées', true), '/factures/aserb_report'); ?></li>
 								<? endif;?>	
 							</ul>
 							
@@ -119,6 +132,7 @@
 							<? if(Configure::read('aser.comptabilite')):?>
 								<li class="rapport"><?php echo $this->Html->link(__('Synthèse des ventes journalières', true), '/ventes/syntheseCptableDVente'); ?></li>
 								<li class="rapport"><?php echo $this->Html->link(__('Détail des crédits journaliers', true), '/ventes/creditCptable'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Ventes Par Groupes Comptable', true), '/ventes/par_produits_groupe_cptable'); ?></li>
 							<? endif;?>
 							<?php if($config['bon']):?>
 								<li class="rapport"><?php echo $this->Html->link(__('Commandes Non envoyées', true), '/ventes/unprinted_orders'); ?></li>
@@ -219,7 +233,11 @@
 					<ul>
 						<li class="rapport"><?php echo $this->Html->link(__('Paramétrage du logiciel', true), '/configs/index'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Sauvergarder la base de données', true), '/configs/backup'); ?></li>
-						<li class="rapport"><?php echo $this->Html->link(__('Réparer la base de données', true), '/configs/repair_all_tables'); ?></li>
+						<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3))):?>
+							<li class="rapport"><?php echo $this->Html->link(__('Restaurer la base de données', true), '/configs/restore_db'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Réparer la base de données', true), '/configs/repair_all_tables'); ?>
+						<?php endif;?>
+						</li>
 					</ul>	
 				</li>
 				<li><?php echo $this->Html->link(__('Accès', true), '#'); ?>

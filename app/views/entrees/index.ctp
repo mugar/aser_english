@@ -40,8 +40,8 @@
 	jQuery('#quantite').change(function(){
 		var mul=1;
 		jQuery.each(jQuery(this).val().split('*'),function(j,val1){
-			if(parseInt(val1)==val1){
-				mul*=parseInt(val1);
+			if(parseFloat(val1)==val1){
+				mul*=parseFloat(val1);
 			}
 		});
 		jQuery('#quantite').val(mul);
@@ -50,7 +50,7 @@
 	//support only division
 	jQuery('#PA').change(function(){
 		if(/\d+\/\d+/.test(jQuery(this).val())){
-			var PA=Math.round(parseInt(jQuery(this).val().split('/')[0])/parseInt(jQuery(this).val().split('/')[1]));
+			var PA=Math.round(parseFloat(jQuery(this).val().split('/')[0])/parseFloat(jQuery(this).val().split('/')[1]));
 			jQuery('#PA').val(PA);
 		}
 	});

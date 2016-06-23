@@ -200,6 +200,7 @@
 					<th>Quantité</th>
 					<th>PU</th>
 					<th>PT</th>
+					<th>Tps</th>
 				</tr>
 			</table>
 		</fieldset>
@@ -254,6 +255,9 @@
 		<?php endif;?> 
 		<span id="paiement_facture" name="classer" class="boutton" title="Clôturer la facture en marquant son état de paiement">Classer</span>
 		<span class="boutton" onclick="print_facture(factureId)" title="Imprimer la facture">Imprimer</span>
+		<?php if(Configure::read('aser.xls_copy')):?>
+			<span class="boutton" onclick="custom_printing(factureId, 'ventes/print_facture/'+factureId)" title="Imprimer la facture">Imprimer avec les Détails</span>
+		<?php endif;?>
 		<?php if($config['multi_resto']): ?>
 			<span class="boutton" onclick="parameters()" title="Configurer les paramètres">Paramètres</span>
 		<?php endif;?> 
@@ -268,7 +272,7 @@
 		<?php if(!$config['magasin']&&$config['bon']): ?>
 			<span class="boutton" onclick="ask(factureId)" title="Imprimer les bons pour le bar et la cuisine pour la facture sélectionnée">Bon</span>
 		<?php endif;?> 
-		<span id ="separator" name="classer" class="boutton" title="Séparer une facture en deux ou plus">Séparateur</span>
+		<span id ="separator" name="disable" class="boutton" title="Séparer une facture en deux ou plus">Séparateur</span>
 		<?php if($config['client_auto_creation']): ?>
 			<span class="boutton" onclick="resto_tier()" title="Créer un nouveau client">Client</span>
 		<?php endif;?>

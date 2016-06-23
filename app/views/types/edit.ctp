@@ -4,7 +4,8 @@
 		<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('name');
-		echo $this->Form->input('type',array('options'=>array('depense'=>'depense','vente'=>'vente')));
+		echo $this->Form->input('type',array('options'=>array('depense'=>'Dépense','vente'=>'Entrée')));
+		echo $this->Form->input('categorie',array('options'=>$categories));
 		?>
 	</span>
 	<span class="right">

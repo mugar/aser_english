@@ -1,4 +1,4 @@
-/** RESTO TOUCH POS **/
+/* RESTO TOUCH POS **/
 var tableNum=0;
 var serveurId=0;
 var serveur='';
@@ -8,6 +8,138 @@ var displayed=0;
 var sectionId=2;
 var ungrouped=0;
 var locked=0;
+
+/*
+ * this function helps to generate from printing the copy of the bill in aser B
+ *  */
+
+function custom_printing(id,redirect_url){
+    var generate_number = function(id){
+        jQuery.ajax({
+        url:getBase()+'factures/generate_aserb_number/'+id,
+        dataType:'json',
+        success:function(r){ 
+            if(r.success){
+                jQuery('#displayed_num').text('n° '+r.no).css({'display':'inline'});
+                jQuery('#displayed_num').attr('type','aserb');
+                if(redirect_url.indexOf("ventes") > -1){
+                    document.location.href=getBase()+'factures/view/'+id+'/standard/2';
+                    print_facture(id,getBase()+'ventes/print_facture/'+id+'/1');
+                }
+                else {
+                    print_documents('export',redirect_url);
+                }
+            }
+            else {
+               alert(r.msg);
+            }
+        }
+    });
+    };
+
+    var desired_number = prompt("Entrer le numéro souhaitez :");
+    desired_number = (desired_number)? desired_number: 0;
+    if(desired_number !== 0){
+        jQuery.ajax({
+            url:getBase()+'factures/check_aserb_number_availability/'+id+'/'+desired_number,
+            dataType:'json',
+            success:function(r){ 
+                if(r.success){
+                    generate_number(id);
+                }
+                else {
+                    alert("Le numéro souhaitez "+desired_number+" n'est pas dispo");
+                    custom_printing(id, redirect_url);
+                }
+            }
+        });
+    }
+    else { generate_number(id);}
+        
+}
+/** Limits javascript code **/
+function year_limits(){
+    jQuery('#year_limits_boxe').dialog({ modal:true, 
+                           show:'slide',
+                           hide:'clip',
+                           width:390,
+                           position:'top',
+                           buttons: { "GO": function() {
+                                        var annee=jQuery('#umwakaYear').val();
+                                        jQuery(this).dialog("close");
+                                        document.location.href=getBase()+'limits'+'/index/'+annee;
+                                    },
+                                    "Annuler": function() { jQuery(this).dialog("close");
+                                                         }
+                                   }
+                       });
+}
+
+function generate_monthly_limits(button){
+    var month = jQuery(button).attr('month');
+    var year = jQuery(button).attr('year');
+    var msg = 'Mettez le min et max séparé par une virgule';
+    var text = prompt(msg);
+    if(text!== null){
+        text = text.split(',');
+        if(!isNaN(parseInt(text[0])) && !isNaN(parseInt(text[1])) && text.length==2){
+          //  alert(text[0]+' '+text[1]);
+            jQuery.ajax({
+                global:true,
+                url:getBase()+'limits/generate_monthly_limits/'+month+'/'+year+'/'+text[0]+'/'+text[1],
+                dataType: "json",
+                success: function(ans){
+                    if(ans.success){
+                        document.location.reload();
+                    }
+                    else alert(ans.msg);
+                }
+            });
+        }
+        else {
+            alert(msg);
+            generate_monthly_limits(button);
+        }   
+    }  
+}
+function set_limite_montant(input){
+    var date = jQuery(input).attr('date');
+    var montant = jQuery(input).val();
+    //alert(date+' '+montant);
+    jQuery.ajax({
+        global:true,
+        url:getBase()+'limits/set_montant/'+date+'/'+montant,
+        dataType: "json",
+        success: function(ans){
+            if(ans.success){
+                jQuery('img#'+date).show();
+                setTimeout(function(){ 
+                   jQuery('img#'+date).hide();
+                    }, 
+                2500);
+            }
+            else alert(ans.msg);
+        }
+    });
+}
+
+/** end of limits javascripts **/
+
+function set_observation(button){
+    var facture_id = jQuery(button).attr('facture');
+    var obs = prompt("Mettez l'observation");
+    jQuery.ajax({
+        global:false,
+        url:getBase()+'factures/set_observation/'+facture_id+'/'+obs,
+        dataType: "json",
+        success: function(ans){
+            if(ans.success){
+                jQuery('td#'+facture_id).text(obs);
+            }
+            else alert(ans.msg);
+        }
+    });
+}
 
 function last_reservation(tier_id){
     jQuery.ajax({
@@ -354,7 +486,8 @@ function impressionB(){
 						}
 					}
 					else {
-						jQuery('#stamp').css({'color':'black','font-size':'20px'}).text('POUR CONSULTATION UNIQUEMENT');
+						// jQuery('#stamp').css({'color':'black','font-size':'20px'}).text('POUR CONSULTATION UNIQUEMENT');
+                        jQuery('#stamp').css({'color':'black','font-size':'20px'}).text('');
 					}
 					print_documents();
 					}
@@ -401,7 +534,6 @@ function aserb(){
 	var date= new Date();
 	date.setMonth(date.getMonth()-1);
 	var prev_month = date.getMonth()+1;
-	//*
 		jQuery('#aserb_boxe').dialog({ modal:true, 
     		               width:390,
     		               position:'top',
@@ -413,7 +545,7 @@ function aserb(){
     		               				if(montant_desire<=0){
     		               					alert('Mettez un  Montant correct!');
     		               				}
-    		               				//*	
+    		               				/*	
     		               				else if(mois!=prev_month){ //because in javascript month are 0 indexed
     		               					alert('Vous pouvez copier les factures seulements pour le mois precedent!');
     		               				}
@@ -443,7 +575,6 @@ function aserb(){
     					           }
                        });
                        
-                       //*/
 	
 }
 /*
@@ -1176,8 +1307,11 @@ function journal_msg(ans){
         buttons["Ne m'embêté plus!"]= function(){ 
                                         jQuery(this).dialog("close");
                                         jQuery.ajax({
-                                            type:'get',
-                                            url:getBase()+'ventes/add/'+true,
+                                            type:'post',
+                                            data: {
+                                                'data[Vente][factureId]':'creation'
+                                            },
+                                            url:getBase()+'ventes/add/'+1,
                                         });
                                     }
     }
@@ -1234,9 +1368,8 @@ function unlock(factureId,moveon){
  				url:getBase()+'ventes/unlock/'+factureId+'/'+jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text(),
  				dataType:'json',
  				success:function(ans){
- 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('en_cours');
- 					jQuery('table#list_factures tr[id="'+factureId+'"]').attr('printed',0);
- 					binder();
+ 					activated(jQuery('table#list_factures tr[id="'+factureId+'"]'))
+                    binder();
  				},
 	 		});
 	 	}
@@ -1255,7 +1388,7 @@ function separator(factureId){
  			dataType:'json',
  			success:function(ans){
  				if(ans.success){
- 					ungrouped=1;
+ 					ungrouped=factureId;
  				}
                 else {
                     ungrouped=0;
@@ -1268,16 +1401,20 @@ function separator(factureId){
 	else if(jQuery('table#list_produits input[type="checkbox"]:checked').length>0){
 		
 		jQuery('table#list_produits input[type="checkbox"]:checked').each(function(i){
-			list=list+','+jQuery(this).val();	
+            if(i>0)
+			 list=list+','+jQuery(this).val();	
+            else 
+              list=jQuery(this).val();  
 		});
 		jQuery.ajax({
  		type:'get',
  		url:getBase()+'ventes/separator/'+factureId+'/'+list,
  		dataType:'json',
  		success:function(ans){
+            ungrouped=0;
             if(ans.success){
      		//	jQuery('body').html(ans);
-     			ungrouped=0;
+     			
      			jQuery('table#list_produits input[type="checkbox"]:checked').each(function(i){
     				jQuery(this).parents('tr').remove();	
     			});

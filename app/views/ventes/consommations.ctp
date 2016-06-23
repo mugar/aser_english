@@ -68,19 +68,30 @@
 	</tr>
 <?php endforeach; ?>
 </tbody>
-<tfoot>
+</table>
+<table>
 	<tr>
-		<td>TOTAL AVANT REDUCTION</td>
+			<th width="300" data-sort="string" >TOTAUX</th>
+			<th data-sort="int">Qté</th>
+			<th width="200" data-sort="int">PV</th>
+			<th width="200" data-sort="int">PT</th>
+			<?php if(Configure::read('aser.ingredient')):?>
+				<th width="100" data-sort="int">PA</th>
+				<th width="100" data-sort="int">BENEFICE</th>
+			<?php endif;?>
+	</tr>
+	<tr>
+		<td>AVANT REDUCTION</td>
 		<td><?php echo $number->format($quantite+0,$formatting); ?></td>
 		<td>&nbsp;</td>
 		<td><?php echo $number->format($total+0,$formatting); ?></td>
 		<?php if(Configure::read('aser.ingredient')):?>
-			<td>&nbsp;</td>
+			<td><?php echo $number->format($pa+0,$formatting); ?></td>
 			<td><?php echo $number->format($ben+0,$formatting); ?></td>
 		<?php endif;?>
 	</tr>
 	<tr>
-		<td>TOTAL APRES REDUCTION</td>
+		<td>APRES REDUCTION</td>
 		<td></td>
 		<td>&nbsp;</td>
 		<td><?php echo $number->format($totalReduit+0,$formatting); ?></td>
@@ -89,7 +100,6 @@
 			<td></td>
 		<?php endif;?>
 	</tr>
-</tfoot>
 </table>
 
 </div>

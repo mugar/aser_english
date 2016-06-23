@@ -5,5 +5,6 @@
 		<td><?php echo $type['Type']['id']; ?>&nbsp;</td>
 		<td><?php echo $type['Type']['name']; ?>&nbsp;</td>
 		<td><?php if(isset($optionsForTypes[$type['Type']['type']])) echo $optionsForTypes[$type['Type']['type']]; ?>&nbsp;</td>
+		<td><?php if(isset($categories[$type['Type']['categorie']])) echo $categories[$type['Type']['categorie']]; ?>&nbsp;</td>
 		<td><?php echo $type['Type']['actif']; ?>&nbsp;</td>
 	</tr>

@@ -32,6 +32,7 @@
 	<tr>
 		<th>Nom</th>
 		<th>Choisir le Type</th>	
+		<th>Catégorie</th>	
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -39,6 +40,7 @@
 		<?php echo $this->Form->create('Type',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('name',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('type',array('label'=>'','options'=>$optionsForTypes));?></td>
+		<td><?php echo $this->Form->input('categorie',array('label'=>'','options'=>$categories));?></td>
 		<td><input type="submit" value="Envoyer"/></td>
 		</form>
 		
@@ -54,6 +56,7 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
 			<th><?php echo $this->Paginator->sort('type');?></th>
+			<th>Catégorie</th>
 			<th><?php echo $this->Paginator->sort('actif');?></th>
 		</tr>
 	<?php

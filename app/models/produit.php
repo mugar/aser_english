@@ -4,7 +4,8 @@ class Produit extends AppModel {
 	var $name = 'Produit';
 	var $displayField = 'name';
 	var $recursive=0;
-	var $virtualFields = array('fullname' => "CONCAT(Produit.name,'_',Produit.quantite,'_',Produit.PV)");  
+	var $virtualFields = array('fullname' => "CONCAT(Produit.name,'_',Produit.quantite,'_',Produit.PV)", 
+														);  
 	var $validate = array(
 		//*
 		'name' => array(

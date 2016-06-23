@@ -1,4 +1,6 @@
-<!--recherche form -->
+<?php 
+?>
+
 <div id="recherche_boxe" style="display:none" title="Options de Recherche">
 <div class="dialog">
 	<div id="message_recherche"></div>
@@ -9,6 +11,7 @@
 			if(is_null($id)){
 				echo $this->Form->input('tier_id',array('label'=>'Client','selected'=>$id,'options'=>$tiers1));
 				echo $this->Form->input('Tier.compagnie');
+				echo $this->Form->input('Facture.show_less',array('type'=>'checkbox','label'=>'Afficher moins'));
 			}
 		?>
 	</span>
@@ -41,54 +44,90 @@
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>N°</th>
-			<th>Compagnie</th>
+			<th>Date</th>
 			<th width="100">Montant (BIF)</th>
 			<th width="100">Montant (USD)</th>
-			<th>Date</th>
 			<th>N° Facture</th>
 			<th>Etat de la facture</th>
-			<th>Client</th>
-			<th>Téléphone</th>
 			<th width="150">Observation</th>
+			<th width="50">Action</th>
 	</tr>
-		<?php
+	
+	<?php 
+		$total_USD=$total_BIF=$current_client=$j=0;
 		$BIF=$USD=0;
-	foreach ($factures as $key=>$facture):
-		
+		foreach ($factures as $i=>$facture):
+			if(!in_array($current_client,array($facture['Tier']['id'],0))){
+					echo '<tr class="strong">';
+					echo '<td colspan="2">TOTAL</td>';
+					echo '<td>'.$number->format($BIF+0,$formatting).' BIF</td>';
+					echo '<td>'.$number->format($USD+0,$formatting).' USD</td>';
+					echo '<td colspan="4">&nbsp;</td>';
+					echo '</tr>';
+				}
+			if($current_client != $facture['Tier']['id']){
+				echo '<tr class="strong">';
+				echo '<td colspan="8" style="text-align: center;">';
+				echo 'Client : '.$facture['Tier']['name'].' --- Compagnie : '.$facture['Tier']['compagnie'].' --- telephone : '.$facture['Tier']['telephone'];
+				echo '</td>';
+				echo '</tr>';
+				$BIF=$USD=0;
+				//if($current_client == 0)
+					$current_client = $facture['Tier']['id'];
+				$j=1;
+			}
 	?>
-	<tr>
-			<td><?php echo $key+1; ?></td>
-			<td><?php echo $facture['Tier']['compagnie']; ?></td>
-			<td><?php if($facture['Facture']['monnaie']=='BIF') echo  $number->format($facture['Facture']['reste'],$formatting);?></td>
-			<td><?php if($facture['Facture']['monnaie']=='USD') echo  $number->format($facture['Facture']['reste'],$formatting);?></td>
-			<td><?php echo  $this->MugTime->tofrench($facture['Facture']['date']); ?></td>
-			<td >
-				<?php echo $this->Html->link($facture['Facture']['numero'], array('controller' => 'factures', 'action' => 'view', $facture['Facture']['id']),array('target'=>'blank')); ?>
-			</td>
-			<td><?php echo $facture['Facture']['etat']; ?></td>
-			<td><?php echo $facture['Tier']['name']; ?></td>
-			<td><?php echo $facture['Tier']['telephone']; ?></td>
-			<td><?php echo $facture['Facture']['observation']; ?></td>
-	</tr>
-<?php 
-	if($facture['Facture']['monnaie']=='USD')
-		$USD+=$facture['Facture']['reste'];
-	else 
-		$BIF+=$facture['Facture']['reste'];
-	endforeach; 
-?>
-	<tr class="strong">
-		<td>TOTAL</td>
-		<td>&nbsp;</td>
-		<td><?php echo  $number->format($BIF+0,$formatting).' BIF'; ?></td>
-		<td><?php echo  $number->format($USD+0,$formatting).' USD'; ?></td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
-	</tr>
+		
+		<?php if(!$show_less):?>
+			<tr>
+					<td><?php echo $j; ?></td>
+					<td><?php echo  $this->MugTime->tofrench($facture['Facture']['date']); ?></td>
+					<td><?php if($facture['Facture']['monnaie']=='BIF') echo  $number->format($facture['Facture']['reste'],$formatting);?></td>
+					<td><?php if($facture['Facture']['monnaie']=='USD') echo  $number->format($facture['Facture']['reste'],$formatting);?></td>
+					<td >
+						<?php echo $this->Html->link($facture['Facture']['numero'], array('controller' => 'factures', 'action' => 'view', $facture['Facture']['id']),array('target'=>'blank')); ?>
+					</td>
+					<td><?php echo $facture['Facture']['etat']; ?></td>
+					<td id="<?php echo $facture['Facture']['id'];?>"><?php echo $facture['Facture']['observation']; ?></td>
+					<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
+						<td><button style='font-size: 8px;' onclick='set_observation(this)' facture='<?php echo $facture['Facture']['id']; ?>'>Mettre Une Observation</button></td>
+					<?php else:?>
+						<td></td>
+					<?endif;?>
+			</tr>
+		<?php endif;?>
+
+			<?php 
+				$j++;
+				if($facture['Facture']['monnaie']=='USD')
+					$USD+=$facture['Facture']['reste'];
+				else 
+					$BIF+=$facture['Facture']['reste'];
+
+					if(($i+1) == count($factures)){
+					echo '<tr class="strong">';
+					echo '<td  colspan="2">TOTAL</td>';
+					echo '<td>'.$number->format($BIF+0,$formatting).' BIF</td>';
+					echo '<td>'.$number->format($USD+0,$formatting).' USD</td>';
+					echo '<td colspan="4">&nbsp;</td>';
+					echo '</tr>';
+					$current_client = $facture['Tier']['id'];
+				}
+			?>
+			
+	<?php 
+		if($facture['Facture']['monnaie']=='USD')
+					$total_USD+=$facture['Facture']['reste'];
+				else 
+					$total_BIF+=$facture['Facture']['reste'];
+		endforeach;
+	?>
+		<tr class="strong">
+				<td colspan="2">TOTAL</td>
+				<td><?php echo  $number->format($total_BIF+0,$formatting).' BIF'; ?></td>
+				<td><?php echo  $number->format($total_USD+0,$formatting).' USD'; ?></td>
+				<td colspan="4">&nbsp;</td>
+		</tr>
 </table>
 </form>
 </div>

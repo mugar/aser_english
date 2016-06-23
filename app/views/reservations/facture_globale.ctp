@@ -1,3 +1,6 @@
+<?php 
+ $config = Configure::read('aser');
+?>
 <script>
  jQuery.noConflict();
      jQuery(document).ready(function(){
@@ -30,17 +33,42 @@
 		<?php echo $this->element('company',array('monnaie'=>$reservation['Facture']['monnaie'])); ?>
 	</div>
 	<div id="stamp"></div>
-	<div class="right"><?php  
-		if(!in_array($reservation['Facture']['date_emission'],array('',null,'0000-00-00'))) echo 'Date : <span id="dateId">'.$this->MugTime->toFrench($reservation['Facture']['date_emission']).'</span><br/>';
-		else  echo ' Date : <span id="dateId" depart="'.$depart.'">'.$this->MugTime->toFrench($depart).'</span><br/>';
-		echo '<br/><br/><br/><br/><br/><br/>';
-		echo $this->element('../tiers/details',array('client'=>$reservation['Tier']));
-		if(!empty($reservation['Facture']['bon_commande'])) echo '<br/>Bon de commande : '.$reservation['Facture']['bon_commande'].'<br/>';
-		echo 'Date d\'entrée : '.$this->MugTime->toFrench($arrivee);
-		echo '<br/>';
-		echo 'Date de sortie : '.$this->MugTime->toFrench($depart);
-		echo '<br/>';
-		echo 'N° de(s) chambre(s) : '.$chambres;
+	<div id="facture_details" style="margin-left:-40px;">
+			<?php 
+				$etat=$reservation['Facture']['etat'];
+				echo 'Etat De Paiement:  <span id="etat">'.$etat.'</span>';
+			?>
+			<?php if(!empty($reservation['Facture']['observation']))
+					echo 'Motif : '.$reservation['Facture']['observation'];
+					echo '<br/>';
+			?>
+			<?php if(!empty($reservation['Facture']['aserb_num']))
+					echo 'Numéro lié: '.$reservation['Facture']['aserb_num'];
+					echo '<br/>';
+			?>
+			
+			
+		</div>
+	<div class="right">
+		<?php  
+			echo ' Date de Création : <span id="dateId" depart="'.$depart.'">'.$this->MugTime->toFrench($reservation['Facture']['date']).'</span><br/>';
+			if(!in_array($reservation['Facture']['date_emission'],array('',null,'0000-00-00'))) {
+			 	echo 'Date d\'émission : <span id="dateId">'.$this->MugTime->toFrench($reservation['Facture']['date_emission']).'</span><br/>';
+			}
+			echo '<br/><br/><br/><br/><br/><br/>';
+		?>	
+		<div>
+			<?php 
+				echo $this->element('../tiers/details',array('client'=>$reservation['Tier']));
+				if(!empty($reservation['Facture']['bon_commande'])) echo '<br/>Bon de commande : '.$reservation['Facture']['bon_commande'].'<br/>';
+			?>
+		</div>
+		<?php
+			echo 'Date d\'entrée : '.$this->MugTime->toFrench($arrivee);
+			echo '<br/>';
+			echo 'Date de sortie : '.$this->MugTime->toFrench($depart);
+			echo '<br/>';
+			echo 'N° de(s) chambre(s) : '.$chambres;
 	 ?>
 	</div>
 	<div style="clear:both"></div>
@@ -60,7 +88,7 @@
 							)?
 							'inline':'none';
 					?>
-					<span id="displayed_num" style=" display:<?php echo $display;?>">
+				<span id="displayed_num" style=" display:<?php echo $display;?>"  xls_copy="<?php echo Configure::read('aser.xls_copy')*1 ?>">
 					<?php echo 'n° '.$reservation['Facture']['numero'];?>
 					</span>
 </span>
@@ -385,6 +413,13 @@ else {
 		<? else:?>
 			<li class="link" onclick="print_documents()" >Imprimer</li>
 		<? endif;?>
+		<?php if(Configure::read('aser.xls_copy')):?>
+			<li class="link" onclick = "custom_printing('<?php echo $factureId ?>','<?php echo 'reservations/facture_globale/'.$factureId.'/'.$payee.'/1/2'?>')" >Imprimer avec Détails</li>
+		<?php endif;?>
+		<? if((in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))&&empty($config['annulee']))
+					||in_array($session->read('Auth.Personnel.id'),$config['annulee'])) :?>
+				<li class="link" onclick = "annuler_facture('<?php echo 'Reservation_'.$reservation['Facture']['id'];?>')" >Annuler la facture</li>
+			<?php endif;?>
 		<li class="link" onclick="jQuery('#accomodation').slideToggle()" title="Afficher ou masquer l'Hébergement" >Hébergement</li>
 		<li class="link"  onclick = "jQuery('#extras_liste').slideToggle()" title="Afficher ou masquer les extras">Extras</li>
 		<?php if(Configure::read('aser.comptabilite')):?>
@@ -417,6 +452,9 @@ else {
 			<li class="link" onclick = "num()" >Changer le numéro</li>
 		<?php endif;?>
 		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<?php if(Configure::read('aser.export_bills')):?>
+				<li><?php echo $this->Html->link('Exporter vers excel', array('controller' => 'reservations', 'action' => 'facture_globale/'.$factureId.'/'.$payee.'/1/1')); ?> </li>
+			<?php endif;?>
 	</ul>
 </div>
 

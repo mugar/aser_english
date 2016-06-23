@@ -193,6 +193,44 @@ function uploadFiles($folder, $formdata, $itemId = null) {
 return $result;
 }
 
+	function restore_db(){
+		$fonction_id = $this->Auth->user('fonction_id');
+		if($fonction_id != 3){
+			$this->Session->setFlash("Vous n'avez pas accès à cette fonction!");
+			$this->redirect('/');
+		}
+
+		if(!empty($this->data)){
+			//exit(debug($this->data));
+			if(!empty($this->data['Config']['file'])){
+				$file = $this->data['Config']['file']['tmp_name'];
+
+				Configure::write('debug',0);
+				App::import('Core', 'ConnectionManager');
+				$dataSource = ConnectionManager::getDataSource('default');
+				$host=$dataSource->config['host'];
+				$root=$dataSource->config['login'];
+				$passwd='';
+				if(!empty($dataSource->config['password'])) {
+					$passwd='-p'.$dataSource->config['password'];
+				}
+				$db=$dataSource->config['database'];
+				$command=$this->Conf->find('command');
+				$cmd_result=shell_exec("mysql -h$host -u$root $passwd $db < $file");
+				if($cmd_result == ''){
+					$this->Session->setFlash("La base de données a été restaurée!");
+					$this->redirect('/');
+				}
+				else {
+					$this->Session->setFlash("Un problème est survenue lors de la restauration. $cmd_result");
+				}
+			}
+			else {
+				$this->Session->setFlash("Aucun fichier n'a été importé");
+			}
+		}
+	}
+
 	function backup() {
 		$this->autoRender=true;
 		Configure::write('debug',0);
@@ -206,7 +244,7 @@ return $result;
 		}
 		$db=$dataSource->config['database'];
 		$command=$this->Conf->find('command');
-		$backup=shell_exec("$command -h$host -u$root $passwd $db ");
+		$backup=shell_exec("mysqldump -h$host -u$root $passwd $db ");
 		$db=$db.'_';
 		$this->set(compact('backup','db'));
 		$this->layout='backup_layout';

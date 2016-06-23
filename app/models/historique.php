@@ -45,14 +45,7 @@ class Historique extends AppModel {
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
 		),
-		'libelle' => array(
-			'alphaNumeric' => array(
-                'rule' => 'alphaNumeric',
-                'required' => true,
-                'allowEmpty' => false,
-                'message' => 'Alphabets and numbers only'
-                ),
-		),
+		
 		'date' => array(
 			'numeric' => array(
 				'rule' => array('date'),

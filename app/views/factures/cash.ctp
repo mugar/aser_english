@@ -20,7 +20,12 @@
 </div>
 <div id='view'>
 <div class="document">
-<h3>Rapport Journalier du <?php echo $this->MugTime->toFrench($date);?></h3>
+<h3>Rapport Journalier </h3>
+<h4>
+		Du <?php echo $this->MugTime->toFrench($date);?>
+		<br>
+		à <?php echo date("H:i:s");?>
+</h4>
 
 <br />
 <br />
@@ -94,11 +99,11 @@
 	</tr>
 	<?php foreach($monnaies as $monnaie):?>
 		<tr class="strong" >
-			<td colspan="3"><?php if($vente1['BIF_'.$monnaie]>0) echo  $number->format($vente1['BIF_'.$monnaie],$formatting).' BIF => '.$number->format($vente2['BIF_'.$monnaie],$formatting).' '.$monnaie; ?></td>
-			<td colspan="3"><?php if($vente1['USD_'.$monnaie]>0) echo  $number->format($vente1['USD_'.$monnaie],$formatting).' USD => '.$number->format($vente2['USD_'.$monnaie],$formatting).' '.$monnaie; ?></td>
+			<td colspan="3"><?php if(!empty($vente1['BIF_'.$monnaie])) echo  $number->format($vente1['BIF_'.$monnaie],$formatting).' BIF => '.$number->format($vente2['BIF_'.$monnaie],$formatting).' '.$monnaie; ?></td>
+			<td colspan="3"><?php if(!empty($vente1['USD_'.$monnaie])) echo  $number->format($vente1['USD_'.$monnaie],$formatting).' USD => '.$number->format($vente2['USD_'.$monnaie],$formatting).' '.$monnaie; ?></td>
 		
-			<td><?php if($pyt1['BIF_'.$monnaie]>0) echo  $number->format($pyt1['BIF_'.$monnaie],$formatting).' BIF => '.$number->format($pyt2['BIF_'.$monnaie],$formatting).' '.$monnaie; ?></td>
-			<td><?php if($pyt1['USD_'.$monnaie]>0) echo  $number->format($pyt1['USD_'.$monnaie],$formatting).' USD => '.$number->format($pyt2['USD_'.$monnaie],$formatting).' '.$monnaie; ?></td>
+			<td><?php if(!empty($pyt1['BIF_'.$monnaie])) echo  $number->format($pyt1['BIF_'.$monnaie],$formatting).' BIF => '.$number->format($pyt2['BIF_'.$monnaie],$formatting).' '.$monnaie; ?></td>
+			<td><?php if(!empty($pyt1['USD_'.$monnaie])) echo  $number->format($pyt1['USD_'.$monnaie],$formatting).' USD => '.$number->format($pyt2['USD_'.$monnaie],$formatting).' '.$monnaie; ?></td>
 			
 			<td><?php echo  $number->format($vente2['BIF_'.$monnaie]+$vente2['USD_'.$monnaie]+$pyt2['BIF_'.$monnaie]+$pyt2['USD_'.$monnaie],$formatting).' '.$monnaie; ?></td>
 		</tr>

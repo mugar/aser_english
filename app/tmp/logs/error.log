@@ -180,3 +180,919 @@ Aco: Reservations/last_reservation in [/var/www/aser/cake/libs/controller/compon
 2015-06-04 13:03:54 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_sections_expires' was on gc-list for 1887 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
 2015-06-04 13:06:15 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_caisses_expires' was on gc-list for 1818 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
 2015-06-04 13:06:15 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_journals_expires' was on gc-list for 1818 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-06-26 12:11:53 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:11:53 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:12:25 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:12:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:13:21 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:13:21 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:13:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:13:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:15:05 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:15:05 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:15:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 12:15:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/ventes/par_produits_groupe_cptable.ctp, line 51]
+2015-06-26 13:17:30 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Tier.export' in 'where clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-06-26 13:17:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/tiers_controller.php, line 111]
+2015-06-26 13:17:31 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-06-26 14:17:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/credit.ctp, line 61]
+2015-06-26 14:17:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/credit.ctp, line 61]
+2015-06-26 14:19:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/credit.ctp, line 61]
+2015-06-26 14:19:11 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/credit.ctp, line 61]
+2015-06-26 15:30:49 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-06-26 15:30:50 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-06-26 15:30:56 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-06-26 15:30:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-06-26 17:15:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/credit.ctp, line 55]
+2015-06-26 17:15:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/credit.ctp, line 55]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_aser_list_expires' was on gc-list for 2772 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_stocks_expires' was on gc-list for 2812 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_locations_expires' was on gc-list for 2812 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_mouvements_expires' was on gc-list for 2914 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_type_chambres_expires' was on gc-list for 3529 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_caisse_interdites_expires' was on gc-list for 3529 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_stocks_expires' was on gc-list for 3541 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_proformas_expires' was on gc-list for 3541 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_reservations_expires' was on gc-list for 3541 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_salles_expires' was on gc-list for 3552 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_configs_expires' was on gc-list for 4277 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_pertes_expires' was on gc-list for 4277 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_fonctions' was on gc-list for 4278 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_fonctions_expires' was on gc-list for 4278 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_aser_list' was on gc-list for 4289 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_aser_list_expires' was on gc-list for 4289 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 14:21:57 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-07-01 15:16:46 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_pertes_expires' was on gc-list for 2693 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 15:16:46 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_personnels_expires' was on gc-list for 2693 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 15:16:46 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_sections_expires' was on gc-list for 2693 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-01 15:16:47 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-07-05 18:39:05 Warning: Warning (2): mysql_connect() [<a href='http://php.net/function.mysql-connect'>function.mysql-connect</a>]: Can't connect to local MySQL server through socket '/var/run/mysqld/mysqld.sock' (2) in [/var/www/aser/cake/libs/model/datasources/dbo/dbo_mysql.php, line 561]
+2015-07-05 18:39:05 Warning: Warning (2): mysql_query() expects parameter 2 to be resource, boolean given in [/var/www/aser/cake/libs/model/datasources/dbo/dbo_mysql.php, line 613]
+2015-07-05 18:39:05 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-07-06 18:31:09 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_aros_acos_expires' was on gc-list for 25521 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 10:56:24 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_salles_expires' was on gc-list for 1814 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 10:56:24 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_locations_expires' was on gc-list for 1814 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:00:36 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_acos_expires' was on gc-list for 1805 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:04:16 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_fonctions_expires' was on gc-list for 1806 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:04:16 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_groupe_comptables_expires' was on gc-list for 1806 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:18:58 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_produits_expires' was on gc-list for 1806 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:20:13 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_tarifs_expires' was on gc-list for 1810 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:20:28 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_core_dir_map_expires' was on gc-list for 1809 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:20:58 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_core_dir_map_expires' was on gc-list for 1804 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:20:58 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_acos_expires' was on gc-list for 1807 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:21:18 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_location_extras_expires' was on gc-list for 1802 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:21:33 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_proformas_expires' was on gc-list for 1805 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 11:52:31 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_operations_expires' was on gc-list for 1808 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 12:00:17 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_pertes_expires' was on gc-list for 1801 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 12:00:17 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_chambres_expires' was on gc-list for 1801 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 12:07:10 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Config.personnel_id' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-07-15 12:07:14 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Config.personnel_id' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-07-15 12:07:14 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Config.personnel_id' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-07-15 12:45:41 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_historiques_expires' was on gc-list for 1806 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 12:51:56 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_chambres_expires' was on gc-list for 1804 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 12:55:41 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_chambres_expires' was on gc-list for 1813 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-07-15 12:55:41 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_tiers_expires' was on gc-list for 1813 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-10 17:23:42 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_historiques_expires' was on gc-list for 1932 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-10 17:23:42 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_mouvements_expires' was on gc-list for 1932 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-10 17:23:42 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_sortis_expires' was on gc-list for 1932 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-10 17:23:42 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_salles_expires' was on gc-list for 1932 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-10 17:23:42 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_fonctions_expires' was on gc-list for 1932 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-10 17:23:42 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_operations_expires' was on gc-list for 1942 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-10 17:23:42 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_factures_expires' was on gc-list for 1942 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-15 13:19:30 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_caisses' was on gc-list for 1801 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-15 13:25:13 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_reservations_expires' was on gc-list for 2063 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-08-20 08:18:55 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Config.personnel_id' in 'on clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-20 08:19:12 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Config.personnel_id' in 'on clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-24 13:06:57 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Reduction.date' in 'order clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-24 13:06:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/reductions/index.ctp, line 70]
+2015-08-24 13:06:57 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Reduction.date' in 'order clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-24 13:06:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/reductions/index.ctp, line 70]
+2015-08-24 13:19:38 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Personnel.name' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-24 13:21:00 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '18-1' for key 'tier_id_2'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-24 13:24:11 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry '18-1' for key 'tier_id_2'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-24 13:56:57 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [actif] => oui
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Reductions/disable in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2015-08-24 14:34:20 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'PU' cannot be null</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-08-25 12:18:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/produits/monthly.ctp, line 43]
+2015-09-03 15:17:04 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_configs_expires' was on gc-list for 1803 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-09-03 15:17:04 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_chambres_expires' was on gc-list for 1803 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-09-03 15:17:04 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-09-03 15:17:19 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_mouvements_expires' was on gc-list for 1807 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-09-03 15:17:36 Warning: Warning (2): apc_store() [<a href='http://php.net/function.apc-store'>function.apc-store</a>]: GC cache entry 'app_cake_model_default_groupe_comptables_expires' was on gc-list for 1812 seconds in [/var/www/aser/cake/libs/cache/apc.php, line 61]
+2015-09-17 11:23:16 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'PV' cannot be null</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 11:23:19 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'PV' cannot be null</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 11:29:30 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'PV' cannot be null</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 11:39:40 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'PV' cannot be null</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 11:45:21 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/produits/view.ctp, line 55]
+2015-09-17 11:45:24 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/produits/view.ctp, line 55]
+2015-09-17 11:58:28 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/produits/view.ctp, line 55]
+2015-09-17 11:58:31 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/produits/view.ctp, line 55]
+2015-09-17 14:13:00 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'deteleAll' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 14:13:00 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'deteleAll' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 14:13:39 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1451: Cannot delete or update a parent row: a foreign key constraint fails (`aser`.`reductions`, CONSTRAINT `reduction_produit` FOREIGN KEY (`produit_id`) REFERENCES `produits` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 14:15:53 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Array' in 'where clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-17 15:15:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/utility_controller.php, line 40]
+2015-09-17 16:14:48 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/utility_controller.php, line 41]
+2015-09-17 16:17:57 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Array' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-18 11:42:16 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-18 16:11:08 Warning: Warning (2): Missing argument 1 for LimitsController::generate_yearly_limits() in [/var/www/aser/app/controllers/limits_controller.php, line 7]
+2015-09-18 16:12:10 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Limit.id' in 'where clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-18 16:16:57 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:16:57 Warning: Warning (2): Missing argument 2 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:16:57 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:16:58 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:16:58 Warning: Warning (2): Missing argument 2 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:16:58 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:17:03 Warning: Warning (2): Missing argument 2 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:17:03 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:17:04 Warning: Warning (2): Missing argument 2 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:17:04 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:18:49 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:19:02 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:19:02 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:19:02 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:19:02 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:19:48 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 16:21:00 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:21:01 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:21:36 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:21:36 Warning: Warning (2): cal_days_in_month() [<a href='http://php.net/function.cal-days-in-month'>function.cal-days-in-month</a>]: invalid date. in [/var/www/aser/app/views/limits/index.ctp, line 36]
+2015-09-18 16:22:59 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 17:27:45 Warning: Warning (2): Missing argument 2 for LimitsController::set_montant() in [/var/www/aser/app/controllers/limits_controller.php, line 47]
+2015-09-18 17:54:21 Warning: Warning (2): Missing argument 4 for LimitsController::generate_monthly_limits() in [/var/www/aser/app/controllers/limits_controller.php, line 35]
+2015-09-18 18:02:16 Warning: Warning (2): Missing argument 1 for LimitsController::index() in [/var/www/aser/app/controllers/limits_controller.php, line 20]
+2015-09-18 18:04:53 Warning: Warning (2): rand() expects parameter 1 to be long, string given in [/var/www/aser/app/controllers/limits_controller.php, line 34]
+2015-09-19 14:09:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:09:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:24:14 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:24:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:26:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:26:58 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:27:32 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:27:33 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:31:42 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:31:43 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:31:58 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:31:59 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:32:02 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 14:32:03 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 15:01:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 15:01:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-19 16:18:01 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/utility_controller.php, line 53]
+2015-09-20 15:18:23 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`factures`, CONSTRAINT `facture_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-20 15:18:34 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`factures`, CONSTRAINT `facture_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-22 11:58:49 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-22 11:58:58 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-22 12:09:37 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-22 12:27:09 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-22 12:28:43 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_tier` FOREIGN KEY (`tier_id`) REFERENCES `tiers` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-23 09:24:49 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`locations`, CONSTRAINT `location_facture` FOREIGN KEY (`facture_id`) REFERENCES `factures` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-23 09:24:49 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`location_extras`, CONSTRAINT `location_location_extra` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-23 09:25:22 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`locations`, CONSTRAINT `location_facture` FOREIGN KEY (`facture_id`) REFERENCES `factures` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-23 09:25:22 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser`.`location_extras`, CONSTRAINT `location_location_extra` FOREIGN KEY (`location_id`) REFERENCES `locations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-09-23 10:10:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-23 10:10:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-23 10:20:39 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-23 10:20:40 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-09-25 16:31:28 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'tier_id' cannot be null</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-12 18:27:42 Warning: Warning (2): Illegal string offset 'aaa' in [/var/www/aser/app/controllers/operations_controller.php, line 570]
+2015-10-12 18:28:03 Warning: Warning (2): Illegal string offset 'aaa' in [/var/www/aser/app/controllers/operations_controller.php, line 570]
+2015-10-12 21:31:46 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Operation.Type,categorie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-12 21:31:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/controllers/operations_controller.php, line 613]
+2015-10-12 22:47:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/operations/resultat.ctp, line 93]
+2015-10-12 22:47:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/operations/resultat.ctp, line 93]
+2015-10-12 22:48:11 Warning: Warning (2): number_format() expects parameter 1 to be double, array given in [/var/www/aser/cake/libs/view/helpers/number.php, line 153]
+2015-10-12 22:48:12 Warning: Warning (2): number_format() expects parameter 1 to be double, array given in [/var/www/aser/cake/libs/view/helpers/number.php, line 153]
+2015-10-12 22:49:12 Warning: Warning (2): number_format() expects parameter 1 to be double, array given in [/var/www/aser/cake/libs/view/helpers/number.php, line 153]
+2015-10-12 22:49:13 Warning: Warning (2): number_format() expects parameter 1 to be double, array given in [/var/www/aser/cake/libs/view/helpers/number.php, line 153]
+2015-10-27 14:25:15 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-27 14:25:15 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:44:51 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:44:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:44:52 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:44:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:16 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:16 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:16 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:17 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:17 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:17 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:19 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:19 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 12:48:19 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 12:48:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 13:02:24 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:02:25 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:03:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:03:11 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:03:37 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:03:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:04:15 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:04:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:04:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:04:21 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-10-28 13:35:17 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 13:35:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-28 13:35:20 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-28 13:35:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-10-29 15:35:59 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`Unite`.`name`) AS  `Produit__name_with_unit` FROM `produits` AS `Produit`   WHE' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-29 15:36:00 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`Unite`.`name`) AS  `Produit__name_with_unit`, `Stock`.`id`, `Stock`.`name`, `Pe' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-29 15:36:00 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/entrees/index.ctp, line 137]
+2015-10-29 15:36:01 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`Unite`.`name`) AS  `Produit__name_with_unit` FROM `produits` AS `Produit`   WHE' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-29 15:36:01 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`Unite`.`name`) AS  `Produit__name_with_unit`, `Stock`.`id`, `Stock`.`name`, `Pe' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-29 15:53:02 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`Unite`.`name`) AS  `Produit__name_with_unit`, `Stock`.`id`, `Stock`.`name`, `Pe' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-10-29 15:53:02 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/entrees/index.ctp, line 137]
+2015-10-29 15:53:03 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1064: You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '`Unite`.`name`) AS  `Produit__name_with_unit`, `Stock`.`id`, `Stock`.`name`, `Pe' at line 1</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-03 14:42:11 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-03 14:42:12 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-03 14:43:50 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-03 14:43:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:49:58 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:49:59 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:51:22 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:51:23 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:52:54 Warning: Warning (2): Missing argument 1 for FacturesController::view() in [/var/www/aser/app/controllers/factures_controller.php, line 1469]
+2015-11-04 13:53:47 Warning: Warning (2): Missing argument 1 for FacturesController::view() in [/var/www/aser/app/controllers/factures_controller.php, line 1469]
+2015-11-04 13:53:58 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:53:59 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:54:37 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-04 13:54:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-05 10:28:06 Warning: Warning (2): Missing argument 2 for VentesController::_addJournalHandler(), called in /var/www/aser/app/controllers/ventes_controller.php on line 2675 and defined in [/var/www/aser/app/controllers/ventes_controller.php, line 2637]
+2015-11-24 14:41:08 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-24 14:41:09 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-24 14:42:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-24 14:42:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 11:08:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:08:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:08:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:08:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:08:38 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:08:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:08:38 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:08:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:39:10 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:39:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:39:10 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:39:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:51:26 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:51:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:51:26 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:51:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:51:27 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:51:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:51:27 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:51:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:51:28 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:51:28 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:51:29 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:51:29 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:52:15 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:52:15 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:52:15 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:52:15 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:52:19 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:52:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:52:20 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:52:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:52:20 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:52:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 11:52:20 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 11:52:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:32 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:32 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:32 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:32 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:34 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:34 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:34 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:34 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:36 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:47 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:47 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:51 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:06:51 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:06:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:34 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:34 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:34 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:34 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:36 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:36 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:37 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:37 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:31:37 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-27 12:31:37 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2015-11-27 12:38:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:38:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:40:09 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:40:09 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:45:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:45:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:50:22 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:50:23 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:50:25 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:50:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:50:28 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:50:29 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-11-27 12:54:48 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-11-27 16:31:46 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-11-30 23:24:00 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Facture.aserb_date' in 'where clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-30 23:24:00 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/aserb_report.ctp, line 44]
+2015-11-30 23:24:01 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Facture.aserb_date' in 'where clause'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-11-30 23:24:01 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/aserb_report.ctp, line 44]
+2015-12-01 16:29:31 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2015-12-04 11:22:14 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1451: Cannot delete or update a parent row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_stock` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-12-04 11:22:20 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1451: Cannot delete or update a parent row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_stock` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-12-04 11:22:27 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1451: Cannot delete or update a parent row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_stock` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-12-04 11:24:51 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1451: Cannot delete or update a parent row: a foreign key constraint fails (`aser`.`entrees`, CONSTRAINT `entree_stock` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2015-12-07 16:33:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-07 16:33:18 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-07 16:33:32 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-07 16:33:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-07 16:34:07 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-07 16:34:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-09 10:43:11 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-09 10:43:14 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-09 10:44:18 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [actif] => oui
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Factures/check_aserb_number_availability in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2015-12-09 10:45:15 Warning: Warning (2): Missing argument 2 for FacturesController::check_aserb_number_availability() in [/var/www/aser/app/controllers/factures_controller.php, line 10]
+2015-12-09 10:47:21 Warning: Warning (2): Missing argument 1 for FacturesController::check_aserb_number_availability() in [/var/www/aser/app/controllers/factures_controller.php, line 10]
+2015-12-09 10:47:21 Warning: Warning (2): Missing argument 2 for FacturesController::check_aserb_number_availability() in [/var/www/aser/app/controllers/factures_controller.php, line 10]
+2015-12-09 10:47:22 Warning: Warning (2): Missing argument 1 for FacturesController::check_aserb_number_availability() in [/var/www/aser/app/controllers/factures_controller.php, line 10]
+2015-12-09 10:47:22 Warning: Warning (2): Missing argument 2 for FacturesController::check_aserb_number_availability() in [/var/www/aser/app/controllers/factures_controller.php, line 10]
+2015-12-15 09:08:33 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:08:34 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:09:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:09:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:09:29 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:09:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:10:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:10:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:10:58 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-15 09:10:59 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:45:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:45:58 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:47:29 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:47:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:49:26 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:49:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:52:02 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 11:52:03 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 12:58:31 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 12:58:32 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 12:59:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 12:59:28 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 12:59:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 12:59:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 13:06:25 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 13:06:25 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 13:06:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 13:06:53 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 13:07:18 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2015-12-21 13:07:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:05:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:05:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:06:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:06:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:07:00 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:07:03 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:07:44 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-01-25 14:07:48 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-02-09 10:29:59 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:30:00 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:01 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:19 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:30:19 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:19 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:30:19 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2016-02-09 10:30:19 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:19 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:37 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:30:37 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:37 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:55 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:30:55 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:30:55 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:31:15 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:31:15 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:31:15 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]
+2016-02-09 10:31:15 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:31:15 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:31:15 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:31:33 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:31:33 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:31:33 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:31:49 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:31:49 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:31:49 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:32:07 Warning: Warning (512): AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => Personnel
+    [Aro0.foreign_key] => 140
+)
+" in [/var/www/aser/cake/libs/model/db_acl.php, line 191]
+2016-02-09 10:32:07 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/update_tables in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-02-09 10:32:07 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 140
+            [name] => caissier
+            [code] => 123
+            [fonction_id] => 2
+            [actif] => oui
+            [identifiant] => caissier
+            [last_action] => 2014-12-24 17:43:22
+            [created] => 2014-12-24 16:52:11
+            [modified] => 2016-02-09 10:25:59
+        )
+
+)
+
+Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.php, line 273]
+2016-03-29 16:59:37 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:37 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:37 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:37 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:38 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:38 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:38 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:38 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:38 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:40 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:40 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:40 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:40 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:41 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:41 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-03-29 16:59:41 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-03-29 16:59:41 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-04-14 16:57:44 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-04-14 16:57:44 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-04-14 16:57:44 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-04-14 16:57:44 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/tiers/auto_complete.ctp, line 2]
+2016-04-27 06:07:43 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:07:44 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:11:34 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:11:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:11:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:11:54 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:14:07 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:14:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:14:27 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:14:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:25:15 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:25:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:28:07 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:28:09 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:48:13 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:48:19 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:50:53 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:50:55 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:51:18 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:51:20 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:51:49 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:51:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:52:07 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:52:11 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:53:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:53:33 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:53:45 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:53:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:54:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:55:00 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:56:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:57:00 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:57:32 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:57:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:57:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-04-27 06:57:54 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:14:51 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:14:53 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:15:15 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:15:17 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:17:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:17:48 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:17:57 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:17:59 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:18:13 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:18:16 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:18:41 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:18:44 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:18:52 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-05-04 13:18:56 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser/app/views/factures/vue_cptable.ctp, line 21]
+2016-06-20 18:54:47 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'PA' cannot be null</span> in [/var/www/aser/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-06-20 18:54:48 Warning: Warning (2): Cannot modify header information - headers already sent by (output started at /var/www/aser/cake/libs/debugger.php:686) in [/var/www/aser/cake/libs/controller/controller.php, line 742]

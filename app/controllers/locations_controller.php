@@ -290,6 +290,7 @@ class LocationsController extends AppController {
 		$location=$this->Location->find('first',array('conditions'=>array('Location.id'=>$id),
 													'fields'=>array('Location.*',
 																	'Facture.date',
+																	'Facture.tva_incluse',
 																	),
 													));
 		
@@ -366,128 +367,136 @@ class LocationsController extends AppController {
 
 		$go=($edit)?true:$this->_checker($this->data);
 		if($go){
-			$jrs=$this->Product->diff($this->data['Location']['arrivee'], $this->data['Location']['depart'])+1;
-			$this->data['Location']['PU']=$montant;
-			$this->data['Location']['location']=$jrs*$montant;
-//			$this->data['Location']['monnaie']=Configure::read('aser.default_currency');
-			$this->data['Location']['etat']=($edit)?$this->data['Location']['etat']:'en_attente';
-			$this->Location->save($this->data);
-			$id=$this->Location->id;
-			$total=0;
-			//calcul des services (pause cafe,...)
-		if(isset($this->data['services'])){
-			foreach($this->data['services'] as $service=>$detail){
-				if(!empty($detail['prix'])){
-					$extra['LocationExtra']['location_id']=$id;
-					$extra['LocationExtra']['extra']=($this->data['Location']['type']=='proforma')?'non':'resto';
-					$extra['LocationExtra']['name']=$service;
-					$extra['LocationExtra']['heure']=(!empty($detail['heure'])) ? $detail['heure']: '';
-					$extra['LocationExtra']['quantite']=(empty($detail['quantite'])) ?
-														$jrs*$this->data['Location']['nombre']:
-														$detail['quantite'];
-					$extra['LocationExtra']['PU']=$detail['prix'];
-					$extra['LocationExtra']['montant']=$extra['LocationExtra']['quantite']*$detail['prix'];
-					$extra['LocationExtra']['monnaie']=$this->data['Location']['monnaie'];
-					//include this in the location bill 
-					if($this->data['Location']['type']=='bill'){
-						$total+=$extra['LocationExtra']['montant'];
+				//first create the bill on which I going to add the location details
+				$facture['Facture']['tier_id']=$this->data['Location']['tier_id'];
+				$facture['Facture']['monnaie']=$this->data['Location']['monnaie'];
+				if(!$edit){
+					$facture['Facture']['etat']='proforma';
+					$facture['Facture']['operation']='Location';
+					$facture['Facture']['date']=$this->data['Location']['date'];
+					if(!$this->Location->Facture->save($facture)){
+						exit(json_encode(array('success'=>false, 'msg'=>'Avec la création de la facture!')));
 					}
-					$this->Location->LocationExtra->save($extra);
-					unset($this->Location->LocationExtra->id);
-					unset($extra);
+					$factureId=$this->Location->Facture->id;
+					//putting the facture numero
+					$this->Product->facture_number($factureId,'Location');
 				}
-			}
-		}	
-		unset($extra);
-		//calcul des extras qui font partie permanante de la facture location
-		if(isset($this->data['extras'])){	//calcul des extras
-	//	exit(debug($this->data));
-			foreach($this->data['extras'] as $detail){
-				if(!empty($detail['prix'])&&!empty($detail['qte'])){
-					$extra['LocationExtra']['location_id']=$id;
-					$extra['LocationExtra']['extra']='oui';
-					$extra['LocationExtra']['name']=$detail['name'];
-					$extra['LocationExtra']['quantite']=(Configure::read('aser.conference-manual')) ?
-													   $detail['qte']:
-													   $detail['qte']*$jrs;
-					$extra['LocationExtra']['PU']=$detail['prix'];
-					$extra['LocationExtra']['montant']=$extra['LocationExtra']['quantite']*$detail['prix'];
-					$extra['LocationExtra']['monnaie']=$this->data['Location']['monnaie'];
-					$total+=$extra['LocationExtra']['montant'];
-				
-					$this->Location->LocationExtra->save($extra);
-					unset($this->Location->LocationExtra->id);
+				else {
+					$factureId = $this->data['Location']['facture_id'];
 				}
-			}
-		}
-		$facture['Facture']['tier_id']=$this->data['Location']['tier_id'];
-		//stop editing the price if it is a proforma modification
-		if(!$edit||($edit&&($this->data['Location']['type']=='bill'))||!Configure::read('aser.conference-resto-reception')){
-			$update['Location']['extras']=$total;
-			$update['Location']['montant']=$update['Location']['extras']+$this->data['Location']['location'];
-			
-			//determination de la tva
-			$facture['Facture']['tva_incluse']=$this->data['Location']['tva_incluse'];
-			$facture['Facture']['tva']=$this->Product->tva($update['Location']['montant'],$this->data['Location']['tva_incluse']);
-			if(!$facture['Facture']['tva_incluse']){
-				$update['Location']['montant']+=$facture['Facture']['tva'];
-			}
+				$this->data['Location']['facture_id']=$factureId;
+				$this->data['Location']['depart'] = (!empty($this->data['Location']['autre_date_depart']))?
+																							$this->data['Location']['autre_date_depart']:
+																							$this->data['Location']['depart'];
+				$jrs=$this->Product->diff($this->data['Location']['arrivee'], $this->data['Location']['depart'])+1;
+				$this->data['Location']['PU']=$montant;
+				$this->data['Location']['location']=$jrs*$montant;
+	//			$this->data['Location']['monnaie']=Configure::read('aser.default_currency');
+				$this->data['Location']['etat']=($edit)?$this->data['Location']['etat']:'en_attente';
+				if(!$this->Location->save($this->data)){
+					exit(json_encode(array('success'=>false, 'msg'=>'Avec la création de la location!')));
+				}
+				$id=$this->Location->id;
+				$total=0;
+				//calcul des services (pause cafe,...)
+				if(isset($this->data['services'])){
+					foreach($this->data['services'] as $service=>$detail){
+						if(!empty($detail['prix'])){
+							$extra['LocationExtra']['location_id']=$id;
+							$extra['LocationExtra']['extra']=($this->data['Location']['type']=='proforma')?'non':'resto';
+							$extra['LocationExtra']['name']=$service;
+							$extra['LocationExtra']['heure']=(!empty($detail['heure'])) ? $detail['heure']: '';
+							$extra['LocationExtra']['quantite']=(empty($detail['quantite'])) ?
+																$jrs*$this->data['Location']['nombre']:
+																$detail['quantite'];
+							$extra['LocationExtra']['PU']=$detail['prix'];
+							$extra['LocationExtra']['montant']=$extra['LocationExtra']['quantite']*$detail['prix'];
+							$extra['LocationExtra']['monnaie']=$this->data['Location']['monnaie'];
+							//include this in the location bill 
+							if($this->data['Location']['type']=='bill'){
+								$total+=$extra['LocationExtra']['montant'];
+							}
+							$this->Location->LocationExtra->save($extra);
+							unset($this->Location->LocationExtra->id);
+							unset($extra);
+						}
+					}
+				}	
+				unset($extra);
+				//calcul des extras qui font partie permanante de la facture location
+				if(isset($this->data['extras'])){	//calcul des extras
+			//	exit(debug($this->data));
+					foreach($this->data['extras'] as $detail){
+						if(!empty($detail['prix'])&&!empty($detail['qte'])){
+							$extra['LocationExtra']['location_id']=$id;
+							$extra['LocationExtra']['extra']='oui';
+							$extra['LocationExtra']['name']=$detail['name'];
+							$extra['LocationExtra']['quantite']=(Configure::read('aser.conference-manual')) ?
+															   $detail['qte']:
+															   $detail['qte']*$jrs;
+							$extra['LocationExtra']['PU']=$detail['prix'];
+							$extra['LocationExtra']['montant']=$extra['LocationExtra']['quantite']*$detail['prix'];
+							$extra['LocationExtra']['monnaie']=$this->data['Location']['monnaie'];
+							$total+=$extra['LocationExtra']['montant'];
+						
+							$this->Location->LocationExtra->save($extra);
+							unset($this->Location->LocationExtra->id);
+						}
+					}
+				}
+		
+				//stop editing the price if it is a proforma modification
+				if(!$edit||($edit&&($this->data['Location']['type']=='bill'))||!Configure::read('aser.conference-resto-reception')){
+					$update['Location']['extras']=$total;
+					$update['Location']['montant']=$update['Location']['extras']+$this->data['Location']['location'];
+					
+					//determination de la tva
+					$facture['Facture']['tva_incluse']=$this->data['Facture']['tva_incluse'];
+					$facture['Facture']['tva']=$this->Product->tva($update['Location']['montant'],$this->data['Facture']['tva_incluse']);
+					if(!$facture['Facture']['tva_incluse']){
+						$update['Location']['montant']+=$facture['Facture']['tva'];
+					}
 
-			$facture['Facture']['original']=$update['Location']['montant'];
-			$facture['Facture']['montant']=$update['Location']['montant'];
-			$facture['Facture']['reste']=$update['Location']['montant'];
-			$facture['Facture']['date']=$this->data['Location']['date'];
-		}
-			if(!$edit){
-				$facture['Facture']['etat']='proforma';
-			}
-			$facture['Facture']['monnaie']=$this->data['Location']['monnaie'];
-			$facture['Facture']['operation']='Location';
-			if(!$edit){
-				$this->Location->Facture->save($facture);
-				$factureId=$this->Location->Facture->id;
-				//update location
-				$update['Location']['id']=$id;
-				$update['Location']['facture_id']=$factureId;
-				$this->Location->save($update);
+					$facture['Facture']['original']=$update['Location']['montant'];
+					$facture['Facture']['montant']=$update['Location']['montant'];
+					$facture['Facture']['reste']=$update['Location']['montant'];
+					$facture['Facture']['date']=$this->data['Location']['date'];
+					$facture['Facture']['id']=$factureId;
+					if(!$this->Location->Facture->save($facture)){
+						exit(json_encode(array('success'=>false, 'msg'=>"Problème avec l'actualisation de la facture")));
+					}
+				}
 			
-				//putting the facture numero
-				$this->Product->facture_number($factureId,'Location');
+				//trace stuff for locations
+			
+				$trace['Trace']['model_id']=$id;
+				$trace['Trace']['model']='Location';
+				$tierInfo=$this->Location->Tier->find('first',array('conditions'=>array('Tier.id'=>$this->data['Location']['tier_id']),
+																	'fields'=>array('Tier.name')
+																	));
+				$action=($edit)?'Modification':'Création';
+				$trace['Trace']['operation']=$action.' de la location avec les détails suivants : Client = "'.$tierInfo['Tier']['name'].
+											'" nombre de clients = "'.$this->data['Location']['nombre'].
+											'" Prix/Jour = "'.$this->data['Location']['PU'].'"';
+				if(!$this->Location->Trace->save($trace)){
+						exit(json_encode(array('success'=>false, 'msg'=>"Problème avec l'enregistrement de la trace de la location")));
+				}
 				
+				//trace stuff for facture
+				$trace['Trace']['id']=null;
+				$trace['Trace']['model_id']=$factureId;
+				$trace['Trace']['model']='Facture';
+				$trace['Trace']['operation']=$action.' de la Facture avec les détails suivants : Client = "'.$tierInfo['Tier']['name'].
+											'" date = "'.$this->Product->formatDate($this->data['Location']['date']).'"';
+				if(!$this->Location->Trace->save($trace)){
+						exit(json_encode(array('success'=>false, 'msg'=>"Problème avec l'enregistrement de la trace de la facture")));
+				}
+				
+				exit(json_encode(array('success'=>true,'msg'=>'Powere !','id'=>$id,'facture_id'=>$factureId)));
 			}
 			else {
-				
-				$facture['Facture']['id']=$this->data['Location']['facture_id'];
-				$this->Location->Facture->save($facture);
-				$factureId=$this->data['Location']['facture_id'];
+				exit(json_encode(array('success'=>false,'msg'=>'Salle Non disponible !')));
 			}
-			
-			//trace stuff for locations
-			
-			$trace['Trace']['model_id']=$id;
-			$trace['Trace']['model']='Location';
-			$tierInfo=$this->Location->Tier->find('first',array('conditions'=>array('Tier.id'=>$this->data['Location']['tier_id']),
-																'fields'=>array('Tier.name')
-																));
-			$action=($edit)?'Modification':'Création';
-			$trace['Trace']['operation']=$action.' de la location avec les détails suivants : Client = "'.$tierInfo['Tier']['name'].
-										'" nombre de clients = "'.$this->data['Location']['nombre'].
-										'" Prix/Jour = "'.$this->data['Location']['PU'].'"';
-			$this->Location->Trace->save($trace);
-			
-			//trace stuff for facture
-			$trace['Trace']['id']=null;
-			$trace['Trace']['model_id']=$factureId;
-			$trace['Trace']['model']='Facture';
-			$trace['Trace']['operation']=$action.' de la Facture avec les détails suivants : Client = "'.$tierInfo['Tier']['name'].
-										'" date = "'.$this->Product->formatDate($this->data['Location']['date']).'"';
-			$this->Location->Trace->save($trace);
-			
-			exit(json_encode(array('success'=>true,'msg'=>'Powere !','id'=>$id,'facture_id'=>$factureId)));
-		}
-		else {
-			exit(json_encode(array('success'=>false,'msg'=>'Salle Non disponible !')));
-		}
 	}
 }
 ?>

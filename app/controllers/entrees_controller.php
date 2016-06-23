@@ -202,13 +202,12 @@ class EntreesController extends AppController {
 	//	exit(debug($return));
 		if($return['success']){
 			//Saving the entree of goods
+		//	exit(debug($data));
 			if(!$this->Entree->save($data)){
 				$this->loadModel('Historique');
 				$this->Historique->delete($data['Entree']['historique_id']);
 				$this->_error($action, 'entree probleme');
 			}
-
-			
 			//Saving the product info that may have been changed like unite de mesure
 			$this->Entree->Produit->save($data);
 		}

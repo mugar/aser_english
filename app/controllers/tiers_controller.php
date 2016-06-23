@@ -17,6 +17,7 @@ class TiersController extends AppController {
 		set_time_limit(240);    //4minutes
 		ini_set('memory_limit', '64M');
 
+		$message='Failed to save : ';
 			$id=$this->data['rowId'];
 			$ids=array();
 			foreach($this->data['Id'] as $value){
@@ -24,52 +25,64 @@ class TiersController extends AppController {
 					$ids[]=$value;
 				}
 			}
-			$names=$this->Tier->find('all',array('fields'=>array('Tier.id'),
+			$names=$this->Tier->find('all',array('fields'=>array('Tier.*'),
 													'conditions'=>array('Tier.id'=>$ids)
 													));
 			foreach($names as $name){
-				$services=$this->Service->find('all',array('fields'=>array('Service.id'),
+				$services=$this->Service->find('all',array('fields'=>array('Service.*'),
 																'conditions'=>array('Service.tier_id'=>$name['Tier']['id'])
 																));
 				foreach($services as $service){
 					$service['Service']['tier_id']=$id;
-					$this->Service->save($service);
+					if(!$this->Service->save($service)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.'Service')));
+					}
 				}
-				$entrees=$this->Entree->find('all',array('fields'=>array('Entree.id'),
+				$entrees=$this->Entree->find('all',array('fields'=>array('Entree.*'),
 																'conditions'=>array('Entree.tier_id'=>$name['Tier']['id'])
 																));
 				foreach($entrees as $entree){
 					$entree['Entree']['tier_id']=$id;
-					$this->Entree->save($entree);
+					if(!$this->Entree->save($entree)){
+							exit(json_encode(array('success'=>false,'msg'=>$message.'Entree')));
+					}
 				}
 				
-				$sortis=$this->Sorti->find('all',array('fields'=>array('Sorti.id'),
+				$sortis=$this->Sorti->find('all',array('fields'=>array('Sorti.*'),
 																'conditions'=>array('Sorti.tier_id'=>$name['Tier']['id'])
 																));
 				foreach($sortis as $sorti){
 					$sorti['Sorti']['tier_id']=$id;
-					$this->Sorti->save($sorti);
+					if(!$this->Sorti->save($sorti)){
+							exit(json_encode(array('success'=>false,'msg'=>$message.'Sorti')));
+					}
 				}
-				$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.id'),
+				$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.*'),
 																'conditions'=>array('Reservation.tier_id'=>$name['Tier']['id'])
 																));
 				foreach($reservations as $reservation){
 					$reservation['Reservation']['tier_id']=$id;
-					$this->Reservation->save($reservation);
+					if(!$this->Reservation->save($reservation)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.'Reservation')));
+					}
 				}
-				$locations=$this->Location->find('all',array('fields'=>array('Location.id'),
+				$locations=$this->Location->find('all',array('fields'=>array('Location.*'),
 																'conditions'=>array('Location.tier_id'=>$name['Tier']['id'])
 																));
 				foreach($locations as $location){
 					$location['Location']['tier_id']=$id;
-					$this->Location->save($location);
+					if(!$this->Location->save($location)){
+							exit(json_encode(array('success'=>false,'msg'=>$message.'Location')));
+					}
 				}
-				$factures=$this->Facture->find('all',array('fields'=>array('Facture.id'),
+				$factures=$this->Facture->find('all',array('fields'=>array('Facture.*'),
 																'conditions'=>array('Facture.tier_id'=>$name['Tier']['id'])
 																));
 				foreach($factures as $facture){
 					$facture['Facture']['tier_id']=$id;
-					$this->Facture->save($facture);
+					if(!$this->Facture->save($facture)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.'Facture')));
+					}
 				}
 				if($name['Tier']['id']!=$id){
 					$this->Tier->delete($name['Tier']['id']);
@@ -94,19 +107,30 @@ class TiersController extends AppController {
 		$conditions=$tiers=array();
 		if(!empty($this->data)){
 			foreach($this->data['Tier'] as $key=>$value){
-				if(($key!='actif')&&($value!='toutes')){
+				if(!in_array($key,array('export','actif'))&&($value!='toutes')){
 					$conditions['Tier.'.$key.' like ']='%'.$value.'%';
 				}
 			}
 			if($this->data['Tier']['actif']!='toutes'){
 				$conditions['Tier.actif']=($this->data['Tier']['actif']=='oui')?(1):(0);
 			}
-			$tiers=$this->Tier->find('all',array('conditions'=>$conditions,
+		}
+		$tiers=$this->Tier->find('all',array('conditions'=>$conditions,
 												'recursive'=>-1,
 												'order'=>array('Tier.name')
 										));
+		if(!empty($this->data['Tier']['export'])&&($this->data['Tier']['export']==1)){
+			$data=array();
+			foreach($tiers as $key=>$tier){
+				$data[$key]['Nom Complet']=$tier['Tier']['name'];
+			}
+			$name="liste_des_clients";
+			$filename=$this->Product->excel($data,array(),$name);
+			$this->redirect('/files/'.$filename);
 		}
-		$this->set('tiers',$tiers);
+		else {
+			$this->set('tiers',$tiers);
+		}
 	}
 	
 	function disable(){
@@ -303,7 +327,7 @@ class TiersController extends AppController {
 			$data['Tier']['actif']=1;
 			$data['Tier']['name']=str_ireplace(' ', '',$data['Tier']['nom']).' '.str_ireplace(' ', '',$data['Tier']['prenom']);
 		}
-		$data['Tier']['name']=$this->Product->name($data['Tier']['name']);
+		$data['Tier']['name']=trim($this->Product->name($data['Tier']['name']));
 		if(!empty($data['Tier']['id'])){
 			$cond['Tier.id !=']=$data['Tier']['id'];
 		}

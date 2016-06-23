@@ -79,7 +79,7 @@
 <script>
  jQuery.noConflict();
      jQuery(document).ready(function(){
-			jQuery(document).idleTimer(30000);
+			jQuery(document).idleTimer(120000);
 			jQuery( document ).on( "idle.idleTimer", function(){
 				document.location.href=getBase()+'personnels/logout';
 			});

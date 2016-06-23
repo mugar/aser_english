@@ -3,12 +3,13 @@
 <div class="document">
 <?php 
 //die(debug($produits));
- foreach($produits as $produit):?>
+$formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thousands'=>' ');
+ foreach($produits as $id=>$produit):?>
 <h3>
 <?php
-	if(!empty($produit)){
-		echo 'Mouvements du produit : '.$produit['Produit']['name'];
-		echo  ' <small style="color:blue;">(PA: '.$produit['Produit']['PA'].', PV: '.$produit['Produit']['PV'].')</small>';
+	if(!empty($produit['info'])){
+		echo 'Mouvements du produit : '.$produit['info']['name'];
+		echo  ' <small style="color:blue;">(PA: '.$produit['info']['PA'].', PV: '.$produit['info']['PV'].')</small>';
 		echo '<br/>';
 		echo 'Stock';
 		echo (count($stocks)>0)?'s':'';
@@ -42,19 +43,20 @@
 			<th>Entrée</th>
 			<th>Sortie</th>
 	</tr>
-	<?php if(!empty($produit['ants'][0])):?>
+	<?php if(!empty($produit['ant'])):?>
 	<tr>
 			<td>Avant le <?php echo $this->MugTime->toFrench($date1); ?></td>
-			<td><?php echo  $number->format($produit['ants'][0]['Historique']['solde'],$formatting); ?></td>
+			<td><?php echo  $number->format($produit['SI'],$formatting); ?></td>
+			<td></td>
 			<td></td>
 			<td></td>
 			<td></td>
 	</tr>
 	<?php endif;?>
-		<?php
-	foreach ($produit['op'] as $operation):
-		
-	?>
+
+	<?php if(!empty($produit['op'])):?>
+
+	<?php foreach ($produit['op'] as $operation): ?>
 	<tr>
 			<td><?php echo  $this->MugTime->toFrench($operation['Historique']['date']); 
 					if($operation['Historique']['date_expiration']){
@@ -81,7 +83,7 @@
 			<td><?php  echo   $number->format($produit['credit'],$formatting); ?></td>
 			<td><?php echo  $number->format($produit['solde'],$formatting); ?></td>
 	</tr>
-	
+<?php endif;?>	
 </table>
 <br />
 <br />

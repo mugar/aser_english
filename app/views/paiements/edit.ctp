@@ -84,7 +84,10 @@
 				echo $this->Form->input('reference',array('label'=>'Référence'));
 			}
 			
-			if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8)))
+			if(((Configure::read('aser.belair')==null)&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8)))
+				||
+				in_array($session->read('Auth.Personnel.fonction_id'),array(3))
+				)				
 				echo $this->Form->input('date',array('type'=>'text','label'=>'Date du paiement','id'=>'Date'.$type));
 			else
 				echo $this->Form->input('date',array('type'=>'hidden','value'=>date('Y-m-d')));

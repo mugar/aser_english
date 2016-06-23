@@ -24,15 +24,32 @@
 					echo $this->Html->link("N° : ".$journalInfo['Journal']['numero'], array('controller' => 'ventes', 'action' => 'journal', $journalInfo['Journal']['id']));
 					}
 			?><br />
+			<?php if(Configure::read('aser.xls_copy') && $facture['Facture']['aserb_num']){
+					echo 'Numéro lié '.$facture['Facture']['aserb_num'];
+				}
+			?>
 		</div>
 	<div class="right">
-	<?php  
-		if(!in_array($facture['Facture']['date_emission'],array('0000-00-00','',null)))  echo '<span id="dateId">Date : '.$this->MugTime->toFrench($facture['Facture']['date_emission']).'</span><br/>';
-		else  echo '<span id="dateId">Date : '.$this->MugTime->toFrench($facture['Facture']['date']).'</span><br/>';
-		echo '<br/><br/><br/><br/>';
-		echo $this->element('../tiers/details',array('client'=>$facture['Tier']));
-		if(!empty($facture['Facture']['bon_commande'])) echo '<br/> Bon de commande : '.$facture['Facture']['bon_commande'].'<br/>';
-		if(!empty($facture['Facture']['beneficiaire'])&&(Configure::read('aser.beneficiaires'))) echo '<br/> Béneficiaire : '.$facture['Facture']['beneficiaire'].'<br/>';
+		
+		<?php  
+			if(!in_array($facture['Facture']['date_emission'],array('0000-00-00','',null)))  echo '<span id="dateId">Date : '.$this->MugTime->toFrench($facture['Facture']['date_emission']).'</span><br/>';
+			else  echo '<span id="dateId">Date : '.$this->MugTime->toFrench($facture['Facture']['date']).'</span><br/>';
+			echo '<br/><br/><br/><br/>';
+		?>	
+			<div id="client_details">
+				<?php 
+					echo $this->element('../tiers/details',array('client'=>$facture['Tier']));
+					if(!empty($facture['Facture']['bon_commande'])) echo '<br/> Bon de commande : '.$facture['Facture']['bon_commande'].'<br/>';
+					if(!empty($facture['Facture']['beneficiaire'])&&(Configure::read('aser.beneficiaires'))) echo '<br/> Béneficiaire : '.$facture['Facture']['beneficiaire'].'<br/>';
+				?>
+			</div>
+		 <?php 
+		 //exit(debug($locationInfo));
+		 if($model=='Location' && $locationInfo['Location']['arrivee'] && $locationInfo['Location']['depart']){
+		 	echo 'Date d\'entrée : '.$this->MugTime->toFrench($locationInfo['Location']['arrivee']);
+			echo '<br/>';
+			echo 'Date de sortie : '.$this->MugTime->toFrench($locationInfo['Location']['depart']);
+			}
 		?>
 		 <br/>
 	</div>
@@ -51,7 +68,7 @@
 <div id="billView">
 <span class="titre">Facture 
 	<?php echo $nature;?>
-		 <span id="displayed_num">
+		 <span id="displayed_num" xls_copy="<?php echo Configure::read('aser.xls_copy')*1 ?>">
 			<?php echo ' n° '.$facture['Facture']['numero'];?>
 		</span>
 	 </span>
@@ -68,7 +85,6 @@
 	<tr>
 			<th>Date</th>
 			<th>N° de Chambre</th>
-			<th>Type de Chambre</th>
 			<th>Montant (<?php echo $facture['Facture']['monnaie']; ?>)</th>
 	</tr>
 		<?php
@@ -83,7 +99,6 @@
 			<tr>
 				<td><?php echo  $this->MugTime->toFrench($this->MugTime->increase_date($book['Reservation']['arrivee'],$i)); ?></td>
 				<td><?php echo  $book['Chambre']['name']; ?></td>
-				<td><?php echo  $book['TypeChambre']['name']; ?></td>
 				<td><?php echo  $number->format($book['Reservation']['PU'],$formatting); ?></td>
 			</tr>
 	<?php endfor;?>
@@ -92,12 +107,10 @@
 	<tr class="strong">
 		<td>HTVA</td>
 		<td>&nbsp;</td>
-		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0); ?></span></td>
 	<tr>
 	<tr class="strong">
 		<td>TVA</td>
-		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format($facture['Facture']['tva']+0); ?></span></td>
 	<tr>
@@ -105,12 +118,10 @@
 	<tr class="strong">
 		<td>TOTAL <?php if($facture['Facture']['tva']!=0) echo '(TTC)';?></td>
 		<td>&nbsp;</td>
-		<td>&nbsp;</td>
 		<td><span id="a_payer" total="<?php echo $facture['Facture']['montant']; ?>"><?php echo ''.$number->format($facture['Facture']['montant']+0); ?></span></td>
 	<tr>
 	<tr class="strong">
 		<td>RESTE A PAYER</td>
-		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span id="reste_a_payer"><?php echo ''.$number->format($facture['Facture']['reste']+0); ?></span></td>
 	<tr>
@@ -489,9 +500,12 @@
 	<ul>
 		
 		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<?php if(($model!='Proforma')&&(!in_array($type,array('proforma','globale')))&&($facture['Facture']['etat'])!='annulee'):?>
+		<?php if(Configure::read('aser.xls_copy')):?>
+			<li class="link" onclick = "custom_printing('<?php echo $facture['Facture']['id']?>','<?php echo 'factures/view/'.$facture['Facture']['id'].'/'.$type.'/2'?>')" >Imprimer avec Détails</li>
+		<?php endif;?>
+		<?php if(($model!='Proforma')&&(!in_array($type,array('proforma')))&&($facture['Facture']['etat'])!='annulee'):?>
 			<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle()" >Afficher/Masquer les Paiements</li>
-			<li class="link" onclick = "pyt('<?php echo $this->params['pass'][0];?>')" >Créer un Paiement</li>
+			<li class="link" onclick = "pyt('<?php echo $this->params['pass'][0];?>','<?php echo $type;?>')" >Créer un Paiement</li>
 			<span id="pyts_links" style="display:none;">
 				<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))) :?>
 					<li class="link" onclick = "remove_pyt('off')" >Effacer un Paiement</li>
@@ -520,7 +534,7 @@
 		<?php endif;?>
 		<?php if($model=='Location'):?>
 			<li><?php echo $this->Html->link('Gestion des Locations', array('controller' => 'locations', 'action' => 'tabella')); ?> </li>
-			<?php if($type==''):?>
+			<?php if($type=='standard'):?>
 				<li><?php echo $this->Html->link('facture Proforma', array('controller' => 'factures', 'action' => 'view/'.$facture['Facture']['id'].'/proforma')); ?> </li>
 				<?php if(!Configure::read('aser.conference-resto-reception')):?>
 					<li><?php echo $this->Html->link('facture Globale', array('controller' => 'factures', 'action' => 'view/'.$facture['Facture']['id'].'/globale')); ?> </li>
@@ -534,12 +548,12 @@
 				<li><?php echo $this->Html->link('Facture location', array('controller' => 'factures', 'action' => 'view/'.$facture['Facture']['id'])); ?> </li>
 				<li><?php echo $this->Html->link('facture Proforma', array('controller' => 'factures', 'action' => 'view/'.$facture['Facture']['id'].'/proforma')); ?> </li>
 			<?php endif;?>
-			<?php if(Configure::read('aser.export_bills')):?>
-				<li><?php echo $this->Html->link('Exporter vers excel', array('controller' => 'factures', 'action' => 'view/'.$facture['Facture']['id'].'/'.$type.'/0/1')); ?> </li>
-			<?php endif;?>
 		<?php endif;?>
 		<li><?php echo $this->Html->link('Gestion des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link('Afficher l\'historique', array('controller' => 'traces', 'action' => 'index',$id,'Facture')); ?> </li>
+		<?php if(Configure::read('aser.export_bills')):?>
+				<li><?php echo $this->Html->link('Exporter vers excel', array('controller' => 'factures', 'action' => 'view/'.$facture['Facture']['id'].'/'.$type.'/1')); ?> </li>
+			<?php endif;?>
 		<?php if(in_array(Configure::read('aser.name'),array('aserb','belair'))||Configure::read('aser.chg_num')):?>
 			<li class="link" onclick = "num()" >Changer le numéro</li>
 		<?php endif;?>
@@ -550,7 +564,10 @@
 	</ul>
 </div>
 <!-- form for paiement creation -->
-<?php echo $this->element('../paiements/edit',array('reste'=>$facture['Facture']['reste'],'action'=>'add'));?>
+<?php 
+	$montant_a_payer = ($type=='globale')?0:$facture['Facture']['reste'];
+	echo $this->element('../paiements/edit',array('reste'=>$montant_a_payer,'action'=>'add'));
+?>
 
 <!--edit facture box -->
 <?php  echo $this->element('../factures/edit',array('facture'=>$facture['Facture']));?>

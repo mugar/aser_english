@@ -4,26 +4,37 @@ class ProduitsController extends AppController {
 	var $name = 'Produits';
 	var $failureMsg='Vérifiez s\'il les champs Section, Groupe et Nom sont remplis!';
 
+
+//* correct tvas
+	/*
 	function stuff(){
-		$this->loadModel('Entree');
-		$this->loadModel('Historique');
-		$entrees=$this->Entree->find('all',array('fields'=>array('Entree.date','Entree.produit_id','Entree.stock_id',
-														'Entree.quantite'
-														),
-										'conditions'=>array('Entree.date >='=>'2015-04-01')
-										));
-	//	exit(debug($entrees));
-		foreach($entrees as $entree){
-			$historique=$entree['Entree'];
-			$historique['id']=NULL;
-			$historique['debit']=$entree['Entree']['quantite'];
-			$historique['credit']=NULL;
-			if(!$this->Historique->save(array('Historique'=>$historique))){
-				exit(debug($historique));
-			}
+		$this->loadModel("Facture");
+		$factures = $this->Facture->find('all',array('fields'=>array('Facture.tva','Facture.montant','Facture.id','Facture.date','Facture.tva_incluse'),
+																					'conditions'=>array('Facture.date >='=>'2015-01-01',
+																															'Facture.tva != round((Facture.montant)*18/118)',
+																															'Facture.tva_incluse'=>1
+																															)
+																			));
+		exit(debug($factures));
+		foreach($factures as $facture){
+			$facture['Facture']['tva']=round(($facture['Facture']['montant'])*18/118);
+			$this->Facture->save($facture);
 		}
 	}
+//*/
 
+
+//* trim whitespace in product names
+	/*
+	function stuff(){
+		$produits = $this->Produit->find('all',array('fields'=>array('Produit.name','Produit.id'),
+																			));
+		foreach($produits as $produit){
+			$produit['Produit']['name']=trim($produit['Produit']['name']);
+			$this->Produit->save($produit);
+		}
+	}
+//*/
 
 
 	/*
@@ -123,8 +134,9 @@ class ProduitsController extends AppController {
 		set_time_limit(240);    //4minutes
 		ini_set('memory_limit', '64M');
 		$factures = $this->Facture->find('all',array('fields'=>array('Facture.id','Facture.date','Facture.numero','Facture.operation'),
-													'conditions'=>array('Facture.date >='=>'2015-02-01',
-																		'Facture.journal_id'=>null
+													'conditions'=>array('Facture.date'=>'2015-02-01',
+																							'Facture.operation'=>'Vente'
+																		//'Facture.journal_id'=>null
 																		),
 													'order'=>array('Facture.numero asc')
 													));
@@ -133,6 +145,20 @@ class ProduitsController extends AppController {
 			$facture['Facture']['journal_id']=3113;
 			if(!$this->Facture->save($facture)){
 				exit(debug($facture));			
+			}
+		}
+
+		$paiements = $this->Paiement->find('all',array('fields'=>array('Paiement.id','Paiement.date','Paiement.numero','Facture.operation'),
+													'conditions'=>array('Paiement.date'=>'2015-02-01',
+																							'Facture.operation'=>'Vente'
+																		//'Paiement.journal_id'=>null
+																		),
+													));
+		//exit(debug($paiements));
+		foreach($paiements as $paiement){
+			$paiement['Paiement']['journal_id']=3113;
+			if(!$this->Paiement->save($paiement)){
+				exit(debug($paiement));			
 			}
 		}
 	}
@@ -428,7 +454,7 @@ set_time_limit(240);    //4minutes
 		$this->set(compact('produits','stockNames','stockIds','referer','choix','date'));
 	}
 	function monthly(){
-		
+		$stock_id=0;
 		if(!empty($this->data)){
 			if($this->data['Historique']['stock_id']==0){
 				$this->data['Historique']['stock_id']=array_keys($this->stocks);
@@ -496,6 +522,7 @@ set_time_limit(240);    //4minutes
 		$this->loadModel('Mouvement');
 		$this->loadModel('Vente');
 		
+		$message='Failed to save : ';
 		set_time_limit(240);    //4minutes
 		ini_set('memory_limit', '64M');
 		
@@ -512,48 +539,61 @@ set_time_limit(240);    //4minutes
 													'conditions'=>array('Produit.id'=>$ids)
 													));
 			foreach($names as $name){
-				$historiques=$this->Historique->find('all',array('fields'=>array('Historique.id'),
+				$historiques=$this->Historique->find('all',array('fields'=>array('Historique.*'),
 																'conditions'=>array('Historique.produit_id'=>$name['Produit']['id'])
 																));
 				foreach($historiques as $historique){
 					$historique['Historique']['produit_id']=$id;
-					$this->Historique->save($historique);
+				//	exit(debug($historique));
+					if(!$this->Historique->save($historique)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.' Historique')));
+					}
 				}
-				$entrees=$this->Entree->find('all',array('fields'=>array('Entree.id'),
+				$entrees=$this->Entree->find('all',array('fields'=>array('Entree.*'),
 																'conditions'=>array('Entree.produit_id'=>$name['Produit']['id'])
 																));
 				foreach($entrees as $entree){
 					$entree['Entree']['produit_id']=$id;
-					$this->Entree->save($entree);
+					if(!$this->Entree->save($entree)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.' Entree')));
+					}
 				}
 				
-				$sortis=$this->Sorti->find('all',array('fields'=>array('Sorti.id'),
+				$sortis=$this->Sorti->find('all',array('fields'=>array('Sorti.*'),
 																'conditions'=>array('Sorti.produit_id'=>$name['Produit']['id'])
 																));
 				foreach($sortis as $sorti){
 					$sorti['Sorti']['produit_id']=$id;
-					$this->Sorti->save($sorti);
+					if(!$this->Sorti->save($sorti)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.' Sorti')));
+					}
 				}
-				$pertes=$this->Perte->find('all',array('fields'=>array('Perte.id'),
+				$pertes=$this->Perte->find('all',array('fields'=>array('Perte.*'),
 																'conditions'=>array('Perte.produit_id'=>$name['Produit']['id'])
 																));
 				foreach($pertes as $perte){
 					$perte['Perte']['produit_id']=$id;
-					$this->Perte->save($perte);
+					if(!$this->Perte->save($perte)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.' Perte')));
+					}
 				}
-				$mouvements=$this->Mouvement->find('all',array('fields'=>array('Mouvement.id'),
+				$mouvements=$this->Mouvement->find('all',array('fields'=>array('Mouvement.*'),
 																'conditions'=>array('Mouvement.produit_id'=>$name['Produit']['id'])
 																));
 				foreach($mouvements as $mouvement){
 					$mouvement['Mouvement']['produit_id']=$id;
-					$this->Mouvement->save($mouvement);
+					if(!$this->Mouvement->save($mouvement)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.' Mouvement')));
+					}
 				}
-				$ventes=$this->Vente->find('all',array('fields'=>array('Vente.id'),
+				$ventes=$this->Vente->find('all',array('fields'=>array('Vente.*'),
 																'conditions'=>array('Vente.produit_id'=>$name['Produit']['id'])
 																));
 				foreach($ventes as $vente){
 					$vente['Vente']['produit_id']=$id;
-					$this->Vente->save($vente);
+					if(!$this->Vente->save($vente)){
+						exit(json_encode(array('success'=>false,'msg'=>$message.' Vente')));
+					}
 				}
 				if($name['Produit']['id']!=$id){
 					$this->Produit->delete($name['Produit']['id']);
@@ -586,7 +626,7 @@ set_time_limit(240);    //4minutes
 	function balance(){
 		$produits=array();
 		$out['Vente']=$out['Sorti']=$out['Perte']=0;
-		$debit=$credit=$solde=$report=$pa=$pv=0;
+		$debit=$credit=$solde=$report=$pa=0;
 		$date1=$date2=null;
 		$model='Produit';
 		$stockId=null;
@@ -622,7 +662,7 @@ set_time_limit(240);    //4minutes
 																'conditions'=>array('Stock.id'=>$this->data['Produit']['stock_id']),
 																));
 																
-			$produits=$this->Produit->find('all',array('fields'=>array('Produit.name','Produit.id','Produit.PV'),
+			$produits=$this->Produit->find('all',array('fields'=>array('Produit.name','Produit.id','Produit.PA'),
 																'conditions'=>$cond,
 																'order'=>array('Produit.name')
 																));
@@ -679,7 +719,7 @@ set_time_limit(240);    //4minutes
 				$diff=$produits[$key]['Entree']-$c;
 				$solde+=$produits[$key]['solde']=$produits[$key]['report']+$diff;
 				$produits[$key]['produit']=$compte[$model]['name'];
-				$pv+=$produits[$key]['total_pv']=$produits[$key]['solde']*$compte['Produit']['PV'];
+				$pa+=$produits[$key]['total_pa']=$produits[$key]['solde']*$compte['Produit']['PA'];
 			}
 			else {
 				unset($produits[$key]);
@@ -700,12 +740,12 @@ set_time_limit(240);    //4minutes
 				$headers[]='Sorti';
 				$headers[]='Perte';
 				$headers[]='solde';
-				$headers[]='total_pv';
+				$headers[]='total_pa';
 				$filename=$this->Product->excel($produits,$headers,'mvts_des_produits');
 				$this->redirect('/files/'.$filename);
 			}
 			else {
-				$this->set(compact('stockId','pv','produits','date1','date2','debit','credit','solde','list','model','report','produit','out','stockInfo'));
+				$this->set(compact('stockId','pa','produits','date1','date2','debit','credit','solde','list','model','report','produit','out','stockInfo'));
 			}
 	}
 
@@ -713,12 +753,12 @@ set_time_limit(240);    //4minutes
 		$operations=$ants=$produits=array();
 		if(empty($data)){
 			$produitCond['Produit.id']=$id;
-			$group=array('Historique.date','Historique.shift','Historique.date_expiration','Historique.libelle');
+			$group=array('Historique.produit_id','Historique.date','Historique.shift','Historique.date_expiration','Historique.libelle');
 		}
 		else {
 			$this->data=$data;
 			$produitCond['Produit.type']='stockable';
-			$group=array('Historique.date');
+			$group=array('Historique.produit_id','Historique.date');
 		}	
 		if(!empty($this->data['Historique']['date1'])){
 			$conditions['Historique.date >=']=$date1=$this->data['Historique']['date1'];
@@ -761,61 +801,100 @@ set_time_limit(240);    //4minutes
 																		'conditions'=>array('Stock.id'=>$stockIds)
 																		));
 			
-			$produits=$this->Produit->find('all',array('fields'=>array('Produit.id',
-																		'Produit.name',
-																		'Produit.PV','Produit.PA'
-																		),
-																	'conditions'=>$produitCond,
-																	'order'=>array('Produit.name')
-																	));
-			foreach($produits as $key=>$produit){
+		
+
+			$valeur_total=0;
+		//	foreach($produits as $key=>$produit){
 				$debit=$credit=$solde=$report=0;
 				if(!is_null($date1)){
 					$ants=$this->Produit->Historique->find('all',array('fields'=>array('sum(Historique.debit) as debit',
-																				'sum(Historique.credit) as credit',
-						                        								),
-						                        				'conditions'=>array('Historique.produit_id'=>$produit['Produit']['id'],
-						                        									'Historique.date <'=>$date1,
-						                        									'Historique.stock_id'=>$stockIds
-																					)
-																	));
-					$solde=$ants[0]['Historique']['solde']=$ants[0]['Historique']['debit']-$ants[0]['Historique']['credit'];
-					$produits[$key]['ants']=$ants;
+																																						'sum(Historique.credit) as credit',
+																																						'Produit.id','Produit.name','Produit.unite_id',
+																																						'Produit.PV','Produit.PA'
+						                        																				),
+														                        				'conditions'=>array(
+														                        									//'Historique.produit_id'=>$produit['Produit']['id'],
+														                        									'Historique.date <'=>$date1,
+														                        									'Historique.stock_id'=>$stockIds
+														                        									)+$produitCond,
+														                        				'group'=>array('Historique.produit_id'),
+														                        				'order'=>array('Produit.name','Historique.date','Historique.id')
+																					
+																								));
+					foreach($ants as $i => $ant){
+						$produits[$ant['Produit']['id']]['info']=$ant['Produit'];
+						$produits[$ant['Produit']['id']]['ant']=$ant;
+						$produits[$ant['Produit']['id']]['SI']=$ant['Historique']['debit']-$ant['Historique']['credit'];
+					}
+					
 				}
-				$conditions['Historique.produit_id']=$produit['Produit']['id'];
-				
-				$operations=$this->Produit->Historique->find('all',array('conditions'=>$conditions,
+				///exit(debug($produits));
+//				$conditions['Historique.produit_id']=$produit['Produit']['id'];
+				$operations=$this->Produit->Historique->find('all',array('conditions'=>$conditions+$produitCond,
 																'fields'=>array('sum(Historique.debit) as debit',
 																				'sum(Historique.credit) as credit',
-																				'Historique.libelle',
-																				'Historique.date',
-																				'Historique.date_expiration',
-																				'Historique.shift'
+																				'Historique.*',
+																				'Produit.id','Produit.name',
+																				'Produit.PV','Produit.PA','Produit.unite_id'
 																					),
-																	'order'=>array('Historique.date asc',
+																	'order'=>array('Produit.name','Historique.date asc',
 																				'Historique.shift',
 																				'Historique.libelle asc',
 																				'Historique.id asc'
 																				),
 																	'group'=>$group
 																	));
+
+		//	exit(debug($operations));
+				//reset variables
+				$i=$counter=0;
+				$current_product_id=0;
+				$debit=$credit=0;
+				$solde=0;
 				foreach($operations as $i=>$operation){
+					//totals for the previous item.
+					if(($counter!=0)&&($current_product_id!=$operation['Produit']['id'])){
+						$produits[$current_product_id]['debit']=$debit;
+						$produits[$current_product_id]['credit']=$credit;
+						$produits[$current_product_id]['solde']=$solde;
+						$produits[$current_product_id]['valeur']=$produits[$current_product_id]['solde']*$produits[$current_product_id]['info']['PA'];
+						$valeur_total += $produits[$current_product_id]['valeur'];
+					}
+					if($current_product_id!=$operation['Produit']['id']){
+						$current_product_id=$operation['Produit']['id'];
+						$produits[$current_product_id]['info']=$operation['Produit'];
+						$solde=(isset($produits[$current_product_id]['SI']))?$produits[$current_product_id]['SI']:0;
+					}
 					$debit+=$operation['Historique']['debit'];	
 					$credit+=$operation['Historique']['credit'];
-					$solde=$operations[$i]['Historique']['solde']=$solde-$operation['Historique']['credit']+$operation['Historique']['debit'];	
+					$solde=$operation['Historique']['solde']=$solde-$operation['Historique']['credit']+$operation['Historique']['debit'];	
+					$produits[$current_product_id]['op'][$i]=$operation;
+					$counter++;
 				}
-				
-				$produits[$key]['op']=$operations;
-				$produits[$key]['debit']=$debit;
-				$produits[$key]['credit']=$credit;
-				$produits[$key]['solde']=$solde;
+				//totals for the last item.
+				if($current_product_id>0){
+					$produits[$current_product_id]['debit']=$debit;
+					$produits[$current_product_id]['credit']=$credit;
+					$produits[$current_product_id]['solde']=$solde;
+					$produits[$current_product_id]['valeur']=$produits[$current_product_id]['solde']*$produits[$current_product_id]['info']['PA'];
+					$valeur_total += $produits[$current_product_id]['valeur'];
+				}
+				// $produits[$key]['op']=$operations;
+				// $produits[$key]['debit']=$debit;
+				// $produits[$key]['credit']=$credit;
+				// $produits[$key]['solde']=$solde;
+				// $produits[$key]['valeur']=$solde*$produits[$key]["Produit"]['PA'];
+				// $valeur_total += $produits[$key]['valeur'];
 			//	exit(debug($produits));
-			}
+			//}
+			$referer=$this->referer();
+			$this->set(compact('produits','date1','date2','id','stockNames','referer','valeur_total'));
+
 		if(!empty($data)){
 			return $produits;
 		}
-		$referer=$this->referer();
-		$this->set(compact('produits','date1','date2','id','stockNames','referer'));
+		
+		
 	}
 
 	function stock() {
@@ -911,9 +990,9 @@ set_time_limit(240);    //4minutes
 					$datas[$key]['Section']=$this->sections[$produit['Groupe']['section_id']];
 					$datas[$key]['Groupe']=$produit['Groupe']['name'];
 					$datas[$key]['Quantité']=$quantite;
-					$datas[$key]['PV']=$produit['Produit']['PV'];
+					$datas[$key]['PA']=$produit['Produit']['PA'];
 					$datas[$key]['Unité']=$produit['Unite']['name'];
-					$pvs+=$datas[$key]['Total']=$datas[$key]['Quantité']*$datas[$key]['PV'];
+					$pvs+=$datas[$key]['Total']=$datas[$key]['Quantité']*$datas[$key]['PA'];
 				}
 			}
 		}
@@ -1084,7 +1163,7 @@ set_time_limit(240);    //4minutes
 				exit('failure_'.$failureMsg);
 		}
 		//removing any special character in the name
-		$data['Produit']['name']=$this->Product->name($data['Produit']['name']);
+		$data['Produit']['name']=trim($this->Product->name($data['Produit']['name']));
 		
 		$cond['Produit.name']=$data['Produit']['name'];
 		if($action=='edit'){
@@ -1276,7 +1355,7 @@ set_time_limit(240);    //4minutes
 	
 	
 	function _section($name){
-		$find=$this->Produit->Section->find('first',array('conditions'=>array('Section.name'=>$name,
+		$find=$this->Produit->Groupe->Section->find('first',array('conditions'=>array('Section.name'=>$name,
 																				),
 															'recursive'=>-1,
 															'fields'=>array('Section.id','Section.name')
@@ -1287,12 +1366,31 @@ set_time_limit(240);    //4minutes
 			}
 			else {
 				$sectionDetails['Section']['name']=$name;
-				$this->Produit->Section->save($sectionDetails);
-				$id=$this->Produit->Section->id;
-				unset($this->Produit->Section->id);
+				$this->Produit->Groupe->Section->save($sectionDetails);
+				$id=$this->Produit->Groupe->Section->id;
+				unset($this->Produit->Groupe->Section->id);
 				return $id;
 			}
 	}
+
+	function _unite($name){
+    $find=$this->Produit->Unite->find('first',array('conditions'=>array('Unite.name'=>$name,
+                                        ),
+                              'recursive'=>-1,
+                              'fields'=>array('Unite.id','Unite.name')
+                              )
+                      );
+      if(!empty($find)){
+        return $find['Unite']['id'];
+      }
+      else {
+        $uniteDetails['Unite']['name']=$name;
+        $this->Produit->Unite->save($uniteDetails);
+        $id=$this->Produit->Unite->id;
+        unset($this->Produit->Unite->id);
+        return $id;
+      }
+  }
 
 	function _groupe($section,$name){
 		$find=$this->Produit->Groupe->find('first',array('conditions'=>array('Groupe.name'=>$name,
@@ -1323,6 +1421,7 @@ set_time_limit(240);    //4minutes
     	 // Set output Encoding.
     	$data->setOutputEncoding('CP1251');
 		if(!empty($this->data)) {
+    //	exit(debug($this->data));
 			//emptying  tables
 		/*
 			$this->Produit->Section->query('truncate table sections');
@@ -1334,17 +1433,21 @@ set_time_limit(240);    //4minutes
 			$this->Produit->Vente->Facture->Journal->query('truncate table journals');
 			$this->Produit->Vente->Facture->Paiement->query('truncate table paiements');
 		//*/	
+
     		$data->read($this->data['Produit']['file']['tmp_name']);
     	//	die(debug($data->sheets[0]['cells']));
 			$i=0;
 			foreach($data->sheets[0]['cells'] as $row){
 				if($i>0&&(count($row)==5)){
+						// exit(debug($row));
 					$produit['section_id']=$this->_section($row[1]);
 					$produit['groupe_id']=$this->_groupe($produit['section_id'],$row[2]);
 					$produit['name']=$row[3];
-					$produit['PV']=$row[4];
-					$produit['type']='non_stockable';
-					$produit['acc']=$row[5];
+					$produit['PA']= (empty($row[4])) ? 0 : $row[4];
+					$produit['PV']=(empty($row[5])) ? 0 : $row[5];;
+					$produit['unite_id']=$this->_unite($row[6]);
+					$produit['type']=	$row[7];
+					$produit['description']=	$row[8];
 					$this->Produit->save(array('Produit'=>$produit));
 					unset($this->Produit->id);
 				}

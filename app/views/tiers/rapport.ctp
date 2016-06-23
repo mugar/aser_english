@@ -1,6 +1,6 @@
 <div id='view'>
 <div class="document">
-<h3>Liste des Tiers (Clients & Fournisseurs)</h3>
+<h3>Liste des Clients</h3>
 <?php if(!empty($tiers)){
 	echo '<h4> (Total : '.count($tiers).' )</h4>';
 }
@@ -64,11 +64,7 @@
 	<span class="left">
 		<?php
 			echo $this->Form->input('name',array('id'=>'nom','value'=>'toutes'));
-			echo $this->Form->input('type',array('options'=>array('toutes'=>'toutes',
-																'client'=>'client',
-																'fournisseur'=>'fournisseur'
-																)
-										));
+			echo $this->Form->input('type',array('type'=>'hidden','value'=>'client'));
 			echo $this->Form->input('compagnie',array('value'=>'toutes'));
 			echo $this->Form->input('adresse',array('value'=>'toutes'));
 			echo $this->Form->input('passport',array('value'=>'toutes'));
@@ -79,7 +75,6 @@
 			echo $this->Form->input('tel',array('value'=>'toutes'));
 			echo $this->Form->input('email',array('value'=>'toutes'));
 			echo $this->Form->input('nationalite',array('value'=>'toutes'));
-			echo $this->Form->input('NIF',array('value'=>'toutes'));
 			echo $this->Form->input('reduction',array('value'=>'toutes'));
 			echo $this->Form->input('actif',array('options'=>array('toutes'=>'toutes',
 																	'oui'=>'oui',
@@ -87,6 +82,8 @@
 																	)
 												)
 									);
+
+			echo $this->Form->input('export',array('label'=>'Exporter vers xls','type'=>'checkbox'));
 		?>
 	</span>
 	</form>

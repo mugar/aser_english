@@ -454,6 +454,8 @@ class ReservationsController extends AppController {
 														'fields'=>array('Reservation.montant',
 																		'Reservation.monnaie',
 																		'Reservation.PU',
+																		'Reservation.demi',
+																		'Reservation.tauxDemi',
 																		'Chambre.name',
 																		'Reservation.arrivee',
 																		'Reservation.depart',
@@ -470,7 +472,14 @@ class ReservationsController extends AppController {
 													)
 										);
 			foreach($part1 as $key=>$reservation){
-				$total[$reservation['Reservation']['monnaie']]+=$reservation['Reservation']['montant'];
+			if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+				$duree=$this->Product->diff($reservation['Reservation']['arrivee'], $reservation['Reservation']['depart'])+1;		
+				$montant=$duree*$reservation['Reservation']['PU'];
+				$part1[$key]['Reservation']['montant']=($reservation['Reservation']['demi']==1)
+														?($montant+($reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100)))
+														:($montant);
+					$total[$reservation['Reservation']['monnaie']]+=	$part1[$key]['Reservation']['montant'];
+				}
 				//extras stuff
 				$extras1=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
@@ -513,10 +522,15 @@ class ReservationsController extends AppController {
 				$part2[$key]['Reservation']['depart']=$date2;
 				$duree=$this->Product->diff($date1, $date2)+1;		
 				$montant=$duree*$reservation['Reservation']['PU'];
-				$part2[$key]['Reservation']['montant']=($reservation['Reservation']['demi']==1)
+				$part2[$key]['Reservation']['montant']=(false)
 														?($montant+($reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100)))
 														:($montant);
-				$total[$reservation['Reservation']['monnaie']]+=$part2[$key]['Reservation']['montant'];
+															
+
+				if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+					$total[$reservation['Reservation']['monnaie']]+=$part2[$key]['Reservation']['montant'];
+				}
+				
 				$extras2=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
 																					'NOT'=>array('Facture.operation'=>array('Reservation','Proforma')),
@@ -561,7 +575,9 @@ class ReservationsController extends AppController {
 				$part3[$key]['Reservation']['montant']=($reservation['Reservation']['demi']==1)
 														?($montant+($reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100)))
 														:($montant);
-				$total[$reservation['Reservation']['monnaie']]+=$part3[$key]['Reservation']['montant'];
+			if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+					$total[$reservation['Reservation']['monnaie']]+=$part3[$key]['Reservation']['montant'];
+				}
 				$extras3=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
 																					'NOT'=>array('Facture.operation'=>array('Reservation','Proforma')),
@@ -604,10 +620,12 @@ class ReservationsController extends AppController {
 				$part4[$key]['Reservation']['depart']=$date2;
 				$duree=$this->Product->diff($reservation['Reservation']['arrivee'], $date2)+1;		
 				$montant=$duree*$reservation['Reservation']['PU'];
-				$part4[$key]['Reservation']['montant']=($reservation['Reservation']['demi']==1)
+				$part4[$key]['Reservation']['montant']=(false) //demi only works pour une reservation qui finit dans ce mois
 														?($montant+($reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100)))
 														:($montant);
-				$total[$reservation['Reservation']['monnaie']]+=$part4[$key]['Reservation']['montant'];
+				if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+					$total[$reservation['Reservation']['monnaie']]+=$part4[$key]['Reservation']['montant'];
+				}
 				$extras4=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
 																					'NOT'=>array('Facture.operation'=>array('Reservation','Proforma')),
@@ -744,28 +762,32 @@ class ReservationsController extends AppController {
 		}
 	}
 	
-	function facture_globale($factureId,$payee='no',$detailed=1){
-		
-		$modelInfos=$this->Reservation->find('all',array('fields'=>array('Reservation.*','Chambre.name','Chambre.type_chambre_id'),
-															'conditions'=>array('Reservation.facture_id'=>$factureId),
-															'order'=>array('Reservation.arrivee')
-															)
-												);
-		//getting the list of rooms from the array of reservations
-		foreach($modelInfos as $reservation){
-			$chambres[]=$reservation['Chambre']['name'];
-		}						
-		$chambres=implode('&',$chambres);
-		
-		$arrivee=$modelInfos[0]['Reservation']['arrivee'];
-		$depart=$modelInfos[count($modelInfos)-1]['Reservation']['depart'];
-		
+	function facture_globale($factureId,$payee='no',$detailed=1,$export_to_xls=0){
 		$reservation=$this->Reservation->Facture->find('first',array('fields'=>array('Facture.*','Tier.*'),
 																'conditions'=>array(
 																					'Facture.id'=>$factureId,
 																					)
 																)
 													);
+		if($reservation['Facture']['etat']=='annulee'){
+				$this->redirect(array('controller'=>'factures','action'=>'view/'.$reservation['Facture']['id']));
+		}
+
+		$modelInfos=$this->Reservation->find('all',array('fields'=>array('Reservation.*','Chambre.name','Chambre.type_chambre_id'),
+															'conditions'=>array('Reservation.facture_id'=>$factureId),
+															'order'=>array('Reservation.arrivee')
+															)
+												);
+		//getting the list of rooms from the array of reservations
+		foreach($modelInfos as $chambre){
+			$chambres[]=$chambre['Chambre']['name'];
+		}						
+		$chambres=implode('&',$chambres);
+		
+		$arrivee=$modelInfos[0]['Reservation']['arrivee'];
+		$depart=$modelInfos[count($modelInfos)-1]['Reservation']['depart'];
+		
+		
 		$tierId=$reservation['Tier']['id'];
 		//determining which departure date to use for extras 
 		$departPlus1=$this->Product->increase_date($depart);
@@ -822,7 +844,7 @@ class ReservationsController extends AppController {
 		$cond['Facture.date >=']=(empty($this->data['Reservation']['date1']))?$arrivee:$this->data['Reservation']['date1'];
 		$cond['Facture.date <=']=(empty($this->data['Reservation']['date2']))?$depart:$this->data['Reservation']['date2'];
 		
-		$cond['Facture.etat']=($payee=='yes')?array('credit','avance','payee'):array('credit','avance');
+		$cond['Facture.etat']=($payee=='yes')?array('credit','avance','payee','en_cours','cloturer'):array('credit','avance','en_cours','cloturer');
 		
 			$this->Product->company_info();
 			
@@ -885,6 +907,19 @@ class ReservationsController extends AppController {
 							'detailed'
 							)
 					);
+			if($export_to_xls){
+				$data['company_info']=$this->Product->company_info();
+				$data['signature']=$this->Conf->find('signature');
+				$data['Facture']=$reservation['Facture'];
+				$data['Facture']['numero']=($export_to_xls==2)?$data['Facture']['aserb_num']:$data['Facture']['numero'];
+				$data['extras']=$extras_factures;
+				$data['model']='Reservation';
+				$data['nature']='';
+				$data['Tier']=$reservation['Tier'];
+				$data['modelInfos']=$modelInfos;
+				$filename=$this->Product->bill2xls($data);
+				$this->redirect('/files/'.$filename);
+			}
 	}
 	
 	function room_changer($id,$old,$new,$date,$pu=null){

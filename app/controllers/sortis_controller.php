@@ -144,7 +144,14 @@ class SortisController extends AppController {
 		//	exit(json_encode(array('success'=>false,'msg'=>'Seul le créateur peut effectuer la modification!')));	
 		}
 		
-		$data['Sorti']['PU']=$this->Product->productPrice($data['Sorti']['produit_id']);
+		$produitInfo=$this->Sorti->Produit->find('first',array('fields'=>array('Produit.expiration',
+																					'Produit.type',
+																					'Produit.PV',
+																					'Produit.PA'		
+																					),
+																	'conditions'=>array('id'=>$data['Sorti']['produit_id']),
+																	'recursive'=>-1));
+		$data['Sorti']['PU']=$produitInfo['Produit']['PA'];
 		$data['Sorti']['montant']=$data['Sorti']['PU']*$data['Sorti']['quantite'];
 		//Saving the sorti operation
 		$this->Sorti->save($data);

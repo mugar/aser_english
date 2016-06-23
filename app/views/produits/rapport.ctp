@@ -15,7 +15,7 @@
 			<th>Section</th>
 			<th>Groupe</th>
 			<th>Quantité</th>
-			<th>PV</th>
+			<th>PA</th>
 			<th>Total</th>
 	</tr>
 		<?php
@@ -28,7 +28,7 @@
 			<td><?php echo  $data['Section']; ?></td>
 			<td><?php echo  $data['Groupe']; ?></td>
 			<td><?php echo  $number->format($data['Quantité'],$formatting).' '.$data['Unité']; ?></td>
-			<td><?php echo  $number->format($data['PV'],$formatting); ?></td>
+			<td><?php echo  $number->format($data['PA'],$formatting); ?></td>
 			<td><?php echo  $number->format($data['Total'],$formatting); ?></td>
 	</tr>
 <?php endforeach; ?>

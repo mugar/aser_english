@@ -148,7 +148,7 @@
 		<li class= "link" onclick = "edit()" >Modifier</li>
 		<li class= "link" onclick = "mass_delete()" >Effacer</li>
 		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li class="link"  onclick = "disable()" >Activer/Désactiver</li>
+		<li class="link"  onclick = "disable('tiers/disable')" >Activer/Désactiver</li>
 		<li class="link"  onclick = "global_bill()" >Facture Globale</li>
 		<li class= "link" onclick = "merge('tiers')" ><? echo  __('Fusionner les Enregistrements');?></li>
 		<li><?php echo $this->Html->link('Edition de Rapport', array('controller'=>'tiers','action' => 'rapport'));?></li>

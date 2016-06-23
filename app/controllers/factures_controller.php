@@ -2,7 +2,150 @@
 class FacturesController extends AppController {
 
 	var $name = 'Factures';
+
+	/**
+	* checks the availability of an aserb number
+	*/
+
+	function check_aserb_number_availability($id,$desired_number){
+		$facture=$this->Facture->find('first',array('fields'=>array('Facture.id',
+                                    'Facture.operation',
+                                    'Facture.date',
+                                    ),
+                            'conditions'=>array('Facture.id'=>$id),
+                      )); 
+		$cond['Facture.aserb_num']=$desired_number;
+		if(Configure::read('aser.facturation_cyclique')){
+				$cond['Facture.operation']=$facture['Facture']['operation'];
+				$cond['Facture.id !=']=$id;
+			
+				$date_parts=explode('-',$facture['Facture']['date']);
+				$year=$date_parts[0];
+			
+				$cond['year(Facture.date)']=$year;
+		}
+
+		$search=$this->Facture->find('first',array(
+														'recursive'=>-1,
+														'fields'=>array('Facture.aserb_num'),
+														'conditions'=>$cond
+													));
+		if(empty($search)){
+			$facture['Facture']['aserb_num']=$desired_number;
+			if($this->Facture->save($facture)){
+				exit(json_encode(array('success'=>true)));
+			}
+			else {
+				exit(json_encode(array('success'=>false,'msg'=>'Probleme avec l enregistrement du numero')));
+			}
+		}
+		else {
+				exit(json_encode(array('success'=>false,'msg'=>'Numero non disponible')));
+		}
+	}
 	
+	/**
+	* reports of all aserb_numbers
+	*/
+
+	function aserb_report(){
+		$cond['Facture.etat !=']='annulee';
+		$cond['Facture.aserb_num >']=0;
+		
+    if(!empty($this->data['Facture']['date1'])){
+    	$date1=$this->data['Facture']['date1'];
+      $cond['OR'][]=array('Facture.aserb_date >='=>$date1,'Facture.date >='=>$date1);
+    }
+    else {
+    	$date1=date('Y-m-d');
+    	$cond['OR'][]=array('Facture.aserb_date >='=>$date1,'Facture.date >='=>$date1);
+    }
+    
+    if(!empty($this->data['Facture']['date2'])){
+    	$date2=$this->data['Facture']['date2'];
+      $cond['OR'][]=array('Facture.aserb_date <='=>$date2,'Facture.date <='=>$date2);
+    }
+    else {
+    	$date2=date('Y-m-d');
+      $cond['OR'][]=array('Facture.aserb_date <='=>$date2,'Facture.date <='=>$date2);
+    }
+    if(!empty($this->data['Tier']['compagnie'])){
+      $cond['Tier.compagnie']=$this->data['Tier']['compagnie'];
+    }
+    if(!empty($this->data['Facture']['tier_id'])){
+      $cond['Facture.tier_id']=$this->data['Facture']['tier_id'];
+    }
+    //  exit(debug($cond));
+    $factures=$this->Facture->find('all',array('fields'=>array('Facture.*',
+                                    'Tier.name',
+                                    'Tier.compagnie'
+                                    ),
+                            'conditions'=>$cond,
+                      )); 
+                  
+         
+    $this->set(compact('factures','date1','date2'));
+	}
+	/**
+	* generate aserb number
+	*/
+	function generate_aserb_number($id){
+		$facture = $this->Facture->find('first',array('conditions'=>array('Facture.id'=>$id),'recursive'=>-1));
+		if(!empty($facture['Facture']['aserb_num'])){
+			exit(json_encode(array('success'=>true,'no'=>$facture['Facture']['aserb_num'])));
+		}
+		else {
+			if(Configure::read('aser.facturation_cyclique')){
+				$cond['Facture.operation']=$facture['Facture']['operation'];
+				$cond['Facture.aserb_num !=']=null;
+				$cond['Facture.id !=']=$id;
+			
+				$date_parts=explode('-',$facture['Facture']['date']);
+				$year=$date_parts[0];
+			
+				$cond['year(Facture.date)']=$year;
+			}
+			else {
+				$cond = array();
+			}
+
+			$last=$this->Facture->find('first',array('order'=>array('Facture.aserb_num desc'),
+														'recursive'=>-1,
+														'fields'=>array('Facture.aserb_num'),
+														'conditions'=>$cond
+													));
+			if(empty($last)){
+				$no=1;
+			}
+			else {
+				$no=$last['Facture']['aserb_num']+1;
+			}
+			$facture['Facture']['aserb_num']=$no;
+			$facture['Facture']['aserb_date']=date('Y-m-d');
+
+			if($this->Facture->save($facture)){
+				exit(json_encode(array('success'=>true,'no'=>$facture['Facture']['aserb_num'])));	
+			}
+			else exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'enregistrement du numero")));
+		}
+		
+	}
+
+	/**
+	* quick function for setting the observation of a bill
+	*/
+
+	function set_observation($id,$obs){
+		$facture = $this->Facture->find('first',array('fields'=>array('Facture.id'),
+																								'conditions'=>array('Facture.id'=>$id)
+																								));
+		if(!empty($facture)){
+			$facture['Facture']['observation']=$obs;
+			if($this->Facture->save($facture)) exit(json_encode(array('success'=>true)));
+			else exit(json_encode(array('success'=>false, 'msg'=>'Problème avec l\'enregistrement de l\'observation')));
+		}
+		else exit(json_encode(array('success'=>false, 'msg'=>'Cette facture n\'existe pas!')));
+	}
 	/**
 	*
 	*/
@@ -21,7 +164,7 @@ class FacturesController extends AppController {
 	//	exit(debug($no));		
 		$factures=$this->Facture->find('all',array('fields'=>array('Facture.id','Facture.numero'),
 												'conditions'=>$reorderCond,
-												'order'=>array('Facture.date')
+												'order'=>array('Facture.date asc')
 												));
 		foreach($factures as $facture){
 			$facture['Facture']['numero']=$no;
@@ -68,6 +211,8 @@ class FacturesController extends AppController {
 		}
 		return true;
 	}
+
+
 	/**
 	 * this function is for silhouette also
 	 * it helps to display on one page all the bills for a given date
@@ -128,6 +273,8 @@ class FacturesController extends AppController {
 		$this->autoRender=false;
 		
 		$cond['Facture.operation']='Vente';
+		$cond['Facture.montant >']=0;
+
 		if($showDate)
 			$cond['Facture.date']=$showDate;
 		else if(empty($this->data)){
@@ -143,6 +290,18 @@ class FacturesController extends AppController {
 												'order'=>array('Facture.date','Facture.id'),
 													
 													));
+
+		//search limits
+		$limit_start_date = '2015-08-12'; //date from which the limits take effect.
+		$limit_below_limit = (strtotime($cond['Facture.date >='])>=strtotime($limit_start_date))?
+												$cond['Facture.date >=']:$limit_start_date;
+
+		$this->loadModel('Limit');
+		$limits = $this->Limit->find('list',array('fields'=>array('Limit.date','Limit.montant'),
+																							'conditions'=>array('Limit.date >='=>$limit_below_limit,
+																																	'Limit.date <='=>$cond['Facture.date <=']
+																																)
+																							));
 		set_time_limit(240);    //4minutes
 		ini_set('memory_limit', '256M');
 		$data=array();
@@ -157,8 +316,11 @@ class FacturesController extends AppController {
 			else if(($date>='2014-02-17')&&($date<'2014-07-01')){
 				$limit=300000;
 			}
+			else if(($date>='2014-07-01')&&($date<$limit_start_date)){
+					$limit=800000;
+			}
 			else {
-				$limit=800000;
+				$limit=$limits[$date];
 			}
 			foreach($facture as $id=>$montant){
 				if(($totalPerDay+$montant)<=$limit){
@@ -190,7 +352,7 @@ class FacturesController extends AppController {
 		                                                   'order'=>array('Reservation.depart desc')
 		                                                   ));
 		 $facture['Facture']['id']=$reservation['Facture']['id'];
-		 $facture['Facture']['date']=$this->Product->increase_date($reservation['Reservation']['depart']);
+		 $facture['Facture']['date_emission']=$this->Product->increase_date($reservation['Reservation']['depart']);
 		 $this->Facture->save($facture);
 	}
 	
@@ -433,7 +595,7 @@ class FacturesController extends AppController {
 		//fetching the bills
 		$conditions['Facture.operation']=$operation;
 		$factures=$this->Facture->find($scope,array('recursive'=>2,
-												'order'=>array('Facture.numero'),
+												'order'=>array('Facture.numero asc'),
 												'conditions'=>$conditions,
 												'contain'=>$contain
 												));
@@ -589,6 +751,7 @@ class FacturesController extends AppController {
 	}
 	
 	function credit($id=null){
+		$show_less = false;
 		if(is_null($id)){
 			$cond=array('Facture.etat'=>array('credit','avance'),
 					'Facture.monnaie'=>array('BIF','USD'),
@@ -597,7 +760,7 @@ class FacturesController extends AppController {
 					);
 		}
 		else {
-			$this->data['Facture']['tier_id']=$id;
+			$cond['Facture.tier_id']=$id;
 			$cond['Facture.etat !=']='annulee';
 			$tierInfo=$this->Facture->Tier->find('first',array('conditions'=>array("Tier.id"=>$id),
 															'fields'=>array("Tier.name"),
@@ -610,15 +773,26 @@ class FacturesController extends AppController {
 		if(!empty($this->data['Facture']['date1'])){
 			$cond['Facture.date >=']=$date1=$this->data['Facture']['date1'];
 		}
+		else if(Configure::read('aser.belair')){
+			$cond['Facture.date >=']=$date1='2015-06-01';	
+		}
 		if(!empty($this->data['Facture']['date2'])){
 			$cond['Facture.date <=']=$date2=$this->data['Facture']['date2'];
 		}
 		if(!empty($this->data['Facture']['tier_id'])&&($this->data['Facture']['tier_id']!=0)){
-			$cond['Facture.tier_id']=$tierId=$this->data['Facture']['tier_id'];
+			$cond['Tier.id']=$tierId=$this->data['Facture']['tier_id'];
 		}
 		if(!empty($this->data['Tier']['compagnie'])){
-			$cond['Tier.compagnie like']='%'.$this->data['Tier']['compagnie'].'%';
+			$cond['Tier.compagnie']='%'.$this->data['Tier']['compagnie'].'%';
 		}
+		if(!empty($this->data['Tier']['compagnie'])){
+			$cond['Tier.compagnie']='%'.$this->data['Tier']['compagnie'].'%';
+		}
+		if(!empty($this->data['Facture']['show_less'])){
+			$show_less = $this->data['Facture']['show_less'];
+		}
+
+		
 		$factures=$this->Facture->find('all',array('fields'=>array('Facture.montant',
 														'Facture.reste',
 														'Facture.date',
@@ -627,25 +801,30 @@ class FacturesController extends AppController {
 														'Facture.numero',
 														'Facture.id',
 														'Facture.etat',
+														'Tier.id',
 														'Tier.name',
 														'Tier.compagnie',
-														'Tier.telephone',
+														'Tier.telephone'
 														),
 										'conditions'=>$cond,
-										'order'=>array('Facture.date')
+										'order'=>array('Tier.name','Facture.date')
 										));
+		
+		
+		
+
 		/*								
 		foreach($factures as $facture){
 			$this->Product->update_facture($facture['Facture']['id'],$facture['Facture']['montant'],$facture['Facture']['etat'],null,false);
 		}
 		//*/ 		
 		$referer=$this->referer();
-		$this->set(compact('factures','referer','date1','date2','tierId','id','tierInfo'));						
+		$this->set(compact('factures','referer','date1','date2','tierId','id','tierInfo','show_less'));						
 	}
 	
 	function bonus(){
 		if(!empty($this->data['factures'])){
-			$trace['Trace']['model']='Facture';
+		  $trace['Trace']['model']='Facture';
 			foreach($this->data['factures'] as $id){
 				$ids[]=$id;
 				$facture=$this->Facture->find('first',array('fields'=>array('Facture.id'),
@@ -900,10 +1079,13 @@ class FacturesController extends AppController {
 																									'Facture.id'=>$this->Product->factures($date,$date)
 																									),
 																						'Facture.monnaie !='=>'',
+																						// 'Facture.operation !='=>'Reservation',
+																						// 'Facture.monnaie'=>'USD',
 																						'Facture.etat'=>array('payee','credit','bonus','avance','excedent')
 																						),
 																	));
-				
+		
+			
 			foreach($factures as $key=>$facture){
 				if(($facture['Facture']['etat']=='bonus')&&($facture['Facture']['operation']!='Reservation')){
 					$datas[$i]['bonus_'.$facture['Facture']['monnaie']]+=$facture['Facture']['montant'];
@@ -932,6 +1114,7 @@ class FacturesController extends AppController {
 					$datas[$i]['credit_'.$facture['Facture']['monnaie']]+=$facture['Facture']['reste'];
 				}
 			}
+				//if ($date == '2015-12-02') exit(debug($factures));
 			$pyts=$this->Facture->Paiement->find('all',array('fields'=>array('Paiement.montant',
 																		'Paiement.monnaie',
 																		'Paiement.montant_equivalent',
@@ -1035,21 +1218,18 @@ class FacturesController extends AppController {
 			$this->Product->bill_total($facture['Facture']['id'],$clientInfo['Tier']['reduction'],true,$facture['Facture']['etat']);
 			
 			//trace stuff
-			$trace['Trace']['operation']+='Changement de client. De "'.$facture['Tier']['name'].'" à "'.$clientInfo['Tier']['name'].'"';
-			$this->Facture->Trace->save($trace);
+			$trace['Trace']['operation'].='Changement de client. De "'.$facture['Tier']['name'].'" à "'.$clientInfo['Tier']['name'].'"';
 		}
 		
 		if($this->data['Facture']['date']!=$facture['Facture']['date']){
 			//trace stuff
-			$trace['Trace']['operation']+='Changement de la date de création. De "'.$this->Product->formatDate($facture['Facture']['date']).'" à "'.$this->Product->formatDate($this->data['Facture']['date']).'"';
-			$this->Facture->Trace->save($trace);
-			
+			$trace['Trace']['operation'].='Changement de la date de création. De "'.$this->Product->formatDate($facture['Facture']['date']).'" à "'.$this->Product->formatDate($this->data['Facture']['date']).'"';
 			$facture['Facture']['date']=$this->data['Facture']['date'];
 		}
 		if(!empty($this->data['Facture']['date_emission'])&&($this->data['Facture']['date_emission']!=$facture['Facture']['date_emission'])){
 			//trace stuff
-			$trace['Trace']['operation']+='Changement de la date d\'émission. De "'.$this->Product->formatDate($facture['Facture']['date_emission']).'" à "'.$this->Product->formatDate($this->data['Facture']['date_emission']).'"';
-			$this->Facture->Trace->save($trace);
+			$trace['Trace']['operation'].='Changement de la date d\'émission. De "'.$this->Product->formatDate($facture['Facture']['date_emission']).'" à "'.$this->Product->formatDate($this->data['Facture']['date_emission']).'"';
+			
 			
 			$facture['Facture']['date_emission']=$this->data['Facture']['date_emission'];
 		}
@@ -1072,11 +1252,12 @@ class FacturesController extends AppController {
 				//calcul de la nouvelle tva 
 				$this->data['Facture']['tva']=$this->Product->tva($this->data['Facture']['montant'],$this->data['Facture']['tva_incluse']);
 			}
-			$trace['Trace']['operation']+='Changement tva de '.$facture['Facture']['tva_incluse'].' a '.$this->data['Facture']['tva_incluse'];
+			$trace['Trace']['operation'].='Changement tva de '.$facture['Facture']['tva_incluse'].' a '.$this->data['Facture']['tva_incluse'];
 		}
 		
 		$facture['Facture']=$this->data['Facture'];
 		$this->Facture->save($this->data);
+		$this->Facture->Trace->save($trace);
 		exit(json_encode(array('success'=>true,'msg'=>'succès !')));
 	}
 	
@@ -1423,7 +1604,8 @@ class FacturesController extends AppController {
 	}
 	
 	
-	function view($id,$type='',$grouped=0,$export_to_xls=0) {
+	function view($id,$type='standard',$export_to_xls=0) {
+		$ids[]=$id;
 		$facture=$this->Facture->find('first',array('fields'=>array('Facture.*','Tier.*','Personnel.name'),
 													'conditions'=>array('Facture.id'=>$id),
 													));
@@ -1442,7 +1624,10 @@ class FacturesController extends AppController {
 				$fields=array('Proforma.*','Produit.name');
 				break;
 			case 'Reservation':
-				$this->redirect(array('controller'=>'reservations','action'=>'facture_globale/'.$id));
+				if($facture['Facture']['etat']!='annulee')
+					$this->redirect(array('controller'=>'reservations','action'=>'facture_globale/'.$id));
+				else
+					$fields=array('Reservation.*','Chambre.name','Facture.date');
 				break;
 			case 'Vente':
 				$fields=array('Vente.*','Produit.name','Facture.date');
@@ -1501,7 +1686,7 @@ class FacturesController extends AppController {
 			}
 			$conditions['LocationExtra.location_id']=$locationInfo['Location']['id'];
 			
-			if(in_array($type,array('','globale'))){
+			if(in_array($type,array('standard','globale'))){
 				$conditions['LocationExtra.extra']=array('oui','resto');
 			}
 			elseif($type=='proforma'){
@@ -1521,7 +1706,7 @@ class FacturesController extends AppController {
 				$facture['Facture']['montant']=$total;
 				$nature='Proforma';
 			}
-			if($type==''){
+			if($type=='standard'){
 				$total=0;
 				foreach($modelInfos as $service){
 					$total+=$service['LocationExtra']['montant'];
@@ -1541,25 +1726,29 @@ class FacturesController extends AppController {
 																					),
 																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
-																						'Facture.etat'=>array('credit'),
+																						'Facture.etat'=>array('payee','excedent','avance','bonus','credit'),
 																						'Facture.tier_id'=>$facture['Tier']['id'],
 																						),
 																	));
 				foreach($ventes as $vente){
 					$total+=$vente['Vente']['montant'];
+					$ids[]=$vente['Facture']['id'];
 				}
+
 				$services=$this->Facture->Service->find('all',array('fields'=>array(
 																					'Service.montant',
 																					'Service.description',
+																					'Facture.id'
 																					),
 																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
-																						'Facture.etat'=>'credit',
+																						'Facture.etat'=>array('payee','excedent','avance','bonus','credit'),
 																						'Facture.tier_id'=>$facture['Tier']['id'],
 																						),
 																	));
 				foreach($services as $key=>$service){
 					$total+=$service['Service']['montant'];
+					$ids[]=$service['Facture']['id'];
 				}
 				foreach($modelInfos as $extra){
 					$total+=$extra['LocationExtra']['montant'];
@@ -1589,7 +1778,7 @@ class FacturesController extends AppController {
 																		'Facture.date',
 																		'Personnel.name'
 																		),
-															'conditions'=>array('Paiement.facture_id'=>$id)
+															'conditions'=>array('Paiement.facture_id'=>$ids)
 															)
 												);
 		$sumPyts=$this->Facture->Paiement->find('all',array('fields'=>array('sum(Paiement.montant) as montant',
@@ -1597,7 +1786,7 @@ class FacturesController extends AppController {
 	 																		'Facture.monnaie',
 	 																		'Paiement.monnaie'
 																			),
-															'conditions'=>array('Paiement.facture_id'=>$id),
+															'conditions'=>array('Paiement.facture_id'=>$ids),
 															'group'=>array('Paiement.monnaie')
 												));
 		$tiers=$this->Facture->Tier->find('list',array('conditions'=>array('Tier.actif'=>1),
@@ -1630,12 +1819,15 @@ class FacturesController extends AppController {
 						'referer',
 						'id',
 						'venteCptables',
-						'typeAppareils'
+						'typeAppareils',
+						'locationInfo'
 			));
 	//*
 		if($export_to_xls){
 			$data['signature']=$signature;
 			$data['Facture']=$facture['Facture'];
+			$data['Facture']['numero']=($export_to_xls==2)?$data['Facture']['aserb_num']:$data['Facture']['numero'];
+			$data['model']=$model;
 			$data['nature']=$nature;
 			$data['Tier']=$facture['Tier'];
 			$data['modelInfos']=$modelInfos;

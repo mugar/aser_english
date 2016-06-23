@@ -57,7 +57,7 @@
 	<?php endif; ?>
 	<div id="details">
 	<div id="left">
-		<?php if(Configure::read('aser.display_bill_number')||($facture['Facture']['etat']=='credit')):?>
+		<?php if(!Configure::read('aser.xls_copy') || $show_aserb_num):?>
 		<span class="info"><?php if($thermal!='non') echo 'N° '.$facture['Facture']['numero'];
                                             else echo 'Facture N° : '.$facture['Facture']['numero'];
 		?></span>
@@ -71,15 +71,17 @@
 		<?php endif ?>
 	</div>
 	<div id="right">
-		<?php if(!empty($facture['Tier']['name'])): ?>
-		<span class="info"><?php  echo 'Client : '.$facture['Tier']['name']; ?></span>
-		<?php endif ?>
-		<?php if(!empty($facture['Tier']['telephone'])): ?>
-		<span class="info"><?php  echo 'Tél : '.$facture['Tier']['telephone'] ?></span>
-		<?php endif ?>
-		<?php if(!empty($facture['Facture']['beneficiaire'])): ?>
-		<span class="info"><?php  echo 'Béneficiaire : '.$facture['Facture']['beneficiaire'] ?></span>
-		<?php endif ?>
+		<?php if(!Configure::read('aser.xls_copy') || $show_aserb_num):?>
+			<?php if(!empty($facture['Tier']['name'])): ?>
+			<span class="info"><?php  echo 'Client : '.$facture['Tier']['name']; ?></span>
+			<?php endif ?>
+			<?php if(!empty($facture['Tier']['telephone'])): ?>
+			<span class="info"><?php  echo 'Tél : '.$facture['Tier']['telephone'] ?></span>
+			<?php endif ?>
+			<?php if(!empty($facture['Facture']['beneficiaire'])): ?>
+			<span class="info"><?php  echo 'Béneficiaire : '.$facture['Facture']['beneficiaire'] ?></span>
+			<?php endif ?>
+		<?php endif;?>
 		<span class="info"><?php  if((!empty($facture['Facture']['table'])))
 				  echo 'Table : '.$facture['Facture']['table']; ?>
 		</span>

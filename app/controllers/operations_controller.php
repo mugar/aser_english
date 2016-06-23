@@ -15,9 +15,86 @@ class OperationsController extends AppController {
 					'depenses'=>'dépenses',
 					);
 	
+	function beforeFilter(){
+		parent::beforeFilter();
+		if(in_array($this->params['action'],array('index','edit'))){
+			$models=$this->models;
+			$model1s=$this->model1s;
+			$model2s=$this->model2s;
+			$this->loadModel('Caiss');
+			$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'oui',
+																'NOT'=>array('Caiss.id'=>$this->caissesInterdites)
+																),
+      												'order'=>array('Caiss.name asc')
+																)
+												);
+			$choix=$list;
+			$options=$models;
+			$choix['']=$options['']='';
+			$this->set(compact('models','model1s','model2s','list','options','choix'));
+		}
+	}
 	
+	function model($choix,$return='model'){
+		$choix=strtolower($choix);
+		switch($choix){
+			case 'clients':
+				$model='Client';
+				$type='debit';
+				break;
+			case 'fournisseurs':
+				$model='Client';
+				$type='credit';
+				break;
+			case 'depenses':	
+				$model='Type';
+				$type='debit';
+				break;
+			case 'ventes':	
+				$model='Type';
+				$type='credit';
+				break;
+			case 'caisses':	
+				$model='Caiss';
+				$type='debit';
+				break;
+		}
+		if($return=='model'){
+			return $model;
+		}
+		else {
+			return $type;
+		}
+	}
 	
-				
+	function _set_common_field($data){
+				$common = $data['Operation']['element1']
+													.'_'.$this->model($data['Operation']['model1'])
+													.'_'.$data['Operation']['element2']
+													.'_'.$this->model($data['Operation']['model2']);
+		return $common;
+	}
+
+	function _types($type){
+		$this->loadModel('Type');
+		return $this->Type->find('list',array('conditions'=>array('Type.type'=>$type,
+    																	'Type.actif'=>'oui',
+																		),
+      												'order'=>array('Type.name asc')
+																)
+												);
+	}
+
+	function _caisses(){
+		$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'oui',
+    																		'NOT'=>array('Caiss.id'=>$this->caissesInterdites)
+																			),
+      												'order'=>array('Caiss.name asc')
+																)
+												);
+		return $list;
+	}
+
 	function autocomplete($index){
 		$parts=explode(' : ',$this->data['Operation'][$index]);
 		$elements=$this->Operation->Compte->find('all',array('fields'=>array('Compte.composer'),
@@ -319,14 +396,9 @@ class OperationsController extends AppController {
 		$operationConditions=$this->Session->read('operationConditions');
 		if((empty($this->data))&&(empty($operationConditions))) {
 			$operationConditions['Operation.auto']=0;
-			if($mode=='report'){
-				$operationConditions['Operation.libelle']='Report';	
-			}
-			else {
-				$operationConditions['Operation.libelle !=']='Report';	
-			}
+			
 			$operations=$this->paginate($operationConditions);
-			$operations=($mode!='report')?$this->_group($operations):$operations;
+			$operations=$this->_group($operations);
 			$operations=$this->rmv_caisses_interdites($operations);
 			$this->set('operations',$operations);
 		}
@@ -566,6 +638,7 @@ class OperationsController extends AppController {
 	}
 
 	function resultat(){
+		$this->loadModel('Sorti');
 		$date1=date('Y-m').'-01';
 		$date2=date('Y-m-d');
 		$devise['USD']=$taux=$this->Conf->find('taux_usd');
@@ -580,32 +653,8 @@ class OperationsController extends AppController {
 		$conditions['Operation.date >=']=$date1;
 		$conditions['Operation.date <=']=$date2;
 		$conditions['Operation.model']='Type';
-			
-		$depenses=$this->Operation->Type->find('all',array('fields'=>array('Type.name','Type.id'),
-													'order'=>array('Type.name'),
-													'conditions'=>array('Type.type'=>'depense')
-													));
-		$total_depenses=$total_ventes=0;
-		
-		
-		
-		foreach($depenses as $i=>$depense){
-			$conditions['Operation.element_id']=$depense['Type']['id'];
-			$sums=$this->Operation->find('all',array('fields'=>array('Type.name',
-																	'sum(Operation.debit) as debit',
-																	'Operation.monnaie'
-																	),
-													'conditions'=>$conditions,
-													'group'=>array('Operation.monnaie')
-												));
-			$montantTotal=0;
-			foreach($sums as $sum){
-				$montant=(isset($sum['Operation']['debit']))?$sum['Operation']['debit']:0;
-				$montantTotal+=$montant*$devise[$sum['Operation']['monnaie']];
-			}
-			$total_depenses+=$depenses[$i]['Type']['montant']=$montantTotal;
-		}
-		
+
+	
 		$this->loadModel('Facture');
 		$this->loadModel('Section');
 		$this->loadModel('Vente');
@@ -665,8 +714,57 @@ class OperationsController extends AppController {
 			$total_ventes+=$total;
 		}
 		
-		$resultat=$total_ventes-$total_depenses;
-		$this->set(compact('depenses','model','sections','date1','date2','monnaie','total_depenses','total_ventes','resultat','taux'));
+	
+		
+		$depenses=$this->Operation->Type->find('all',array('fields'=>array('Type.name','Type.id','Type.categorie'),
+													'order'=>array('Type.name'),
+													'conditions'=>array('Type.type'=>'depense')
+													));
+		$total_depenses=0;
+		$depenses_by_categories=array();
+		foreach(Configure::read('categories') as $categorie => $cat_name){
+			$depenses_by_categories[$categorie]['name']=$cat_name;
+			$depenses_by_categories[$categorie]['montant']=0;
+			$depenses_by_categories[$categorie]['depenses']=array();
+		}
+
+		foreach($depenses as $i=>$depense){
+			$conditions['Operation.element_id']=$depense['Type']['id'];
+			$sums=$this->Operation->find('all',array('fields'=>array('Type.name',
+																	'sum(Operation.debit) as debit',
+																	'Operation.monnaie'
+																	),
+													'conditions'=>$conditions,
+													'group'=>array('Operation.monnaie')
+												));
+			$montantTotal=0;
+			foreach($sums as $sum){
+				$montant=(isset($sum['Operation']['debit']))?$sum['Operation']['debit']:0;
+				$montantTotal+=$montant*$devise[$sum['Operation']['monnaie']];
+			}
+			$total_depenses+=$depenses[$i]['Type']['montant']=$montantTotal;
+			$depenses_by_categories[$depense['Type']['categorie']]['depenses'][$i]=$depenses[$i]['Type'];
+			$depenses_by_categories[$depense['Type']['categorie']]['montant']+=$montantTotal;
+		}
+		
+		$sortis=$this->Sorti->find('all',array('fields'=>array('sum(Sorti.montant) as montant'),
+																				'conditions'=>array('Sorti.date >='=>$date1,
+																													'Sorti.date <='=>$date2
+																														)
+																	));
+
+		$total_sortis = (!empty($sortis[0]))?$sortis[0]['Sorti']['montant']:0;
+		$depenses_by_categories[1]['montant']+=$total_sortis;
+
+		$marge_brute=$total_ventes - $depenses_by_categories[1]['montant'];
+		$marge_intermediaire = $marge_brute -  $depenses_by_categories[2]['montant'];
+		$marge_exploitation = $marge_intermediaire - $depenses_by_categories[3]['montant'];
+		$marge_net = $marge_exploitation - $depenses_by_categories[4]['montant'];
+
+
+		$this->set(compact('model','sections','date1','date2','monnaie','total_ventes','taux',
+												'marge_brute','marge_exploitation','marge_intermediaire','marge_net','total_sortis','depenses_by_categories'
+			));
 	}
 	
 	function _show($ids){
@@ -781,10 +879,24 @@ class OperationsController extends AppController {
 	function edit($op = null,$edit='yes') {
 		if($edit=='yes'){
 			if (!empty($this->data)) {
+			//	exit(debug($this->data));
+				//set the common field used for search.
+				$this->data['Operation']['common']=$this->_set_common_field($this->data);
 				$ids=$this->Operation->find('all',array('fields'=>array('Operation.id','Operation.credit','Operation.debit'),
 												'conditions'=>array('Operation.op_num'=>$this->data['Operation']['op_num']),
+												'order'=>array('Operation.id asc')
 												));
-				foreach($ids as $id){
+			//	exit(debug($ids));
+				foreach($ids as $i=>$id){
+				
+					if($i==0){ 	//setting the element 1
+						$this->data['Operation']['element_id']=$this->data['Operation']['element1'];	
+						$this->data['Operation']['model']=$this->model($this->data['Operation']['model1']); //model to use
+					}
+					else { 	//setting the element 2
+						$this->data['Operation']['element_id']=$this->data['Operation']['element2'];		
+						$this->data['Operation']['model']=$this->model($this->data['Operation']['model2']); //model to use
+					}
 					$this->data['Operation']['debit']=($id['Operation']['debit']!=null)?($this->data['Operation']['montant']):null;
 					$this->data['Operation']['credit']=($id['Operation']['credit']!=null)?($this->data['Operation']['montant']):null;
 					$this->data['Operation']['id']=$id['Operation']['id'];
@@ -793,17 +905,41 @@ class OperationsController extends AppController {
 				exit(json_encode(array('success'=>true,'msg'=>'Modification Enregistrée')));
 			}
 			else {
-				$this->data = $this->Operation->find('first',array('fields'=>array('Operation.date',
-																			'Operation.libelle',
-																			'Operation.debit as montant',
-																			'Operation.monnaie',
-																			'Operation.mode_paiement',
-																			'Operation.op_num',
-																			'Operation.ordre'
-																				),
-																'conditions'=>array('Operation.op_num'=>$op),
-																'order'=>array('Operation.id desc')
-																));
+				$operations = $this->Operation->find('all',array('fields'=>array('Operation.*'
+																																				),
+																												'conditions'=>array('Operation.op_num'=>$op),
+																						'order'=>array('Operation.id asc')
+																						));
+				if(count($operations)==2){
+					$this->data = $operations[0];
+					$this->data['Operation']['montant']=($this->data['Operation']['debit'])?$this->data['Operation']['debit']:$this->data['Operation']['credit'];
+					if($operations[0]['Operation']['model']=='Caiss'){
+						$selected_source = 'caisses';
+						$elements1=$this->_caisses();
+					}
+					else {
+						$selected_source ='ventes';
+						$elements1 = $this->_types('vente');
+					}
+					$selected_element1=$operations[0]['Operation']['element_id'];
+
+					if($operations[1]['Operation']['model']=='Caiss'){
+						$selected_destination = 'caisses';
+						$elements2=$this->_caisses();
+					}
+					else {
+						$selected_destination ='depenses';
+						$elements2 = $this->_types('depense');
+					}
+					$selected_element2=$operations[1]['Operation']['element_id'];
+
+					$this->set(compact('selected_source','selected_destination','elements1','elements2','selected_element1','selected_element2'));
+
+				}
+				else {
+						exit(json_encode(array('success'=>false,'msg'=>'Cette enregistrement est corrompu!')));		
+				}
+
 			}
 		}
 		else {

@@ -48,7 +48,7 @@ class PaiementsController extends AppController {
 		}
 		else {
 			if(!empty($this->data['Paiement']['mode_paiement'])){
-		 		$cond['Paiement.mode_paiement']=$date1=$this->data['Paiement']['mode_paiement'];
+		 		$cond['Paiement.mode_paiement']=$this->data['Paiement']['mode_paiement'];
 		 	}
 		 	if(!empty($this->data['Paiement']['date1'])){
 		 		$cond['Paiement.date >=']=$date1=$this->data['Paiement']['date1'];
@@ -73,12 +73,12 @@ class PaiementsController extends AppController {
 							array('Facture.monnaie'=>$monnaie,'Paiement.montant_equivalent'=>null));
 			}
 			if(!empty($this->data['Paiement']['compagnie'])){
-		 		$factCond['Tier.compagnie']=$this->data['Paiement']['compagnie'];
+		 		$factCond['Tier.compagnie like']='%'.$this->data['Paiement']['compagnie'].'%';
 		 	}
 			$cond['AND']=array(0=>array('OR'=>$cond['OR']),
-							1=>array('OR'=>array('Facture.operation'=>array('Reservation','Service','Location'),
-									'Personnel.fonction_id'=>array('4')
-									))
+							// 1=>array('OR'=>array('Facture.operation'=>array('Reservation','Service','Location'),
+							// 		'Personnel.fonction_id'=>array('4')
+							// 		))
 							);
 			unset($cond['OR']);
 				
@@ -95,6 +95,7 @@ class PaiementsController extends AppController {
 																'recursive'=>0
 													));
 		$cond['Facture.id']=$factures;
+	//	exit(debug($cond));
 	 	$pyts=$this->Paiement->Facture->Paiement->find('all',array('fields'=>array('Paiement.*',
 	 															'Facture.numero',
 	 															'Facture.id',
@@ -139,6 +140,26 @@ class PaiementsController extends AppController {
 			exit(json_encode(array('success'=>false,'msg'=>'La date donnée est incorrecte!')));
 	}
 	
+	function globale_bill_pyt(){
+		$locationInfo = $this->Paiement->Facture->Location->find('first',array('fields'=>array('Location.*','Facture.tier_id'
+																					),
+																	'conditions'=>array('Location.facture_id'=>$this->data['Paiement']['facture_id'],
+																						),
+																	));
+
+		$factures_ids = $this->Paiement->Facture->find('list',array('fields'=>array('Facture.id'
+																					),
+																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
+																						'Facture.date <='=>$locationInfo['Location']['depart'],
+																						'Facture.etat'=>array('avance','credit'),
+																						'Facture.tier_id'=>$locationInfo['Facture']['tier_id'],
+																						),
+																	));
+		$this->data['Id'] = $factures_ids + array($this->data['Paiement']['facture_id']);
+		$this->data['rows'] = count($this->data['Id']);
+		$this->mass_payment();
+	}
+
 	function mass_payment(){
 	//exit(debug($this->data));
 		
@@ -224,6 +245,7 @@ class PaiementsController extends AppController {
 		//facture details
 		$facture=$this->Paiement->Facture->find('first',array('fields'=>array('Facture.id',
 																			'Facture.montant',
+																			'Facture.monnaie',
 																			'Facture.etat',
 																			'Facture.reste',
 																			'Facture.journal_id',
@@ -233,7 +255,9 @@ class PaiementsController extends AppController {
 															'recursive'=>0,
 													)
 											);
-		if($single&&($data['Paiement']['montant']>$facture['Facture']['reste'])){
+		$reste=$facture['Facture']['montant']-$this->Paiement->Facture->pyts($data['Paiement']['facture_id']);
+		//exit(debug($reste));
+		if($single&&($data['Paiement']['montant']>$reste)){
 			if($exit)
 				exit(json_encode(array('success'=>false,'msg'=>'Paiement trop elevée!')));
 			else 
@@ -246,16 +270,35 @@ class PaiementsController extends AppController {
 			$data['Paiement']['date']=$journal['date'];
 		}
 		else {
+			if(($facture['Facture']['operation']=='Vente')&&empty($facture['Facture']['journal_id'])){
+					exit(json_encode(array('success'=>false,'msg'=>'Seul un caissier peut classer cette facture')));
+			}
 			$data['Paiement']['journal_id']=$facture['Facture']['journal_id'];
 		}
 		//saving ...
 		$data['Paiement']['id']=null;
 		if(!$this->Paiement->save($data)) exit(json_encode(array('success'=>false,'msg'=>'Failed to save the Payment')));
 
+
 		//updating bill state		
 		if($facture['Facture']['operation']!='Vente'){
 			$this->Product->update_facture($facture['Facture']['id'],$facture['Facture']['montant'],$facture['Facture']['etat'],null,false);
 		}
+		
+		//saving the trace
+		$trace['Trace']['id']=NULL;
+		$trace['Trace']['model_id']=$facture['Facture']['id'];
+		$trace['Trace']['model']='Facture';
+		$trace['Trace']['operation']='Creation Paiement de ';
+
+		if($data['Paiement']['montant_equivalent']>0){
+			$trace['Trace']['operation'].=$data['Paiement']['montant_equivalent'].' '.((!empty($data['Paiement']['monnaie']))?$data['Paiement']['monnaie']:'');
+		}
+		else {
+				$trace['Trace']['operation'].=$data['Paiement']['montant'].' '.$facture['Facture']['monnaie'];
+		}
+		$this->Paiement->Facture->Trace->save($trace);
+
 		if($single&&$exit){
 			exit(json_encode(array('success'=>true,'msg'=>'ok!')));
 		}

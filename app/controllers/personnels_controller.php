@@ -65,7 +65,9 @@ class PersonnelsController extends AppController {
 		if(preg_match('#(\d)+#',$code,$match)){
 			$code=$match[0];
 			
-			$search=$this->Personnel->find('first',array('conditions'=>array('Personnel.code'=>$code),
+			$search=$this->Personnel->find('first',array('conditions'=>array('Personnel.code'=>$code,
+                                                                      'Personnel.actif'=>'oui'
+                                                                      ),
 														'recursive'=>-1
 														));
 			if(!empty($search)&&

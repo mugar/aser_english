@@ -83,12 +83,16 @@ class ServicesController extends AppController {
 		if(isset($this->data['Facture']['numero'])&&($this->data['Facture']['numero']!='toutes')) {
 	 		$conditions['Facture.numero like']='%'.$this->data['Facture']['numero'].'%';
 		}
+		if(isset($this->data['Facture']['monnaie'])&&($this->data['Facture']['monnaie']!='')) {
+	 		$conditions['Facture.monnaie']=$this->data['Facture']['monnaie'];
+		}
 		if(isset($this->data['Facture']['etat'])&&($this->data['Facture']['etat']!='toutes')) {
 	 		$conditions['Facture.etat']=$this->data['Facture']['etat'];
 		}
 		else {
 			$conditions['Facture.etat !=']='annulee';
 		}
+		//exit(debug($conditions));
 		$groupServices=$this->Service->find('all',array('fields'=>array(
 																	'TypeService.name',
 																	'Facture.numero',

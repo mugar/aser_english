@@ -84,10 +84,6 @@ class Entree extends AppModel {
 		)
 	);
 
-	function afterSave(){
-		if($this->id){
-
-		}
-	}
+	
 }
 ?>

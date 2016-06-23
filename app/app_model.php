@@ -49,6 +49,18 @@ class AppModel extends Model {
 		return $sessionData;
 	}
 	
+	//* this function will replace 0 with null
+	function check_tier_id($alias,&$data){
+		if(in_array($alias,array('Entree','Sorti','Facture')) 
+			&& isset($data[$alias]['tier_id']) 
+			&& $data[$alias]['tier_id']==0
+			){
+		//	exit(debug($data));
+					$data[$alias]['tier_id']=NULL;
+			//	
+		}
+
+	}
 	
 	
 	function beforeSave(){
@@ -64,6 +76,7 @@ class AppModel extends Model {
 				
 			}
 		}
+		$this->check_tier_id($this->alias,$this->data);
 		return true;
 	}
 	function afterFind($results, $primary=false) {

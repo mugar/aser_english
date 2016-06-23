@@ -13,7 +13,8 @@
 	<span class="right">
 		<?php
 			echo $this->Form->input('nombre',array('label'=>'Nombre de personnes'));
-			echo $this->Form->input('tva_incluse',array('type'=>'checkbox','checked'=>'checked'));
+			// exit(debug($this->data));
+			echo $this->Form->input('Facture.tva_incluse',array('type'=>'checkbox'));
 			echo $this->Form->input('type',array('type'=>'hidden','value'=>$type));
 		?>
 	</span>

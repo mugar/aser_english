@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
-"POT-Creation-Date: 2013-06-26 23:26+0300\n"
+"POT-Creation-Date: 2016-02-05 11:56+0300\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Last-Translator: NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
@@ -14,180 +14,204 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
 
-#: /controllers/Copy of operations_controller.php:508;863
 #: /controllers/affectations_controller.php:87
-#: /controllers/caisse_interdites_controller.php:12;42;62
+#: /controllers/caisse_interdites_controller.php:22;52;70
 #: /controllers/compte_operations_controller.php:500
 #: /controllers/comptes_controller.php:15;48;80
+#: /controllers/dettes_controller.php:74;114;151
 #: /controllers/fonctions_controller.php:14;34;52
-#: /controllers/journals_controller.php:73;95;115
 #: /controllers/location_extras_controller.php:12;34;54
-#: /controllers/operations_controller.php:483
-#: /controllers/personnels_controller.php:122
-#: /controllers/produits_controller.php:497
+#: /controllers/operations_controller.php:574
+#: /controllers/paies_controller.php:12;24;44
+#: /controllers/personnels_controller.php:213
+#: /controllers/produits_controller (copy).php:1040
+#: /controllers/produits_controller.php:1087
 #: /controllers/proformas_controller.php:17;54;87
 #: /controllers/relations_controller.php:36;160;197
-#: /controllers/services_controller.php:118;152;185
+#: /controllers/salaires_controller.php:176;198;218
+#: /controllers/services_controller.php:181;219;252
 #: /controllers/type_services_controller.php:12;34;54
-#: /controllers/types_controller.php:31;63;91
+#: /controllers/types_controller.php:141
 msgid "Id pour %s incorrecte !"
 msgstr ""
 
-#: /controllers/Copy of operations_controller.php:877
-#: /controllers/caisse_interdites_controller.php:29;47
+#: /controllers/caisse_interdites_controller.php:41;57
 #: /controllers/compte_operations_controller.php:505
-#: /controllers/configs_controller.php:18;58
+#: /controllers/configs_controller.php:31;71
+#: /controllers/dettes_controller.php:129
 #: /controllers/fonctions_controller.php:24;39
-#: /controllers/journals_controller.php:83;100
 #: /controllers/location_extras_controller.php:22;39
+#: /controllers/paies_controller.php:29
 #: /controllers/proformas_controller.php:69
 #: /controllers/relations_controller.php:93;180
-#: /controllers/services_controller.php:137;167
+#: /controllers/salaires_controller.php:186;203
+#: /controllers/services_controller.php:204;234
 #: /controllers/type_services_controller.php:22;39
-#: /controllers/types_controller.php:78
 msgid "Informations enregistrées"
 msgstr ""
 
-#: /controllers/caisse_interdites_controller.php:32;50
+#: /controllers/caisse_interdites_controller.php:44;60
 #: /controllers/compte_operations_controller.php:508
+#: /controllers/dettes_controller.php:137
 #: /controllers/fonctions_controller.php:27;42
-#: /controllers/journals_controller.php:86;103
 #: /controllers/location_extras_controller.php:25;42
+#: /controllers/paies_controller.php:32
 #: /controllers/proformas_controller.php:72
 #: /controllers/relations_controller.php:183
-#: /controllers/services_controller.php:140;170
+#: /controllers/salaires_controller.php:189;206
+#: /controllers/services_controller.php:207;237
 #: /controllers/type_services_controller.php:25;42
 msgid "Impossible d'enregistrer. Réessayer S.V.P."
 msgstr ""
 
-#: /controllers/caisse_interdites_controller.php:66
+#: /controllers/caisse_interdites_controller.php:74
 #: /controllers/comptes_controller.php:84
+#: /controllers/dettes_controller.php:155
 #: /controllers/fonctions_controller.php:56
-#: /controllers/journals_controller.php:119
 #: /controllers/location_extras_controller.php:58
+#: /controllers/paies_controller.php:48
 #: /controllers/proformas_controller.php:101
 #: /controllers/relations_controller.php:201
-#: /controllers/services_controller.php:199
+#: /controllers/salaires_controller.php:222
+#: /controllers/services_controller.php:266
 #: /controllers/type_services_controller.php:58
-#: /controllers/types_controller.php:105
 msgid "Enregistrement effacé"
 msgstr ""
 
-#: /controllers/caisse_interdites_controller.php:69
+#: /controllers/caisse_interdites_controller.php:77
 #: /controllers/comptes_controller.php:87
+#: /controllers/dettes_controller.php:158
 #: /controllers/fonctions_controller.php:59
-#: /controllers/journals_controller.php:122
 #: /controllers/location_extras_controller.php:61
+#: /controllers/paies_controller.php:51
 #: /controllers/proformas_controller.php:104
 #: /controllers/relations_controller.php:204
-#: /controllers/services_controller.php:202
+#: /controllers/salaires_controller.php:225
+#: /controllers/services_controller.php:269
 #: /controllers/type_services_controller.php:61
-#: /controllers/types_controller.php:108
 msgid "Impossible d'effacer !"
 msgstr ""
 
-#: /controllers/configs_controller.php:21
+#: /controllers/configs_controller.php:13
+msgid "Opération effectuée"
+msgstr ""
+
+#: /controllers/configs_controller.php:34
 msgid "Impossible d' enregistrer !"
 msgstr ""
 
-#: /controllers/personnels_controller.php:140
+#: /controllers/journals_controller.php:13;34
+msgid "Invalid journal"
+msgstr ""
+
+#: /controllers/journals_controller.php:23;39
+msgid "The journal has been saved"
+msgstr ""
+
+#: /controllers/journals_controller.php:26;42
+msgid "The journal could not be saved. Please, try again."
+msgstr ""
+
+#: /controllers/journals_controller.php:54
+msgid "Invalid id for journal"
+msgstr ""
+
+#: /controllers/journals_controller.php:58
+msgid "Journal deleted"
+msgstr ""
+
+#: /controllers/journals_controller.php:61
+msgid "Journal was not deleted"
+msgstr ""
+
+#: /controllers/personnels_controller.php:231
 msgid "Ce code est déjà utilisé!"
 msgstr ""
 
-#: /controllers/produits_controller.php:780
-msgid "Importation réussie !"
+#: /controllers/produits_controller (copy).php:590
+#: /controllers/produits_controller.php:604
+msgid "Enregistrement en double!"
 msgstr ""
 
-#: /views/affectations/add.ctp:4
-#: /views/caisse_interdites/add.ctp:4
-#: /views/compte_operations/add.ctp:4
-#: /views/comptes/add.ctp:4
-#: /views/etages/add.ctp:4
-#: /views/factures/add.ctp:4
-#: /views/historique_chambres/add.ctp:4
-#: /views/historiques/add.ctp:4
-#: /views/location_extras/add.ctp:4
-#: /views/locations/add.ctp:4
-#: /views/operations/add.ctp:4
-#: /views/proformas/add.ctp:4
-#: /views/reservations/add.ctp:4
-#: /views/services/add.ctp:4
-#: /views/traces/add.ctp:4
-#: /views/type_services/add.ctp:4
-#: /views/types/add.ctp:4
-#: /views/ventes/add.ctp:4
-#: /views/ventes/edit.ctp:4
-msgid "Add %s"
+#: /controllers/produits_controller (copy).php:1385
+#: /controllers/produits_controller.php:1432
+msgid "tImportation réussie !"
 msgstr ""
 
-#: /views/affectations/add.ctp:4
-#: /views/affectations/edit.ctp:4
-#: /views/affectations/view.ctp:2;64;65;67
-#: /views/reservations/index.ctp:142
-#: /views/reservations/view.ctp:120
-msgid "Affectation"
+#: /views/abscences/edit.ctp:7
+msgid "Type d'abscence"
 msgstr ""
 
-#: /views/affectations/add.ctp:13
-#: /views/affectations/edit.ctp:14
-#: /views/caisse_interdites/add.ctp:11
-#: /views/caisse_interdites/edit.ctp:9
-#: /views/caisses/amortir.ctp:11
-#: /views/caisses/rapport.ctp:20
-#: /views/compte_operations/add.ctp:15
-#: /views/compte_operations/edit.ctp:15
-#: /views/comptes/add.ctp:10
-#: /views/comptes/edit.ctp:13
-#: /views/configs/defaulter.ctp:38
-#: /views/configs/index.ctp:78
-#: /views/configs/restore.ctp:9
-#: /views/etages/add.ctp:9
-#: /views/etages/edit.ctp:10
-#: /views/factures/add.ctp:18
-#: /views/fonctions/add.ctp:10
-#: /views/fonctions/edit.ctp:11
-#: /views/historique_chambres/add.ctp:13
-#: /views/historique_chambres/edit.ctp:14
-#: /views/historiques/add.ctp:15
-#: /views/historiques/edit.ctp:16
-#: /views/location_extras/add.ctp:14
-#: /views/location_extras/edit.ctp:15
-#: /views/locations/add.ctp:21
-#: /views/operations/add.ctp:15
-#: /views/produits/marge.ctp:52
-#: /views/produits/resume.ctp:20
-#: /views/produits/upload_xls.ctp:10
-#: /views/proformas/add.ctp:13
-#: /views/proformas/edit.ctp:14
-#: /views/relations/add_plat.ctp:27
-#: /views/relations/edit.ctp:20
-#: /views/reservations/add.ctp:22
-#: /views/reservations/edit.ctp:13
-#: /views/services/add.ctp:14
-#: /views/services/edit.ctp:14
-#: /views/sortis/transport.ctp:107
-#: /views/tiers/history.ctp:20
-#: /views/traces/add.ctp:9
-#: /views/traces/edit.ctp:10
-#: /views/type_services/add.ctp:10
-#: /views/type_services/edit.ctp:10
-#: /views/types/add.ctp:13
-#: /views/types/edit.ctp:16
-#: /views/ventes/add.ctp:43
-#: /views/ventes/edit.ctp:82
-msgid "Envoyer"
+#: /views/abscences/index.ctp:104
+#: /views/affectations/view.ctp:44
+#: /views/caisse_interdites/view.ctp:9
+#: /views/chambres/view.ctp:44
+#: /views/compte_operations/add.ctp:25
+#: /views/compte_operations/edit.ctp:26
+#: /views/compte_operations/view.ctp:39;61
+#: /views/configs/view.ctp:19
+#: /views/dettes/view.ctp:29
+#: /views/entrees/view.ctp:59
+#: /views/fonctions/view.ctp:15
+#: /views/historique_chambres/add.ctp:21
+#: /views/historique_chambres/edit.ctp:23
+#: /views/historique_chambres/view.ctp:9;44
+#: /views/historiques/view.ctp:49
+#: /views/journals/view.ctp:64
+#: /views/operations/add.ctp:23
+#: /views/operations/view.ctp:39;59
+#: /views/personnels/view.ctp:2;39;59;60;62
+#: /views/pertes/view.ctp:44
+#: /views/proformas/view.ctp:39
+#: /views/rappels/view.ctp:19
+#: /views/rappels/stocks/view.ctp:19
+#: /views/reservations/view.ctp:89
+#: /views/salaires/add.ctp:27
+#: /views/salaires/edit.ctp:29
+#: /views/salaires/view.ctp:9;74
+#: /views/sections/view.ctp:19
+#: /views/services/view.ctp:44
+#: /views/sortis/view.ctp:64
+#: /views/stocks/view.ctp:19
+#: /views/stocks/stocks/view.ctp:19
+#: /views/tiers/stocks/view.ctp:19
+#: /views/tiers/stocks/stocks/view.ctp:19
+#: /views/traces/view.ctp:19
+#: /views/type_services/view.ctp:29;54
+#: /views/types/view.ctp:29
+#: /views/ventes/view.ctp:24;54
+msgid "Personnel"
 msgstr ""
 
+#: /views/abscences/index.ctp:110
+#: /views/paies/view.ctp:49
+msgid "Mois"
+msgstr ""
+
+#: /views/abscences/index.ctp:111
+msgid "Year"
+msgstr ""
+
+#: /views/abscences/index.ctp:155
+msgid "Feuille de présences de : "
+msgstr ""
+
+#: /views/abscences/index.ctp:155
+msgid " pour le mois de "
+msgstr ""
+
+#: /views/abscences/index.ctp:166
 #: /views/affectations/add.ctp:16
 #: /views/affectations/edit.ctp:17
 #: /views/affectations/history.ctp:37
 #: /views/affectations/index.ctp:103
 #: /views/affectations/view.ctp:62
-#: /views/caisse_interdites/add.ctp:14
-#: /views/caisse_interdites/edit.ctp:12
+#: /views/buanderies/index.ctp:107
+#: /views/caisse_interdites/add.ctp:13
+#: /views/caisse_interdites/edit.ctp:14
 #: /views/caisse_interdites/index.ctp:50
 #: /views/caisse_interdites/view.ctp:22
-#: /views/caisses/index.ctp:46
+#: /views/caisses/index.ctp:53
 #: /views/caisses/sum.ctp:40
 #: /views/caisses/view.ctp:42
 #: /views/chambres/fiche.ctp:138
@@ -209,25 +233,37 @@ msgstr ""
 #: /views/comptes/index.ctp:71
 #: /views/comptes/view.ctp:27
 #: /views/configs/view.ctp:27
+#: /views/dettes/add.ctp:17
+#: /views/dettes/edit.ctp:21
+#: /views/dettes/index.ctp:108
+#: /views/dettes/rapport.ctp:60
+#: /views/dettes/view.ctp:47
 #: /views/entrees/advanced_add.ctp:56
-#: /views/entrees/index.ctp:103
+#: /views/entrees/index.ctp:160
 #: /views/entrees/index_old.ctp:71
-#: /views/entrees/rapport.ctp:43
+#: /views/entrees/rapport.ctp:47
 #: /views/entrees/view.ctp:77
 #: /views/etages/add.ctp:12
 #: /views/etages/edit.ctp:13
 #: /views/etages/index.ctp:42
 #: /views/etages/view.ctp:18
 #: /views/factures/add.ctp:21
-#: /views/factures/cash.ctp:221
-#: /views/factures/index.ctp:92
-#: /views/factures/monthly.ctp:70
-#: /views/factures/rapport.ctp:111
-#: /views/factures/view.ctp:425
+#: /views/factures/aserb_report.ctp:66
+#: /views/factures/buanderie.ctp:75
+#: /views/factures/cash.ctp:179
+#: /views/factures/credit.ctp:132
+#: /views/factures/declaration.ctp:150
+#: /views/factures/index.ctp:107
+#: /views/factures/monthly.ctp:72
+#: /views/factures/rapport.ctp:112
+#: /views/factures/silhouette.ctp:94
+#: /views/factures/view.ctp:499
 #: /views/fonctions/add.ctp:13
 #: /views/fonctions/edit.ctp:14
 #: /views/fonctions/index.ctp:54
 #: /views/fonctions/view.ctp:33
+#: /views/groupe_comptables/index.ctp:54
+#: /views/groupe_comptables/view.ctp:22
 #: /views/groupes/index.ctp:68
 #: /views/groupes/view.ctp:32
 #: /views/historique_chambres/add.ctp:16
@@ -238,39 +274,53 @@ msgstr ""
 #: /views/historiques/edit.ctp:19
 #: /views/historiques/index.ctp:86
 #: /views/historiques/view.ctp:62
+#: /views/journals/add.ctp:12
+#: /views/journals/edit.ctp:12
+#: /views/journals/index.ctp:10;53
 #: /views/journals/manquant.ctp:107
+#: /views/journals/view.ctp:77;127;207;270
+#: /views/limits/index.ctp:65
 #: /views/location_extras/add.ctp:17
 #: /views/location_extras/edit.ctp:18
 #: /views/location_extras/index.ctp:54
 #: /views/location_extras/view.ctp:42
 #: /views/locations/add.ctp:24
 #: /views/locations/index.ctp:70
-#: /views/locations/tabella.ctp:344
+#: /views/locations/rapport.ctp:91
+#: /views/locations/tabella.ctp:408
 #: /views/locations/view.ctp:62
-#: /views/mouvements/index.ctp:96
+#: /views/mouvements/index.ctp:105
 #: /views/mouvements/view.ctp:72
 #: /views/operations/add.ctp:18
-#: /views/operations/balance.ctp:65
+#: /views/operations/balance.ctp:67
 #: /views/operations/bon.ctp:88
 #: /views/operations/depenses.ctp:56
-#: /views/operations/index.ctp:178
-#: /views/operations/rapport.ctp:121
-#: /views/operations/resultat.ctp:77
+#: /views/operations/index.ctp:200
+#: /views/operations/rapport.ctp:117
+#: /views/operations/resultat.ctp:159
+#: /views/operations/resultat_t.ctp:85
 #: /views/operations/view.ctp:52
-#: /views/paiements/payment.ctp:48
+#: /views/paiements/payment.ctp:44
 #: /views/paiements/recu.ctp:48
+#: /views/paies/add.ctp:21
+#: /views/paies/edit.ctp:22
+#: /views/paies/index.ctp:62
+#: /views/paies/view.ctp:62
 #: /views/personnels/index.ctp:81
 #: /views/personnels/view.ctp:57
-#: /views/pertes/index.ctp:81
-#: /views/pertes/rapport.ctp:43
+#: /views/pertes/index.ctp:90
+#: /views/pertes/rapport.ctp:48
 #: /views/pertes/view.ctp:62
 #: /views/produits/advanced_add.ctp:59
 #: /views/produits/balance.ctp:97
+#: /views/produits/conso_theorique.ctp:36
 #: /views/produits/historique.ctp:178
 #: /views/produits/historique1.ctp:74
-#: /views/produits/index.ctp:122
+#: /views/produits/index.ctp:146
+#: /views/produits/monthly.ctp:78
 #: /views/produits/rapport.ctp:49
-#: /views/produits/view.ctp:73
+#: /views/produits/shifts.ctp:66
+#: /views/produits/view.ctp:94
 #: /views/proformas/add.ctp:16
 #: /views/proformas/edit.ctp:17
 #: /views/proformas/index.ctp:93
@@ -279,39 +329,50 @@ msgstr ""
 #: /views/rappels/view.ctp:37
 #: /views/rappels/stocks/index.ctp:54
 #: /views/rappels/stocks/view.ctp:37
+#: /views/reductions/index.ctp:91
+#: /views/reductions/view.ctp:72
 #: /views/relations/add_plat.ctp:30
 #: /views/relations/edit.ctp:23
 #: /views/relations/index.ctp:115
 #: /views/relations/view.ctp:52
 #: /views/reservations/add.ctp:25
+#: /views/reservations/arrivals.ctp:104
+#: /views/reservations/confirmation (copy).ctp:9
 #: /views/reservations/edit.ctp:16
-#: /views/reservations/etat_occupation.ctp:85
-#: /views/reservations/facture_globale.ctp:338
+#: /views/reservations/etat_occupation.ctp:230
+#: /views/reservations/facture_globale.ctp:401
 #: /views/reservations/hosted.ctp:34
 #: /views/reservations/index.ctp:123
-#: /views/reservations/monthly.ctp:145
+#: /views/reservations/monthly.ctp:178
 #: /views/reservations/payment.ctp:86
 #: /views/reservations/rapport.ctp:72
-#: /views/reservations/tabella.ctp:557
+#: /views/reservations/rooms_to_clean.ctp:36
+#: /views/reservations/tabella.ctp:560
 #: /views/reservations/view.ctp:107
+#: /views/salaires/add.ctp:22
+#: /views/salaires/edit.ctp:23
+#: /views/salaires/index.ctp:66
+#: /views/salaires/paie.ctp:88
+#: /views/salaires/view.ctp:67
 #: /views/salles/index.ctp:57
 #: /views/salles/view.ctp:37
 #: /views/sections/index.ctp:54
 #: /views/sections/view.ctp:37
+#: /views/services/Copy of index.ctp:103
 #: /views/services/add.ctp:17
 #: /views/services/edit.ctp:17
-#: /views/services/index.ctp:103
+#: /views/services/index.ctp:97
 #: /views/services/rapport.ctp:52
 #: /views/services/view.ctp:62
-#: /views/sortis/index.ctp:75
-#: /views/sortis/rapport.ctp:42
+#: /views/sortis/index.ctp:91
+#: /views/sortis/rapport.ctp:45
 #: /views/sortis/view.ctp:82
 #: /views/stocks/index.ctp:54
 #: /views/stocks/view.ctp:37
 #: /views/stocks/stocks/index.ctp:54
 #: /views/stocks/stocks/view.ctp:37
-#: /views/tiers/global_bill.ctp:331
-#: /views/tiers/index.ctp:149
+#: /views/tiers/global_bill.ctp:274
+#: /views/tiers/index.ctp:146
 #: /views/tiers/rapport.ctp:51
 #: /views/tiers/view.ctp:96
 #: /views/tiers/stocks/index.ctp:54
@@ -321,37 +382,126 @@ msgstr ""
 #: /views/traces/add.ctp:12
 #: /views/traces/edit.ctp:13
 #: /views/traces/view.ctp:32
-#: /views/type_chambres/index.ctp:60
+#: /views/type_chambres/index.ctp:61
 #: /views/type_chambres/view.ctp:32
-#: /views/type_services/add.ctp:13
-#: /views/type_services/edit.ctp:13
-#: /views/type_services/index.ctp:46
+#: /views/type_services/add.ctp:14
+#: /views/type_services/edit.ctp:15
+#: /views/type_services/index.ctp:53
 #: /views/type_services/view.ctp:47
-#: /views/types/add.ctp:16
-#: /views/types/edit.ctp:19
-#: /views/types/index.ctp:101
+#: /views/types/index.ctp:87
 #: /views/types/view.ctp:47
 #: /views/unites/index.ctp:54
 #: /views/unites/view.ctp:37
 #: /views/ventes/add.ctp:46
-#: /views/ventes/consommations.ctp:81
+#: /views/ventes/consommations.ctp:108
+#: /views/ventes/credit_cptable.ctp:93
 #: /views/ventes/edit.ctp:85
-#: /views/ventes/journal.ctp:279
+#: /views/ventes/journal.ctp:330
 #: /views/ventes/manquant.ctp:111
 #: /views/ventes/old_rapport.ctp:56
+#: /views/ventes/par_produits_groupe_cptable.ctp:95
 #: /views/ventes/rapport.ctp:160
 #: /views/ventes/recette.ctp:99
+#: /views/ventes/removed_orders.ctp:60
+#: /views/ventes/synthese_cptable_d_vente.ctp:81
+#: /views/ventes/unlocked_bills.ctp:70
+#: /views/ventes/unprinted_orders.ctp:57
 #: /views/ventes/view.ctp:72
 #: /plugins/acl/views/elements/design/header.ctp:20
 msgid "Actions"
+msgstr ""
+
+#: /views/affectations/add.ctp:4
+#: /views/caisse_interdites/add.ctp:4
+#: /views/compte_operations/add.ctp:4
+#: /views/comptes/add.ctp:4
+#: /views/dettes/add.ctp:4
+#: /views/etages/add.ctp:4
+#: /views/factures/add.ctp:4
+#: /views/historique_chambres/add.ctp:4
+#: /views/historiques/add.ctp:4
+#: /views/location_extras/add.ctp:4
+#: /views/locations/add.ctp:4
+#: /views/operations/add.ctp:4
+#: /views/paies/add.ctp:4
+#: /views/proformas/add.ctp:4
+#: /views/reservations/add.ctp:4
+#: /views/salaires/add.ctp:4
+#: /views/services/add.ctp:4
+#: /views/traces/add.ctp:4
+#: /views/type_services/add.ctp:4
+#: /views/ventes/add.ctp:4
+#: /views/ventes/edit.ctp:4
+msgid "Add %s"
+msgstr ""
+
+#: /views/affectations/add.ctp:4
+#: /views/affectations/edit.ctp:4
+#: /views/affectations/view.ctp:2;64;65;67
+#: /views/reservations/index.ctp:142
+#: /views/reservations/view.ctp:120
+msgid "Affectation"
+msgstr ""
+
+#: /views/affectations/add.ctp:13
+#: /views/affectations/edit.ctp:14
+#: /views/caisse_interdites/add.ctp:10
+#: /views/caisse_interdites/edit.ctp:11
+#: /views/caisses/amortir.ctp:11
+#: /views/caisses/rapport.ctp:20
+#: /views/compte_operations/add.ctp:15
+#: /views/compte_operations/edit.ctp:15
+#: /views/comptes/add.ctp:10
+#: /views/comptes/edit.ctp:13
+#: /views/configs/defaulter.ctp:38
+#: /views/configs/restore.ctp:9
+#: /views/dettes/add.ctp:14
+#: /views/dettes/edit.ctp:18
+#: /views/etages/add.ctp:9
+#: /views/etages/edit.ctp:10
+#: /views/factures/add.ctp:18
+#: /views/fonctions/add.ctp:10
+#: /views/fonctions/edit.ctp:11
+#: /views/historique_chambres/add.ctp:13
+#: /views/historique_chambres/edit.ctp:14
+#: /views/historiques/add.ctp:15
+#: /views/historiques/edit.ctp:16
+#: /views/location_extras/add.ctp:14
+#: /views/location_extras/edit.ctp:15
+#: /views/locations/add.ctp:21
+#: /views/operations/add.ctp:15
+#: /views/paies/add.ctp:18
+#: /views/paies/edit.ctp:19
+#: /views/produits/marge.ctp:52
+#: /views/produits/resume.ctp:20
+#: /views/produits/upload_xls.ctp:10
+#: /views/proformas/add.ctp:13
+#: /views/proformas/edit.ctp:14
+#: /views/relations/add_plat.ctp:27
+#: /views/relations/edit.ctp:20
+#: /views/reservations/add.ctp:22
+#: /views/reservations/edit.ctp:13
+#: /views/salaires/add.ctp:19
+#: /views/salaires/edit.ctp:20
+#: /views/services/add.ctp:14
+#: /views/services/edit.ctp:14
+#: /views/sortis/transport.ctp:107
+#: /views/tiers/history.ctp:20
+#: /views/traces/add.ctp:9
+#: /views/traces/edit.ctp:10
+#: /views/type_services/add.ctp:11
+#: /views/type_services/edit.ctp:12
+#: /views/ventes/add.ctp:43
+#: /views/ventes/edit.ctp:82
+msgid "Envoyer"
 msgstr ""
 
 #: /views/affectations/add.ctp:19;20;22;27;29
 #: /views/affectations/edit.ctp:21;22;24;29;31
 #: /views/affectations/index.ctp:107;109
 #: /views/affectations/view.ctp:66;68;70
-#: /views/caisse_interdites/add.ctp:17;20
-#: /views/caisse_interdites/edit.ctp:16;19
+#: /views/caisse_interdites/add.ctp:16;19
+#: /views/caisse_interdites/edit.ctp:18;21
 #: /views/caisse_interdites/index.ctp:58
 #: /views/caisse_interdites/view.ctp:26;30
 #: /views/caisses/view.ctp:45
@@ -365,6 +515,9 @@ msgstr ""
 #: /views/comptes/index.ctp:75
 #: /views/comptes/view.ctp:31;33;35
 #: /views/configs/view.ctp:31
+#: /views/dettes/add.ctp:20
+#: /views/dettes/edit.ctp:25
+#: /views/dettes/view.ctp:51
 #: /views/elements/docs.ctp:6;12;18
 #: /views/entrees/advanced_add.ctp:59;60
 #: /views/entrees/index_old.ctp:78
@@ -377,6 +530,7 @@ msgstr ""
 #: /views/fonctions/add.ctp:16
 #: /views/fonctions/edit.ctp:18
 #: /views/fonctions/view.ctp:37
+#: /views/groupe_comptables/view.ctp:26
 #: /views/groupes/view.ctp:36;38
 #: /views/historique_chambres/add.ctp:19;20
 #: /views/historique_chambres/edit.ctp:21;22
@@ -395,6 +549,10 @@ msgstr ""
 #: /views/mouvements/view.ctp:76;79
 #: /views/operations/add.ctp:21;22
 #: /views/operations/view.ctp:56;58
+#: /views/paies/add.ctp:24;25
+#: /views/paies/edit.ctp:26;27
+#: /views/paies/index.ctp:68
+#: /views/paies/view.ctp:66;68
 #: /views/personnels/view.ctp:61;65
 #: /views/pertes/view.ctp:66;68
 #: /views/produits/advanced_add.ctp:62;63;65
@@ -404,6 +562,7 @@ msgstr ""
 #: /views/proformas/view.ctp:61;63
 #: /views/rappels/view.ctp:40;43
 #: /views/rappels/stocks/view.ctp:40;43
+#: /views/reductions/view.ctp:76;79
 #: /views/relations/add_plat.ctp:33;34
 #: /views/relations/edit.ctp:27;28
 #: /views/relations/view.ctp:56;58
@@ -411,6 +570,9 @@ msgstr ""
 #: /views/reservations/edit.ctp:20;22;24
 #: /views/reservations/index.ctp:139;141
 #: /views/reservations/view.ctp:111;114;116;119;121
+#: /views/salaires/add.ctp:25;26;28
+#: /views/salaires/edit.ctp:27;28;30
+#: /views/salaires/view.ctp:71;73;75
 #: /views/salles/view.ctp:41;43
 #: /views/sections/view.ctp:41;45
 #: /views/services/add.ctp:20;22;24
@@ -426,12 +588,10 @@ msgstr ""
 #: /views/traces/edit.ctp:17;18
 #: /views/traces/view.ctp:36;38
 #: /views/type_chambres/view.ctp:36;40
-#: /views/type_services/add.ctp:16;17
-#: /views/type_services/edit.ctp:17;18
-#: /views/type_services/index.ctp:51
+#: /views/type_services/add.ctp:17;18
+#: /views/type_services/edit.ctp:19;20
+#: /views/type_services/index.ctp:58
 #: /views/type_services/view.ctp:51;53;55
-#: /views/types/add.ctp:19
-#: /views/types/edit.ctp:21
 #: /views/types/view.ctp:50;52
 #: /views/unites/view.ctp:41;43
 #: /views/ventes/add.ctp:49;50
@@ -485,8 +645,8 @@ msgstr ""
 #: /views/affectations/edit.ctp:25;30;32
 #: /views/affectations/index.ctp:110
 #: /views/affectations/view.ctp:67;71
-#: /views/caisse_interdites/add.ctp:21
-#: /views/caisse_interdites/edit.ctp:20
+#: /views/caisse_interdites/add.ctp:20
+#: /views/caisse_interdites/edit.ctp:22
 #: /views/caisse_interdites/index.ctp:52;59
 #: /views/caisse_interdites/view.ctp:27;31
 #: /views/caisses/view.ctp:46
@@ -497,6 +657,7 @@ msgstr ""
 #: /views/comptes/add.ctp:18;20
 #: /views/comptes/view.ctp:32;34;36
 #: /views/configs/view.ctp:32
+#: /views/dettes/view.ctp:52
 #: /views/entrees/advanced_add.ctp:61
 #: /views/entrees/index_old.ctp:73;79
 #: /views/entrees/view.ctp:82;85;87;89
@@ -506,6 +667,7 @@ msgstr ""
 #: /views/etages/view.ctp:23;26
 #: /views/factures/add.ctp:28;30;32;34;38;40
 #: /views/fonctions/view.ctp:38
+#: /views/groupe_comptables/view.ctp:27
 #: /views/groupes/view.ctp:37;39
 #: /views/historique_chambres/add.ctp:21
 #: /views/historique_chambres/edit.ctp:23
@@ -521,6 +683,10 @@ msgstr ""
 #: /views/mouvements/view.ctp:77;80;82
 #: /views/operations/add.ctp:23
 #: /views/operations/view.ctp:57;59
+#: /views/paies/add.ctp:26
+#: /views/paies/edit.ctp:28
+#: /views/paies/index.ctp:64;69
+#: /views/paies/view.ctp:67;69
 #: /views/personnels/view.ctp:62;66
 #: /views/pertes/view.ctp:67;69
 #: /views/produits/advanced_add.ctp:64;66
@@ -528,6 +694,7 @@ msgstr ""
 #: /views/proformas/view.ctp:62;64
 #: /views/rappels/view.ctp:41
 #: /views/rappels/stocks/view.ctp:41
+#: /views/reductions/view.ctp:77;80;82
 #: /views/relations/add_plat.ctp:35
 #: /views/relations/edit.ctp:29;31
 #: /views/relations/view.ctp:57;59;61
@@ -535,11 +702,16 @@ msgstr ""
 #: /views/reservations/edit.ctp:23;25
 #: /views/reservations/index.ctp:140;142
 #: /views/reservations/view.ctp:112;115;117;120;122
+#: /views/salaires/add.ctp:27;29
+#: /views/salaires/edit.ctp:29;31
+#: /views/salaires/index.ctp:68
+#: /views/salaires/view.ctp:72;74;76
 #: /views/salles/view.ctp:42;44
 #: /views/sections/view.ctp:42;46
+#: /views/services/Copy of index.ctp:106
 #: /views/services/add.ctp:23;25
 #: /views/services/edit.ctp:24;26
-#: /views/services/index.ctp:105
+#: /views/services/index.ctp:100
 #: /views/services/view.ctp:67;70;72
 #: /views/sortis/view.ctp:87;89;92;94;96
 #: /views/stocks/view.ctp:41
@@ -548,9 +720,9 @@ msgstr ""
 #: /views/tiers/stocks/stocks/view.ctp:41
 #: /views/traces/view.ctp:37
 #: /views/type_chambres/view.ctp:37;41
-#: /views/type_services/add.ctp:18
-#: /views/type_services/edit.ctp:19
-#: /views/type_services/index.ctp:48
+#: /views/type_services/add.ctp:19
+#: /views/type_services/edit.ctp:21
+#: /views/type_services/index.ctp:55
 #: /views/type_services/view.ctp:52;54;56
 #: /views/types/view.ctp:51;53
 #: /views/unites/view.ctp:42;44
@@ -578,6 +750,10 @@ msgstr ""
 #: /views/affectations/index.ctp:111
 #: /views/affectations/view.ctp:72
 #: /views/caisses/view.ctp:47
+#: /views/dettes/add.ctp:21
+#: /views/dettes/edit.ctp:26
+#: /views/dettes/index.ctp:114
+#: /views/dettes/view.ctp:53
 #: /views/entrees/view.ctp:83
 #: /views/factures/add.ctp:26
 #: /views/locations/add.ctp:28
@@ -605,6 +781,10 @@ msgstr ""
 #: /views/comptes/add.ctp:17
 #: /views/comptes/edit.ctp:19
 #: /views/comptes/view.ctp:33
+#: /views/dettes/add.ctp:21
+#: /views/dettes/edit.ctp:26
+#: /views/dettes/index.ctp:114
+#: /views/dettes/view.ctp:53
 #: /views/entrees/view.ctp:83
 #: /views/factures/add.ctp:26
 #: /views/locations/add.ctp:28
@@ -628,6 +808,7 @@ msgstr ""
 #: /views/affectations/add.ctp:27
 #: /views/affectations/edit.ctp:29
 #: /views/factures/add.ctp:31
+#: /views/journals/view.ctp:19
 #: /views/ventes/add.ctp:49
 #: /views/ventes/edit.ctp:89
 #: /views/ventes/recette.ctp:2
@@ -658,42 +839,47 @@ msgstr ""
 #: /views/caisse_interdites/edit.ctp:4
 #: /views/compte_operations/edit.ctp:4
 #: /views/comptes/edit.ctp:4
+#: /views/dettes/edit.ctp:4
 #: /views/etages/edit.ctp:4
 #: /views/historique_chambres/edit.ctp:4
 #: /views/historiques/edit.ctp:4
 #: /views/location_extras/edit.ctp:4
+#: /views/paies/edit.ctp:4
 #: /views/proformas/edit.ctp:4
 #: /views/relations/edit.ctp:4
 #: /views/reservations/edit.ctp:4
+#: /views/salaires/edit.ctp:4
 #: /views/services/edit.ctp:4
 #: /views/traces/edit.ctp:4
 #: /views/type_services/edit.ctp:4
-#: /views/types/edit.ctp:4
 msgid "Edit %s"
 msgstr ""
 
 #: /views/affectations/edit.ctp:20
-#: /views/caisse_interdites/edit.ctp:15
+#: /views/caisse_interdites/edit.ctp:17
 #: /views/chambres/update_index.ctp:30
 #: /views/compte_operations/edit.ctp:21
+#: /views/dettes/edit.ctp:24
 #: /views/etages/edit.ctp:16
 #: /views/fonctions/edit.ctp:17
 #: /views/historique_chambres/edit.ctp:20
 #: /views/historiques/edit.ctp:22
 #: /views/location_extras/edit.ctp:21
+#: /views/paies/edit.ctp:25
 #: /views/proformas/edit.ctp:20
 #: /views/relations/edit.ctp:26
 #: /views/reservations/edit.ctp:19
+#: /views/salaires/edit.ctp:26
 #: /views/services/edit.ctp:20
 #: /views/traces/edit.ctp:16
-#: /views/type_services/edit.ctp:16
+#: /views/type_services/edit.ctp:18
 #: /views/ventes/edit.ctp:88
 msgid "Effacer"
 msgstr ""
 
 #: /views/affectations/edit.ctp:20
 #: /views/affectations/view.ctp:65
-#: /views/caisse_interdites/edit.ctp:15
+#: /views/caisse_interdites/edit.ctp:17
 #: /views/caisse_interdites/view.ctp:25
 #: /views/chambres/update_index.ctp:30
 #: /views/chambres/view.ctp:65
@@ -701,11 +887,14 @@ msgstr ""
 #: /views/compte_operations/view.ctp:55
 #: /views/comptes/view.ctp:30
 #: /views/configs/view.ctp:30
+#: /views/dettes/edit.ctp:24
+#: /views/dettes/view.ctp:50
 #: /views/entrees/view.ctp:80
 #: /views/etages/edit.ctp:16
 #: /views/etages/view.ctp:21
 #: /views/fonctions/edit.ctp:17
 #: /views/fonctions/view.ctp:36
+#: /views/groupe_comptables/view.ctp:25
 #: /views/groupes/view.ctp:35
 #: /views/historique_chambres/edit.ctp:20
 #: /views/historique_chambres/view.ctp:40
@@ -716,14 +905,19 @@ msgstr ""
 #: /views/locations/view.ctp:65
 #: /views/mouvements/view.ctp:75
 #: /views/operations/view.ctp:55
+#: /views/paies/edit.ctp:25
+#: /views/paies/view.ctp:65
 #: /views/personnels/view.ctp:60
 #: /views/pertes/view.ctp:65
 #: /views/proformas/edit.ctp:20
 #: /views/proformas/view.ctp:60
+#: /views/reductions/view.ctp:75
 #: /views/relations/edit.ctp:26
 #: /views/relations/view.ctp:55
 #: /views/reservations/edit.ctp:19
 #: /views/reservations/view.ctp:110
+#: /views/salaires/edit.ctp:26
+#: /views/salaires/view.ctp:70
 #: /views/salles/view.ctp:40
 #: /views/sections/view.ctp:40
 #: /views/services/edit.ctp:20
@@ -732,7 +926,7 @@ msgstr ""
 #: /views/traces/edit.ctp:16
 #: /views/traces/view.ctp:35
 #: /views/type_chambres/view.ctp:35
-#: /views/type_services/edit.ctp:16
+#: /views/type_services/edit.ctp:18
 #: /views/type_services/view.ctp:50
 #: /views/unites/view.ctp:40
 #: /views/ventes/edit.ctp:88
@@ -741,131 +935,155 @@ msgid "Voulez vous vraiment effacer l'enregistrement N° %s ?"
 msgstr ""
 
 #: /views/affectations/index.ctp:90
+#: /views/buanderies/index.ctp:94
 #: /views/caisse_interdites/index.ctp:37
 #: /views/chambres/index.ctp:46
 #: /views/chambres/update_index.ctp:38
 #: /views/compte_operations/index.ctp:164
 #: /views/comptes/index.ctp:58
-#: /views/entrees/index.ctp:90
+#: /views/dettes/index.ctp:95
+#: /views/entrees/index.ctp:147
 #: /views/entrees/index_old.ctp:57
 #: /views/etages/index.ctp:29
-#: /views/factures/index.ctp:79
+#: /views/factures/buanderie.ctp:62
+#: /views/factures/index.ctp:94
 #: /views/fonctions/index.ctp:41
+#: /views/groupe_comptables/index.ctp:41
 #: /views/groupes/index.ctp:55
 #: /views/historique_chambres/index.ctp:39
 #: /views/historiques/index.ctp:73
 #: /views/location_extras/index.ctp:41
 #: /views/locations/index.ctp:55
-#: /views/mouvements/index.ctp:83
+#: /views/mouvements/index.ctp:92
+#: /views/paies/index.ctp:49
 #: /views/personnels/index.ctp:68
-#: /views/pertes/index.ctp:68
-#: /views/produits/index.ctp:108
+#: /views/pertes/index.ctp:77
+#: /views/produits/index.ctp:132
 #: /views/proformas/index.ctp:80
 #: /views/rappels/index.ctp:47
 #: /views/rappels/stocks/index.ctp:41
+#: /views/reductions/index.ctp:78
 #: /views/relations/index.ctp:102
 #: /views/reservations/index.ctp:109
+#: /views/salaires/index.ctp:53
 #: /views/salles/index.ctp:44
 #: /views/sections/index.ctp:41
-#: /views/services/index.ctp:90
-#: /views/sortis/index.ctp:62
+#: /views/services/Copy of index.ctp:90
+#: /views/services/index.ctp:84
+#: /views/sortis/index.ctp:78
 #: /views/stocks/index.ctp:41
 #: /views/stocks/stocks/index.ctp:41
-#: /views/tiers/index.ctp:136
+#: /views/tiers/index.ctp:133
 #: /views/tiers/stocks/index.ctp:41
 #: /views/tiers/stocks/stocks/index.ctp:41
 #: /views/traces/index.ctp:28
-#: /views/type_chambres/index.ctp:47
-#: /views/type_services/index.ctp:33
-#: /views/types/index.ctp:88
+#: /views/type_chambres/index.ctp:48
+#: /views/type_services/index.ctp:40
+#: /views/types/index.ctp:74
 #: /views/unites/index.ctp:41
 #: /views/ventes/recette.ctp:85
 msgid "Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu'au numéro %end%"
 msgstr ""
 
 #: /views/affectations/index.ctp:95
+#: /views/buanderies/index.ctp:99
 #: /views/caisse_interdites/index.ctp:42
 #: /views/chambres/index.ctp:51
 #: /views/chambres/update_index.ctp:43
 #: /views/compte_operations/index.ctp:169
 #: /views/comptes/index.ctp:63
-#: /views/entrees/index.ctp:95
+#: /views/dettes/index.ctp:100
+#: /views/entrees/index.ctp:152
 #: /views/entrees/index_old.ctp:62
 #: /views/etages/index.ctp:34
-#: /views/factures/index.ctp:84
+#: /views/factures/buanderie.ctp:67
+#: /views/factures/index.ctp:99
 #: /views/fonctions/index.ctp:46
+#: /views/groupe_comptables/index.ctp:46
 #: /views/groupes/index.ctp:60
 #: /views/historique_chambres/index.ctp:44
 #: /views/historiques/index.ctp:78
 #: /views/location_extras/index.ctp:46
 #: /views/locations/index.ctp:60
-#: /views/mouvements/index.ctp:88
-#: /views/operations/index.ctp:170
+#: /views/mouvements/index.ctp:97
+#: /views/operations/index.ctp:192
+#: /views/paies/index.ctp:54
 #: /views/personnels/index.ctp:73
-#: /views/pertes/index.ctp:73
-#: /views/produits/index.ctp:113
+#: /views/pertes/index.ctp:82
+#: /views/produits/index.ctp:137
 #: /views/proformas/index.ctp:85
 #: /views/rappels/index.ctp:52
 #: /views/rappels/stocks/index.ctp:46
+#: /views/reductions/index.ctp:83
 #: /views/relations/index.ctp:107
 #: /views/reservations/index.ctp:114
+#: /views/salaires/index.ctp:58
 #: /views/salles/index.ctp:49
 #: /views/sections/index.ctp:46
-#: /views/services/index.ctp:95
-#: /views/sortis/index.ctp:67
+#: /views/services/Copy of index.ctp:95
+#: /views/services/index.ctp:89
+#: /views/sortis/index.ctp:83
 #: /views/stocks/index.ctp:46
 #: /views/stocks/stocks/index.ctp:46
-#: /views/tiers/index.ctp:141
+#: /views/tiers/index.ctp:138
 #: /views/tiers/stocks/index.ctp:46
 #: /views/tiers/stocks/stocks/index.ctp:46
 #: /views/traces/index.ctp:33
-#: /views/type_chambres/index.ctp:52
-#: /views/type_services/index.ctp:38
-#: /views/types/index.ctp:93
+#: /views/type_chambres/index.ctp:53
+#: /views/type_services/index.ctp:45
+#: /views/types/index.ctp:79
 #: /views/unites/index.ctp:46
 #: /views/ventes/recette.ctp:90
 msgid "précédent"
 msgstr ""
 
 #: /views/affectations/index.ctp:98
+#: /views/buanderies/index.ctp:102
 #: /views/caisse_interdites/index.ctp:45
 #: /views/chambres/index.ctp:54
 #: /views/chambres/update_index.ctp:46
 #: /views/compte_operations/index.ctp:172
 #: /views/comptes/index.ctp:66
-#: /views/entrees/index.ctp:98
+#: /views/dettes/index.ctp:103
+#: /views/entrees/index.ctp:155
 #: /views/entrees/index_old.ctp:65
 #: /views/etages/index.ctp:37
-#: /views/factures/index.ctp:87
+#: /views/factures/buanderie.ctp:70
+#: /views/factures/index.ctp:102
 #: /views/fonctions/index.ctp:49
+#: /views/groupe_comptables/index.ctp:49
 #: /views/groupes/index.ctp:63
 #: /views/historique_chambres/index.ctp:47
 #: /views/historiques/index.ctp:81
 #: /views/location_extras/index.ctp:49
 #: /views/locations/index.ctp:63
-#: /views/mouvements/index.ctp:91
-#: /views/operations/index.ctp:173
+#: /views/mouvements/index.ctp:100
+#: /views/operations/index.ctp:195
+#: /views/paies/index.ctp:57
 #: /views/personnels/index.ctp:76
-#: /views/pertes/index.ctp:76
-#: /views/produits/index.ctp:116
+#: /views/pertes/index.ctp:85
+#: /views/produits/index.ctp:140
 #: /views/proformas/index.ctp:88
 #: /views/rappels/index.ctp:55
 #: /views/rappels/stocks/index.ctp:49
+#: /views/reductions/index.ctp:86
 #: /views/relations/index.ctp:110
 #: /views/reservations/index.ctp:117
+#: /views/salaires/index.ctp:61
 #: /views/salles/index.ctp:52
 #: /views/sections/index.ctp:49
-#: /views/services/index.ctp:98
-#: /views/sortis/index.ctp:70
+#: /views/services/Copy of index.ctp:98
+#: /views/services/index.ctp:92
+#: /views/sortis/index.ctp:86
 #: /views/stocks/index.ctp:49
 #: /views/stocks/stocks/index.ctp:49
-#: /views/tiers/index.ctp:144
+#: /views/tiers/index.ctp:141
 #: /views/tiers/stocks/index.ctp:49
 #: /views/tiers/stocks/stocks/index.ctp:49
 #: /views/traces/index.ctp:36
-#: /views/type_chambres/index.ctp:55
-#: /views/type_services/index.ctp:41
-#: /views/types/index.ctp:96
+#: /views/type_chambres/index.ctp:56
+#: /views/type_services/index.ctp:48
+#: /views/types/index.ctp:82
 #: /views/unites/index.ctp:49
 #: /views/ventes/recette.ctp:93
 msgid "suivant"
@@ -878,24 +1096,30 @@ msgstr ""
 #: /views/compte_operations/view.ctp:4
 #: /views/comptes/view.ctp:4
 #: /views/configs/view.ctp:4
+#: /views/dettes/view.ctp:4
 #: /views/entrees/view.ctp:4
 #: /views/etages/view.ctp:4
 #: /views/fonctions/view.ctp:4
+#: /views/groupe_comptables/view.ctp:4
 #: /views/groupes/view.ctp:4
 #: /views/historique_chambres/view.ctp:4
 #: /views/historiques/view.ctp:4
+#: /views/journals/view.ctp:4;98;188;258
 #: /views/location_extras/view.ctp:4
 #: /views/locations/view.ctp:4
 #: /views/mouvements/view.ctp:4
 #: /views/operations/view.ctp:4
+#: /views/paies/view.ctp:4
 #: /views/personnels/view.ctp:4
 #: /views/pertes/view.ctp:4
 #: /views/produits/historique.ctp:5
 #: /views/proformas/view.ctp:4
 #: /views/rappels/view.ctp:4
 #: /views/rappels/stocks/view.ctp:4
+#: /views/reductions/view.ctp:4
 #: /views/relations/view.ctp:4
 #: /views/reservations/view.ctp:4
+#: /views/salaires/view.ctp:4
 #: /views/salles/view.ctp:4
 #: /views/sections/view.ctp:4
 #: /views/services/view.ctp:4
@@ -923,6 +1147,7 @@ msgstr ""
 #: /views/affectations/view.ctp:19
 #: /views/comptes/add.ctp:18
 #: /views/comptes/view.ctp:19;34
+#: /views/dettes/view.ctp:9
 #: /views/entrees/view.ctp:9
 #: /views/locations/view.ctp:9
 #: /views/reservations/view.ctp:9
@@ -935,6 +1160,7 @@ msgstr ""
 
 #: /views/affectations/view.ctp:24
 #: /views/historique_chambres/view.ctp:19
+#: /views/journals/view.ctp:107
 #: /views/reservations/view.ctp:69
 msgid "Etat"
 msgstr ""
@@ -960,47 +1186,14 @@ msgstr ""
 msgid "Commentaire"
 msgstr ""
 
-#: /views/affectations/view.ctp:44
-#: /views/caisse_interdites/view.ctp:9
-#: /views/chambres/view.ctp:44
-#: /views/compte_operations/add.ctp:25
-#: /views/compte_operations/edit.ctp:26
-#: /views/compte_operations/view.ctp:39;61
-#: /views/configs/view.ctp:19
-#: /views/entrees/view.ctp:59
-#: /views/fonctions/view.ctp:15
-#: /views/historique_chambres/add.ctp:21
-#: /views/historique_chambres/edit.ctp:23
-#: /views/historique_chambres/view.ctp:9;44
-#: /views/historiques/view.ctp:49
-#: /views/operations/add.ctp:23
-#: /views/operations/view.ctp:39;59
-#: /views/personnels/view.ctp:2;39;59;60;62
-#: /views/pertes/view.ctp:44
-#: /views/proformas/view.ctp:39
-#: /views/rappels/view.ctp:19
-#: /views/rappels/stocks/view.ctp:19
-#: /views/reservations/view.ctp:89
-#: /views/sections/view.ctp:19
-#: /views/services/view.ctp:44
-#: /views/sortis/view.ctp:64
-#: /views/stocks/view.ctp:19
-#: /views/stocks/stocks/view.ctp:19
-#: /views/tiers/stocks/view.ctp:19
-#: /views/tiers/stocks/stocks/view.ctp:19
-#: /views/traces/view.ctp:19
-#: /views/type_services/view.ctp:29;54
-#: /views/types/view.ctp:29
-#: /views/ventes/view.ctp:24;54
-msgid "Personnel"
-msgstr ""
-
 #: /views/affectations/view.ctp:49
 #: /views/chambres/view.ctp:49
 #: /views/compte_operations/view.ctp:44
+#: /views/dettes/view.ctp:34
 #: /views/entrees/view.ctp:64
 #: /views/fonctions/view.ctp:20
 #: /views/historiques/view.ctp:54
+#: /views/journals/view.ctp:202;269
 #: /views/operations/view.ctp:44
 #: /views/personnels/view.ctp:44
 #: /views/pertes/view.ctp:49
@@ -1026,6 +1219,7 @@ msgstr ""
 
 #: /views/affectations/view.ctp:54
 #: /views/chambres/view.ctp:54
+#: /views/dettes/view.ctp:39
 #: /views/entrees/view.ctp:69
 #: /views/fonctions/view.ctp:25
 #: /views/personnels/view.ctp:49
@@ -1056,10 +1250,12 @@ msgstr ""
 #: /views/compte_operations/view.ctp:54
 #: /views/comptes/view.ctp:29
 #: /views/configs/view.ctp:29
+#: /views/dettes/view.ctp:49
 #: /views/entrees/view.ctp:79
 #: /views/etages/view.ctp:20
 #: /views/fonctions/edit.ctp:4
 #: /views/fonctions/view.ctp:35
+#: /views/groupe_comptables/view.ctp:24
 #: /views/groupes/view.ctp:34
 #: /views/historique_chambres/view.ctp:39
 #: /views/historiques/view.ctp:64
@@ -1067,14 +1263,17 @@ msgstr ""
 #: /views/locations/view.ctp:64
 #: /views/mouvements/view.ctp:74
 #: /views/operations/view.ctp:54
+#: /views/paies/view.ctp:64
 #: /views/personnels/view.ctp:59
 #: /views/pertes/view.ctp:64
 #: /views/produits/historique.ctp:180
 #: /views/proformas/view.ctp:59
 #: /views/rappels/view.ctp:39
 #: /views/rappels/stocks/view.ctp:39
+#: /views/reductions/view.ctp:74
 #: /views/relations/view.ctp:54
 #: /views/reservations/view.ctp:109
+#: /views/salaires/view.ctp:69
 #: /views/salles/view.ctp:39
 #: /views/sections/view.ctp:39
 #: /views/services/view.ctp:64
@@ -1099,9 +1298,11 @@ msgstr ""
 #: /views/compte_operations/view.ctp:55
 #: /views/comptes/view.ctp:30
 #: /views/configs/view.ctp:30
+#: /views/dettes/view.ctp:50
 #: /views/entrees/view.ctp:80
 #: /views/etages/view.ctp:21
 #: /views/fonctions/view.ctp:36
+#: /views/groupe_comptables/view.ctp:25
 #: /views/groupes/view.ctp:35
 #: /views/historique_chambres/view.ctp:40
 #: /views/historiques/view.ctp:65
@@ -1109,11 +1310,14 @@ msgstr ""
 #: /views/locations/view.ctp:65
 #: /views/mouvements/view.ctp:75
 #: /views/operations/view.ctp:55
+#: /views/paies/view.ctp:65
 #: /views/personnels/view.ctp:60
 #: /views/pertes/view.ctp:65
 #: /views/proformas/view.ctp:60
+#: /views/reductions/view.ctp:75
 #: /views/relations/view.ctp:55
 #: /views/reservations/view.ctp:110
+#: /views/salaires/view.ctp:70
 #: /views/salles/view.ctp:40
 #: /views/sections/view.ctp:40
 #: /views/services/view.ctp:65
@@ -1126,6 +1330,18 @@ msgstr ""
 msgid "Effacer %s"
 msgstr ""
 
+#: /views/buanderies/index.ctp:10
+#: /views/factures/buanderie.ctp:2
+msgid "Factures Buanderies"
+msgstr ""
+
+#: /views/buanderies/index.ctp:111
+#: /views/dettes/index.ctp:112
+#: /views/factures/buanderie.ctp:78
+#: /views/factures/index.ctp:111
+msgid "Edition de Rapport"
+msgstr ""
+
 #: /views/caisse_interdites/add.ctp:4
 #: /views/caisse_interdites/edit.ctp:4
 #: /views/caisse_interdites/index.ctp:52
@@ -1133,15 +1349,15 @@ msgstr ""
 msgid "Caisse Interdite"
 msgstr ""
 
-#: /views/caisse_interdites/add.ctp:17
-#: /views/caisse_interdites/edit.ctp:16
+#: /views/caisse_interdites/add.ctp:16
+#: /views/caisse_interdites/edit.ctp:18
 #: /views/caisse_interdites/index.ctp:2
 #: /views/caisse_interdites/view.ctp:26
 msgid "Caisse Interdites"
 msgstr ""
 
-#: /views/caisse_interdites/add.ctp:20
-#: /views/caisse_interdites/edit.ctp:19
+#: /views/caisse_interdites/add.ctp:19
+#: /views/caisse_interdites/edit.ctp:21
 #: /views/caisse_interdites/index.ctp:58
 #: /views/caisse_interdites/view.ctp:30
 #: /views/caisses/view.ctp:45
@@ -1154,8 +1370,8 @@ msgstr ""
 msgid "Caisses"
 msgstr ""
 
-#: /views/caisse_interdites/add.ctp:21
-#: /views/caisse_interdites/edit.ctp:20
+#: /views/caisse_interdites/add.ctp:20
+#: /views/caisse_interdites/edit.ctp:22
 #: /views/caisse_interdites/index.ctp:59
 #: /views/caisse_interdites/view.ctp:14;31
 #: /views/caisses/view.ctp:2;44;46
@@ -1181,11 +1397,12 @@ msgid "Rapport Trésorerie"
 msgstr ""
 
 #: /views/caisses/view.ctp:9
-#: /views/operations/resultat.ctp:81
+#: /views/dettes/view.ctp:14
+#: /views/limits/index.ctp:69
+#: /views/operations/resultat.ctp:163
+#: /views/operations/resultat_t.ctp:89
 #: /views/tiers/view.ctp:16
 #: /views/type_services/view.ctp:14
-#: /views/types/add.ctp:4
-#: /views/types/edit.ctp:4
 #: /views/types/view.ctp:2;14;49;51
 msgid "Type"
 msgstr ""
@@ -1195,6 +1412,7 @@ msgstr ""
 #: /views/comptes/view.ctp:14
 #: /views/etages/view.ctp:9
 #: /views/fonctions/view.ctp:9
+#: /views/groupe_comptables/view.ctp:9
 #: /views/groupes/view.ctp:14
 #: /views/location_extras/view.ctp:14
 #: /views/personnels/view.ctp:9
@@ -1217,12 +1435,15 @@ msgid "Name"
 msgstr ""
 
 #: /views/caisses/view.ctp:19
+#: /views/dettes/view.ctp:19
 #: /views/entrees/view.ctp:44
+#: /views/journals/view.ctp:103;261
 #: /views/location_extras/view.ctp:29
 #: /views/locations/view.ctp:49
 #: /views/pertes/view.ctp:34
 #: /views/proformas/view.ctp:29
 #: /views/reservations/view.ctp:59
+#: /views/salaires/view.ctp:14
 #: /views/salles/view.ctp:19
 #: /views/services/view.ctp:24
 #: /views/sortis/view.ctp:44
@@ -1231,6 +1452,8 @@ msgid "Montant"
 msgstr ""
 
 #: /views/caisses/view.ctp:24
+#: /views/dettes/view.ctp:24
+#: /views/journals/view.ctp:106;196;263
 #: /views/location_extras/view.ctp:34
 #: /views/locations/view.ctp:54
 #: /views/produits/historique.ctp:73
@@ -1253,6 +1476,7 @@ msgstr ""
 
 #: /views/caisses/view.ctp:34
 #: /views/chambres/view.ctp:39
+#: /views/groupe_comptables/view.ctp:14
 #: /views/rappels/view.ctp:14
 #: /views/rappels/stocks/view.ctp:14
 #: /views/salles/view.ctp:29
@@ -1270,8 +1494,6 @@ msgid "Description"
 msgstr ""
 
 #: /views/caisses/view.ctp:47
-#: /views/types/add.ctp:20
-#: /views/types/edit.ctp:22
 #: /views/types/view.ctp:52
 msgid "Caisse Operations"
 msgstr ""
@@ -1384,6 +1606,9 @@ msgstr ""
 #: /views/operations/add.ctp:22
 #: /views/operations/view.ctp:58
 #: /views/personnels/view.ctp:61
+#: /views/salaires/add.ctp:26
+#: /views/salaires/edit.ctp:28
+#: /views/salaires/view.ctp:73
 #: /views/type_services/view.ctp:53
 msgid "Personnels"
 msgstr ""
@@ -1406,47 +1631,62 @@ msgid "Liste des charges"
 msgstr ""
 
 #: /views/compte_operations/rapport.ctp:115
+#: /views/limits/index.ctp:69
 #: /views/operations/depenses.ctp:60
-#: /views/operations/rapport.ctp:125
-#: /views/operations/resultat.ctp:81
+#: /views/operations/rapport.ctp:121
+#: /views/operations/resultat.ctp:163
+#: /views/operations/resultat_t.ctp:89
 #: /views/ventes/manquant.ctp:115
 msgid "Liste des Opérations"
 msgstr ""
 
 #: /views/compte_operations/view.ctp:9
 #: /views/historique_chambres/view.ctp:24
+#: /views/journals/view.ctp:14;108;200;267
 #: /views/mouvements/view.ctp:59
 #: /views/operations/view.ctp:34
+#: /views/paies/view.ctp:44
+#: /views/reductions/view.ctp:59
 #: /views/services/view.ctp:39
+#: /views/ventes/credit_cptable.ctp:21
 #: /views/ventes/view.ctp:49
 msgid "Date"
 msgstr ""
 
 #: /views/compte_operations/view.ctp:19
+#: /views/journals/view.ctp:193
 msgid "Piece"
 msgstr ""
 
 #: /views/compte_operations/view.ctp:24
 #: /views/historiques/view.ctp:34
+#: /views/journals/view.ctp:198
 msgid "Libelle"
 msgstr ""
 
 #: /views/compte_operations/view.ctp:29
 #: /views/historiques/view.ctp:39
+#: /views/journals/view.ctp:194
 msgid "Debit"
 msgstr ""
 
 #: /views/compte_operations/view.ctp:34
 #: /views/historiques/view.ctp:44
+#: /views/journals/view.ctp:29;195
 msgid "Credit"
 msgstr ""
 
 #: /views/comptes/view.ctp:9
+#: /views/journals/view.ctp:9;101
 msgid "Numero"
 msgstr ""
 
-#: /views/configs/index.ctp:19
+#: /views/configs/index.ctp:20
 msgid "Configuration des paramètres du logiciel "
+msgstr ""
+
+#: /views/configs/index.ctp:66
+msgid "Enregistrer la configuration"
 msgstr ""
 
 #: /views/configs/restore.ctp:2
@@ -1467,6 +1707,19 @@ msgstr ""
 
 #: /views/configs/view.ctp:31
 msgid "Configs"
+msgstr ""
+
+#: /views/dettes/add.ctp:4
+#: /views/dettes/edit.ctp:4
+#: /views/dettes/view.ctp:2;49;50;52
+msgid "Dette"
+msgstr ""
+
+#: /views/dettes/add.ctp:20
+#: /views/dettes/edit.ctp:25
+#: /views/dettes/index.ctp:3
+#: /views/dettes/view.ctp:51
+msgid "Dettes"
 msgstr ""
 
 #: /views/elements/docs.ctp:6
@@ -1501,7 +1754,7 @@ msgstr ""
 msgid "Commandes"
 msgstr ""
 
-#: /views/elements/menu.ctp:8
+#: /views/elements/menu.ctp:10
 #: /views/produits/historique.ctp:10
 #: /views/rappels/view.ctp:2;39;41
 #: /views/rappels/stocks/view.ctp:2;39;41
@@ -1515,261 +1768,371 @@ msgstr ""
 msgid "Stock"
 msgstr ""
 
-#: /views/elements/menu.ctp:10
+#: /views/elements/menu.ctp:12
 msgid "Configuration des Produits"
 msgstr ""
 
-#: /views/elements/menu.ctp:12
+#: /views/elements/menu.ctp:15
 msgid "Gestion des stocks"
 msgstr ""
 
-#: /views/elements/menu.ctp:13
+#: /views/elements/menu.ctp:17
 msgid "Gestion des sections"
 msgstr ""
 
-#: /views/elements/menu.ctp:14
+#: /views/elements/menu.ctp:18
 msgid "Gestion des groupes"
 msgstr ""
 
-#: /views/elements/menu.ctp:15
-msgid "Gestion des Unités de Mesures"
+#: /views/elements/menu.ctp:20
+msgid "Gestion des Groupes Comptables"
 msgstr ""
 
-#: /views/elements/menu.ctp:16
+#: /views/elements/menu.ctp:23
+msgid "Gestion des Unités de Mesure"
+msgstr ""
+
+#: /views/elements/menu.ctp:25
 msgid "Gestion des produits"
 msgstr ""
 
-#: /views/elements/menu.ctp:18
-#: /views/produits/index.ctp:137
+#: /views/elements/menu.ctp:28
+#: /views/produits/index.ctp:161
 msgid "Rapport Des Produits"
 msgstr ""
 
-#: /views/elements/menu.ctp:19
+#: /views/elements/menu.ctp:29
 msgid "Mouvements Des Produits"
 msgstr ""
 
-#: /views/elements/menu.ctp:20
-msgid "Importer des produits"
-msgstr ""
-
-#: /views/elements/menu.ctp:25;129;145
-msgid "Gestion des Opérations"
-msgstr ""
-
-#: /views/elements/menu.ctp:27
-msgid "Gestion des Entrees"
-msgstr ""
-
-#: /views/elements/menu.ctp:29;34;113;126
-msgid "Edition de rapport"
+#: /views/elements/menu.ctp:30
+msgid "Evolution journalière"
 msgstr ""
 
 #: /views/elements/menu.ctp:32
+msgid "Etat journalier"
+msgstr ""
+
+#: /views/elements/menu.ctp:33
+msgid "Conso Théoriques"
+msgstr ""
+
+#: /views/elements/menu.ctp:34
+msgid "Importer des produits"
+msgstr ""
+
+#: /views/elements/menu.ctp:41;200;218
+#: /views/operations/index.ctp:50
+msgid "Gestion des Opérations"
+msgstr ""
+
+#: /views/elements/menu.ctp:43
+msgid "Gestion des Entrées"
+msgstr ""
+
+#: /views/elements/menu.ctp:45;50;172;184
+msgid "Edition de rapport"
+msgstr ""
+
+#: /views/elements/menu.ctp:48
 msgid "Gestion des Sorties"
 msgstr ""
 
-#: /views/elements/menu.ctp:37
+#: /views/elements/menu.ctp:53
 msgid "Gestion des Pertes"
 msgstr ""
 
-#: /views/elements/menu.ctp:39
+#: /views/elements/menu.ctp:55
 msgid "Rapport Pertes"
 msgstr ""
 
-#: /views/elements/menu.ctp:42
+#: /views/elements/menu.ctp:58
 msgid "Gestion des Mouvements"
 msgstr ""
 
-#: /views/elements/menu.ctp:47;49
+#: /views/elements/menu.ctp:65;67
 #: /views/tiers/index.ctp:8
 msgid "Clients & Fournisseurs"
 msgstr ""
 
-#: /views/elements/menu.ctp:50
+#: /views/elements/menu.ctp:69
+msgid "Gestion des Réductions"
+msgstr ""
+
+#: /views/elements/menu.ctp:71
 msgid "Gestion des Factures"
 msgstr ""
 
-#: /views/elements/menu.ctp:52
+#: /views/elements/menu.ctp:73
 msgid "Rapport des Factures"
 msgstr ""
 
-#: /views/elements/menu.ctp:53
+#: /views/elements/menu.ctp:74
 msgid "Ventes Mensuelle"
 msgstr ""
 
-#: /views/elements/menu.ctp:54
+#: /views/elements/menu.ctp:75
 msgid "Rapport Journalier"
 msgstr ""
 
-#: /views/elements/menu.ctp:55;91
+#: /views/elements/menu.ctp:76;158
 msgid "Rapport des Paiements"
 msgstr ""
 
-#: /views/elements/menu.ctp:59
-msgid "Gestion des Proformas"
-msgstr ""
-
-#: /views/elements/menu.ctp:66;67
-msgid "Point de Vente"
-msgstr ""
-
-#: /views/elements/menu.ctp:70;72
-msgid "Interface De Vente"
-msgstr ""
-
-#: /views/elements/menu.ctp:75
-msgid "Rapport Des Ventes"
-msgstr ""
-
 #: /views/elements/menu.ctp:77
-msgid "Rapport Des Consommations"
+msgid "Liste des Débiteurs"
 msgstr ""
 
-#: /views/elements/menu.ctp:78
-msgid "Rapport Caisse"
+#: /views/elements/menu.ctp:81
+msgid "Liste des Clients"
 msgstr ""
 
-#: /views/elements/menu.ctp:83
-msgid "Hébergement"
-msgstr ""
-
-#: /views/elements/menu.ctp:85
-msgid "Gestion des Type de Chambres"
+#: /views/elements/menu.ctp:84
+msgid "Listes Des Factures"
 msgstr ""
 
 #: /views/elements/menu.ctp:86
-msgid "Gestion des chambres"
+msgid "Limites"
 msgstr ""
 
-#: /views/elements/menu.ctp:87
-msgid "Gestion des Réservations"
+#: /views/elements/menu.ctp:91
+msgid "Impression Journalière"
 msgstr ""
 
-#: /views/elements/menu.ctp:89
-msgid "Etat d'Occupation"
+#: /views/elements/menu.ctp:94
+msgid "Factures Débloquées"
 msgstr ""
 
-#: /views/elements/menu.ctp:90
-msgid "Rapport Mensuelle"
-msgstr ""
-
-#: /views/elements/menu.ctp:92
-msgid "Rapport des Réservations"
-msgstr ""
-
-#: /views/elements/menu.ctp:100
-msgid "Salles de Conférences"
-msgstr ""
-
-#: /views/elements/menu.ctp:102
-msgid "Gestion des Salles"
+#: /views/elements/menu.ctp:97
+msgid "Factures envoyées"
 msgstr ""
 
 #: /views/elements/menu.ctp:103
+msgid "Gestion des Proformas"
+msgstr ""
+
+#: /views/elements/menu.ctp:106
+msgid "Gestion des Dettes"
+msgstr ""
+
+#: /views/elements/menu.ctp:114;115
+msgid "Point de Vente"
+msgstr ""
+
+#: /views/elements/menu.ctp:118;120
+msgid "Interface De Vente"
+msgstr ""
+
+#: /views/elements/menu.ctp:123
+msgid "Rapport Des Ventes"
+msgstr ""
+
+#: /views/elements/menu.ctp:125
+msgid "Rapport Des Consommations"
+msgstr ""
+
+#: /views/elements/menu.ctp:126
+msgid "Rapport Caisse"
+msgstr ""
+
+#: /views/elements/menu.ctp:128
+msgid "Paramétrage des Journaux"
+msgstr ""
+
+#: /views/elements/menu.ctp:131
+msgid "Synthèse des ventes journalières"
+msgstr ""
+
+#: /views/elements/menu.ctp:132
+msgid "Détail des crédits journaliers"
+msgstr ""
+
+#: /views/elements/menu.ctp:133
+msgid "Ventes Par Groupes Comptable"
+msgstr ""
+
+#: /views/elements/menu.ctp:136
+msgid "Commandes Non envoyées"
+msgstr ""
+
+#: /views/elements/menu.ctp:138
+msgid "Commandes Effacées"
+msgstr ""
+
+#: /views/elements/menu.ctp:143
+msgid "Hébergement"
+msgstr ""
+
+#: /views/elements/menu.ctp:145
+msgid "Gestion des Types de Chambre"
+msgstr ""
+
+#: /views/elements/menu.ctp:146
+msgid "Gestion des Chambres"
+msgstr ""
+
+#: /views/elements/menu.ctp:149
+msgid "Listes des chambres à nettoyer"
+msgstr ""
+
+#: /views/elements/menu.ctp:153
+msgid "Gestion des Réservations"
+msgstr ""
+
+#: /views/elements/menu.ctp:155
+msgid "Etat d'Occupation"
+msgstr ""
+
+#: /views/elements/menu.ctp:156
+msgid "Liste des prochains arrivages"
+msgstr ""
+
+#: /views/elements/menu.ctp:157
+msgid "Rapport Mensuel"
+msgstr ""
+
+#: /views/elements/menu.ctp:159
+msgid "Rapport des Réservations Par Nationalité"
+msgstr ""
+
+#: /views/elements/menu.ctp:167
+msgid "Salles de Conférence"
+msgstr ""
+
+#: /views/elements/menu.ctp:169
+msgid "Gestion des Salles"
+msgstr ""
+
+#: /views/elements/menu.ctp:170
 msgid "Gestion des Locations"
 msgstr ""
 
-#: /views/elements/menu.ctp:108
+#: /views/elements/menu.ctp:179
 #: /views/factures/add.ctp:37
 #: /views/locations/view.ctp:44
+#: /views/services/Copy of index.ctp:2
 #: /views/services/add.ctp:20
 #: /views/services/edit.ctp:21
 #: /views/services/index.ctp:2
 #: /views/services/view.ctp:66
-#: /views/type_services/add.ctp:17
-#: /views/type_services/edit.ctp:18
-#: /views/type_services/index.ctp:51
+#: /views/type_services/add.ctp:18
+#: /views/type_services/edit.ctp:20
+#: /views/type_services/index.ctp:58
 #: /views/type_services/view.ctp:55
 msgid "Services"
 msgstr ""
 
-#: /views/elements/menu.ctp:110
+#: /views/elements/menu.ctp:181
 msgid "Gestion des Type de Services"
 msgstr ""
 
-#: /views/elements/menu.ctp:111
+#: /views/elements/menu.ctp:182
 msgid "Gestion des Services"
 msgstr ""
 
-#: /views/elements/menu.ctp:122
+#: /views/elements/menu.ctp:193
 msgid "Trésorerie"
 msgstr ""
 
-#: /views/elements/menu.ctp:124
+#: /views/elements/menu.ctp:195
 msgid "Gestion des caisses"
 msgstr ""
 
-#: /views/elements/menu.ctp:131
-msgid "Recettes & Dépenses"
+#: /views/elements/menu.ctp:197
+msgid "Mouvements des caisses"
 msgstr ""
 
-#: /views/elements/menu.ctp:133
+#: /views/elements/menu.ctp:202
+msgid "Gestion des types d'Entrées & Dépenses"
+msgstr ""
+
+#: /views/elements/menu.ctp:204
 msgid "Rapport Dépenses"
 msgstr ""
 
-#: /views/elements/menu.ctp:137
+#: /views/elements/menu.ctp:209
 msgid "Gestion des Caisses interdites"
 msgstr ""
 
-#: /views/elements/menu.ctp:142
+#: /views/elements/menu.ctp:215
 msgid "Comptabilité"
 msgstr ""
 
-#: /views/elements/menu.ctp:144
+#: /views/elements/menu.ctp:217
 msgid "Gestion des Comptes"
 msgstr ""
 
-#: /views/elements/menu.ctp:147
+#: /views/elements/menu.ctp:220
 msgid "Enregistrement des Reports"
 msgstr ""
 
-#: /views/elements/menu.ctp:148
+#: /views/elements/menu.ctp:221
 msgid "Grand Livre"
 msgstr ""
 
-#: /views/elements/menu.ctp:149
+#: /views/elements/menu.ctp:222
 msgid "Balance"
 msgstr ""
 
-#: /views/elements/menu.ctp:150
+#: /views/elements/menu.ctp:223
 msgid "Charges d'Exploitation"
 msgstr ""
 
-#: /views/elements/menu.ctp:151
+#: /views/elements/menu.ctp:224
 msgid "Solde de Gestion"
 msgstr ""
 
-#: /views/elements/menu.ctp:157
+#: /views/elements/menu.ctp:230
 msgid "Configuration"
 msgstr ""
 
-#: /views/elements/menu.ctp:159
-msgid "Paramètrage"
+#: /views/elements/menu.ctp:232
+msgid "Paramétrage du logiciel"
 msgstr ""
 
-#: /views/elements/menu.ctp:160
-msgid "Sauvergarder"
+#: /views/elements/menu.ctp:233
+msgid "Sauvergarder la base de données"
 msgstr ""
 
-#: /views/elements/menu.ctp:163
+#: /views/elements/menu.ctp:234
+msgid "Réparer la base de données"
+msgstr ""
+
+#: /views/elements/menu.ctp:237
 msgid "Accès"
 msgstr ""
 
-#: /views/elements/menu.ctp:165
+#: /views/elements/menu.ctp:239
 msgid "Gestion des Fonctions"
 msgstr ""
 
-#: /views/elements/menu.ctp:166
+#: /views/elements/menu.ctp:240
 #: /views/personnels/index.ctp:16
 msgid "Gestion du Personnel"
 msgstr ""
 
-#: /views/elements/menu.ctp:167
+#: /views/elements/menu.ctp:241
+msgid "Gestion des Salaires"
+msgstr ""
+
+#: /views/elements/menu.ctp:242
 msgid "Page d'accueil"
 msgstr ""
 
-#: /views/elements/menu.ctp:170
-msgid "Déconnexion"
+#: /views/elements/signature.ctp:7;29
+msgid "Signature du Caissier"
+msgstr ""
+
+#: /views/elements/signature.ctp:8
+msgid "Verifié par"
+msgstr ""
+
+#: /views/elements/signature.ctp:14
+msgid "Contrôleur financier"
+msgstr ""
+
+#: /views/elements/signature.ctp:15
+msgid "Approuvée par"
 msgstr ""
 
 #: /views/entrees/advanced_add.ctp:59
@@ -1790,6 +2153,7 @@ msgstr ""
 #: /views/pertes/view.ctp:70
 #: /views/rappels/view.ctp:42
 #: /views/rappels/stocks/view.ctp:42
+#: /views/reductions/view.ctp:78
 #: /views/relations/edit.ctp:30
 #: /views/relations/index.ctp:121
 #: /views/relations/view.ctp:60
@@ -1813,6 +2177,7 @@ msgstr ""
 #: /views/produits/historique.ctp:181
 #: /views/rappels/view.ctp:42
 #: /views/rappels/stocks/view.ctp:42
+#: /views/reductions/view.ctp:78
 #: /views/relations/edit.ctp:30
 #: /views/relations/index.ctp:121
 #: /views/relations/view.ctp:60
@@ -1857,6 +2222,7 @@ msgstr ""
 #: /views/mouvements/view.ctp:9
 #: /views/pertes/view.ctp:14
 #: /views/produits/historique.ctp:3;180
+#: /views/reductions/view.ctp:9
 #: /views/sortis/view.ctp:29
 msgid "Produit"
 msgstr ""
@@ -1867,6 +2233,7 @@ msgstr ""
 #: /views/pertes/view.ctp:24
 #: /views/produits/historique.ctp:58
 #: /views/proformas/view.ctp:19
+#: /views/reductions/view.ctp:14
 #: /views/relations/view.ctp:29
 #: /views/sortis/view.ctp:34
 msgid "Quantite"
@@ -1879,6 +2246,7 @@ msgstr ""
 
 #: /views/entrees/view.ctp:49
 #: /views/mouvements/view.ctp:54
+#: /views/reductions/view.ctp:54
 #: /views/sortis/view.ctp:54
 msgid "Echange"
 msgstr ""
@@ -1886,6 +2254,7 @@ msgstr ""
 #: /views/entrees/view.ctp:54
 #: /views/mouvements/view.ctp:64
 #: /views/pertes/view.ctp:39
+#: /views/reductions/view.ctp:64
 #: /views/sortis/view.ctp:59
 msgid "Expiration Details"
 msgstr ""
@@ -1903,6 +2272,7 @@ msgid "Entretien Chambre"
 msgstr ""
 
 #: /views/factures/add.ctp:33
+#: /views/journals/view.ctp:39
 msgid "Paiements"
 msgstr ""
 
@@ -1911,12 +2281,13 @@ msgid "Paiement"
 msgstr ""
 
 #: /views/factures/add.ctp:38
+#: /views/services/Copy of index.ctp:106
 #: /views/services/add.ctp:4
 #: /views/services/edit.ctp:4
-#: /views/services/index.ctp:105
+#: /views/services/index.ctp:100
 #: /views/services/view.ctp:2;64;65;67
-#: /views/type_services/add.ctp:18
-#: /views/type_services/edit.ctp:19
+#: /views/type_services/add.ctp:19
+#: /views/type_services/edit.ctp:21
 #: /views/type_services/view.ctp:56
 msgid "Service"
 msgstr ""
@@ -1934,8 +2305,26 @@ msgstr ""
 msgid "Sorti"
 msgstr ""
 
-#: /views/factures/index.ctp:96
-msgid "Edition de Rapport"
+#: /views/factures/aserb_report.ctp:9
+#: /views/reservations/arrivals.ctp:13
+msgid "Date de Début"
+msgstr ""
+
+#: /views/factures/aserb_report.ctp:10
+#: /views/reservations/arrivals.ctp:14
+msgid "Date de Fin"
+msgstr ""
+
+#: /views/factures/index.ctp:32
+msgid "Factures liées"
+msgstr ""
+
+#: /views/factures/view.ctp:456
+msgid "Buanderie"
+msgstr ""
+
+#: /views/factures/view.ctp:533
+msgid "Afficher les Commandes envoyées"
 msgstr ""
 
 #: /views/fonctions/add.ctp:4
@@ -1955,6 +2344,18 @@ msgstr ""
 #: /views/fonctions/index.ctp:2
 #: /views/fonctions/view.ctp:37
 msgid "Fonctions"
+msgstr ""
+
+#: /views/groupe_comptables/index.ctp:2
+msgid "Gestion Des Groupe Comptables"
+msgstr ""
+
+#: /views/groupe_comptables/view.ctp:2;24;25;27
+msgid "Groupe Comptable"
+msgstr ""
+
+#: /views/groupe_comptables/view.ctp:26
+msgid "Groupe Comptables"
 msgstr ""
 
 #: /views/groupes/index.ctp:2
@@ -2032,6 +2433,7 @@ msgid "Num Credit"
 msgstr ""
 
 #: /views/historiques/view.ctp:24
+#: /views/journals/view.ctp:191
 #: /views/operations/view.ctp:14
 msgid "Model"
 msgstr ""
@@ -2040,7 +2442,290 @@ msgstr ""
 msgid "Id Element"
 msgstr ""
 
-#: /views/layouts/default.ctp:122
+#: /views/journals/add.ctp:4
+msgid "Add Journal"
+msgstr ""
+
+#: /views/journals/add.ctp:9
+#: /views/journals/edit.ctp:9
+msgid "Submit"
+msgstr ""
+
+#: /views/journals/add.ctp:15
+#: /views/journals/edit.ctp:15
+#: /views/journals/view.ctp:81
+msgid "List Journals"
+msgstr ""
+
+#: /views/journals/add.ctp:16
+#: /views/journals/edit.ctp:16
+#: /views/journals/index.ctp:56
+#: /views/journals/view.ctp:83
+msgid "List Personnels"
+msgstr ""
+
+#: /views/journals/edit.ctp:4
+#: /views/journals/view.ctp:79
+msgid "Edit Journal"
+msgstr ""
+
+#: /views/journals/index.ctp:2
+msgid "Journals"
+msgstr ""
+
+#: /views/journals/index.ctp:41
+msgid "Page %page% of %pages%, showing %current% records out of %count% total, starting on record %start%, ending on %end%"
+msgstr ""
+
+#: /views/journals/index.ctp:46
+msgid "previous"
+msgstr ""
+
+#: /views/journals/index.ctp:49
+msgid "next"
+msgstr ""
+
+#: /views/journals/index.ctp:55
+#: /views/journals/view.ctp:82
+msgid "New Journal"
+msgstr ""
+
+#: /views/journals/view.ctp:2
+#: /views/ventes/manquant.ctp:115
+msgid "Journal"
+msgstr ""
+
+#: /views/journals/view.ctp:24;122
+msgid "Cash"
+msgstr ""
+
+#: /views/journals/view.ctp:34
+msgid "Bonus"
+msgstr ""
+
+#: /views/journals/view.ctp:44
+msgid "Ajouts"
+msgstr ""
+
+#: /views/journals/view.ctp:49
+msgid "Depenses"
+msgstr ""
+
+#: /views/journals/view.ctp:54
+msgid "Versement"
+msgstr ""
+
+#: /views/journals/view.ctp:59;112
+msgid "Observation"
+msgstr ""
+
+#: /views/journals/view.ctp:69
+msgid "Closed"
+msgstr ""
+
+#: /views/journals/view.ctp:80
+msgid "Delete Journal"
+msgstr ""
+
+#: /views/journals/view.ctp:80;170;240;296
+msgid "Are you sure you want to delete # %s?"
+msgstr ""
+
+#: /views/journals/view.ctp:84
+msgid "New Personnel"
+msgstr ""
+
+#: /views/journals/view.ctp:85
+msgid "List Factures"
+msgstr ""
+
+#: /views/journals/view.ctp:86;179
+msgid "New Facture"
+msgstr ""
+
+#: /views/journals/view.ctp:87
+msgid "List Operations"
+msgstr ""
+
+#: /views/journals/view.ctp:88;249
+msgid "New Operation"
+msgstr ""
+
+#: /views/journals/view.ctp:89
+msgid "List Paiements"
+msgstr ""
+
+#: /views/journals/view.ctp:90;305
+msgid "New Paiement"
+msgstr ""
+
+#: /views/journals/view.ctp:94
+msgid "Related Factures"
+msgstr ""
+
+#: /views/journals/view.ctp:99;189;259
+msgid "Journal Id"
+msgstr ""
+
+#: /views/journals/view.ctp:100
+msgid "Tier Id"
+msgstr ""
+
+#: /views/journals/view.ctp:102
+#: /views/operations/add.ctp:4
+#: /views/operations/balance.ctp:71
+#: /views/operations/depenses.ctp:60
+#: /views/operations/rapport.ctp:121
+#: /views/operations/view.ctp:2;54;55;57
+#: /views/traces/view.ctp:14
+msgid "Operation"
+msgstr ""
+
+#: /views/journals/view.ctp:104
+msgid "Reste"
+msgstr ""
+
+#: /views/journals/view.ctp:105
+msgid "Tva"
+msgstr ""
+
+#: /views/journals/view.ctp:109
+msgid "Classee"
+msgstr ""
+
+#: /views/journals/view.ctp:110
+msgid "Printed"
+msgstr ""
+
+#: /views/journals/view.ctp:111
+msgid "Table"
+msgstr ""
+
+#: /views/journals/view.ctp:113
+msgid "Date Emission"
+msgstr ""
+
+#: /views/journals/view.ctp:114;201;268
+#: /views/relations/view.ctp:34
+#: /views/unites/view.ctp:19
+msgid "Personnel Id"
+msgstr ""
+
+#: /views/journals/view.ctp:115
+msgid "Reduction"
+msgstr ""
+
+#: /views/journals/view.ctp:116
+msgid "Original"
+msgstr ""
+
+#: /views/journals/view.ctp:117
+msgid "Beneficiaire"
+msgstr ""
+
+#: /views/journals/view.ctp:118
+msgid "Matricule"
+msgstr ""
+
+#: /views/journals/view.ctp:119
+msgid "Liasse"
+msgstr ""
+
+#: /views/journals/view.ctp:120
+msgid "Employeur"
+msgstr ""
+
+#: /views/journals/view.ctp:121
+msgid "Pos"
+msgstr ""
+
+#: /views/journals/view.ctp:123
+msgid "Linked"
+msgstr ""
+
+#: /views/journals/view.ctp:124
+msgid "Chambre Id"
+msgstr ""
+
+#: /views/journals/view.ctp:125
+msgid "Inclure"
+msgstr ""
+
+#: /views/journals/view.ctp:126
+msgid "Aserb Num"
+msgstr ""
+
+#: /views/journals/view.ctp:168;238;294
+msgid "View"
+msgstr ""
+
+#: /views/journals/view.ctp:169;239;295
+msgid "Edit"
+msgstr ""
+
+#: /views/journals/view.ctp:170;240;296
+msgid "Delete"
+msgstr ""
+
+#: /views/journals/view.ctp:184
+msgid "Related Operations"
+msgstr ""
+
+#: /views/journals/view.ctp:190
+#: /views/operations/view.ctp:9
+msgid "Element Id"
+msgstr ""
+
+#: /views/journals/view.ctp:192
+#: /views/operations/view.ctp:19
+msgid "Op Num"
+msgstr ""
+
+#: /views/journals/view.ctp:197
+msgid "Ordre"
+msgstr ""
+
+#: /views/journals/view.ctp:199;264
+msgid "Mode Paiement"
+msgstr ""
+
+#: /views/journals/view.ctp:203
+msgid "Auto"
+msgstr ""
+
+#: /views/journals/view.ctp:204
+msgid "Compte Id"
+msgstr ""
+
+#: /views/journals/view.ctp:205
+msgid "Common"
+msgstr ""
+
+#: /views/journals/view.ctp:206
+msgid "Ignore"
+msgstr ""
+
+#: /views/journals/view.ctp:254
+msgid "Related Paiements"
+msgstr ""
+
+#: /views/journals/view.ctp:260
+msgid "Facture Id"
+msgstr ""
+
+#: /views/journals/view.ctp:262
+msgid "Montant Equivalent"
+msgstr ""
+
+#: /views/journals/view.ctp:265
+msgid "Reference"
+msgstr ""
+
+#: /views/journals/view.ctp:266
+msgid "Pyt Id"
+msgstr ""
+
+#: /views/layouts/default.ctp:127
 msgid "mugarmug@gmail.com"
 msgstr ""
 
@@ -2117,40 +2802,49 @@ msgid "Gestion Des Mouvements"
 msgstr ""
 
 #: /views/mouvements/view.ctp:2;74;75;77
+#: /views/reductions/view.ctp:2;74;75;77
 msgid "Mouvement"
 msgstr ""
 
 #: /views/mouvements/view.ctp:19;80
+#: /views/reductions/view.ctp:19;80
 msgid "Stock Sortant"
 msgstr ""
 
 #: /views/mouvements/view.ctp:24;82
+#: /views/reductions/view.ctp:24;82
 msgid "First Personnel"
 msgstr ""
 
 #: /views/mouvements/view.ctp:29
+#: /views/reductions/view.ctp:29
 msgid "Creation"
 msgstr ""
 
 #: /views/mouvements/view.ctp:34
+#: /views/reductions/view.ctp:34
 msgid "Modification"
 msgstr ""
 
 #: /views/mouvements/view.ctp:39
+#: /views/reductions/view.ctp:39
 msgid "Stock Entrant"
 msgstr ""
 
 #: /views/mouvements/view.ctp:44
+#: /views/reductions/view.ctp:44
 msgid "Second Personnel"
 msgstr ""
 
 #: /views/mouvements/view.ctp:49
+#: /views/reductions/view.ctp:49
 msgid "Confirmation"
 msgstr ""
 
 #: /views/mouvements/view.ctp:76
 #: /views/rappels/view.ctp:43
 #: /views/rappels/stocks/view.ctp:43
+#: /views/reductions/view.ctp:76
 #: /views/stocks/view.ctp:43
 #: /views/stocks/stocks/view.ctp:43
 #: /views/tiers/stocks/view.ctp:43
@@ -2162,6 +2856,7 @@ msgstr ""
 #: /views/produits/historique.ctp:182
 #: /views/rappels/view.ctp:40
 #: /views/rappels/stocks/view.ctp:40
+#: /views/reductions/view.ctp:79
 #: /views/relations/edit.ctp:28
 #: /views/relations/view.ctp:58
 #: /views/stocks/view.ctp:40
@@ -2172,31 +2867,89 @@ msgstr ""
 msgid "Stocks"
 msgstr ""
 
-#: /views/operations/add.ctp:4
-#: /views/operations/balance.ctp:69
-#: /views/operations/depenses.ctp:60
-#: /views/operations/rapport.ctp:125
-#: /views/operations/view.ctp:2;54;55;57
-#: /views/traces/view.ctp:14
-msgid "Operation"
-msgstr ""
-
 #: /views/operations/add.ctp:21
-#: /views/operations/index.ctp:35
 #: /views/operations/view.ctp:56
 msgid "Operations"
 msgstr ""
 
-#: /views/operations/balance.ctp:69
+#: /views/operations/balance.ctp:71
 msgid "Liste des elements"
 msgstr ""
 
-#: /views/operations/view.ctp:9
-msgid "Element Id"
+#: /views/paiements/synthese_pyts.ctp:9
+msgid "Montant en "
 msgstr ""
 
-#: /views/operations/view.ctp:19
-msgid "Op Num"
+#: /views/paies/add.ctp:4
+#: /views/paies/edit.ctp:4
+#: /views/paies/index.ctp:64
+#: /views/paies/view.ctp:2;64;65;67
+#: /views/salaires/add.ctp:29
+#: /views/salaires/edit.ctp:31
+#: /views/salaires/view.ctp:76
+msgid "Paie"
+msgstr ""
+
+#: /views/paies/add.ctp:24
+#: /views/paies/edit.ctp:26
+#: /views/paies/index.ctp:2
+#: /views/paies/view.ctp:66
+#: /views/salaires/add.ctp:28
+#: /views/salaires/edit.ctp:30
+#: /views/salaires/view.ctp:75
+msgid "Paies"
+msgstr ""
+
+#: /views/paies/add.ctp:25
+#: /views/paies/edit.ctp:27
+#: /views/paies/index.ctp:68
+#: /views/paies/view.ctp:68
+#: /views/personnels/view.ctp:65
+#: /views/salaires/add.ctp:25
+#: /views/salaires/edit.ctp:27
+#: /views/salaires/index.ctp:2
+#: /views/salaires/view.ctp:71
+msgid "Salaires"
+msgstr ""
+
+#: /views/paies/add.ctp:26
+#: /views/paies/edit.ctp:28
+#: /views/paies/index.ctp:69
+#: /views/paies/view.ctp:9;69
+#: /views/personnels/view.ctp:66
+#: /views/salaires/add.ctp:4
+#: /views/salaires/edit.ctp:4
+#: /views/salaires/index.ctp:68
+#: /views/salaires/view.ctp:2;69;70;72
+msgid "Salaire"
+msgstr ""
+
+#: /views/paies/view.ctp:14
+msgid "ILA"
+msgstr ""
+
+#: /views/paies/view.ctp:19
+msgid "INDD"
+msgstr ""
+
+#: /views/paies/view.ctp:24
+msgid "RBA"
+msgstr ""
+
+#: /views/paies/view.ctp:29
+msgid "INSS"
+msgstr ""
+
+#: /views/paies/view.ctp:34
+msgid "IPR"
+msgstr ""
+
+#: /views/paies/view.ctp:39
+msgid "SNET"
+msgstr ""
+
+#: /views/paies/view.ctp:54
+msgid "Annee"
 msgstr ""
 
 #: /views/personnels/login.ctp:29
@@ -2218,21 +2971,9 @@ msgstr ""
 msgid "Date Engagement"
 msgstr ""
 
-#: /views/personnels/view.ctp:65
-msgid "Salaires"
-msgstr ""
-
-#: /views/personnels/view.ctp:66
-msgid "Salaire"
-msgstr ""
-
 #: /views/pertes/index.ctp:2
 #: /views/pertes/view.ctp:66
 msgid "Pertes"
-msgstr ""
-
-#: /views/pertes/rapport_xls.ctp:1
-msgid "Rapport des Pertes de la periode entre le "
 msgstr ""
 
 #: /views/pertes/view.ctp:2;64;65;67
@@ -2292,12 +3033,8 @@ msgstr ""
 msgid "Gestions Des Produits"
 msgstr ""
 
-#: /views/produits/index.ctp:137
+#: /views/produits/index.ctp:161
 msgid "%s"
-msgstr ""
-
-#: /views/produits/marge.ctp:1
-msgid "Tableau des marges de la période entre le "
 msgstr ""
 
 #: /views/produits/upload_xls.ctp:4
@@ -2333,6 +3070,10 @@ msgstr ""
 msgid "Gestion Des Stocks"
 msgstr ""
 
+#: /views/reductions/index.ctp:2
+msgid "Gestion Des Reductions"
+msgstr ""
+
 #: /views/relations/add_plat.ctp:4
 msgid "Plat"
 msgstr ""
@@ -2352,9 +3093,28 @@ msgstr ""
 msgid "Deuxieme Produit"
 msgstr ""
 
-#: /views/relations/view.ctp:34
-#: /views/unites/view.ctp:19
-msgid "Personnel Id"
+#: /views/reservations/etat_occupation.ctp:242
+msgid "Version Simplifiée"
+msgstr ""
+
+#: /views/reservations/etat_occupation.ctp:244
+msgid "Version Très Simplifiée"
+msgstr ""
+
+#: /views/reservations/etat_occupation.ctp:247
+msgid "Version Détaillée"
+msgstr ""
+
+#: /views/reservations/facture_globale.ctp:146
+msgid "Chambre N° "
+msgstr ""
+
+#: /views/reservations/facture_globale.ctp:376;386
+msgid "Signature réceptioniste"
+msgstr ""
+
+#: /views/reservations/facture_globale.ctp:392
+msgid "Signature Client"
 msgstr ""
 
 #: /views/reservations/index.ctp:129
@@ -2407,6 +3167,55 @@ msgstr ""
 msgid "Reservation Trace"
 msgstr ""
 
+#: /views/salaires/index.ctp:11
+msgid "Salaire Net"
+msgstr ""
+
+#: /views/salaires/index.ctp:71
+msgid "Generer la liste des paies"
+msgstr ""
+
+#: /views/salaires/paie.ctp:7
+msgid "Date de la paie"
+msgstr ""
+
+#: /views/salaires/view.ctp:19
+msgid "HS"
+msgstr ""
+
+#: /views/salaires/view.ctp:24
+msgid "PRIME"
+msgstr ""
+
+#: /views/salaires/view.ctp:29
+msgid "ALLOC"
+msgstr ""
+
+#: /views/salaires/view.ctp:34
+msgid "SM"
+msgstr ""
+
+#: /views/salaires/view.ctp:39
+msgid "ASSUR"
+msgstr ""
+
+#: /views/salaires/view.ctp:44
+msgid "AVANCE"
+msgstr ""
+
+#: /views/salaires/view.ctp:49
+msgid "COTIS"
+msgstr ""
+
+#: /views/salaires/view.ctp:54
+msgid "Date Debut"
+msgstr ""
+
+#: /views/salaires/view.ctp:59
+#: /views/ventes/synthese_cptable_d_vente.ctp:9;24
+msgid "Date Fin"
+msgstr ""
+
 #: /views/salles/index.ctp:2
 msgid "Gestions Des Salles"
 msgstr ""
@@ -2422,8 +3231,8 @@ msgstr ""
 #: /views/services/add.ctp:24
 #: /views/services/edit.ctp:25
 #: /views/services/view.ctp:71
-#: /views/type_services/add.ctp:16
-#: /views/type_services/edit.ctp:17
+#: /views/type_services/add.ctp:17
+#: /views/type_services/edit.ctp:19
 #: /views/type_services/index.ctp:2
 #: /views/type_services/view.ctp:51
 msgid "Type Services"
@@ -2434,7 +3243,7 @@ msgstr ""
 #: /views/services/view.ctp:19;72
 #: /views/type_services/add.ctp:4
 #: /views/type_services/edit.ctp:4
-#: /views/type_services/index.ctp:48
+#: /views/type_services/index.ctp:55
 #: /views/type_services/view.ctp:2;49;50;52
 msgid "Type Service"
 msgstr ""
@@ -2443,17 +3252,17 @@ msgstr ""
 msgid "Gestion Des Sorties"
 msgstr ""
 
-#: /views/sortis/rapport_xls.ctp:1
-msgid "Rapport des Sortis de la periode entre le "
-msgstr ""
-
-#: /views/sortis/transport.ctp:1;36;66
-msgid "Sortis pour ceux qui paient le transport de la période entre le "
-msgstr ""
-
 #: /views/sortis/view.ctp:88
 #: /views/unites/view.ctp:41
 msgid "Unites"
+msgstr ""
+
+#: /views/tiers/edit.ctp:22
+msgid "Information du client"
+msgstr ""
+
+#: /views/tiers/edit.ctp:84
+msgid "Information de la réservation"
 msgstr ""
 
 #: /views/tiers/view.ctp:5
@@ -2485,7 +3294,7 @@ msgid "Passport"
 msgstr ""
 
 #: /views/type_chambres/index.ctp:2
-msgid "Gestion des Type Chambres"
+msgid "Gestion des Types Chambre"
 msgstr ""
 
 #: /views/type_chambres/view.ctp:9
@@ -2500,19 +3309,12 @@ msgstr ""
 msgid "Compte_num"
 msgstr ""
 
-#: /views/types/add.ctp:19
-#: /views/types/edit.ctp:21
+#: /views/types/index.ctp:2
+msgid "Types d'entrées et de dépenses"
+msgstr ""
+
 #: /views/types/view.ctp:50
 msgid "Types"
-msgstr ""
-
-#: /views/types/add.ctp:20
-#: /views/types/edit.ctp:22
-msgid "Lister/Créer  %s"
-msgstr ""
-
-#: /views/types/index.ctp:2
-msgid "Ventes & Dépenses"
 msgstr ""
 
 #: /views/types/view.ctp:53
@@ -2531,12 +3333,20 @@ msgstr ""
 msgid "Premiere Conversion"
 msgstr ""
 
-#: /views/ventes/index.ctp:106
+#: /views/ventes/index.ctp:130
 msgid "Détails Vente"
 msgstr ""
 
-#: /views/ventes/manquant.ctp:115
-msgid "Journal"
+#: /views/ventes/synthese_cptable_d_vente.ctp:8;23
+msgid "Date Début"
+msgstr ""
+
+#: /views/ventes/synthese_cptable_d_vente.ctp:32
+msgid "Pas d'activitées pour le "
+msgstr ""
+
+#: /views/ventes/synthese_cptable_d_vente.ctp:34
+msgid "Synthèse des ventes journalières du service restaurant, Spa et divers"
 msgstr ""
 
 #: /views/ventes/view.ctp:29

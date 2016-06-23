@@ -66,40 +66,40 @@
 								 'bon_num'=>0, // a toujours desactiver
 								 'TTC'=>0, // a activer s'il la direction desire afficher le "TTC" sur les factures resto (toutes taxes comprises)
 								 'beneficiaires'=>0, // a activer si l'entreprise accepte que des clients prennent des produits sur le compte des autres 
-								'detailed_ben'=>0, // a activer pour les pharmacies qui travaillent les mutuelles d'assurance 
+								 'detailed_ben'=>0, // a activer pour les pharmacies qui travaillent les mutuelles d'assurance 
 								 'extras'=>0, //toujours desactiver
 								 'conference'=>1, //a activer pour le module de gestion des salles de conference
-								 'tva'=>18, // a activer si l'entreprise est soumise a la tva et mettre son taux.
+								 'tva'=>1, // a activer si l'entreprise est soumise a la tva et mettre son taux.
 								 'name'=>'aser', // nom du dossier qui contient le logiciel ,
 								 'upload'=>0, // a activer pour ceux qui ulitise la version touchscreen du point de vente
 								 'swipe'=>0, // a activer si on ulitilse les cartes magnetiques pour la connexion
-								 'touchscreen'=>0, // a activer pour ceux qui ulitise la version touchscreen du point de vente
+								 'touchscreen'=>1, // a activer pour ceux qui ulitise la version touchscreen du point de vente
 								 'alerts'=>1, //  a activer pour les pharmacies ou autres entreprises qui desirent des alertes
 								 'tresorerie'=>1, // a activer s'ils utilisent le module tresorerie
 								 'stock'=>1,  // a activer s'ils utilisent le module stock
 								 'client_auto_creation'=>1,  // a activer s'ils les caissier ont le droit de creer de nouveau client
-								 'comptabilite'=>1,
-								 'advanced_stock'=>0, //for accompagnement stuff to be activated
+								 'comptabilite'=>0,
+								 'advanced_stock'=>1, //for accompagnement stuff to be activated
 								 'bonus'=>0, // a activer s'ils l'entreprise donne des bonus
 								 'stock_option_caisse'=>1, // a activer s'ils les caissiers ont le droit de creer et de modifier de nouveau produits
 								 'link'=>0,
 								 'facturation_cyclique'=>1,
 								 'display_bill_number'=>1,
 								 'billetage'=>0,
-								 'caissier_serveur'=>1, // a activer les serveurs jouent aussi le role des caissiers
+								 'caissier_serveur'=>0, // a activer les serveurs jouent aussi le role des caissiers
 								 'tables'=>22, // le nombre total de table dont dispose leur restaurant
-								 'cloturer'=>1, // if on cloture automatique le journal at the beginning of each day
+								 'cloturer'=>0, // if on cloture automatique le journal at the beginning of each day
 								 'multi_pv'=>0, // dsi le produit peut avoir plusieurs prix differents,
 								 'pharmacie'=>0, // si l'entreprise est une pharmacie active les batch number & date d'expiration
 								 'default_currency'=>'BIF',
 								 'PU'=>1,
 								 'proforma'=>0,
-								 'one_time_printing'=>1, // a activer s'ils veulent que les factures tickets soient imprimes une seule fois au maximum
+								 'one_time_printing'=>0, // a activer s'ils veulent que les factures tickets soient imprimes une seule fois au maximum
 								 'pos_sales_report'=>0,
 								 'auto_logout'=>0, // a activer s'ils desirent une deconnexion automatique apres 30 secondes d'inactivites
 								 'database'=>'aser',
-								 'aserb'=>1, // a activer pour belair seulement
-								 'silhouette'=>0, // a activer pour silhouette seulement,
+								 'aserb'=>0, // a activer pour belair seulement
+								 'silhouette'=>1, // a activer pour silhouette seulement,
 								 'impression_par_serveur'=>0, //wether to allow a waiter to print a bill
 								 'multi_serveur'=>0, // multi waiter working on the same bill
 								 'ingredient'=>1, // a activer si le client desire mettre la composition de chaque plat ou produit et ainsi connaitre le PA des produits composes
@@ -115,19 +115,24 @@
 								 'default_stock'=>1, //default stock id if multi stock is disabled but connexion is enabled,
 								 'conference-manual'=>1, // if on le calcul des quantites est manuel lors de la creation de la facture proforma/location. au liu detre un multiple des jours et du nbre de pers	
 								 'conference-resto-reception'=>0, // if on les conso resto de la conference sont factures a la reception,
-								 'caisse_interdite'=>1,
+								 'caisse_interdite'=>0,
 								 'ebenezer'=>0, //if on enables features of pharmacie eben ezer
 								 'gouvernance'=>1, //if on enables features related to housekeeping
-								 'groupes_on_index'=>1, //if on enables the grouping of products on the vente index
+								 'groupes_on_index'=>0, //if on enables the grouping of products on the vente index
 								 'disable_transfer'=>1, //to disable transfer of bills from on journal to another.
 								 'deny_caishier_to_make_credit'=>1,
-								 'disable_nembeteplus'=>1, //when managers want to force the closing of the report.
-								 'export_bills'=>0, //option payant of exporting bills to xls
+								 'disable_nembeteplus'=>0, //when managers want to force the closing of the report.
+								 'export_bills'=>1, //option payant of exporting bills to xls
+								 'belair'=>1,
+									'gestion_reduction'=>1,
+								//	'kcc'=>0, // to enable/disable Kings conference specific features
+									'xls_copy'=>1,
+									'all_company_info'=>1
 								 )
 					); 
 	// setup for the options needed by the function that copies the journal money into the caisse
-	Configure::write('caisse',array('caisse_id'=>10,
-									'type_id'=>5
+	Configure::write('caisse',array('caisse_id'=>26,
+									'type_id'=>14
 									));				
 	//setup the options for late checkout or demi
 	Configure::write('demis',array(50=>'50 %',75=>'75 %'));
@@ -166,6 +171,11 @@
 	 								)
 					);		
 					
+	/**
+	* categeories de depenses.
+	*/
+
+	Configure::write('categories',array(0=>'',1=>'Intrants',2=>"Produits d'entretien",3=>"Frais de fonctionement", 4=>"Investissement", 5=>"Stock et Autres"));
 	/**
 	* List of countries
 	*/				

@@ -1,7 +1,7 @@
 
 <div id='view'>
 <div class="document">
-<?php if(!empty($produits)):?>	
+<?php  if(!empty($produits)):?>	
 	<h3>
 <?php
 		echo $choixs[$choix].' dans ';
@@ -19,6 +19,7 @@
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr>
 		<th width="100" >Produit</th>
+		<th width="60" >Unité</th>
 		<?php if($choix=='mvt'):?>		
 			<th width="30">SI</th>
 		<?php endif;?>
@@ -27,33 +28,46 @@
 		?>
 			<th width="30"><?php echo $date_parts[2];?></th>
 		<?php endfor;?>
+		<th>VALEUR (PA)</th>
 	</tr>
-	<?php foreach($produits as $produit):
-		$solde=($choix=='mvt')?$produit['ants'][0]['Historique']['solde']:0;
+	<?php foreach($produits as $id=>$produit):
+		$solde=($choix=='mvt')?(!empty($produit['SI'])?$produit['SI']:0):0;
 	?>
 		<tr>
-			<td> <?php echo $this->Html->link($produit['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $produit['Produit']['id'],0));?></td>
+			<td> <?php echo $this->Html->link($produit['info']['name'], array('controller' => 'produits', 'action' => 'view', $produit['info']['id'],0));?></td>
+			<td><?php if(isset($unites[$produit['info']['unite_id']])) echo $unites[$produit['info']['unite_id']];?></td>
 			<?php if($choix=='mvt'):?>		
-				<td><?php echo  $number->format($produit['ants'][0]['Historique']['solde'],$formatting); ?></td>
+				<td><?php echo  $number->format((!empty($produit['SI'])?$produit['SI']:0),$formatting); ?></td>
 			<?php endif;?>
 			<?php for($i=0; $i<=$days;$i++):
 				$current_date=$this->MugTime->increase_date($date1,$i);
 				$found=0;
-				foreach($produit['op'] as $historique){
-					if($historique['Historique']['date']==$current_date){
-						$found=($choix=='mvt')?
-								$historique['Historique']['solde']:
-								$historique['Historique']['debit']+$historique['Historique']['credit'];
-						break;
+				if(!empty($produit['op'])){
+					foreach($produit['op'] as $historique){
+						if($historique['Historique']['date']==$current_date){
+							$found=($choix=='mvt')?
+									$historique['Historique']['solde']:
+									$historique['Historique']['debit']-$historique['Historique']['credit'];
+							break;
+						}
 					}
+				}
+				else {
+				//	echo '<td colspan="'.$days.'"></td>';	
 				}
 				$solde=($choix=='mvt')?(($found)?$found:$solde):$found;
 				echo '<td>'.$solde.'</td>';	
 			?>
 				
 			<?php endfor;?>
+			<td><?php if (!empty($produit['valeur'])) echo ($produit['valeur']); else echo 0;?></td>
 		</tr>
 	<?php endforeach;?>	
+	<tr class="strong">
+		<td>TOTAL</td>
+		<td colspan="<?php if($choix == 'mvt') echo $days+3; else echo $days+2; ?>"></td>
+		<td><?php echo ($valeur_total);?></td>
+	</tr>
 </table>
 <?php endif;?>
 <br />

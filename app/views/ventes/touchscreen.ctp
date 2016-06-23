@@ -262,6 +262,7 @@
 					<th>Quantité</th>
 					<th>PU</th>
 					<th>PT</th>
+					<th>Tps</th>
 				</tr>
 			</table>
 		</fieldset>
@@ -298,7 +299,7 @@
 			<?php if($session->read('Auth.Personnel.fonction_id')!=1): ?>
 			<span class="boutton" onclick="document.location.href=getBase()+'ventes/journal'" title="Journal">Rapport</span>
 			<?php endif;?> 
-			<span class="boutton" onclick="separator(factureId)" title="Splitter">Separateur</span>
+			<span id="separator" class="boutton" name="disable" title="Splitter">Separateur</span>
 			<?php if($config['sama']&&($mode!='serveur')): ?>
 				<span class="boutton" onclick="bill_cleaner(factureId)" title="Cleaner">Nettoyeur</span>
 			<?php endif;?>

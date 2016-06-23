@@ -151,7 +151,7 @@
 		<li class="link"  onclick="quantites()" >Afficher les Quantités</li>
 		<li class="link"  onclick="actions('checkbox','historique')" >Afficher l'Historique du Stock</li>
 		<li  class="link" onclick = "mass_modification()" >Modification en Masse</li>
-		<?php if(Configure::read('aser.multi_pv')):?>
+		<?php if(false&&Configure::read('aser.multi_pv')):?>
 			<li class="link"  onclick = "produit_tarifs('checkbox','index')" >Afficher/Masquer des Tarifs</li>
 			<span id="produit_tarifs_links" style="display:none">
 				<li class="link"  onclick = "produit_tarifs('checkbox','add')" >Créer Tarif</li>

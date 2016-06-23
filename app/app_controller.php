@@ -260,7 +260,8 @@ class AppController extends Controller {
 													'proformas',
 													'operations',
 													'locations',
-													'buanderies'
+													'buanderies',
+													'reductions'
 													)
 		)){
 			$this->loadModel('Tier');
@@ -297,7 +298,7 @@ class AppController extends Controller {
 		}
 		
 		//pour les produits where they are needed
-		if(in_array($this->params['controller'],array('entrees','sortis','pertes','mouvements','ventes'))){
+		if(in_array($this->params['controller'],array('entrees','sortis','pertes','mouvements','ventes','reductions'))){
 			$this->loadModel('Produit');
 			$cond['Produit.actif']='oui';
 			if(!Configure::read('aser.magasin')&&($this->params['controller']=='pertes')){
@@ -312,9 +313,15 @@ class AppController extends Controller {
 			else {
 				$cond['Produit.type']='stockable';
 			}
-			$this->produits=$produits=$this->Produit->find('list',array('conditions'=>$cond,
-																		'order'=>array('Produit.name asc')
+			$produits_raw=$this->Produit->find('all',array('conditions'=>$cond,
+																		'order'=>array('Produit.name asc'),
+																		'fields'=>array('Produit.id','Produit.name','Unite.name')
 																		));
+			$produits=array();
+			foreach($produits_raw as $p=>$produit){
+				$produits[$produit['Produit']['id']]=$produit['Produit']['name'].' ('.$produit['Unite']['name'].')';
+			}
+			$this->produits=$produits;
 			$produits1=array('')+$produits;
 			$this->set(compact('produits','produits1'));
 		}
@@ -381,7 +388,7 @@ class AppController extends Controller {
 					'Service'=>'Service Divers',
 					//'Proforma'=>'Proforma'
 					);
-		if($this->params['controller']!='tiers'){
+		if(!in_array($this->params['controller'],array('tiers','reductions'))){
 			$actifs=$actifs1=array('oui'=>'oui','non'=>'non');
 			$actifs1[]='';
 			$this->set(compact('actifs','actifs1'));
@@ -401,6 +408,9 @@ class AppController extends Controller {
 		$pax=array(1=>1,2=>2,3=>3);
 		$optionsForTypes=array('depense'=>'Dépense','vente'=>'Entrée');
 		$optionsForType1s=array('')+$optionsForTypes;
+
+		//designed by message
+		//$designed_by='<div id="designed_by" style="margin: -5px auto 10px auto; font_size: 7px; color: #666">Système conçu par aser-technologies +25779853419</div>';
 		$this->set(compact('monnaies','monnaies1',
 						'modePaiements','modePaiements1',
 						'operations',
@@ -418,6 +428,7 @@ class AppController extends Controller {
 					'countries',
 					'pax',
 					'optionsForTypes','optionsForType1s'
+				//	,'designed_by'
 					));
 	
 	if(Configure::read('aser.alerts')){	

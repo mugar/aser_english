@@ -17,6 +17,15 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+/*** limits css ***/
+
+.limit_table {
+	width: 150px;	
+}
+.limit_input {
+	width: 80px;
+}
+/** end limits css ***/
 
 /** chart jqplot css **/
 #chartDiv .jqplot-point-label {
@@ -2580,9 +2589,13 @@ p.error em {
 div.actions ul {
 	margin: 0;
 	padding: 0;
+	top:120px;
+	bottom: 0;
 	position:fixed;
 	width:15%;
 	margin-bottom:50px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }
 div.actions li {
 	margin:0 0 0.5em 0;

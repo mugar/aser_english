@@ -97,7 +97,7 @@
  * Turn off all caching application-wide.
  *
  */
-	Configure::write('Cache.disable',false);
+	Configure::write('Cache.disable',true);
 
 /**
  * Enable cache checking.
@@ -108,7 +108,7 @@
  * or in each action using $this->cacheAction = true.
  *
  */
-	Configure::write('Cache.check', true);
+	Configure::write('Cache.check', false);
 
 /**
  * Defines the default error type when using the log() function. Used for
