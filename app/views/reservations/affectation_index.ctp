@@ -7,7 +7,7 @@
 			<th>reservation_id</th>
 			<th>chambre_id</th>
 			<th>Tier</th>
-			<th>Etat</th>
+			<th>State</th>
 			<th>Entrée</th>
 			<th>Sortie</th>
 			<th>Commentaire</th>

@@ -56,13 +56,13 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Personnel', true)), array('action' => 'edit', $personnel['Personnel']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Effacer %s', true), __('Personnel', true)), array('action' => 'delete', $personnel['Personnel']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $personnel['Personnel']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Personnels', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Personnel', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Personnel', true)), array('action' => 'edit', $personnel['Personnel']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Personnel', true)), array('action' => 'delete', $personnel['Personnel']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $personnel['Personnel']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Personnels', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Personnel', true)), array('action' => 'add')); ?> </li>
 		
 		 
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Salaires', true)), array('controller' => 'salaires', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Salaire', true)), array('controller' => 'salaires', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Salaires', true)), array('controller' => 'salaires', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Salaire', true)), array('controller' => 'salaires', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

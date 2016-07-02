@@ -11,17 +11,17 @@
 	<tr>
 			<th>Tier</th>
 			<th>Facture</th>
-			<th>Etat de Paiement</th>
+			<th>State de Paiement</th>
 			<th>Type Chambre</th>
 			<th>Nombre</th>
 			<th>Adultes</th>
 			<th>Enfants</th>
 			<th>Arrivee</th>
-			<th>Depart</th>
-			<th>PU</th>
+			<th>Departure</th>
+			<th>Unit Price</th>
 			<th>Montant</th>
-			<th>Monnaie</th>
-			<th>Etat Réservation</th>
+			<th>Currency</th>
+			<th>State Réservation</th>
 		
 	</tr>
 		<?php
@@ -71,14 +71,14 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Reservations', array('controller' => 'reservations', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link('Gestion des Réservations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
+		<li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Reservation',array('id'=>'recherche'));?>
@@ -100,8 +100,8 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début','type'=>'text'));									
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));									
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
   			$options=array('1'=>'Répartition par tier',
    						  '2'=>'Comparaison de deux années'
    						  );

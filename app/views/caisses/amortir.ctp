@@ -8,7 +8,7 @@
 		echo $this->Form->input('nbr',array('label'=>'Nbre de mois'));
 		echo $this->Form->input('capital',array('label'=>'capital'));
 		echo $this->Form->input('txasur',array('label'=>'taux d\'assurance'));
-		echo $this->Form->end(__('Envoyer', true));
+		echo $this->Form->end(__('Save', true));
 		?>
 		</div>
 <?php if(!empty($tableau)): ?>

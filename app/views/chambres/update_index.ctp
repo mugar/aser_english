@@ -26,8 +26,8 @@
 		<td><?php echo $chambre['Chambre']['date']; ?>&nbsp;</td>
 		<td class="actions">
 			<?php echo $this->Html->link(__('Afficher', true), array('action' => 'view', $chambre['Chambre']['id'])); ?>
-			<?php echo $this->Html->link(__('Modifier', true), array('action' => 'edit', $chambre['Chambre']['id'])); ?>
-			<?php echo $this->Html->link(__('Effacer', true), array('action' => 'delete', $chambre['Chambre']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $chambre['Chambre']['id'])); ?>
+			<?php echo $this->Html->link(__('Edit', true), array('action' => 'edit', $chambre['Chambre']['id'])); ?>
+			<?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $chambre['Chambre']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $chambre['Chambre']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -35,13 +35,13 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu\'au numéro %end%', true)
+	'format' => __('Page %page% of %pages%, showing  %current% records out of %count%, from %start%, to %end%', true)
 	));
 	?>	</p>
 
 	<div class="paging">
-		<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
-		<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 	</div>

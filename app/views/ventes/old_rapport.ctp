@@ -5,8 +5,8 @@
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Tier</th>
-			<th>N° Facture</th>
-			<th>Etat Facture</th>
+			<th>Invoice N°</th>
+			<th>State Facture</th>
 			<th>Montant</th>
 			<th>Reste</th>
 			<th>Table</th>
@@ -55,13 +55,13 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Liste des Products', array('controller' => 'produits', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
@@ -83,8 +83,8 @@
 																		'annulee'=>'annulee'
 																		)
 														));
-			echo $this->Form->input('Facture.date1',array('label'=>'Choisissez une date début','type'=>'text'));									
-			echo $this->Form->input('Facture.date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));				
+			echo $this->Form->input('Facture.date1',array('label'=>'Start Date','type'=>'text'));									
+			echo $this->Form->input('Facture.date2',array('label'=>'End Date','type'=>'text'));				
 			?>
 	</span>
 	</form>

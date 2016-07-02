@@ -11,14 +11,14 @@
 		echo $this->Form->input('monnaie');
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Envoyer', true));?>
+<?php echo $this->Form->end(__('Save', true));?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Location Extras', true)), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Locations', true)), array('controller' => 'locations', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Location', true)), array('controller' => 'locations', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Location Extras', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Locations', true)), array('controller' => 'locations', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Location', true)), array('controller' => 'locations', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

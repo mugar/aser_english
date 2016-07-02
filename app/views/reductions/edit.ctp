@@ -3,7 +3,7 @@
 	<span class="left">
 		<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('tier_id',array('label'=>'Client'));
+		echo $this->Form->input('tier_id',array('label'=>'Customer'));
 		echo $this->Form->input('produit_id');
 		?>
 	</span>

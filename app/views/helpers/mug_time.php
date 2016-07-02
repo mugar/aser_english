@@ -43,7 +43,7 @@
 		function toFrench($mysql_format) {
 			if(!empty($mysql_format)){
 		 		$mysql_format=explode('-',$mysql_format);
-				$french_format=$mysql_format[2].'/'.$mysql_format[1].'/'.$mysql_format[0];
+				$french_format=$mysql_format[1].'/'.$mysql_format[2].'/'.$mysql_format[0];
 				return $french_format;
 			 }
 		}
@@ -55,43 +55,43 @@
 		function giveMonth($number) {
 			switch($number) {
 				case 1:
-					$month='Janvier';
+					$month='January';
 					break;
 				case 2:
-					$month='Février';
+					$month='February';
 					break;
 				case 3:
-					$month='Mars';
+					$month='March';
 					break;
 				case 4:
-					$month='Avril';
+					$month='April';
 					break;
 				case 5:
-					$month='Mai';
+					$month='May';
 					break;
 				case 6:
-					$month='Juin';
+					$month='June';
 					break;
 				case 7:
-					$month='Juillet';
+					$month='July';
 					break;
 				case 8:
-					$month='Août';
+					$month='August';
 					break;
 				case 9:
-					$month='Septembre';
+					$month='September';
 					break;
 				case 10:
-					$month='Octobre';
+					$month='October';
 					break;
 				case 11:
-					$month='Novembre';
+					$month='November';
 					break;
 				case 12:
-					$month='Décembre';
+					$month='December';
 					break;
 				default:
-					$month='Mois inconnue';
+					$month='Unkown';
 					break;
 			}
 			return $month;

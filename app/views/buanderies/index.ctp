@@ -9,14 +9,14 @@
 <div class="factures index">
 	<h2><?php __('Factures Buanderies');?></h2>
 	<!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Facture',array('id'=>'recherche','url'=>array('controller'=>'buanderies','action'=>'index')));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('chambre_id',array('selected'=>0,'options'=>$chambres1,'label'=>'Chambre N°'));
-			echo $this->Form->input('tier_id',array('selected'=>0,'options'=>$tiers1,'label'=>'Nom Du Client'));
+			echo $this->Form->input('tier_id',array('selected'=>0,'options'=>$tiers1,'label'=>'Nom Du Customer'));
 			echo $this->Form->input('Tier.compagnie');
 			echo $this->Form->input('Facture.etat',array('options'=>array(''=>'',
 																		'payee'=>'payee',
@@ -32,7 +32,7 @@
 	<span class="right">
 		<?php
 			
-			echo $this->Form->input('numero',array('label'=>'Facture N°'));
+			echo $this->Form->input('numero',array('label'=>'Invoice N°'));
 			echo $this->Form->input('Facture.montant');
 			echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));				
 			echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));	
@@ -50,7 +50,7 @@
 	<tr>
 		<th>Date</th>
 		<th>N Chambre</th>
-		<th>Client</th>
+		<th>Customer</th>
 		<th>Montant</th>
 		<th>Actions</th>
 	</tr>
@@ -61,7 +61,7 @@
 		<td><?php echo $this->Form->input('chambre_id',array('id'=>'chambre','label'=>'','options'=>$chambres));?></td>
 		<td><?php echo $this->Form->input('tier_id',array('id'=>'tierId','label'=>'','options'=>$tiers1,'selected'=>0,'disabled'=>'disabled'));?></td>
 		<td><?php echo $this->Form->input('montant',array('label'=>''));?></td>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		</form>
 	</tr>
 	<?php endfor; ?>
@@ -91,23 +91,23 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu\'au numéro %end%', true)
+	'format' => __('Page %page% of %pages%, showing  %current% records out of %count%, from %start%, to %end%', true)
 	));
 	?>	</p>
 
 	<div class="paging">
-		<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
-		<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 	</div>
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li class="link"  onclick="actions('checkbox','view')" >Afficher Les Détails</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link(__('Edition de Rapport', true), array('controller' => 'factures', 'action' => 'rapport')); ?> </li>
 	</ul>
 </div>

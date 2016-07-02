@@ -1,18 +1,18 @@
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
   <div id="message_recherche"></div>
   <?php echo $this->Form->create('Facture',array('id'=>'recherche'));?>
   <span class="left">
     <?php
-      echo $this->Form->input('date1',array('label'=>__('Date de Début',true),'type'=>'text'));
-      echo $this->Form->input('date2',array('label'=>__('Date de Fin',true),'type'=>'text'));
+      echo $this->Form->input('date1',array('label'=>__('Start Date',true),'type'=>'text'));
+      echo $this->Form->input('date2',array('label'=>__('End Date',true),'type'=>'text'));
     ?>
   </span>
   <span class="right">
     <?php
-      echo $this->Form->input('Tier.compagnie',array('label'=>'Compagnie du client','type'=>'text'));     
+      echo $this->Form->input('Tier.compagnie',array('label'=>'Customer Company','type'=>'text'));     
     ?>
   </span>
   </form>
@@ -33,12 +33,12 @@
   <tr>
       <th>Date de Création</th>
        <th>Date d'envoie</th>
-      <th>N° Facture</th>
+      <th>Invoice N°</th>
       <th>Montant</th>
       <th>Reste</th>
-      <th>Client</th>
-      <th>Compagnie</th>
-      <th>Etat</th>
+      <th>Customer</th>
+      <th>Company</th>
+      <th>State</th>
   </tr>
     <?php
   $i=0;
@@ -65,8 +65,8 @@ endforeach; ?>
 <div class="actions">
   <h3><?php __('Actions'); ?></h3>
   <ul>
-    <li class="link" onclick = "print_documents()" >Imprimer</li>
-    <li class="link"  onclick = "recherche()" >Options de Recherche</li>
-    <li><?php echo $this->Html->link('Gestion des Réservations', array('controller' => 'factures', 'action' => 'tabella')); ?> </li>
+    <li class="link" onclick = "print_documents()" >Print</li>
+    <li class="link"  onclick = "recherche()" >Search Options</li>
+    <li><?php echo $this->Html->link('Bookings Management', array('controller' => 'factures', 'action' => 'tabella')); ?> </li>
   </ul>
 </div>

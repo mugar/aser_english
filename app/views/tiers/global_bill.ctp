@@ -52,7 +52,7 @@
 				<th>Nom de l'employeur</th>
 			<?php endif; ?> 
 		<?php endif; ?>
-			<th>Produits</th>
+			<th>Products</th>
 			<th>Quantité</th>
 			<th width="100">PU</th>
 		<?php if(Configure::read('aser.beneficiaires')):?>
@@ -76,7 +76,7 @@
 				<td><?php  if(!empty($vente['Facture']['employeur'])) echo  $vente['Facture']['employeur']; ?></td>
 			<?php endif; ?>
 		<?php endif; ?>
-			<td><?php echo  $vente['Produit']['name']; ?></td>
+			<td><?php echo  $vente['Product']['name']; ?></td>
 			<td><?php echo  $vente['Vente']['quantite']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting).' '.Configure::read('aser.default_currency'); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['montant']+0,$formatting).' '.Configure::read('aser.default_currency'); ?></td>
@@ -121,7 +121,7 @@
 
 <?php if($tva!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<?php if(Configure::read('aser.beneficiaires')):?>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -220,7 +220,7 @@
 	</tr>
 <?php endif;?>
 	<tr class="strong">
-		<td>RESTE A PAYER</td>
+		<td>LEFT TO PAY</td>
 		<?php if(Configure::read('aser.beneficiaires')):?>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
@@ -274,7 +274,7 @@ echo $this->element('../paiements/payments_table',array('pyts'=>$pyts,'facture'=
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
 		<li><?php echo $this->Html->link('Exporter vers excel', array('controller' => 'tiers', 'action' => 'global_bill',$id,$date1,$date2,1)); ?> </li>
 		<li class="link" onclick = "jQuery('#pyts').slideToggle()" >Afficher Paiements</li>
 		<li><?php echo $this->Html->link('Gestion des Tiers', array('controller' => 'tiers', 'action' => 'index')); ?> </li>

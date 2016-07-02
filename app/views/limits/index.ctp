@@ -64,7 +64,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "year_limits()" >Changer l'année</li>
 		<li><?php echo $this->Html->link(sprintf(__('Liste des Opérations', true), __('Type', true)), array('action' => 'index')); ?></li>
 	</ul>
@@ -75,7 +75,7 @@
 <div class="dialog" id="goto">
 	<span class='left'>
 		<?php
-			echo $this->Form->input('annee',array('id'=>'umwaka','label'=>'Année','type'=>'date','dateFormat'=>'Y'));
+			echo $this->Form->input('annee',array('id'=>'umwaka','label'=>'Year','type'=>'date','dateFormat'=>'Y'));
 		?>
 	</span>
 	<span class="right">

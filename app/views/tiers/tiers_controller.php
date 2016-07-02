@@ -127,7 +127,7 @@ class TiersController extends AppController {
 	function global_bill($id,$date1,$date2,$xls=0){
 		$tier=$this->Tier->find('first',array('conditions'=>array('Tier.id'=>$id)));
 		$ventes=$this->Tier->Facture->Vente->find('all',array('fields'=>array('Vente.*',
-																		'Produit.name',
+																		'Product.name',
 																		'Facture.date',
 																		'Facture.beneficiaire',
 																		'Facture.matricule',
@@ -221,7 +221,7 @@ class TiersController extends AppController {
 				$data[$key]['Matricule']=$vente['Facture']['matricule'];
 				$data[$key]['Liasse']=$vente['Facture']['liasse'];
 				$data[$key]['Employeur']=$vente['Facture']['employeur'];
-				$data[$key]['Produit']=$vente['Produit']['name'];
+				$data[$key]['Product']=$vente['Product']['name'];
 				$data[$key]['Quantité']=$vente['Vente']['quantite'];
 				$data[$key]['PU']=$vente['Vente']['PU'];
 				$data[$key]['Sous Total']=$vente['Vente']['montant'];
@@ -293,7 +293,7 @@ class TiersController extends AppController {
 		$this->Tier->save($data);
 		
 		if(isset($data['Tier']['booking'])){
-			exit(json_encode(array('success'=>true,'msg'=>'Client enregistré!','id'=>$this->Tier->id)));
+			exit(json_encode(array('success'=>true,'msg'=>'Customer enregistré!','id'=>$this->Tier->id)));
 		}
 	}
 	

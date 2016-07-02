@@ -1,8 +1,8 @@
 <div id='view'>
 <div class="document">
-<h3><?php echo 'ETAT D\'OCCUPATION ';
+<h3><?php echo 'OCCUPANCY REPORT ';
 		
-			echo '<h4>( Pour la journée du '.$this->MugTime->toFrench($date).' à '.date('H:i:s').' )</h4>';
+			echo '<h4>( of '.$this->MugTime->toFrench($date).' at '.date('H:i:s').' )</h4>';
 	?>
 </h3>
 <br />
@@ -14,19 +14,19 @@
 	</tr>
 	
 	<tr>
-		<td>CHAMBRES VACANTES</td>
+		<td>AVAILABLE ROOMS</td>
 		<td><?php echo  $vacante+0; ?></td>
 	</tr>
 	<tr>
-		<td>CHAMBRES OCCUPEES</td>
+		<td>OCCUPIED ROOMS</td>
 		<td><?php echo  $occupee+0; ?></td>
 	</tr>
 	<tr>
-		<td>CHAMBRES RESERVEES</td>
+		<td>BOOKED ROOMS</td>
 		<td><?php echo  $reservee+0; ?></td>
 	</tr>
 	<tr>
-		<td>ARRIVEES DES CLIENTS</td>
+		<td>CUSTOMER ARRIVALS</td>
 		<td><?php echo  $arrivals+0; 
 				if($arrivals>0)
 					echo ' : ('.$arrivalsList.')';
@@ -34,7 +34,7 @@
 		?></td>
 	</tr>
 	<tr>
-		<td>DEPARTS DES CLIENTS</td>
+		<td>CUSTOMER DEPARTURES</td>
 		<td><?php echo  $departures+0;
 			if($departures>0)
 					echo ' : ('.$departuresList.')';
@@ -42,11 +42,11 @@
 	</tr>
 	<?php if($mode=='full'):?>
 	<tr>
-		<td>CHIFFRE D'AFFAIRE DE CE JOUR</td>
+		<td>TODAY SALES</td>
 		<td><?php echo  $number->format($usd+0,$formatting).' USD, '.$number->format($bif+0,$formatting).' BIF'; ?></td>
 	</tr>
 	<tr>
-		<td>PAIEMENTS DE CE JOUR</td>
+		<td>TODAY PAYMENTS</td>
 		<td><?php echo  $number->format($total['USD']+0,$formatting).' USD, '.$number->format($total['BIF']+0,$formatting).' BIF'.', '.$number->format($total['EUR']+0,$formatting).' EUR'; ?></td>
 	</tr>
 	<? endif;?>
@@ -56,12 +56,12 @@
 <br />
 <?php if($mode=='full'):?>
 <?php if(($total['USD']+$total['BIF']+$total['EUR'])>0):?>
-	<h3>DETAIL DES PAIEMENTS DE CE JOUR</h3>
+	<h3>TODAY PAYMENTS DETAILS</h3>
 <table cellpadding="0" cellspacing="0" id="journal_resume">
 	<tr>
-			<th align="center">Monnaie</th>
+			<th align="center">Currency</th>
 			<th align="center">Cash</th>
-			<th align="center">Chéque</th>
+			<th align="center">Cheque</th>
 			<th align="center">Visa</th>
 	</tr>
 	<?php foreach($monnaies as $monnaie):?>
@@ -79,17 +79,17 @@
 <?php endif;?>
 <?php if(!empty($departuresDetails)):?>
 	
-	<h3>LISTE DES DEPARTS</h3>
+	<h3>DEPARTURES LIST</h3>
 <table cellpadding="0" cellspacing="0" id="journal_resume" style="width:900px">
 	<tr>
-			<th align="center">Chambre</th>
-			<th align="center">Client</th>
-			<th align="center">Compagnie</th>
+			<th align="center">Room N°</th>
+			<th align="center">Customer</th>
+			<th align="center">Company</th>
 			<?php if($mode=='full'):?>
-				<th align="center">Facture</th>
-				<th align="center">Etat de la facture</th>
+				<th align="center">Invoice  N°</th>
+				<th align="center">Invoice State</th>
 			<?php endif;?>
-			<th align="center">Heure de départ</th>
+			<th align="center">Departureure Time</th>
 	</tr>
 	<?php 
 	foreach($departuresDetails as $detail):?>
@@ -136,22 +136,22 @@
 
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Chambre</th>
-			<th>Client</th>
-			<th>Nationalité</th>
+			<th>Room  N°</th>
+			<th>Customer</th>
+			<th>Nationality/th>
 			<th>Pax</th>
-			<th>Compagnie</th>
-			<th>Arrivee</th>
-			<th>Depart</th>
+			<th>Company</th>
+			<th>Arrival</th>
+			<th>Departureure</th>
 			<?php if($mode!='tiny'):?>
-				<th>Nuitée</th>
+				<th>Rate</th>
 				<? if($mode=='full'):?>
-					<th>Prix/Nuitée</th>
-					<th>Réduction</th>
+					<th>Rate</th>
+					<th>Discount</th>
 				<?php endif;?>
-				<th>Etat</th>
-				<th>N° Facture</th>
-				<th>Mode de Paiement</th>
+				<th>State</th>
+				<th>Invoice N°</th>
+				<th>Payment Mode</th>
 			<?php endif;?>
 	</tr>
 		<?php
@@ -212,7 +212,7 @@
 	</tr>
 <?php elseif($mode=='tiny'):?>
 	<tr class="strong">
-		<td colspan="3">TOTAL des personnes</td>
+		<td colspan="3">TOTAL of customers</td>
 		<td><?php echo $persTotal; ?></td>
 		<td colspan="3"></td>
 	</tr>
@@ -230,32 +230,32 @@
 	<h3><?php __('Actions'); ?></h3>
 	<div id="legend" style="display:none;">
 	<table cellpadding="0" cellspacing="0" id="legend">
-		<tr class="active"><td>ARRIVEE DE CLIENT</td></tr>
+		<tr class="active"><td>ARRIVAL OF CUSTOMERS</td></tr>
 	</table>
 	</div>
 	<ul>
-		<li class="link"  onclick = "jQuery('#legend').slideToggle();" >Afficher/Masquer la Légende</li>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Gestion des Réservations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
+		<li class="link"  onclick = "jQuery('#legend').slideToggle();" >Show/Hide la Légende</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 		<? if($mode=='full'):?>
-			<li><?php echo $this->Html->link(__('Version Simplifiée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/simple/'.$date)); ?> </li>
+			<li><?php echo $this->Html->link(__('Simplified Version',true), array('controller' => 'reservations', 'action' => 'etat_occupation/simple/'.$date)); ?> </li>
 			<?php if(Configure::read('aser.kcc')):?>
-				<li><?php echo $this->Html->link(__('Version Très Simplifiée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/tiny/'.$date)); ?> </li>
+				<li><?php echo $this->Html->link(__('Very Simplified Version',true), array('controller' => 'reservations', 'action' => 'etat_occupation/tiny/'.$date)); ?> </li>
 			<? endif;?>
 		<? else :?>
-			<li><?php echo $this->Html->link(__('Version Détaillée',true), array('controller' => 'reservations', 'action' => 'etat_occupation/full/'.$date)); ?> </li>
+			<li><?php echo $this->Html->link(__('Full Version',true), array('controller' => 'reservations', 'action' => 'etat_occupation/full/'.$date)); ?> </li>
 		<? endif;?>
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Reservation',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('date',array('label'=>'Choisissez une date','type'=>'text'));
+			echo $this->Form->input('date',array('label'=>'Choose a date','type'=>'text'));
 			echo $this->Form->input('mode',array('type'=>'hidden','value'=>$mode));
 		?>
 	</span>

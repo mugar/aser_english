@@ -103,8 +103,8 @@
 		<th><?php __('Montant'); ?></th>
 		<th><?php __('Reste'); ?></th>
 		<th><?php __('Tva'); ?></th>
-		<th><?php __('Monnaie'); ?></th>
-		<th><?php __('Etat'); ?></th>
+		<th><?php __('Currency'); ?></th>
+		<th><?php __('State'); ?></th>
 		<th><?php __('Date'); ?></th>
 		<th><?php __('Classee'); ?></th>
 		<th><?php __('Printed'); ?></th>
@@ -193,7 +193,7 @@
 		<th><?php __('Piece'); ?></th>
 		<th><?php __('Debit'); ?></th>
 		<th><?php __('Credit'); ?></th>
-		<th><?php __('Monnaie'); ?></th>
+		<th><?php __('Currency'); ?></th>
 		<th><?php __('Ordre'); ?></th>
 		<th><?php __('Libelle'); ?></th>
 		<th><?php __('Mode Paiement'); ?></th>
@@ -260,7 +260,7 @@
 		<th><?php __('Facture Id'); ?></th>
 		<th><?php __('Montant'); ?></th>
 		<th><?php __('Montant Equivalent'); ?></th>
-		<th><?php __('Monnaie'); ?></th>
+		<th><?php __('Currency'); ?></th>
 		<th><?php __('Mode Paiement'); ?></th>
 		<th><?php __('Reference'); ?></th>
 		<th><?php __('Pyt Id'); ?></th>

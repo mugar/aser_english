@@ -237,7 +237,7 @@
 					<th>Total</th>
 					<th>Reste</th>
 					<?php endif; ?>
-					<th>Etat</th>
+					<th>State</th>
 				<?php if(!(($config['sama']&&($mode=='serveur'))||$config['magasin'])): ?>
 					<th>Serveur</th>
 				<?php endif; ?>
@@ -246,7 +246,7 @@
 				<?php echo $this->element('../ventes/list_factures',array('factures'=>$factures));?>
 			</table>
 		</fieldset>
-		<fieldset id="list_produits"><legend>Liste des Produits</legend>
+		<fieldset id="list_produits"><legend>Liste des Products</legend>
 			<table cellpadding="0" cellspacing="0" id="list_produits">
 				<tr>
 				
@@ -258,9 +258,9 @@
 					<th>Date</th>
 					<th>Béneficiaire</th>
 				<?php endif; ?>
-					<th>Produit</th>
+					<th>Product</th>
 					<th>Quantité</th>
-					<th>PU</th>
+					<th>Unit Price</th>
 					<th>PT</th>
 					<th>Tps</th>
 				</tr>
@@ -274,7 +274,7 @@
 			?>
 				<span id="remove_facture" name="annuler" class="boutton"  title="Annuler la facture">Annuler</span>
 			<?php endif;?> 	
-				<span id="remove_conso" name="disable" class="boutton"  title="Supprimer la consommation de la facture sélectionnée ">Effacer</span>
+				<span id="remove_conso" name="disable" class="boutton"  title="Supprimer la consommation de la facture sélectionnée ">Delete</span>
 			<?php if(!$config['magasin']): ?>
 			<span class="boutton" onclick="show_tables()" title="Configuration des tables">Tables</span>
 			<?php endif;?> 	
@@ -285,13 +285,13 @@
 				<?php endif;?> 
 			<?php endif;?>
 			<?php if(($session->read('Auth.Personnel.fonction_id')!=1)||(isset($config['impression_par_serveur'])&&$config['impression_par_serveur'])): ?> 
-				<span class="boutton" onclick="print_facture(factureId)" title="Imprimer la facture">Imprimer</span>
+				<span class="boutton" onclick="print_facture(factureId)" title="Print la facture">Print</span>
 			<?php endif;?>
 			<?php if($config['multi_resto']): ?>
 					<span class="boutton" onclick="parameters()" title="Configurer les paramètres">Paramètres</span>
 				<?php endif;?> 
 			<?php if($config['sama']&&($mode!='serveur')||$config['bon']): ?>
-				<span class="boutton" onclick="ask(factureId)" title="Imprimer les bons pour les boissons et la cuisine pour la facture sélectionnée">Bon</span>
+				<span class="boutton" onclick="ask(factureId)" title="Print les bons pour les boissons et la cuisine pour la facture sélectionnée">Bon</span>
 			<?php endif;?> 
 			<?php if(false&&($config['sama']&&($mode=='serveur'))): ?>
 				<span class="boutton" onclick="confirm_order(factureId)" title="Confirmer la commande">OK</span>
@@ -318,10 +318,10 @@
 				<?php
 					if(Configure::read('aser.hotel'))
 						echo $this->Form->input('chambre',array('id'=>'chambre','label'=>'Chambre / Conférence','title'=>'Taper le numero de la chambre pour afficher son client,  ou la lettre C afficher les clients en conférences'));
-					echo $this->Form->input('client',array('options'=>$tiers,'label'=>'Client','id'=>'tierId','selected'=>0));
+					echo $this->Form->input('client',array('options'=>$tiers,'label'=>'Customer','id'=>'tierId','selected'=>0));
 					echo $this->Form->input('avance',array('id'=>'avance','label'=>'Cash'));
 					echo $this->Form->input('change',array('id'=>'change','disabled'=>'disabled','value'=>0));
-					echo '<span name="payment" value="1" class="boutton_selected" onclick="switcher(this)" id="payee">PAYEE</span>';	
+					echo '<span name="payment" value="1" class="boutton_selected" onclick="switcher(this)" id="payee">PAID AMOUNT</span>';	
 					echo '<span name="payment" value="2" class="boutton" onclick="switcher(this)">CREDIT</span>';	
 					echo '<span name="payment" value="3" class="boutton" onclick="switcher(this)">BONUS</span>';	
 					echo '<span name="payment" value="4" class="boutton" onclick="switcher(this)">AVANCE</span>';	
@@ -382,14 +382,14 @@
 			?>
 			</fieldset>
 		</span>
-		<fieldset id="produit_select"><legend>Produits</legend>
+		<fieldset id="produit_select"><legend>Products</legend>
 			<?php 
 				foreach($produits as $produit){
-					echo '<div name="'.strtolower($produit['Produit']['name']).'" id="'.$produit['Produit']['id'].'" type="'.$produit['Produit']['acc'].'" section="'.$produit['Groupe']['section_id'].'" groupe="'.$produit['Groupe']['id'].'"  class="produit" onclick="resto_touch_create(this)" >';
-				//	echo 'style="background:url(../img/produits/'.$produit['Produit']['id'].') 0 0  no-repeat; background-position:center;">';	
+					echo '<div name="'.strtolower($produit['Product']['name']).'" id="'.$produit['Product']['id'].'" type="'.$produit['Product']['acc'].'" section="'.$produit['Groupe']['section_id'].'" groupe="'.$produit['Groupe']['id'].'"  class="produit" onclick="resto_touch_create(this)" >';
+				//	echo 'style="background:url(../img/produits/'.$produit['Product']['id'].') 0 0  no-repeat; background-position:center;">';	
 				//	echo $this->Html->image('logo.jpg', array('border' => '0','width'=>108,'height'=>50));
-					echo ucwords($produit['Produit']['name']);
-						echo '<span class="prix">'.$number->format($produit['Produit']['PV'],$formatting).'</span>';
+					echo ucwords($produit['Product']['name']);
+						echo '<span class="prix">'.$number->format($produit['Product']['PV'],$formatting).'</span>';
 					echo '</div>';
 				}
 			?>

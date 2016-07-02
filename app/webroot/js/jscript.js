@@ -10,7 +10,7 @@ jQuery('<div id="loca_edit" title="Modification de la location"></div>').insertA
     		               hide:'clip',
     		               width:1000,
     		               position:'top',
-    		               buttons: { "Modifier": function() {
+    		               buttons: { "Edit": function() {
     		               	var clientName=jQuery('#tierId option:selected').html();
     		               	jQuery('form#location-extras input').each(function(){
     								jQuery(this).appendTo('form#loca_form').css('display','none').attr('class','extra');
@@ -30,7 +30,7 @@ jQuery('<div id="loca_edit" title="Modification de la location"></div>').insertA
     							         },
     							    });
     							    },
-    					            "Fermer": function() { jQuery(this).dialog("close"); }
+    					            "Close": function() { jQuery(this).dialog("close"); }
     					           }
                        });
                        jQuery("#loca_edit").html('<span id="loading">Chargement...</span>');
@@ -76,7 +76,7 @@ function transfer(){
     			}
     		});
     		},
-    		"Annuler": function() { jQuery(this).dialog("close"); 
+    		"Cancel": function() { jQuery(this).dialog("close"); 
     		}
     	}
    } );
@@ -302,7 +302,7 @@ function getBase(){
    		jQuery(this).hide();
  	});
  	jQuery('body').bind("ajaxError",function(e, jqxhr, settings, exception) {
-  				alert('Accès Interdit!');
+  				alert('Access Denied!');
 	 });
  }
  
@@ -322,7 +322,7 @@ function getBase(){
  								}
  						});
     				},
-    			"Annuler": function() { jQuery(this).dialog("close"); }
+    			"Cancel": function() { jQuery(this).dialog("close"); }
     	 		}
     	});
  }
@@ -418,7 +418,7 @@ function getBase(){
     				width:300,
     				position:'top',
 	    			buttons: { 
-	    				"Annuler": function() { jQuery(this).dialog("close"); 
+	    				"Cancel": function() { jQuery(this).dialog("close"); 
 	    										goOn=false;
 	    						}
 	    			}
@@ -500,7 +500,7 @@ function getBase(){
     			width:400,
     			position:'top',
     			buttons: { 
-    				"Enregistrer": function() {
+    				"Save": function() {
     					goOn=true;
     					 mode=jQuery('#mode').val();
     					 ref=jQuery('#ref').val();
@@ -655,7 +655,7 @@ function getBase(){
     			width:300,
     			position:'top',
     			buttons: { 
-    				"Annuler": function() { jQuery(this).dialog("close"); 
+    				"Cancel": function() { jQuery(this).dialog("close"); 
     										goOn=false;
     									}
     					}
@@ -1421,7 +1421,7 @@ function rightClick(){
     							jQuery('#demi_boxe').dialog({ modal:true, 	
     		             		  width:390,
     		             		  position:'top',
-    		             		  buttons: { "Valider": function() {
+    		             		  buttons: { "Save": function() {
     		             		  	 jQuery(this).dialog("close");
     		               				var tauxDemi=jQuery('#tauxDemi').val();
     		               				jQuery.ajax({
@@ -1433,7 +1433,7 @@ function rightClick(){
 									 		}
 									 	});
     							    },
-    					            "Annuler": function() { jQuery(this).dialog("close");
+    					            "Cancel": function() { jQuery(this).dialog("close");
     					            					 }
     					           }
                        			});
@@ -1479,7 +1479,7 @@ function rightClick(){
     		               hide:'clip',
     		               width:390,
     		               position:'top',
-    		               buttons: { "Changer": function() {
+    		               buttons: { "Change": function() {
     		               			//validation stuff
     								var test=jQuery("#PU_form").validate({
  												rules:{
@@ -1505,7 +1505,7 @@ function rightClick(){
 									 	});
 									 }
     							    },
-    					            "Annuler": function() { jQuery(this).dialog("close");
+    					            "Cancel": function() { jQuery(this).dialog("close");
     					            						jQuery('#message_PU').html('');
     					            					 }
     					           }
@@ -1528,7 +1528,7 @@ function rightClick(){
     		              		 hide:'clip',
     		              		 width:230,
     		              		 position:'top',
-    		              		 buttons: { "Changer": function() {
+    		              		 buttons: { "Change": function() {
     		               				var new_room=jQuery('#rooms').val();
     		               				var date=jQuery('#DateCheckIn').val();
     		               				var pu=(jQuery('#autre_prix').length>0)?jQuery('#autre_prix').val():'';
@@ -1551,7 +1551,7 @@ function rightClick(){
    											},
 									 	});
 									 },
-									  "Annuler": function() { jQuery(this).dialog("close");
+									  "Cancel": function() { jQuery(this).dialog("close");
     					            						jQuery('#message_PU').html('');
     					            					 }
     							    },
@@ -1567,7 +1567,7 @@ function rightClick(){
     		               hide:'clip',
     		               width:390,
     		               position:'top',
-    		               buttons: { "Changer": function() {
+    		               buttons: { "Change": function() {
     		               				var depart=jQuery('#DateOfDeparture').val();
     		               				var arrival=jQuery('#DateOfArrival').val();
     		               				var test=jQuery("#departure_form").validate({
@@ -1595,7 +1595,7 @@ function rightClick(){
 									 		});
 									 	}
     							    },
-    					            "Annuler": function() { jQuery(this).dialog("close");
+    					            "Cancel": function() { jQuery(this).dialog("close");
     					            						jQuery('#message_depart').html('');
     					            					 }
     					           }
@@ -1616,7 +1616,7 @@ function rightClick(){
     		               hide:'clip',
     		               width:400,
     		               position:'top',
-    		               buttons: { "Modifier": function() {
+    		               buttons: { "Edit": function() {
     		             		  			if((jQuery('#clientList').val()!=0)
     		             		  			&&(jQuery('#clientList').val()!=undefined)){
     		             		  				var nom=jQuery('#clientList option:selected').text();
@@ -1649,7 +1649,7 @@ function rightClick(){
     							         }
     							    });
     							    },
-    					            "Fermer": function() { jQuery(this).dialog("close"); }
+    					            "Close": function() { jQuery(this).dialog("close"); }
     					           }
                        });
                        jQuery("#client_edit").html('<span id="loading">Chargement...</span>');
@@ -1659,7 +1659,7 @@ function rightClick(){
 				 	jQuery('#state_boxe').dialog({ modal:true, 
     		               width:230,
     		               position:'top',
-    		               buttons: { "Changer": function() {
+    		               buttons: { "Change": function() {
     		               				var state=jQuery('#stateSelect').val();
     		               				if(state=='partie'){
     		               					var heure=jQuery('#departureTimeHour').val()+'.'+
@@ -1669,7 +1669,7 @@ function rightClick(){
     		               				jQuery(this).dialog('close');
 										state_updater(reservation_id,el,state,'',0,heure);
 										},
-									"Annuler":function(){ jQuery(this).dialog('close');}
+									"Cancel":function(){ jQuery(this).dialog('close');}
 									}
 							});
 					break;
@@ -1680,7 +1680,7 @@ function rightClick(){
 				 	jQuery('#services_boxe').dialog({ modal:true, 
     					width:420,
     					buttons: { 
-    						"Enregistrer": function() { 
+    						"Save": function() { 
     							jQuery('#services_form').ajaxSubmit({
     								data:{ 'data[Service][tier_id]':tier_id,
     									'data[Service][description]':jQuery('#descService').val(),
@@ -1697,18 +1697,18 @@ function rightClick(){
     								}
     							});
     						},
-    						"Annuler": function() { jQuery(this).dialog("close"); }
+    						"Cancel": function() { jQuery(this).dialog("close"); }
     						 }
     				});
     				break;
 				 case 'annulee':
-				 var type=(jQuery('div#tabella').attr('type')=='reservations')?('réservation'):('location');
+				 var type=(jQuery('div#tabella').attr('type')=='reservations')?('booking'):('rental');
 				 var controller=(jQuery('div#tabella').attr('type')=='reservations')?('reservations'):('locations');
-				 if(confirm('Voulez vous vraiement annuler cette '+type+' ?')){
+				 if(confirm('Do you really want to cancel this '+type+' ?')){
 				 	var goOn=true;
 				 	var motif='';
 				 	if(facture_id!=0){
-				 		motif=prompt('Motif de l\'annulation : ');
+				 		motif=prompt('Reason for the cancellation: ');
 				 		goOn=((motif!=null)&&(motif!=''))?true:false;
 				 	}
 				 	if(goOn){
@@ -1794,7 +1794,7 @@ jQuery('*').mouseup(function() {
     			position:'top',
     			//	show:'bounce',
     			buttons: { 
-    					"Fermer": function() { jQuery(this).dialog("close");
+    					"Close": function() { jQuery(this).dialog("close");
     											jQuery('td.selection').attr('class','');
     											jQuery('#message_res').html('');
     											jQuery('#id').val('') ;
@@ -2016,7 +2016,7 @@ function goTo(){
     		               				var controller=jQuery('div#tabella').attr('type');
     		               				document.location.href=getBase()+controller+'/tabella/'+mois+'/'+annee;
     							    },
-    					            "Annuler": function() { jQuery(this).dialog("close");
+    					            "Cancel": function() { jQuery(this).dialog("close");
     					            					 }
     					           }
                        });
@@ -2108,7 +2108,7 @@ function mass_pyt(reservation){
   	 		 modal:true, 
     		width:390,
     		position:'top',
-    		buttons: { "Créer": function() {
+    		buttons: { "Create": function() {
 					//validation stuff
     			var test=jQuery("#pytAdd").validate({
  					rules:{
@@ -2146,7 +2146,7 @@ function mass_pyt(reservation){
     				});
     			}
     		},
-    		"Annuler": function() { jQuery(this).dialog("close"); 
+    		"Cancel": function() { jQuery(this).dialog("close"); 
     		}
     	}
    } );
@@ -2190,7 +2190,7 @@ function pyt(factureId,type){
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Créer": function() {
+    		buttons: { "Create": function() {
     			
     			//validation stuff
     			var test=jQuery(form).validate({
@@ -2223,7 +2223,7 @@ function pyt(factureId,type){
     				});
     			}
     		},
-    		"Annuler": function() { jQuery(this).dialog("close"); 
+    		"Cancel": function() { jQuery(this).dialog("close"); 
     		}
     				  				
     	}
@@ -2236,11 +2236,11 @@ function recherche(){
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Lancer !": function() {
+    		buttons: { "Go": function() {
     			jQuery('form#recherche').submit();
     			jQuery(this).dialog("close");
     		},
-    		"Annuler": function() { jQuery(this).dialog("close"); 
+    		"Cancel": function() { jQuery(this).dialog("close"); 
     		}
     				  				
     	}
@@ -2308,7 +2308,7 @@ jQuery('#availability_boxe').dialog({
     				});
     			}
     		},
-    		"Annuler": function() { jQuery(this).dialog("close"); 
+    		"Cancel": function() { jQuery(this).dialog("close"); 
     						}
     				  				
     		}
@@ -2348,7 +2348,7 @@ function edit_facture(factureId){
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Modifier": function() {
+    		buttons: { "Edit": function() {
     								
     								
     			jQuery('#edit_facture_form').ajaxSubmit({
@@ -2365,7 +2365,7 @@ function edit_facture(factureId){
     				}		          
     			});
     		},
-    		"Annuler": function() { jQuery(this).dialog("close");}
+    		"Cancel": function() { jQuery(this).dialog("close");}
     				  				
     		}
     	});
@@ -2411,7 +2411,7 @@ function createFactureByRightClick(facture_id,reservation_id,el,action,state){
     			});
     		}
     		},
-    		"Annuler": function() { jQuery(this).dialog("close"); }
+    		"Cancel": function() { jQuery(this).dialog("close"); }
     	}
     	});
 	}
@@ -2452,11 +2452,11 @@ function resto_tier(){
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Créer": function() {
+    		buttons: { "Create": function() {
     			if(tier())
     				jQuery('#add_client').dialog("close"); 
     		},
-    		"Annuler": function() { jQuery(this).dialog("close"); 
+    		"Cancel": function() { jQuery(this).dialog("close"); 
     		}
     	}
    	});
@@ -2527,7 +2527,7 @@ function edit_produit(){
 	  			modal:true, 
 	    		width:390,
 	    		position:'top',
-	    		buttons: { "Enregistrer": function() {
+	    		buttons: { "Save": function() {
 	    			var actif=jQuery('select#actif').val();	
 	    			var groupe1=jQuery('#GroupeId').val();
 	    			var groupe2=jQuery('#groupe').val();
@@ -2549,7 +2549,7 @@ function edit_produit(){
     				},
 	    		});
 	    	},
-	    	"Annuler": function() { jQuery(this).dialog("close"); 
+	    	"Cancel": function() { jQuery(this).dialog("close"); 
 	    							}
 	    	}
 	    });
@@ -2566,7 +2566,7 @@ function add_produit(){
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Créer ": function() {
+    		buttons: { "Create ": function() {
     							
     			jQuery('form#add_produit').ajaxSubmit({
     					 beforeSend:function(){ jQuery('#message_produit').html('<span id="loading">Enregistrement...</span>')},
@@ -2588,7 +2588,7 @@ function add_produit(){
     							        },
     							        });
     							     },
-    					"Annuler": function() { jQuery(this).dialog("close"); 
+    					"Cancel": function() { jQuery(this).dialog("close"); 
     							}
     				  				
     				  	}
@@ -2675,7 +2675,7 @@ function affectation(params){
     		width:300,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Créer": function() {
+    		buttons: { "Create": function() {
     			var row=jQuery('select[id="chambre"] option:selected').html();
     			
     			jQuery('form#aff').ajaxSubmit({
@@ -2707,7 +2707,7 @@ function affectation(params){
     							          
     			});
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     					}
     				  				
     		}
@@ -2722,7 +2722,7 @@ function single_add(){
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Créer": function() {
+    		buttons: { "Create": function() {
     			//validation stuff
 				jQuery.validator.addMethod(
 					"depart",
@@ -2804,7 +2804,7 @@ function single_add(){
     			});
     	}
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     					}
     				  				
     		}
@@ -2821,7 +2821,7 @@ function multi_add(){
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Créer": function() {
+    		buttons: { "Create": function() {
     			var tier=jQuery('select[id="principal"] option:selected').html();
     			var tier_id=jQuery('select[id="principal"] option:selected').val();
     			var nombre=parseInt(jQuery('#nombre').val());
@@ -2874,7 +2874,7 @@ function multi_add(){
     							          
     			});
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     					}
     				  				
     		}
@@ -2926,7 +2926,7 @@ function actions(nom,action,affectationForm) {
     							show:'slide',
     							hide:'clip',
     							buttons: { "Effacer": function() { document.location.href=getBase()+info[1]+"/"+action+"/"+id; },
-    										"Annuler": function() { jQuery(this).dialog("close"); }
+    										"Cancel": function() { jQuery(this).dialog("close"); }
     									  }
     							} );
 		break;
@@ -2945,7 +2945,7 @@ function actions(nom,action,affectationForm) {
     		               buttons: { "Go": function() {
     		               				jQuery('#historique_form').attr('action',getBase()+'produits/view/'+id).submit();
     							      },
-    					             "Annuler": function() { jQuery(this).dialog("close"); }
+    					             "Cancel": function() { jQuery(this).dialog("close"); }
     				                }
                        });
     		break;
@@ -2992,7 +2992,7 @@ function produit_tarifs(nom,action,tarifs_form) {
     			width:390,
     			position:'top',
     		//	show:'bounce',
-    			buttons: { "Créer": function() {
+    			buttons: { "Create": function() {
     				//validation stuff
     			var test=jQuery("#tarifAdd").validate({
  					rules:{
@@ -3023,7 +3023,7 @@ function produit_tarifs(nom,action,tarifs_form) {
     				});
     			}
     					},
-    					"Annuler": function() { jQuery(this).dialog("close"); }
+    					"Cancel": function() { jQuery(this).dialog("close"); }
     			}
 		   });
 	   		break;
@@ -3052,7 +3052,7 @@ function produit_tarifs(nom,action,tarifs_form) {
 	    							}
     							})
     							},
-    							"Annuler": function() { jQuery(this).dialog("close"); }
+    							"Cancel": function() { jQuery(this).dialog("close"); }
     							  }
     				} );
 			}
@@ -3132,7 +3132,7 @@ function location_extras(nom,action,extras_form) {
     			width:390,
     			position:'top',
     		//	show:'bounce',
-    			buttons: { "Créer": function() {
+    			buttons: { "Create": function() {
     				var extras=parseInt(jQuery(tr).children('td[name="extras"]').text());
     				var total=parseInt(jQuery(tr).children('td[name="total"]').text());
     				var libel=jQuery('#libelle').val();
@@ -3159,7 +3159,7 @@ function location_extras(nom,action,extras_form) {
     					}
     				});
     					},
-    					"Annuler": function() { jQuery(this).dialog("close"); }
+    					"Cancel": function() { jQuery(this).dialog("close"); }
     			}
 		   });
 	   		break;
@@ -3197,7 +3197,7 @@ function location_extras(nom,action,extras_form) {
     							}
     							})
     							},
-    							"Annuler": function() { jQuery(this).dialog("close"); }
+    							"Cancel": function() { jQuery(this).dialog("close"); }
     							  }
     				} );
 			}
@@ -3460,12 +3460,12 @@ function effacer(nom) {
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
-    	jQuery('<div id="effacer" title="Message">Voulez vous vraiment effacer les enregistrements ?</div>')
+    	jQuery('<div id="effacer" title="Message">Do you really want to delete this record?</div>')
     	.dialog({ modal:true, 
     							show:'slide',
     							hide:'clip',
-    							buttons: { "Effacer": function() { jQuery('form[name="'+nom+'"]').submit(); },
-    										"Annuler": function() { jQuery(this).dialog("close"); }
+    							buttons: { "Delete": function() { jQuery('form[name="'+nom+'"]').submit(); },
+    										"Cancel": function() { jQuery(this).dialog("close"); }
     									  }
     							} );
    }
@@ -3486,7 +3486,7 @@ function print_documents(action,redirect_url){
 		 		
 		 			options=options+'<option value="'+val+'">'+val+'</option>';
 		 	});
-			jQuery('<div id="effacer" title="Choix de l\'imprimante"><br/><select id="printing">'+options+'</select></div>')
+			jQuery('<div id="effacer" title="Choose the printer"><br/><select id="printing">'+options+'</select></div>')
 			.dialog({
 			 	modal:true, 
     		 	hide:'clip',
@@ -3704,7 +3704,7 @@ function msg_gouvernante(){
     		width:300,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Enregistrer": function() {
+    		buttons: { "Save": function() {
     			var message=jQuery('#ChambreMessage').val();
     			jQuery('form[name="'+nom+'"]').attr('action',getBase()+'chambres/message')
     			jQuery('form[name="'+nom+'"]').ajaxSubmit({
@@ -3726,7 +3726,7 @@ function msg_gouvernante(){
     							          
     			});
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     					}
     				  				
     		}
@@ -3807,7 +3807,7 @@ function documents(nom,action){
     							    	  }
     											//jQuery(this).dialog("close");
     										},
-    										"Annuler": function() { jQuery(this).dialog("close"); }
+    										"Cancel": function() { jQuery(this).dialog("close"); }
     									}
     								});
     	}
@@ -3832,7 +3832,7 @@ function mass_modification(controller) {
     											        jQuery('form[name="'+nom+'"]').submit();
     											        jQuery(this).dialog("close");
     											      	},
-    										"Annuler": function() { jQuery(this).dialog("close"); }
+    										"Cancel": function() { jQuery(this).dialog("close"); }
     							}
     							} );
 	}

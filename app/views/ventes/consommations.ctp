@@ -34,7 +34,7 @@
 <table cellpadding="0" cellspacing="0" class="aser_sort">
 <thead>
 	<tr>
-			<th width="300" data-sort="string" >Produit</th>
+			<th width="300" data-sort="string" >Product</th>
 			<th data-sort="int">Qté</th>
 			<th width="200" data-sort="int">PV</th>
 			<th width="200" data-sort="int">PT</th>
@@ -56,7 +56,7 @@
 	<tr<?php echo $class;?>>
 			
 			<td>
-				<?php echo $this->Html->link($vente['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Produit']['id'])); ?>
+				<?php echo $this->Html->link($vente['Product']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Product']['id'])); ?>
 			</td>
 			<td data-sort-value="<?php echo $vente['Vente']['quantite']; ?>"><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 			<td data-sort-value="<?php echo $vente['Vente']['PU']; ?>"><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
@@ -107,17 +107,17 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents(0)" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents(0)" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php
 			$action=(Configure::read('aser.touchscreen'))?'touchscreen':'index';
 			 echo $this->Html->link('Interface de Vente', array('controller' => 'ventes', 'action' => $action)); 
 		?> </li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Liste des Products', array('controller' => 'produits', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
@@ -127,7 +127,7 @@
 			echo $this->Form->input('produit_id',array('selected'=>0,'id'=>'produits','options'=>$produits1));
 			echo $this->Form->input('stock_id',array('selected'=>0,'id'=>'stockId','options'=>$stocks1));
 			if(Configure::read('aser.comptabilite'))
-				echo $this->Form->input('Produit.groupe_comptable_id',array('selected'=>0,'multiple'=>true,'options'=>$groupeComptables1));
+				echo $this->Form->input('Product.groupe_comptable_id',array('selected'=>0,'multiple'=>true,'options'=>$groupeComptables1));
 		?>
 	</span>
 	<span class="right">
@@ -135,7 +135,7 @@
 			echo $this->Form->input('personnel_id',array('selected'=>0,'label'=>'Caissier'));
 			echo $this->Form->input('Facture.date1',array('label'=>'Date Début','type'=>'text'));									
 			echo $this->Form->input('Facture.date2',array('label'=>'Date Fin','type'=>'text'));
-			echo $this->Form->input('Facture.etat',array('label'=>'Etat de la facture','multiple'=>true,'options'=>$etats));
+			echo $this->Form->input('Facture.etat',array('label'=>'State de la facture','multiple'=>true,'options'=>$etats));
 			echo $this->Form->input('xls',array('label'=>'Exporter vers xls','type'=>'checkbox'));
 			?>
 	</span>

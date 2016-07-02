@@ -7,7 +7,7 @@
 	
 	<tr>
 		<th>Nom de la Caisse</th>
-		<th>Monnaie Par Défaut</th>
+		<th>Currency Par Défaut</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -15,7 +15,7 @@
 		<?php echo $this->Form->create('Caiss',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('name',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('monnaie',array('label'=>''));?></td>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		</form>
 		
 	</tr>
@@ -28,7 +28,7 @@
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th>Id</th>
 			<th>Name</th>
-			<th>Monnaie Par Défaut</th>
+			<th>Currency Par Défaut</th>
 			<th>Montant</th>
 			<th>Actif</th>
 		</tr>
@@ -48,12 +48,12 @@
 </form>
 	
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class= "link" onclick = "edit()" >Modifier</li>
-		<li class= "link" onclick = "mass_delete()" >Effacer</li>
+		<li class= "link" onclick = "edit()" >Edit</li>
+		<li class= "link" onclick = "mass_delete()" >Delete</li>
 		<li class= "link" onclick = "actions('checkbox','view')" >Afficher l'Historique</li>
 		<li><?php echo $this->Html->link('Mouvements des Caisses', array('controller' => 'operations', 'action' => 'balance/caisses')); ?> </li>
 		<li><?php echo $this->Html->link('Gestion des Operations', array('controller' => 'operations', 'action' => 'index')); ?> </li>

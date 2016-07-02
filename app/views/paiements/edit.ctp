@@ -46,27 +46,27 @@
 		$type='Transfer';
 	}
 	else if(isset($remboursement)){
-		$title='Remboursement';
+		$title='Reimboursement';
 		$boxe="remb_boxe";
 		$form="rembAdd";
 		$type='remboursement';
 	}	
 	else {
-		$title='Paiement';
+		$title='Payment';
 		$boxe="pyt_boxe";
 		$form="pytAdd";
 		$type='Paiement';
 	}
 ?>
-<div id="<?php echo $boxe;?>" style="display:none" title="Création d'un <?php echo $title;?>">
+<div id="<?php echo $boxe;?>" style="display:none" title="Creation of a <?php echo $title;?>">
 <div class="dialog">
 	<?php echo $this->Form->create('Paiement',array('id'=>$form,'name'=>$form,'action'=>$action));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('montant',array('id'=>$type.'Montant','value'=>$reste));
-			echo $this->Form->input('montant_equivalent',array('id'=>'equi'));
+			echo $this->Form->input('montant',array('id'=>$type.'Montant', 'label'=>'Amount','value'=>$reste));
+			echo $this->Form->input('montant_equivalent',array('id'=>'equi', 'label'=>'Equivalent Amount',));
 			if(!isset($remboursement)){
-				echo $this->Form->input('monnaie',array('id'=>'monnaie','disabled'=>'disabled'));
+				echo $this->Form->input('monnaie',array('id'=>'monnaie','disabled'=>'disabled', 'label'=>'Currency',));
 			}
 		?>
 	</span>
@@ -74,21 +74,21 @@
 		<?php
 			if(!isset($remboursement)){
 				
-				echo $this->Form->input('mode_paiement',array('id'=>'mode','label'=>'Type de Paiement'));
+				echo $this->Form->input('mode_paiement',array('id'=>'mode','label'=>'Payment Mode'));
 				//transfer part
 				echo '<span id="transfer_fields" style="display:none;">';
 				echo $this->Form->input('facture_transfer',array('label'=>'N° facture','type'=>'text','disabled'=>'disabled','class'=>'transfer'));
 				echo $this->Form->input('date_facture',array('label'=>'Date de la facture','disabled'=>'disabled','class'=>'transfer'));
 				echo '</span>';
 				
-				echo $this->Form->input('reference',array('label'=>'Référence'));
+				echo $this->Form->input('reference',array('label'=>'Reference'));
 			}
 			
 			if(((Configure::read('aser.belair')==null)&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8)))
 				||
 				in_array($session->read('Auth.Personnel.fonction_id'),array(3))
 				)				
-				echo $this->Form->input('date',array('type'=>'text','label'=>'Date du paiement','id'=>'Date'.$type));
+				echo $this->Form->input('date',array('type'=>'text','label'=>'Payment Date','id'=>'Date'.$type));
 			else
 				echo $this->Form->input('date',array('type'=>'hidden','value'=>date('Y-m-d')));
 		?>

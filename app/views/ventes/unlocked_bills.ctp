@@ -1,11 +1,11 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début','type'=>'text'));	
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));	
 		?>
 	</span>
 	<span class="right">
@@ -31,8 +31,8 @@
 <br />
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th width="100">N° Facture</th>
-			<th>Etat</th>
+			<th width="100">Invoice N°</th>
+			<th>State</th>
 			<th width="200">Montant</th>
 			<th width="300">Reste A Payer</th>
 			<th>Serveur</th>
@@ -69,8 +69,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

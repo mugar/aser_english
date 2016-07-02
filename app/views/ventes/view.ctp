@@ -41,7 +41,7 @@
 			<?php echo $vente['Vente']['montant']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Monnaie'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Currency'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $vente['Vente']['monnaie']; ?>
 			&nbsp;
@@ -71,15 +71,15 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Vente', true)), array('action' => 'edit', $vente['Vente']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Effacer %s', true), __('Vente', true)), array('action' => 'delete', $vente['Vente']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $vente['Vente']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Ventes', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Vente', true)), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister/Créer %s', true), __('Tiers', true)), array('controller' => 'tiers', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Stock', true)), array('controller' => 'stocks', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Factures', true)), array('controller' => 'factures', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Facture', true)), array('controller' => 'factures', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Vente', true)), array('action' => 'edit', $vente['Vente']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Vente', true)), array('action' => 'delete', $vente['Vente']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $vente['Vente']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Ventes', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Vente', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister/Create %s', true), __('Tiers', true)), array('controller' => 'tiers', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Stock', true)), array('controller' => 'stocks', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Invoices', true)), array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Facture', true)), array('controller' => 'factures', 'action' => 'add')); ?> </li>
 		
 		 
 		

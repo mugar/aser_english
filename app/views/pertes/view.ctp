@@ -11,9 +11,9 @@
 			<?php echo $this->Html->link($perte['Bon']['numero'], array('controller' => 'bons', 'action' => 'view', $perte['Bon']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Produit'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($perte['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Produit']['id'])); ?>
+			<?php echo $this->Html->link($perte['Product']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Product']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nature'); ?></dt>
@@ -61,13 +61,13 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Perte', true)), array('action' => 'edit', $perte['Perte']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Effacer %s', true), __('Perte', true)), array('action' => 'delete', $perte['Perte']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $perte['Perte']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Pertes', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Perte', true)), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Bons', true)), array('controller' => 'bons', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Bon', true)), array('controller' => 'bons', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Produits', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Perte', true)), array('action' => 'edit', $perte['Perte']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Perte', true)), array('action' => 'delete', $perte['Perte']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $perte['Perte']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Pertes', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Perte', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Bons', true)), array('controller' => 'bons', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Bon', true)), array('controller' => 'bons', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Products', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
 		
 		 
 	</ul>

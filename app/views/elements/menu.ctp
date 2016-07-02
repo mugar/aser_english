@@ -9,7 +9,7 @@
 				<?php if(Configure::read('aser.POS')):?>
 					<li><?php echo $html->link(__('Stock', true), '#'); ?>
 						<ul>
-							<li class="folder"><?php echo $this->Html->link(__('Configuration des Produits', true), '#'); ?>
+							<li class="folder"><?php echo $this->Html->link(__('Configuration des Products', true), '#'); ?>
 								<ul>	
 									<?php if(Configure::read('aser.stock')):?>
 										<li class="folder"><?php echo $this->Html->link(__('Gestion des stocks', true), '/stocks/index'); ?></li>
@@ -25,11 +25,11 @@
 									<li class="folder"><?php echo $this->Html->link(__('Gestion des produits', true), '/produits/index'); ?>
 				    					<?php if(Configure::read('aser.stock')):?>
 				    	  					<ul>
-												<li class="rapport"><?php echo $this->Html->link(__('Rapport Des Produits', true), '/produits/rapport'); ?></li>
-												<li class="rapport"><?php echo $this->Html->link(__('Mouvements Des Produits', true), '/produits/balance'); ?></li>
+												<li class="rapport"><?php echo $this->Html->link(__('Rapport Des Products', true), '/produits/rapport'); ?></li>
+												<li class="rapport"><?php echo $this->Html->link(__('Mouvements Des Products', true), '/produits/balance'); ?></li>
 												<li class="rapport"><?php echo $this->Html->link(__('Evolution journalière', true), '/produits/monthly'); ?></li>
 												
-												<!-- <li class="rapport"><?php echo $this->Html->link(__('Etat journalier', true), '/produits/shifts'); ?></li>
+												<!-- <li class="rapport"><?php echo $this->Html->link(__('State journalier', true), '/produits/shifts'); ?></li>
 												<li class="rapport"><?php echo $this->Html->link(__('Conso Théoriques', true), '/produits/conso_theorique'); ?></li> -->
 												<?php if($session->read('Auth.Personnel.fonction_id') == 3):?>
 												<li class="upload"><?php echo $this->Html->link(__('Importer des produits', true), '/produits/upload_xls'); ?></li>
@@ -64,9 +64,9 @@
 					</ul>
 				</li>
 				<?php endif;?>
-				<li><?php echo $this->Html->link(__('Clients & Fournisseurs', true), '#'); ?>
+				<li><?php echo $this->Html->link(__('Customers & Fournisseurs', true), '#'); ?>
 					<ul>
-						<li class="folder"><?php echo $this->Html->link(__('Clients & Fournisseurs', true), '/tiers/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Customers & Fournisseurs', true), '/tiers/index'); ?></li>
 						<?php if(Configure::read('aser.gestion_reduction')):?>
 							<li class="folder"><?php echo $this->Html->link(__('Gestion des Réductions', true), '/reductions'); ?></li>
 						<?php endif;?>
@@ -80,7 +80,7 @@
 								<?php if((Configure::read('aser.aserb')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5)))||
 									in_array(Configure::read('aser.name'),array('aserb','belair'))	
 								):?>
-									<li class="rapport"><?php echo $this->Html->link(__('Liste des Clients', true), '/factures/declaration'); ?></li>
+									<li class="rapport"><?php echo $this->Html->link(__('Liste des Customers', true), '/factures/declaration'); ?></li>
 								<?php endif;?>
 								<?php if(Configure::read('aser.silhouette')):?>
 									<li class="rapport"><?php echo $this->Html->link(__('Listes Des Factures', true), '/factures/silhouette'); ?>
@@ -142,23 +142,23 @@
 				</li>
 				<?php endif; ?>
 				<?php if($config['hotel']): ?>
-				<li><?php echo $html->link(__('Hébergement', true), '#'); ?>
+				<li><?php echo $html->link(__('Accommodation', true), '#'); ?>
 					<ul>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Types de Chambre', true), '/typeChambres/index'); ?></li>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Chambres', true), '/chambres/index'); ?>
+						<li class="folder"><?php echo $this->Html->link(__('Room Types Management', true), '/typeChambres/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Room Management ', true), '/chambres/index'); ?>
 							<?php if(Configure::read('aser.gouvernance')):?>
 							<ul>
 								<li class="rapport"><?php echo $this->Html->link(__('Listes des chambres à nettoyer', true), '/reservations/rooms_to_clean'); ?></li>
 							</ul>
 							<?php endif; ?>
 						</li>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Réservations', true), '/reservations/tabella'); ?>
+						<li class="folder"><?php echo $this->Html->link(__('Bookings Management', true), '/reservations/tabella'); ?>
 							<ul>
-								<li class="rapport"><?php echo $this->Html->link(__('Etat d\'Occupation', true), '/reservations/etat_occupation'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Liste des prochains arrivages', true), '/reservations/arrivals'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport Mensuel', true), '/reservations/monthly'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport des Paiements', true), '/paiements/payment'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport des Réservations Par Nationalité', true), '/reservations/hosted'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Occupancy Report', true), '/reservations/etat_occupation'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Upcoming arrivals', true), '/reservations/arrivals'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Monthly Report', true), '/reservations/monthly'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Payment Report', true), '/paiements/payment'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Bookings by nationality', true), '/reservations/hosted'); ?></li>
 							</ul>
 						</li>
 					</ul>
@@ -234,8 +234,11 @@
 						<li class="rapport"><?php echo $this->Html->link(__('Paramétrage du logiciel', true), '/configs/index'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Sauvergarder la base de données', true), '/configs/backup'); ?></li>
 						<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3))):?>
-							<li class="rapport"><?php echo $this->Html->link(__('Restaurer la base de données', true), '/configs/restore_db'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Importer la base de données', true), '/configs/restore_db'); ?></li>
 							<li class="rapport"><?php echo $this->Html->link(__('Réparer la base de données', true), '/configs/repair_all_tables'); ?>
+
+							<li class="rapport"><?php echo $this->Html->link(__('Delete complétement la base de données', true), '/configs/reset_db/complete'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Delete juste les opérations dans base de données', true), '/configs/reset_db/partial'); ?></li>
 						<?php endif;?>
 						</li>
 					</ul>	
@@ -244,7 +247,6 @@
 					<ul>
 						<li class="group"><?php echo $this->Html->link(__('Gestion des Fonctions', true), '/fonctions/index'); ?></li>
 						<li class="personnel"><?php echo $this->Html->link(__('Gestion du Personnel', true), '/personnels/index'); ?></li>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Salaires', true), '/salaires/index'); ?></li>
 						<li class="home_min"><?php echo $this->Html->link(__('Page d\'accueil', true), '/'); ?></li>
 					</ul>
 				</li>
@@ -258,7 +260,7 @@
 				<?php if($config['POS']||$config['stock']): ?>
 					<li> Stock </li>
 				<?php endif; ?>
-				<li> Clients & Fournisseurs </li>
+				<li> Customers & Fournisseurs </li>
 				<?php if($config['POS']): ?>
 					<li>Point De Vente </li>
 				<?php endif; ?>

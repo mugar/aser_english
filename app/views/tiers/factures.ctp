@@ -8,8 +8,8 @@
 			<th>Opération</th>
 			<th>Montant</th>
 			<th>Reste</th>
-			<th>Monnaie</th>
-			<th>Etat Paiement</th>
+			<th>Currency</th>
+			<th>State Paiement</th>
 			<th>Date</th>
 			<th>Echéance</th>
 		

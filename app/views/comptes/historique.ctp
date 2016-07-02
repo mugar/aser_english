@@ -91,8 +91,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link(sprintf(__('Liste des comptes', true), __('Compte', true)), array('action' => 'index')); ?></li>
 		<?php if(!is_null($controller)):?>
 			<li><?php echo $this->Html->link('Liste des '.$controller, array('controller'=>$controller,'action' => 'index')); ?></li>
@@ -101,7 +101,7 @@
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Compte',array('id'=>'recherche'));?>
@@ -110,24 +110,24 @@
 			echo $this->Form->input('choix',array('id'=>'choix','options'=>array(
 																				'marchandises'=>'Marchandises',
 																				'capital'=>'capital',
-																				'clients'=>'Dettes Clients',
+																				'clients'=>'Dettes Customers',
 																				'fournisseurs'=>'Dettes fournisseur',
 																				'dettes_m_l'=>'Dettes à M/L terme',
 																				'immobs'=>'Immobilisation',
 																				'caisses'=>'Trésorerie',
 																				'charges'=>'Charges',
 																				'charges_services'=>'charges_services',
-																				'produits'=>'Produits',
+																				'produits'=>'Products',
 																				'produits_services'=>'produits_services',
 																				'tva'=>'Tva à décaisser'
 																				),
 												'label'=>'Choix du compte'
 						));
-			echo $this->Form->input('tier_id',array('disabled'=>'disabled','id'=>'Cpte_clients','options'=>$clients,'label'=>'Créances Clients'));
+			echo $this->Form->input('tier_id',array('disabled'=>'disabled','id'=>'Cpte_clients','options'=>$clients,'label'=>'Créances Customers'));
 			echo $this->Form->input('tier_id',array('disabled'=>'disabled','id'=>'Cpte_fournisseurs','options'=>$fournisseurs,'label'=>'Dettes fournisseurs'));
 			echo $this->Form->input('type_id',array('disabled'=>'disabled','id'=>'Cpte_charges','options'=>$charges,'label'=>'Charges'));
 			echo $this->Form->input('type_service_id',array('disabled'=>'disabled','id'=>'Cpte_charges_services','options'=>$charges_services,'label'=>'Charges de Services'));
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début'));									
+			echo $this->Form->input('date1',array('label'=>'Start Date'));									
 		?>
 	</span>
 	<span class="right">
@@ -136,9 +136,9 @@
 			echo $this->Form->input('tier_id',array('disabled'=>'disabled','id'=>'Cpte_dettes_m_l','options'=>$fournisseurs,'label'=>'Dettes à M/L terme'));
 			echo $this->Form->input('type_immobilisation_id',array('disabled'=>'disabled','id'=>'Cpte_immobs','options'=>$immobs,'label'=>'Immobilisations'));
 			echo $this->Form->input('caiss_id',array('disabled'=>'disabled','id'=>'Cpte_caisses','options'=>$caisses,'label'=>'Trésorerie'));
-			echo $this->Form->input('type_id',array('disabled'=>'disabled','id'=>'Cpte_produits','options'=>$produits,'label'=>'Produits'));
-			echo $this->Form->input('type_service_id',array('disabled'=>'disabled','id'=>'Cpte_produits_services','options'=>$produits_services,'label'=>'Produits de Services'));
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('type_id',array('disabled'=>'disabled','id'=>'Cpte_produits','options'=>$produits,'label'=>'Products'));
+			echo $this->Form->input('type_service_id',array('disabled'=>'disabled','id'=>'Cpte_produits_services','options'=>$produits_services,'label'=>'Products de Services'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>

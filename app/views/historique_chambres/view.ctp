@@ -16,7 +16,7 @@
 			<?php echo $historiqueChambre['HistoriqueChambre']['chambres']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Etat'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('State'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $historiqueChambre['HistoriqueChambre']['etat']; ?>
 			&nbsp;
@@ -36,11 +36,11 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Historique Chambre', true)), array('action' => 'edit', $historiqueChambre['HistoriqueChambre']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Effacer %s', true), __('Historique Chambre', true)), array('action' => 'delete', $historiqueChambre['HistoriqueChambre']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $historiqueChambre['HistoriqueChambre']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Historique Chambres', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Historique Chambre', true)), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Personnels', true)), array('controller' => 'personnels', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Personnel', true)), array('controller' => 'personnels', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Historique Chambre', true)), array('action' => 'edit', $historiqueChambre['HistoriqueChambre']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Historique Chambre', true)), array('action' => 'delete', $historiqueChambre['HistoriqueChambre']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $historiqueChambre['HistoriqueChambre']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Historique Chambres', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Historique Chambre', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Personnels', true)), array('controller' => 'personnels', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Personnel', true)), array('controller' => 'personnels', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

@@ -1,5 +1,5 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
@@ -38,14 +38,14 @@
 <table cellpadding="0" cellspacing="0" >
 	<tr class="border">
 		<th rowspan="2"><? echo __('Nature des services');?></th>
-		<?php foreach($facturationMonnaies as $monnaie):?>
+		<?php foreach($facturationCurrencys as $monnaie):?>
 				<th colspan="2"><? echo $monnaie;?></th>
 		<? endforeach;?>
 	</tr>
 	<tr class="border">
 		
-		<?php foreach($facturationMonnaies as $monnaie):?>
-				<th><? echo __('VENTES PAYEES');?></th>
+		<?php foreach($facturationCurrencys as $monnaie):?>
+				<th><? echo __('VENTES PAID AMOUNTS');?></th>
 				<th><? echo __('VENTES CREDITS');?></th>
 		<? endforeach;?>
 		
@@ -54,7 +54,7 @@
 		<? if(($gpeCptable['credit']>0)||(isset($gpeCptable['detail']))):?>
 		<tr>
 			<td><? echo $gpeCptable['GroupeComptable']['name'];?></td>
-			<?php foreach($facturationMonnaies as $monnaie):?>
+			<?php foreach($facturationCurrencys as $monnaie):?>
 				<td><? if(isset($gpeCptable['payee'][$monnaie])) echo $gpeCptable['payee'][$monnaie];?></td>
 				<td><? if(isset($gpeCptable['credit'][$monnaie])) echo $gpeCptable['credit'][$monnaie];?></td>
 			<? endforeach;?>
@@ -63,7 +63,7 @@
 	<? endforeach;?>
 	<tr class="strong">
 			<td>TOTAL</td>
-			<?php foreach($facturationMonnaies as $monnaie):?>
+			<?php foreach($facturationCurrencys as $monnaie):?>
 				<td><? echo $total['payee'][$monnaie];?></td>
 				<td><? echo $total['credit'][$monnaie];?></td>
 			<? endforeach;?>
@@ -80,8 +80,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

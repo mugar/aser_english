@@ -23,7 +23,7 @@
 	</tr>
 	<?php for($i=0;$i<5;$i++): ?>
 	<tr name="<?php echo $i?>">
-		<?php echo $this->Form->create('Produit',array('action'=>'add'));?>
+		<?php echo $this->Form->create('Product',array('action'=>'add'));?>
 		
 		<td><?php echo $this->Form->input('stock_id',array('label'=>'','selected'=>0,'title'=>'Le nom du stock auquel appartient le produit'));?></td>
 		<td><?php echo $this->Form->input('section_id',array('id'=>$i.'SectionId','label'=>'','selected'=>0,'title'=>'Le nom de la section auquel appartient le produit'));?></td>
@@ -47,22 +47,22 @@
 		<td><?php echo $this->Form->input('cartons',array('label'=>'','title'=>'Nombre de cartons vides','value'=>0));?></td>
 		<td><?php echo $form->input('perime',array('label'=>'','title'=>'Cochez si le produit a une date d\'expiration','type'=>'checkbox','onclick'=>"Element.toggle($('date'))" ));
 		echo '<span id="date" style="display:none;">'.$this->Form->input('date_expiration',array('label'=>'','title'=>'Date d\'expiration du produit','type'=>'text','id'=>$i.'Date')).'</span>';?></td>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		</form>
 		
 	</tr>
 	<?php endfor; ?>
 </table>
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Produits', true)), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Entrees', true)), array('controller' => 'entrees', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Entree', true)), array('controller' => 'entrees', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Sortis', true)), array('controller' => 'sortis', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Sorti', true)), array('controller' => 'sortis', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Products', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Entrees', true)), array('controller' => 'entrees', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Entree', true)), array('controller' => 'entrees', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Sortis', true)), array('controller' => 'sortis', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Sorti', true)), array('controller' => 'sortis', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

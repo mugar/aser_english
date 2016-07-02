@@ -19,7 +19,7 @@
 <?php $config=Configure::read('aser'); ?>
 <div id='view'>
 <div class="document">
-<h3><?php echo 'Rapport des Ventes Par Produits et Par Groupes Comptable';
+<h3><?php echo 'Rapport des Ventes Par Products et Par Groupes Comptable';
 	?>
 	<?php if(!is_null($date1)&&!is_null($date2)) :?>
 	<h4><?php echo '<h4>(Période du '.$this->MugTime->toFrench($date1).' au ';
@@ -32,7 +32,7 @@
 <table cellpadding="0" cellspacing="0" class="aser_sort">
 <thead>
 	<tr>
-			<th width="300" data-sort="string" >Produit</th>
+			<th width="300" data-sort="string" >Product</th>
 			<th data-sort="int">Qté</th>
 			<th width="200" data-sort="int">PV</th>
 			<th width="200" data-sort="int">PT</th>
@@ -51,7 +51,7 @@
 		<?php foreach ($groupeComptable['ventes'] as $vente):?>
 			<tr>	
 				<td>
-					<?php echo $this->Html->link($vente['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Produit']['id'])); ?>
+					<?php echo $this->Html->link($vente['Product']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Product']['id'])); ?>
 				</td>
 				<td data-sort-value="<?php echo $vente['Vente']['quantite']; ?>"><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 				<td data-sort-value="<?php echo $vente['Vente']['PU']; ?>"><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
@@ -94,17 +94,17 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents(0)" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents(0)" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php
 			$action=(Configure::read('aser.touchscreen'))?'touchscreen':'index';
 			 echo $this->Html->link('Interface de Vente', array('controller' => 'ventes', 'action' => $action)); 
 		?> </li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Liste des Products', array('controller' => 'produits', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>

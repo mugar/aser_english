@@ -46,7 +46,7 @@
 			<ul id="nav">
 				<li><?php echo $html->link(__('Gestion du Stock', true), '#'); ?>
 					<ul>
-				<li class="folder"><?php echo $this->Html->link(__('Gestion des Produits', true), '#'); ?>
+				<li class="folder"><?php echo $this->Html->link(__('Gestion des Products', true), '#'); ?>
 					<ul>	
 						<li class="folder"><?php echo $this->Html->link(__('Gestion des stocks', true), '/stocks/index'); ?></li>
 						<li class="folder"><?php echo $this->Html->link(__('Gestion des sections', true), '/sections/index'); ?></li>

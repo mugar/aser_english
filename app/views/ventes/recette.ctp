@@ -2,13 +2,13 @@
 	<h2><?php __('Ventes');?></h2>	
 	
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-		echo $this->Form->input('Produit.name',array('value'=>'toutes'));
+		echo $this->Form->input('Product.name',array('value'=>'toutes'));
 		?>
 	</span>
 	<span class="right">
@@ -58,7 +58,7 @@
 			<?php echo $this->Html->link($vente['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $vente['Stock']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($vente['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Produit']['id'])); ?>
+			<?php echo $this->Html->link($vente['Product']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Product']['id'])); ?>
 		</td>
 		<td><?php echo $vente['Vente']['quantite']; ?>&nbsp;</td>
 		<td>
@@ -82,25 +82,25 @@
 		<p>
 		<?php
 		echo $this->Paginator->counter(array(
-		'format' => __('Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu\'au numéro %end%', true)
+		'format' => __('Page %page% of %pages%, showing  %current% records out of %count%, from %start%, to %end%', true)
 		));
 		?>	</p>
 
 		<div class="paging">
-			<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+			<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 		 | 	<?php echo $this->Paginator->numbers();?>
 	 |
-			<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+			<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 		</div>
 	</div>
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li class="link"  onclick = "model_details('checkbox','index')" >Lister/Masquer les Détails</li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Entrees', true)), array('controller' => 'entrees', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Produits', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li class="link"  onclick = "model_details('checkbox','index')" >Show/Hide the details</li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Entrees', true)), array('controller' => 'entrees', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Products', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

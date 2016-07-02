@@ -12,5 +12,5 @@
 			<td><?php echo $this->Form->input('credit',array('label'=>''));?></td>
 		
 		<?php echo $this->Form->input('mode',array('type'=>'hidden','value'=>$mode));?>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		<?php echo $this->Form->input('journal',array('id'=>'compte','type'=>'hidden','value'=>$journal));?>

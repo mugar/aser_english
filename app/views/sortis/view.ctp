@@ -26,9 +26,9 @@
 			<?php echo $this->Html->link($sorti['Facture']['numero'], array('controller' => 'factures', 'action' => 'view', $sorti['Facture']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Produit'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($sorti['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $sorti['Produit']['id'])); ?>
+			<?php echo $this->Html->link($sorti['Product']['name'], array('controller' => 'produits', 'action' => 'view', $sorti['Product']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Quantite'); ?></dt>
@@ -46,7 +46,7 @@
 			<?php echo $sorti['Sorti']['montant']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Monnaie'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Currency'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $sorti['Sorti']['monnaie']; ?>
 			&nbsp;
@@ -81,20 +81,20 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Sorti', true)), array('action' => 'edit', $sorti['Sorti']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Effacer %s', true), __('Sorti', true)), array('action' => 'delete', $sorti['Sorti']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $sorti['Sorti']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Sortis', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Sorti', true)), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Unites', true)), array('controller' => 'unites', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Unite', true)), array('controller' => 'unites', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister/Créer %s', true), __('Tiers', true)), array('controller' => 'tiers', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Commandes', true)), array('controller' => 'commandes', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Commande', true)), array('controller' => 'commandes', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Bons', true)), array('controller' => 'bons', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Bon', true)), array('controller' => 'bons', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Factures', true)), array('controller' => 'factures', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Facture', true)), array('controller' => 'factures', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Produits', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Sorti', true)), array('action' => 'edit', $sorti['Sorti']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Sorti', true)), array('action' => 'delete', $sorti['Sorti']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $sorti['Sorti']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Sortis', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Sorti', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Unites', true)), array('controller' => 'unites', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Unite', true)), array('controller' => 'unites', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister/Create %s', true), __('Tiers', true)), array('controller' => 'tiers', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Commandes', true)), array('controller' => 'commandes', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Commande', true)), array('controller' => 'commandes', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Bons', true)), array('controller' => 'bons', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Bon', true)), array('controller' => 'bons', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Invoices', true)), array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Facture', true)), array('controller' => 'factures', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Products', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
 		
 		 
 	</ul>

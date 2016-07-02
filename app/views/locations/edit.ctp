@@ -7,7 +7,7 @@
 		<?php
 			echo $this->Form->input('salle_id',array('label'=>'Salle','id'=>'salleId'));
 			echo $this->Form->input('tier_id',array('label'=>'Nom du client','id'=>'tierId'));
-			echo $this->Form->input('monnaie',array('label'=>'monnaie', 'options'=>$facturationMonnaies));
+			echo $this->Form->input('monnaie',array('label'=>'monnaie', 'options'=>$facturationCurrencys));
 			?>
 	</span>
 	<span class="right">

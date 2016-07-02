@@ -110,7 +110,7 @@
 	second="<?php echo Configure::read('printer.barman');?>"
 	third="<?php echo Configure::read('printer.cuisine');?>"
 	></div>
-	<div id="indicator" > Patientez ...</div>
+	<div id="indicator" > Loading ...</div>
 		<?php echo $this->element('defaulter'); ?>
 	<div id="container">
 	<?php echo $this->element('menu',array('enabled'=>$enabled)); ?>
@@ -124,7 +124,7 @@
 		</div>
 	</div>
 		<div id="footer">
-			Logiciel <b>Aser Manager</b> par Mugabo Armand | Tél: 75 854 201/ 79 853 419 | Email:<?php echo $this->Html->link(__('mugarmug@gmail.com', true), 'mailto:mugarmug@gmail.com'); ?> | Tous droits réservés © <?php echo '2012 - '.date('Y');?>
+			 <b>Aser Manager</b> Software created by Mugabo Armand | Tél: +257 75 854 201/ 79 853 419 | Email:<?php echo $this->Html->link(__('mugarmug@gmail.com', true), 'mailto:mugarmug@gmail.com'); ?> | All rights reserved © <?php echo '2012 - '.date('Y');?>
 		</div>
 	</div>
 	<?php echo $this->element('sql_dump'); ?>

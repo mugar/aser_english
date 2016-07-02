@@ -389,17 +389,17 @@ class AppController extends Controller {
 					//'Proforma'=>'Proforma'
 					);
 		if(!in_array($this->params['controller'],array('tiers','reductions'))){
-			$actifs=$actifs1=array('oui'=>'oui','non'=>'non');
+			$actifs=$actifs1=array('oui'=>'Yes','non'=>'No');
 			$actifs1[]='';
 			$this->set(compact('actifs','actifs1'));
 		}
 			
 		$taux=$this->Conf->find('taux_usd');
-		$etats=array('payee'=>'payee',
-					'credit'=>'credit',
-					'avance'=>'avance',
-					'bonus'=>'bonus',
-					'annulee'=>'annulee'
+		$etats=array('payee'=>'Paid',
+					'credit'=>'Credit',
+					'avance'=>'Advance',
+					'bonus'=>'Bonus',
+					'annulee'=>'Canceled'
 					);
 		$etats1=array(''=>'')+$etats;
 		$facturationMonnaies=$this->facturationMonnaies=array('BIF'=>'BIF','USD'=>'USD');

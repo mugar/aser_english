@@ -1,10 +1,10 @@
-<div id="edit_facture_boxe" style="display:none" title="Modifier la facture">
+<div id="edit_facture_boxe" style="display:none" title="Edit la facture">
 <div class="dialog">
 	<?php echo $this->Form->create('Facture',array('id'=>'edit_facture_form','action'=>'edit'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('id',array('type'=>'hidden','value'=>$facture['id']));
-			echo $this->Form->input('tier_id',array('label'=>'Nom du Client','selected'=>$facture['tier_id']));
+			echo $this->Form->input('tier_id',array('label'=>'Nom du Customer','selected'=>$facture['tier_id']));
 			if(Configure::read('aser.beneficiaires'))
 				echo $this->Form->input('beneficiaire',array('label'=>'Nom du Béneficiaire'));
 			if(Configure::read('aser.detailed_ben'))

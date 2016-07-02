@@ -12,7 +12,7 @@
 <div class="document">
 		
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche Pour Les extras">
+<div id="recherche_boxe" style="display:none" title="Search Options Pour Les extras">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Reservation',array('id'=>'recherche','action'=>'/facture_globale/'.$factureId,$payee,$detailed));?>
@@ -36,14 +36,14 @@
 	<div id="facture_details" style="margin-left:-40px;">
 			<?php 
 				$etat=$reservation['Facture']['etat'];
-				echo 'Etat De Paiement:  <span id="etat">'.$etat.'</span>';
+				echo 'Payment State:  <span id="etat">'.$etat.'</span>';
 			?>
 			<?php if(!empty($reservation['Facture']['observation']))
-					echo 'Motif : '.$reservation['Facture']['observation'];
+					echo 'Reason : '.$reservation['Facture']['observation'];
 					echo '<br/>';
 			?>
 			<?php if(!empty($reservation['Facture']['aserb_num']))
-					echo 'Numéro lié: '.$reservation['Facture']['aserb_num'];
+					echo 'Linked Number: '.$reservation['Facture']['aserb_num'];
 					echo '<br/>';
 			?>
 			
@@ -51,9 +51,9 @@
 		</div>
 	<div class="right">
 		<?php  
-			echo ' Date de Création : <span id="dateId" depart="'.$depart.'">'.$this->MugTime->toFrench($reservation['Facture']['date']).'</span><br/>';
+			echo ' Creation Date : <span id="dateId" depart="'.$depart.'">'.$this->MugTime->toFrench($reservation['Facture']['date']).'</span><br/>';
 			if(!in_array($reservation['Facture']['date_emission'],array('',null,'0000-00-00'))) {
-			 	echo 'Date d\'émission : <span id="dateId">'.$this->MugTime->toFrench($reservation['Facture']['date_emission']).'</span><br/>';
+			 	echo 'Emission Date : <span id="dateId">'.$this->MugTime->toFrench($reservation['Facture']['date_emission']).'</span><br/>';
 			}
 			echo '<br/><br/><br/><br/><br/><br/>';
 		?>	
@@ -64,11 +64,11 @@
 			?>
 		</div>
 		<?php
-			echo 'Date d\'entrée : '.$this->MugTime->toFrench($arrivee);
+			echo 'Check In Date : '.$this->MugTime->toFrench($arrivee);
 			echo '<br/>';
-			echo 'Date de sortie : '.$this->MugTime->toFrench($depart);
+			echo 'Check Out Date : '.$this->MugTime->toFrench($depart);
 			echo '<br/>';
-			echo 'N° de(s) chambre(s) : '.$chambres;
+			echo 'N° of Room(s) : '.$chambres;
 	 ?>
 	</div>
 	<div style="clear:both"></div>
@@ -82,7 +82,7 @@
 <br />
 <br />
 <div id="accomodation">
-<span class="titre"><? echo _('Facture d’hébergement ');
+<span class="titre"><? echo _('Accommodation Invoice ');
 					$display=((Configure::read('aser.aserb')&&(in_array($session->read('Auth.Personnel.fonction_id'),array(3))))
 							||!Configure::read('aser.aserb')
 							)?
@@ -98,9 +98,9 @@
 	<?php if($detailed):?>
 	<tr>
 			<th>Date</th>
-			<th>N° de la Chambre</th>
-			<th>Type de Chambre</th>
-			<th>Prix (<?php echo $reservation['Facture']['monnaie'];?>)</th>
+			<th>Room N°</th>
+			<th>Room Type</th>
+			<th>Rate (<?php echo $reservation['Facture']['monnaie'];?>)</th>
 	</tr>
 	<?php
 	$totalReservation=0;
@@ -126,7 +126,7 @@
 		$totalReservation+=round($book['Reservation']['PU']*($book['Reservation']['tauxDemi']/100),0);
 	?>
 		<tr>
-			<td>Démi Journée du <?php echo  $this->MugTime->toFrench($this->MugTime->increase_date($book['Reservation']['depart'],1)); ?></td>
+			<td>Late Check Out of <?php echo  $this->MugTime->toFrench($this->MugTime->increase_date($book['Reservation']['depart'],1)); ?></td>
 			<td><?php echo  $book['Chambre']['name']; ?></td>
 			<td><?php echo  $typeChambres[$book['Chambre']['type_chambre_id']]; ?></td>
 			<td><?php echo  $number->format(round($book['Reservation']['PU']*($book['Reservation']['tauxDemi']/100)),$formatting); ?></td>
@@ -135,10 +135,10 @@
 <?php endforeach; ?>
 <? else : ?>
 <tr>
-			<th><? echo __('Nature des services');?></th>
-			<th><? echo __('Qté');?></th>
-			<th><? echo __('P.U');?></th>
-			<th><? echo __('P.T');?></th>
+			<th><? echo __('Service Type');?></th>
+			<th><? echo __('Qty');?></th>
+			<th><? echo __('PU');?></th>
+			<th><? echo __('Total Price');?></th>
 	</tr>
 	<?php
 	$totalReservation=0;
@@ -146,9 +146,9 @@
 		$totalReservation+=$book['Reservation']['montant'];
 	?>
 	<tr>
-		<td><?php echo __( 'Chambre N° ').$book['Chambre']['name']; ?></td>
+		<td><?php echo __( 'Room N° ').$book['Chambre']['name']; ?></td>
 		<td><?php echo  $nuitee=$this->MugTime->diff( $book['Reservation']['arrivee'], $book['Reservation']['depart'])+1;
-				echo _(' nuitée(s)');		
+				echo _(' bed night(s)');		
 			?>
 		</td>
 		<td><?php echo  $number->format($book['Reservation']['PU'],$formatting); ?></td>
@@ -159,7 +159,7 @@
 	?>
 		<tr>
 			<td><?php echo  $book['Chambre']['name']; ?></td>
-			<td>Démi Journée</td>
+			<td>Late Check Out</td>
 			<td><?php echo  $number->format(round($book['Reservation']['PU']*($book['Reservation']['tauxDemi']/100)),$formatting); ?></td>
 			<td><?php echo  $number->format(round($book['Reservation']['PU']*($book['Reservation']['tauxDemi']/100)),$formatting); ?></td>
 		</tr>
@@ -168,7 +168,7 @@
 <?php endif;?>
 <?php if($reservation['Facture']['tva']!=0):?>
 	<tr class="strong">
-		<td><? echo __('P.T Hors TVA');?></td>
+		<td><? echo __('T.P WITHOUT TVA');?></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span id="a_payer"><?php echo ''.$number->format(($reservation['Facture']['montant']-$reservation['Facture']['tva'])+0,$formatting); ?></span></td>
@@ -182,14 +182,14 @@
 <?php endif;?>
 
 <tr class="strong">
-		<td><? echo __('P.T'); if($reservation['Facture']['tva']!=0) echo __('.TVAC');?></td>
+		<td><? echo __('T.P'); if($reservation['Facture']['tva']!=0) echo __('.TVAC');?></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><?php echo ''.$number->format($totalReservation,$formatting); ?></span></td>
 </tr>
 	<? if($detailed):?>
 		<tr class="strong">
-			<td><? echo __('NUITEES DEJA CONSOMMEES'); if($reservation['Facture']['tva']!=0) echo '( TVAC)';?></td>
+			<td><? echo __('CONSUMMED BED NIGHTS '); if($reservation['Facture']['tva']!=0) echo '(TVAC)';?></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td><span id="a_payer"><?php echo ''.$number->format($reservation['Facture']['montant']+0,$formatting); ?></span></td>
@@ -202,7 +202,7 @@
 		<td><span id="a_payer"><?php echo ''.$number->format($reservation['Facture']['montant']-$reservation['Facture']['reste']+0,$formatting); ?></span></td>
 	</tr>
 	<tr class="strong">
-		<td>RESTE A PAYER (en <?php echo $reservation['Facture']['monnaie']?>)</td>
+		<td>LEFT TO PAY (en <?php echo $reservation['Facture']['monnaie']?>)</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td id="facture_reste"><?php echo $number->format($totalReservation-$reservation['Facture']['montant']+$reservation['Facture']['reste']+0,$formatting); ?></td>
@@ -220,12 +220,12 @@
 	
 	<tr>
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
-			<th>Numero</th>
-			<th>Type De Facture</th>
-			<th>Montant</th>
-			<th>Reste A Payer</th>
-			<th>Monnaie</th>
-			<th>Etat De Paiement</th>
+			<th>Invoice N°</th>
+			<th>Invoice Type</th>
+			<th>Amount</th>
+			<th>Left to Pay</th>
+			<th>Currency</th>
+			<th>Payment state</th>
 			<th>Date</th>
 		
 	</tr>
@@ -259,7 +259,7 @@
 <?php foreach($sums as $sum):?>
 <?php if(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']!='BIF')):?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<td colspan="2">&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($sum['Facture']['montant']-$sum['Facture']['tva'])+0,$formatting); ?></span></td>
 		<td>&nbsp;</td>
@@ -278,7 +278,7 @@
 	</tr>
 <?php elseif(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']=='BIF')):?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<td colspan="2">&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($sum['Facture']['montant']-$sum['Facture']['tva'])+0,$formatting); ?></span></td>
 		<td>&nbsp;</td>
@@ -306,7 +306,7 @@
 		<td>&nbsp;</td>
 	</tr>
 	<tr class="strong">
-		<td>PAYEE</td>
+		<td>PAID AMOUNT</td>
 		<td colspan="2">&nbsp;</td>
 		<td><?php echo ''.$number->format($sum['Facture']['montant']-$sum['Facture']['reste']+0,$formatting); ?></td>
 		<td>&nbsp;</td>
@@ -315,7 +315,7 @@
 		<td>&nbsp;</td>
 	</tr>
 	<tr class="strong">
-		<td>RESTE A PAYER (en <?php echo $sum['Facture']['monnaie']; ?>)</td>
+		<td>LEFT TO PAY (en <?php echo $sum['Facture']['monnaie']; ?>)</td>
 		<td colspan="2">&nbsp;</td>
 		<td><span id="a_payer"><?php echo ''.$number->format($sum['Facture']['reste']+0,$formatting); ?></span></td>
 		<td>&nbsp;</td>
@@ -326,7 +326,7 @@
 <?php endforeach;?>
 <?php if($reservation['Facture']['monnaie']=='USD'):?>
 	<tr class="strong">
-		<td> RESTE EN DOLLARS</td>
+		<td> LEF TO PAY IN DOLLARS</td>
 		<td colspan="2">&nbsp;</td>
 		<td><?php echo $number->format($total_usd+0,$formatting); ?></span></td>
 		<td>&nbsp;</td>
@@ -386,13 +386,13 @@ else {
 	<div class="left">
 		<div class="text">
 			<?php $personnel=$session->read('Auth.Personnel');
-			echo __('Signature réceptioniste').' : <br/>'.ucfirst($personnel['name']);	
+			echo __('Receptionist Signature').' : <br/>'.ucfirst($personnel['name']);	
 		?>
 		</div>
 	</div>
 	<div class="right">
 		<?php
-			echo __('Signature Client').' <br/>';	
+			echo __('Customer Signature').' <br/>';	
 		?>
 	</div>
 	<div style="clear:both"></div>
@@ -404,56 +404,56 @@ else {
 	<h3><?php __('Actions'); ?></h3>
 	<div id="legend" style="display:none;">
 	<table cellpadding="0" cellspacing="0" id="legend">
-		<tr class="active"><td>Nuitée non consommée</td></tr>
+		<tr class="active"><td>Unconsummed Nights</td></tr>
 	</table>
 	</div>
 	<ul>
 		<?php if(Configure::read('aser.aserb')):?>
-				<li class="link" onclick="impressionB()" >Imprimer</li>
+				<li class="link" onclick="impressionB()" >Print</li>
 		<? else:?>
-			<li class="link" onclick="print_documents()" >Imprimer</li>
+			<li class="link" onclick="print_documents()" >Print</li>
 		<? endif;?>
 		<?php if(Configure::read('aser.xls_copy')):?>
-			<li class="link" onclick = "custom_printing('<?php echo $factureId ?>','<?php echo 'reservations/facture_globale/'.$factureId.'/'.$payee.'/1/2'?>')" >Imprimer avec Détails</li>
+			<li class="link" onclick = "custom_printing('<?php echo $factureId ?>','<?php echo 'reservations/facture_globale/'.$factureId.'/'.$payee.'/1/2'?>')" >Print with Details</li>
 		<?php endif;?>
 		<? if((in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))&&empty($config['annulee']))
 					||in_array($session->read('Auth.Personnel.id'),$config['annulee'])) :?>
-				<li class="link" onclick = "annuler_facture('<?php echo 'Reservation_'.$reservation['Facture']['id'];?>')" >Annuler la facture</li>
+				<li class="link" onclick = "annuler_facture('<?php echo 'Reservation_'.$reservation['Facture']['id'];?>')" >Cancel the Invoice</li>
 			<?php endif;?>
-		<li class="link" onclick="jQuery('#accomodation').slideToggle()" title="Afficher ou masquer l'Hébergement" >Hébergement</li>
-		<li class="link"  onclick = "jQuery('#extras_liste').slideToggle()" title="Afficher ou masquer les extras">Extras</li>
+		<li class="link" onclick="jQuery('#accomodation').slideToggle()" title="Afficher ou masquer l'Hébergement" >Show/Hide Accommodation</li>
+		<li class="link"  onclick = "jQuery('#extras_liste').slideToggle()" title="Afficher ou masquer les extras">Show/Hide Extras</li>
 		<?php if(Configure::read('aser.comptabilite')):?>
-		<li class="link"  onclick = "jQuery('#extras_vue_cptable').slideToggle()" title="Afficher ou masquer les extras">Synthèse des Extras</li>
+		<li class="link"  onclick = "jQuery('#extras_vue_cptable').slideToggle()" title="Afficher ou masquer les extras">Recap of Extras</li>
 		<?php endif;?>
 		<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))) :?>
-			<li class="link" onclick = "edit_facture()" >Modifier la facture</li>
+			<li class="link" onclick = "edit_facture()" >Edit the Invoice</li>
 		<?php endif;?>
-		<li class="link"  onclick ="mass_pyt('on')">Créer un Paiement</li>
-		<li class="link"  onclick ="pyt(undefined,'remboursement')">Créer un Remboursement</li>
-		<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle();" >Afficher/Masquer les Paiements</li>
-		<li class="link"  onclick = "jQuery('#synthese_pyts').slideToggle();jQuery('#signature_client').toggle()" title="Afficher ou masquer la synthese des paiements">Synthèse des Paiements</li>
+		<li class="link"  onclick ="mass_pyt('on')">Create a Payment</li>
+		<li class="link"  onclick ="pyt(undefined,'remboursement')">Create un Reimboursement</li>
+		<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle();" >Show/Hide Payments</li>
+		<li class="link"  onclick = "jQuery('#synthese_pyts').slideToggle();jQuery('#signature_client').toggle()" title="Afficher ou masquer la synthese des paiements">Recap of Payments</li>
 		<span id="pyts_links" style="display:none;">
-			<li class="link" onclick = "remove_pyt('on')" >Effacer un Paiement</li>
+			<li class="link" onclick = "remove_pyt('on')" >Delete a Payment</li>
 		</span>
 		<?php if($payee=='no'):?>
-			<li><?php echo $this->Html->link('Afficher les Extras Payée', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,'yes')); ?> </li>
+			<li><?php echo $this->Html->link('Show Paid Extras', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,'yes')); ?> </li>
 		<?php else :?>
-			<li><?php echo $this->Html->link('Enlever les Extras Payée', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,'no')); ?> </li>
+			<li><?php echo $this->Html->link('Hide Paid Extras', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,'no')); ?> </li>
 		<?php endif;?>
 		
 		<?php if($detailed==0):?>
-			<li><?php echo $this->Html->link('Version detaillée', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,$payee,1)); ?> </li>
+			<li><?php echo $this->Html->link('Full Version', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,$payee,1)); ?> </li>
 		<?php else :?>
-			<li><?php echo $this->Html->link('Version simplifiée', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,$payee,0)); ?> </li>
+			<li><?php echo $this->Html->link('Simplified Version', array('controller' => 'reservations', 'action' => 'facture_globale',$factureId,$payee,0)); ?> </li>
 		<?php endif;?>
-		<li><?php echo $this->Html->link('Gestions Des Réservations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
-		<li><?php echo $this->Html->link('Afficher l\'Historique', array('controller' => 'traces', 'action' => 'index',$factureId,'Facture')); ?> </li>
+		<li><?php echo $this->Html->link('Booking Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
+		<li><?php echo $this->Html->link('Show Logs', array('controller' => 'traces', 'action' => 'index',$factureId,'Facture')); ?> </li>
 		<?php if(in_array(Configure::read('aser.name'),array('aserb','belair'))||Configure::read('aser.chg_num')):?>
-			<li class="link" onclick = "num()" >Changer le numéro</li>
+			<li class="link" onclick = "num()" >Chang the number</li>
 		<?php endif;?>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<?php if(Configure::read('aser.export_bills')):?>
-				<li><?php echo $this->Html->link('Exporter vers excel', array('controller' => 'reservations', 'action' => 'facture_globale/'.$factureId.'/'.$payee.'/1/1')); ?> </li>
+				<li><?php echo $this->Html->link('Export to excel', array('controller' => 'reservations', 'action' => 'facture_globale/'.$factureId.'/'.$payee.'/1/1')); ?> </li>
 			<?php endif;?>
 	</ul>
 </div>
@@ -466,7 +466,7 @@ else {
 <!--edit facture box -->
 <?php echo $this->element('../factures/edit',array('facture'=>$reservation['Facture']));?>
 
-<div id="print_boxe" style="display:none" title="Mode de Paiement Envisage">
+<div id="print_boxe" style="display:none" title="Payment Mode Envisage">
 <div class="dialog">
 	<span class="left">
 		<?php

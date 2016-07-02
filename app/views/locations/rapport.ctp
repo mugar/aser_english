@@ -1,5 +1,5 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Location',array('id'=>'recherche'));?>
@@ -22,7 +22,7 @@
 	<span class="right">
 		<?php
 		
-		echo $this->Form->input('Facture.date1',array('label'=>'Choisissez une date début','type'=>'text'));				
+		echo $this->Form->input('Facture.date1',array('label'=>'Start Date','type'=>'text'));				
 		echo $this->Form->input('Facture.date2',array('label'=>'et une date fin pour la recherche','type'=>'text'));
 		?>
 	</span>
@@ -47,9 +47,9 @@
 			<th>Date</th>
 			<th>Salle</th>
 			<th>Nombre de jours</th>
-			<th width="150">Client</th>
+			<th width="150">Customer</th>
 			<th>Facture</th>
-			<th>Etat</th>
+			<th>State</th>
 			<th width="150">Montant</th>
 			<th width="150">Reste A Payer</th>
 	</tr>
@@ -90,8 +90,8 @@ endforeach; ?>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Gestion des Locations', array('controller' => 'locations', 'action' => 'tabella')); ?> </li>
 		<li><?php echo $this->Html->link('Page d\'acceuil', '/'); ?> </li>
 	</ul>

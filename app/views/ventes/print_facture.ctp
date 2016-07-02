@@ -59,7 +59,7 @@
 	<div id="left">
 		<?php if(!Configure::read('aser.xls_copy') || $show_aserb_num):?>
 		<span class="info"><?php if($thermal!='non') echo 'N° '.$facture['Facture']['numero'];
-                                            else echo 'Facture N° : '.$facture['Facture']['numero'];
+                                            else echo 'Invoice N° : '.$facture['Facture']['numero'];
 		?></span>
 		<?php endif;?>
 		<?php if(!$config['magasin']): ?>
@@ -73,7 +73,7 @@
 	<div id="right">
 		<?php if(!Configure::read('aser.xls_copy') || $show_aserb_num):?>
 			<?php if(!empty($facture['Tier']['name'])): ?>
-			<span class="info"><?php  echo 'Client : '.$facture['Tier']['name']; ?></span>
+			<span class="info"><?php  echo 'Customer : '.$facture['Tier']['name']; ?></span>
 			<?php endif ?>
 			<?php if(!empty($facture['Tier']['telephone'])): ?>
 			<span class="info"><?php  echo 'Tél : '.$facture['Tier']['telephone'] ?></span>
@@ -99,8 +99,8 @@
 			<?php else: ?>
 				<th>Quantité</th>
 			<?php endif; ?>
-			<th>Produit</th>
-			<th>PU</th>
+			<th>Product</th>
+			<th>Unit Price</th>
 			<th>PT</th>
 		</tr>
 		<?php
@@ -108,7 +108,7 @@
 		?>
 		<tr >
 			<td><?php echo $vente['Vente']['quantite']; ?>&nbsp;</td>
-			<td><?php echo ucwords($vente['Produit']['name']); ?>&nbsp;</td>
+			<td><?php echo ucwords($vente['Product']['name']); ?>&nbsp;</td>
 			<td><?php echo $vente['Vente']['PU']; ?>&nbsp;</td>
 			<td><?php echo $vente['Vente']['montant']; ?>&nbsp;</td>
 		</tr>
@@ -134,7 +134,7 @@
 			</tr>
 			<?php if($facture['Facture']['etat']!='payee'):?>
 			<tr>
-				<td colspan="3">RESTE A PAYER</td>
+				<td colspan="3">LEFT TO PAY</td>
 				<td><?php echo strtoupper($facture['Facture']['reste']); ?></th>
 			</tr>
 			<tr height="80">

@@ -1,7 +1,7 @@
 <h3><?php __('Tableau des marges de la période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' ');?></h3>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Produits</th>
+			<th>Products</th>
 			<th>Marge Brut</th>
 			<th>Retours Brarudi</th>
 			<th>Casses Megas</th>
@@ -39,14 +39,14 @@
 			?></td>
 	</tr>
 </table>
-	<?php echo $this->Form->create('Produit');?>
+	<?php echo $this->Form->create('Product');?>
 		<?php
-		echo $this->Form->input('date1',array('label'=>'Choisissez une date début',
+		echo $this->Form->input('date1',array('label'=>'Start Date',
 												'type'=>'date',
 												'format'=>'d-m-y')
 											);									
-		echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport',
+		echo $this->Form->input('date2',array('label'=>'End Date',
 												'type'=>'date',
 												'format'=>'d-m-y')
 											);
-		echo $this->Form->end(__('Envoyer', true));?>
+		echo $this->Form->end(__('Save', true));?>

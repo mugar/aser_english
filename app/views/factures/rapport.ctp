@@ -1,12 +1,12 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Facture',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('numero',array('value'=>'','label'=>'N° de la facture'));
-			echo $this->Form->input('tier_id',array('label'=>'Client','multiple'=>true,'options'=>$tiers1));
+			echo $this->Form->input('tier_id',array('label'=>'Customer','multiple'=>true,'options'=>$tiers1));
 			echo $this->Form->input('Facture.etat',array('options'=>array('toutes'=>'toutes',
 																					'payee'=>'payee',
 																					'credit'=>'credit',
@@ -16,7 +16,7 @@
 																					),
 																'multiple'=>true,
 																'selected'=>'toutes',
-																'label'=>'Etat de la facture'
+																'label'=>'State de la facture'
 																	));
 			
 			echo $this->Form->input('operation',array('label'=>'Type de Facture','options'=>$models));
@@ -29,7 +29,7 @@
 		
 			echo $this->Form->input('Tier.compagnie',array('value'=>''));
 		echo $this->Form->input('monnaie',array('options'=>$monnaies));
-		echo $this->Form->input('date1',array('label'=>'Choisissez une date début','type'=>'text'));				
+		echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
 		echo $this->Form->input('date2',array('label'=>'et une date fin pour la recherche','type'=>'text'));
 		//echo $this->Form->input('export',array('label'=>'Répartition par Personnel','type'=>'checkbox'));
 		?>
@@ -56,7 +56,7 @@
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th width="200">Tier</th>
 			<th width="100">Facture</th>
-			<th>Etat</th>
+			<th>State</th>
 			<th width="200">Montant</th>
 			<th width="300">Reste A Payer</th>
 			<th width="300">Deposit</th>
@@ -111,8 +111,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li class="link"  onclick = "mass_pyt('off')" >Paiement en masse</li>
 		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>

@@ -1,6 +1,6 @@
 <div id='view'>
 <div class="document">
-<h3>Rapport Des Produits <?php if(!empty($stock)) echo '(Stock : '.ucfirst($stock['Stock']['name']).')';?></h3>
+<h3>Rapport Des Products <?php if(!empty($stock)) echo '(Stock : '.ucfirst($stock['Stock']['name']).')';?></h3>
 <br />
 <h4><?php echo '(Pour La date du '.date('d/m/Y').' à '.date('H:i');
 		 echo '. '.count($datas).' produits au total';
@@ -10,8 +10,8 @@
 <br/>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Nom Du Produit</th>
-			<th>Type De Produit</th>
+			<th>Nom Du Product</th>
+			<th>Type De Product</th>
 			<th>Section</th>
 			<th>Groupe</th>
 			<th>Quantité</th>
@@ -23,7 +23,7 @@
 		
 	?>
 	<tr>
-			<td><?php echo  $data['Produit']; ?></td>
+			<td><?php echo  $data['Product']; ?></td>
 			<td><?php echo  $data['Type']; ?></td>
 			<td><?php echo  $data['Section']; ?></td>
 			<td><?php echo  $data['Groupe']; ?></td>
@@ -48,9 +48,9 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Liste des Products', array('controller' => 'produits', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 

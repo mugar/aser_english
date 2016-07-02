@@ -7,7 +7,7 @@
 });
 </script>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche','action'=>'journal'));?>
@@ -35,9 +35,9 @@
 			echo ' à '.date('H:i:s').', ';
 			echo 'N° : '.$journalInfo['Journal']['numero'];
 			if($journalInfo['Journal']['closed']) 
-				echo ' Etat : <span id="etat_journal" closed="1">clôturée</span>';
+				echo ' State : <span id="etat_journal" closed="1">clôturée</span>';
 			else
-				echo ' Etat : <span id="etat_journal" closed="0">Non clôturée</span>';
+				echo ' State : <span id="etat_journal" closed="0">Non clôturée</span>';
 			echo '<span style="display:none" id="journal_id">'.$journalInfo['Journal']['id'].'</span>';
 			echo '<span style="display:none" id="personnel_id">'.$journalInfo['Journal']['personnel_id'].'</span>';
 			echo ')';
@@ -123,7 +123,7 @@
 <table cellpadding="0" cellspacing="0" id="pytTab">
 	<tr>	
 			<th>Numero</th>
-			<th>Etat</th>
+			<th>State</th>
 	</tr>
 	<?php
 		foreach ($journals as $journal):
@@ -143,14 +143,14 @@
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
-			<th>Client</th>
-			<th>N° Facture</th>
-			<th>Etat Facture</th>
+			<th>Customer</th>
+			<th>Invoice N°</th>
+			<th>State Facture</th>
 			<th>Montant Original</th>
 			<th>Reduction %</th>
 			<th>Montant</th>
 			<th>Reste</th>
-			<th>Monnaie</th>
+			<th>Currency</th>
 			<?php if(!Configure::read('aser.magasin')):?>
 				<th>Table</th>
 				<th>Serveur</th>
@@ -211,11 +211,11 @@
 	<tr>	
 			<th>Date de Paiement</th>
 			<th>Date de Facturation</th>
-			<th>N° Facture</th>
+			<th>Invoice N°</th>
 			<th>Type De Facture</th>
 			<th>Montant</th>
 			<th>Montant Equivalent</th>
-			<th>Mode de Paiement</th>
+			<th>Payment Mode</th>
 			<th>Réference</th>
 			<th>Personnel</th>
 	</tr>
@@ -234,11 +234,11 @@
 	<tr>	
 			<th>Date de Paiement</th>
 			<th>Date de Facturation</th>
-			<th>N° Facture</th>
+			<th>Invoice N°</th>
 			<th>Type De Facture</th>
 			<th>Montant</th>
 			<th>Montant Equivalent</th>
-			<th>Mode de Paiement</th>
+			<th>Payment Mode</th>
 			<th>Réference</th>
 			<th>Personnel</th>
 	</tr>
@@ -329,8 +329,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick="print_documents(jQuery('#etat_journal').attr('closed'))" >Imprimer</li>
-		<li class="link"  onclick="recherche()" >Options de Recherche</li>
+		<li class="link"  onclick="print_documents(jQuery('#etat_journal').attr('closed'))" >Print</li>
+		<li class="link"  onclick="recherche()" >Search Options</li>
 		<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(2,4))):?>
 			<li class="link"  id="cloturer" >Clôturer le rapport</li>
 		<?php endif;?>
@@ -344,9 +344,9 @@
 		<?php else : ?>
 			<li><?php echo $this->Html->link('Interface De Vente', array('controller' => 'ventes', 'action' => 'index')); ?> </li>
 		<?php endif; ?>
-		<li class="link"  onclick="jQuery('#journal_details').slideToggle()" >Afficher/Masquer les Détails</li>
+		<li class="link"  onclick="jQuery('#journal_details').slideToggle()" >Show/Hide les Détails</li>
 		<?php if(Configure::read('aser.aserb')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
-			<li class="link"  onclick="copier_bills_dans_b(1)" >Envoyer les factures </li>
+			<li class="link"  onclick="copier_bills_dans_b(1)" >Save les factures </li>
 			<li class="link"  onclick="copier_bills_dans_b(0)" >Enlever les factures</li>
 		<?php endif;?>
 	</ul>

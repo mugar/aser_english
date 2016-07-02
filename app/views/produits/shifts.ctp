@@ -17,7 +17,7 @@
 <br/>
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr class="border">
-		<th rowspan="2" width="100" >Produit</th>
+		<th rowspan="2" width="100" >Product</th>
 		<?php foreach($stockNames as $stockName):?>
 			<th colspan="<?php echo count($shifts);?>" ><?php echo $stockName['Stock']['name'];?></th>
 		<?php endforeach;?>
@@ -32,7 +32,7 @@
 	</tr>
 	<?php foreach($produits as $produit):?>
 		<tr>
-			<td> <?php echo $this->Html->link($produit['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $produit['Produit']['id'],0));?></td>
+			<td> <?php echo $this->Html->link($produit['Product']['name'], array('controller' => 'produits', 'action' => 'view', $produit['Product']['id'],0));?></td>
 			<?php 
 		//	exit(debug($produit['stocks']));
 			foreach($produit['stocks'] as $stockQty){
@@ -65,17 +65,17 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('action' => 'index')); ?></li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Liste des Products', array('action' => 'index')); ?></li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Produit',array('id'=>'recherche'));?>
+	<?php echo $this->Form->create('Product',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('Historique.choix',array('label'=>'Type de rapport','options'=>$choixs));

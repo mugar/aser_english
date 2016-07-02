@@ -12,13 +12,13 @@
 		echo $this->Form->input('debit');
 		echo $this->Form->input('credit');	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Envoyer', true));?>
+<?php echo $this->Form->end(__('Save', true));?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Historiques', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Historiques', true)), array('action' => 'index'));?></li>
 		
 	</ul>
 </div>

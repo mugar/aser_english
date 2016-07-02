@@ -1,7 +1,7 @@
 <?php 
 ?>
 
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Facture',array('id'=>'recherche','action'=>'credit/'.$id));?>
@@ -9,7 +9,7 @@
 		<?php
 			echo $this->Form->input('numero',array('label'=>'N° de la facture'));
 			if(is_null($id)){
-				echo $this->Form->input('tier_id',array('label'=>'Client','selected'=>$id,'options'=>$tiers1));
+				echo $this->Form->input('tier_id',array('label'=>'Customer','selected'=>$id,'options'=>$tiers1));
 				echo $this->Form->input('Tier.compagnie');
 				echo $this->Form->input('Facture.show_less',array('type'=>'checkbox','label'=>'Afficher moins'));
 			}
@@ -17,7 +17,7 @@
 	</span>
 	<span class="right">
 		<?php
-		echo $this->Form->input('date1',array('label'=>'Choisissez une date début','type'=>'text'));				
+		echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
 		echo $this->Form->input('date2',array('label'=>'et une date fin pour la recherche','type'=>'text'));
 		?>
 	</span>
@@ -47,8 +47,8 @@
 			<th>Date</th>
 			<th width="100">Montant (BIF)</th>
 			<th width="100">Montant (USD)</th>
-			<th>N° Facture</th>
-			<th>Etat de la facture</th>
+			<th>Invoice N°</th>
+			<th>State de la facture</th>
 			<th width="150">Observation</th>
 			<th width="50">Action</th>
 	</tr>
@@ -68,7 +68,7 @@
 			if($current_client != $facture['Tier']['id']){
 				echo '<tr class="strong">';
 				echo '<td colspan="8" style="text-align: center;">';
-				echo 'Client : '.$facture['Tier']['name'].' --- Compagnie : '.$facture['Tier']['compagnie'].' --- telephone : '.$facture['Tier']['telephone'];
+				echo 'Customer : '.$facture['Tier']['name'].' --- Compagnie : '.$facture['Tier']['compagnie'].' --- telephone : '.$facture['Tier']['telephone'];
 				echo '</td>';
 				echo '</tr>';
 				$BIF=$USD=0;
@@ -135,8 +135,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link('Retour En arrière', $referer); ?> </li>
 	</ul>

@@ -11,8 +11,8 @@
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr>
 			<th>Quantité</th>
-			<th>Produit</th>
-			<th>PU</th>
+			<th>Product</th>
+			<th>Unit Price</th>
 			<th>Montant</th>
 			<th>Stock</th>
 			<th>Nature</th>
@@ -23,9 +23,9 @@
 	?>
 	<tr>
 			<td><?php echo  $perte['Perte']['quantite'];
-					if(isset($unites[$perte['Produit']['unite_id']])) echo ' '.$unites[$perte['Produit']['unite_id']]; 
+					if(isset($unites[$perte['Product']['unite_id']])) echo ' '.$unites[$perte['Product']['unite_id']]; 
 			?></td>
-			<td><?php echo  $perte['Produit']['name']; ?></td>
+			<td><?php echo  $perte['Product']['name']; ?></td>
 			<td><?php echo  $number->format($perte['Perte']['PU'],$formatting); ?></td>
 			<td><?php echo  $number->format($perte['Perte']['montant'],$formatting); ?></td>
 			<td><?php echo  $perte['Stock']['name']; ?></td>
@@ -47,8 +47,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Lister Pertes', array('controller' => 'pertes', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

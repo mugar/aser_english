@@ -106,14 +106,14 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Interface de Vente', array('action' => 'index')); ?></li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Journal',array('id'=>'recherche'));?>
@@ -124,8 +124,8 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début'));
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('date1',array('label'=>'Start Date'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>

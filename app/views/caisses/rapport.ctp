@@ -9,15 +9,15 @@
 <?php echo $this->Form->create('Caiss');?>
 <?php
 		echo $this->Form->input('Caiss.id',array('selected'=>0,'options'=>$options,'label'=>'Caisse'));
-		echo $this->Form->input('date1',array('label'=>'Choisissez une date début',
+		echo $this->Form->input('date1',array('label'=>'Start Date',
 												'type'=>'date',
 												'format'=>'d-m-y')
 											);									
-		echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport',
+		echo $this->Form->input('date2',array('label'=>'End Date',
 												'type'=>'date',
 												'format'=>'d-m-y')
 											);
-		echo $this->Form->end(__('Envoyer', true));
+		echo $this->Form->end(__('Save', true));
 		?>
 </fieldset>
 		</div>

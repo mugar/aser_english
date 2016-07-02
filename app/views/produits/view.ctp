@@ -93,18 +93,18 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('action' => 'index')); ?></li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Liste des Products', array('action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link('Retour En arrière', $referer); ?></li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Produit',array('id'=>'recherche','action'=>'view/'.$id));?>
+	<?php echo $this->Form->create('Product',array('id'=>'recherche','action'=>'view/'.$id));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('Historique.stock_id',array('label'=>'Stock'));
@@ -112,8 +112,8 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('Historique.date1',array('label'=>'Choisissez une date début'));
-			echo $this->Form->input('Historique.date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('Historique.date1',array('label'=>'Start Date'));
+			echo $this->Form->input('Historique.date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>

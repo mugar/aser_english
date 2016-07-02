@@ -1,10 +1,10 @@
 <?php $fonction = $session->read('Auth.Personnel.fonction_id'); ?>
 <div class="produits view">
-<h2><?php  __('Produit');?></h2>
+<h2><?php  __('Product');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['id']; ?>
+			<?php echo $produit['Product']['id']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Stock'); ?></dt>
@@ -24,40 +24,40 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['name']; ?>
+			<?php echo $produit['Product']['name']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PA'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['PA']; ?>
+			<?php echo $produit['Product']['PA']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PAMP'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['PAMP']; ?>
+			<?php echo $produit['Product']['PAMP']; ?>
 			&nbsp;
 		</dd>
 		
 	<?php if($fonction!=8): ?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('marge'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['marge']; ?>
+			<?php echo $produit['Product']['marge']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PVMP'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['PVMP']; ?>
+			<?php echo $produit['Product']['PVMP']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PV'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['PV']; ?>
+			<?php echo $produit['Product']['PV']; ?>
 			&nbsp;
 		</dd>
 	<?php endif; ?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Quantite'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['quantite']; ?>
+			<?php echo $produit['Product']['quantite']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Unite'); ?></dt>
@@ -67,32 +67,32 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Total'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['total']; ?>
+			<?php echo $produit['Product']['total']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Monnaie'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Currency'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['monnaie']; ?>
+			<?php echo $produit['Product']['monnaie']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Relations'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['relations']; ?>
+			<?php echo $produit['Product']['relations']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Minimum'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['min']; ?>
+			<?php echo $produit['Product']['min']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Expiration'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['expiration']; ?>
+			<?php echo $produit['Product']['expiration']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Actif'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Produit']['actif']; ?>
+			<?php echo $produit['Product']['actif']; ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -125,11 +125,11 @@
 			<?php echo $this->Html->link($relation['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $relation['Stock']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($relation['PremierProduit']['name'], array('controller' => 'produits', 'action' => 'view', $relation['PremierProduit']['id'])); ?>
+			<?php echo $this->Html->link($relation['PremierProduct']['name'], array('controller' => 'produits', 'action' => 'view', $relation['PremierProduct']['id'])); ?>
 		</td>
 		<td><?php echo $relation['Relation']['relation']; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($relation['DeuxiemeProduit']['name'], array('controller' => 'produits', 'action' => 'view', $relation['DeuxiemeProduit']['id'])); ?>
+			<?php echo $this->Html->link($relation['DeuxiemeProduct']['name'], array('controller' => 'produits', 'action' => 'view', $relation['DeuxiemeProduct']['id'])); ?>
 		</td>
 		<td><?php echo $relation['Relation']['quantite']; ?>&nbsp;</td><td>
 			<?php echo $this->Html->link($relation['Unite']['name'], array('controller' => 'unites', 'action' => 'view', $relation['Unite']['id'])); ?>
@@ -161,11 +161,11 @@
 	?>
 	<tr<>
 		
-		<td><?php echo $detail['ProduitDetail']['id']; ?>&nbsp;</td>
-		<td><?php echo $detail['ProduitDetail']['quantite']; ?>&nbsp;</td>
-		<td><?php echo $detail['ProduitDetail']['PA']; ?>&nbsp;</td>
-		<td><?php echo $detail['ProduitDetail']['date']; ?>&nbsp;</td>
-		<td><?php echo $detail['ProduitDetail']['batch']; ?>&nbsp;</td>
+		<td><?php echo $detail['ProductDetail']['id']; ?>&nbsp;</td>
+		<td><?php echo $detail['ProductDetail']['quantite']; ?>&nbsp;</td>
+		<td><?php echo $detail['ProductDetail']['PA']; ?>&nbsp;</td>
+		<td><?php echo $detail['ProductDetail']['date']; ?>&nbsp;</td>
+		<td><?php echo $detail['ProductDetail']['batch']; ?>&nbsp;</td>
 	</tr>
 <?php   endforeach; ?>
 	</table>
@@ -177,13 +177,13 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Produit', true)), array('action' => 'edit', $produit['Produit']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Produits', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Groupes', true)), array('controller' => 'groupes', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Relations', true)), array('controller' => 'relations', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Entrees', true)), array('controller' => 'entrees', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Sortis', true)), array('controller' => 'sortis', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Product', true)), array('action' => 'edit', $produit['Product']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Products', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Groupes', true)), array('controller' => 'groupes', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Relations', true)), array('controller' => 'relations', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Entrees', true)), array('controller' => 'entrees', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Sortis', true)), array('controller' => 'sortis', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

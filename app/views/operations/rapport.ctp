@@ -14,7 +14,7 @@
 			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).', monnaie : '.$monnaie.')</h4>';
 	}
 	else {
-		echo '<h4>(Monnaie : '.$monnaie.')</h4>';
+		echo '<h4>(Currency : '.$monnaie.')</h4>';
 	}
 ?>
 <br/>
@@ -24,7 +24,7 @@
 			<th>Date</th>
 			<th width="50">N° Ordre</th>
 			<th width="200">Libéllé</th>
-			<th width="200">Mode de Paiement</th>
+			<th width="200">Payment Mode</th>
 			<th width="150">Entrée</th>
 			<th width="150">Sortie</th>
 			<th width="150">Solde Progréssif</th>
@@ -116,21 +116,21 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link(sprintf(__('Liste des Opérations', true), __('Operation', true)), array('action' => 'index')); ?></li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Operation',array('id'=>'recherche','action'=>'rapport/'.$model.'/'.$id));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début'));
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('date1',array('label'=>'Start Date'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 												
 		?>
 	</span>

@@ -1,14 +1,14 @@
 <div id='view'>
 <div class="document">
-<h3>Rapport des Réservations Par Nationalité</h3>
+<h3>Bookings by Nationality Report</h3>
 <br/>
-<h4>(<?php echo 'Pour le mois de '.$this->MugTime->giveMonth($mois).' '.$annee;?>)</h4>
+<h4>(<?php echo 'For '.$this->MugTime->giveMonth($mois).' '.$annee;?>)</h4>
 <br/>
 <br/>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Nationalité</th>
-			<th>Nombres De Réservations</th>
+			<th>Nationality</th>
+			<th>Number of Bookings</th>
 	</tr>
 		<?php
 		$total=0;
@@ -33,26 +33,26 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Gestion des Réservations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 	</ul>
 </div>
 
 <!--goTo  form -->
 
 <!--goTo  form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog" id="goto">
 	<?php echo $this->Form->create('Reservation',array('id'=>'recherche'));?>
 	<span class='left'>
 		<?php
-			echo $this->Form->input('mois',array('id'=>'ukwezi','type'=>'date','dateFormat'=>'M'));
+			echo $this->Form->input('mois',array('id'=>'ukwezi', 'label'=>'Month','type'=>'date','dateFormat'=>'M'));
 		?>
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('annee',array('id'=>'umwaka','label'=>'Année','type'=>'date','dateFormat'=>'Y'));
+			echo $this->Form->input('annee',array('id'=>'umwaka','label'=>'Year','type'=>'date','dateFormat'=>'Y'));
 		?>
 	</span>
 	</form>

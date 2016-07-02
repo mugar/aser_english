@@ -2,20 +2,20 @@
 <?php if($type=='links'): ?>
 	<?php if(in_array('bons',$actions)): ?>
 		<li class="link" onclick = "documents('checkbox','bon')" >Créer Bon </li>
-		<li class="link" onclick = "remove_docs('checkbox','bon')" >Effacer Bon </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Bons', true)), array('controller' => 'bons', 'action' => 'index')); ?> </li>
+		<li class="link" onclick = "remove_docs('checkbox','bon')" >Delete Bon </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Bons', true)), array('controller' => 'bons', 'action' => 'index')); ?> </li>
 	<?php endif; ?>
 	
 	<?php if(in_array('factures',$actions)): ?>
 		<li class="link" onclick = "documents('checkbox','facture')" >Créer Facture </li>
 		<li class="link" onclick = "remove_docs('checkbox','facture')" >Annuler Facture </li>		
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Factures', true)), array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Invoices', true)), array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	<?php endif; ?>
 	
 	<?php if(in_array('commandes',$actions)): ?>	
 		<li class="link" onclick = "documents('checkbox','commande')" >Créer Commande </li>
-		<li class="link" onclick = "remove_docs('checkbox','commande')" >Effacer Commande </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Commandes', true)), array('controller' => 'commandes', 'action' => 'index')); ?> </li>
+		<li class="link" onclick = "remove_docs('checkbox','commande')" >Delete Commande </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Commandes', true)), array('controller' => 'commandes', 'action' => 'index')); ?> </li>
 	<?php endif; ?>
 <?php else: ?>
 	<?php if(in_array('commandes',$actions)): ?>

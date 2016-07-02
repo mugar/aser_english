@@ -1305,12 +1305,12 @@ class ReservationsController extends AppController {
 		//taux d'occupation calculeus
 		$occupation=$this->occupation($days, $cur_month, $cur_year);
 		$chambres1 = $this->Reservation->Chambre->find('list',array('order'=>'Chambre.name asc'));
-		$etats=array('en_attente'=>'En attente',
-					'confirmee'=>'Confirmée',
-					'arrivee'=>'Arrivée',
-					'partie'=>'Partie',
-					'changee'=>'Changée',
-					'credit'=>'Crédit'
+		$etats=array('en_attente'=>'Pending',
+					'confirmee'=>'Confirmed',
+					'arrivee'=>'Checked IN',
+					'partie'=>'Checked OUT',
+					'changee'=>'Switched',
+					'credit'=>'Not Payed'
 					);
 		$this->set(compact('etats',
 							'days',

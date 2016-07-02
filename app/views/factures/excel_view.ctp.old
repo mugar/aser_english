@@ -36,7 +36,7 @@ header('Content-Disposition: attachment; filename='.$filename);
 			<?php if(!in_array($facture['Facture']['date_emission'],array('0000-00-00','',null))) echo 'Emise le : '.$this->MugTime->toFrench($facture['Facture']['date_emission']).'<br />';?>	
 			<?php 
 				$etat=($type=='proforma')?'proforma':$facture['Facture']['etat'];
-				echo 'Etat :  <span id="etat">'.$etat.'</span>';
+				echo 'State :  <span id="etat">'.$etat.'</span>';
 			?>	<br />
 			<?php if(!empty($facture['Facture']['observation']))
 					echo 'Motif : '.$facture['Facture']['observation'];
@@ -89,7 +89,7 @@ header('Content-Disposition: attachment; filename='.$filename);
 	<tr>
 			<th>Libellé</th>
 			<th>Quantité</th>
-			<th>PU</th>
+			<th>Unit Price</th>
 			<th>Montant (<?php echo $facture['Facture']['monnaie']; ?>)</th>
 	</tr>
 		<?php
@@ -119,7 +119,7 @@ header('Content-Disposition: attachment; filename='.$filename);
 		
 	?>
 	<tr>
-			<td><?php echo  $vente['Produit']['name']; ?></td>
+			<td><?php echo  $vente['Product']['name']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['montant'],$formatting); ?></td>
@@ -139,7 +139,7 @@ header('Content-Disposition: attachment; filename='.$filename);
 <?php endforeach; ?>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0,$formatting); ?></span></td>
@@ -159,7 +159,7 @@ header('Content-Disposition: attachment; filename='.$filename);
 	<tr>
 <?php if(!in_array($type,array('proforma','globale'))):?>
 	<tr class="strong">
-		<td>RESTE A PAYER</td>
+		<td>LEFT TO PAY</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span id="reste_a_payer"><?php echo ''.$number->format($facture['Facture']['reste']+0,$formatting); ?></span></td>

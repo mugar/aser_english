@@ -9,7 +9,7 @@
 			<?php if(!in_array($facture['Facture']['date_emission'],array('0000-00-00','',null))) echo 'Emise le : '.$this->MugTime->toFrench($facture['Facture']['date_emission']).'<br />';?>	
 			<?php 
 				$etat=($type=='proforma')?'proforma':$facture['Facture']['etat'];
-				echo 'Etat :  <span id="etat">'.$etat.'</span>';
+				echo 'State :  <span id="etat">'.$etat.'</span>';
 			?>	<br />
 			<?php if(!empty($facture['Facture']['observation']))
 					echo 'Motif : '.$facture['Facture']['observation'];
@@ -105,7 +105,7 @@
 <?php endforeach; ?>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0); ?></span></td>
 	<tr>
@@ -121,7 +121,7 @@
 		<td><span id="a_payer" total="<?php echo $facture['Facture']['montant']; ?>"><?php echo ''.$number->format($facture['Facture']['montant']+0); ?></span></td>
 	<tr>
 	<tr class="strong">
-		<td>RESTE A PAYER</td>
+		<td>LEFT TO PAY</td>
 		<td>&nbsp;</td>
 		<td><span id="reste_a_payer"><?php echo ''.$number->format($facture['Facture']['reste']+0); ?></span></td>
 	<tr>
@@ -134,9 +134,9 @@
 			<th>Date</th>
 			<th>Béneficiaire</th>
 		<?php endif; ?>
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Quantité</th>
-			<th>PU</th>
+			<th>Unit Price</th>
 			<th>Montant (en <?php echo $facture['Facture']['monnaie'];?>)</th>
 	</tr>
 		<?php
@@ -152,7 +152,7 @@
 			<td><?php echo  $vente['Facture']['date']; ?></td>
 			<td><?php echo $facture['Facture']['beneficiaire']; ?></td>
 		<?php endif; ?>
-			<td><?php echo  $vente['Produit']['name']; ?></td>
+			<td><?php echo  $vente['Product']['name']; ?></td>
 			<td><?php echo  $vente['Vente']['quantite']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
 			<td style="text-align=right;"><?php echo  $number->format($vente['Vente']['montant']+0,$formatting); ?></td>
@@ -160,7 +160,7 @@
 <?php endforeach; ?>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<?php if(Configure::read('aser.beneficiaires')&&!empty($facture['Facture']['beneficiaire'])):?>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
@@ -213,7 +213,7 @@
 		<td style="text-align=right;"><span id="a_payer" total="<?php echo $facture['Facture']['montant']; ?>"><?php echo ''.$number->format($facture['Facture']['montant']+0,$formatting); ?></span></td>
 	<tr>
 	<tr class="strong">
-		<td>RESTE A PAYER</td>
+		<td>LEFT TO PAY</td>
 		<?php if(Configure::read('aser.beneficiaires')&&!empty($facture['Facture']['beneficiaire'])):?>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
@@ -234,7 +234,7 @@
 	<tr>
 			<th>Libellé</th>
 			<th>Quantité</th>
-			<th>PU</th>
+			<th>Unit Price</th>
 			<th>Montant (<?php echo $facture['Facture']['monnaie']; ?>)</th>
 	</tr>
 		<?php
@@ -264,7 +264,7 @@
 		
 	?>
 	<tr>
-			<td><?php echo  $vente['Produit']['name']; ?></td>
+			<td><?php echo  $vente['Product']['name']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['montant'],$formatting); ?></td>
@@ -284,7 +284,7 @@
 <?php endforeach; ?>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0,$formatting); ?></span></td>
@@ -304,7 +304,7 @@
 	<tr>
 <?php if(!in_array($type,array('proforma','globale'))):?>
 	<tr class="strong">
-		<td>RESTE A PAYER</td>
+		<td>LEFT TO PAY</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span id="reste_a_payer"><?php echo ''.$number->format($facture['Facture']['reste']+0,$formatting); ?></span></td>
@@ -341,9 +341,9 @@
 <?php if($model=='Proforma') :?>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Quantité</th>
-			<th>PU</th>
+			<th>Unit Price</th>
 			<th>Montant (<?php echo $facture['Facture']['monnaie']; ?>)</th>
 	</tr>
 		<?php
@@ -355,7 +355,7 @@
 		}
 	?>
 	<tr>
-			<td><?php echo  $vente['Produit']['name']; ?></td>
+			<td><?php echo  $vente['Product']['name']; ?></td>
 			<td><?php echo  $vente['Proforma']['quantite'].' '.$vente['Unite']['name']; ?></td>
 			<td><?php echo  $number->format($vente['Proforma']['PU']); ?></td>
 			<td><?php echo  $number->format($vente['Proforma']['montant']); ?></td>
@@ -363,7 +363,7 @@
 <?php endforeach; ?>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0); ?></span></td>
@@ -414,7 +414,7 @@
 <?php endforeach; ?>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<?php if(!Configure::read('aser.mahanaim')):?>
 			<td>&nbsp;</td>
 		<?php endif;?>
@@ -436,7 +436,7 @@
 		<td><span id="a_payer" total="<?php echo $facture['Facture']['montant']; ?>"><?php echo ''.$number->format($facture['Facture']['montant']+0); ?></span></td>
 	<tr>
 	<tr class="strong">
-		<td>RESTE A PAYER</td>
+		<td>LEFT TO PAY</td>
 		<?php if(!Configure::read('aser.mahanaim')):?>
 			<td>&nbsp;</td>
 		<?php endif;?>
@@ -458,7 +458,7 @@
 	</tr>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>HTVA</td>
+		<td>WITHOUT TVA</td>
 		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0); ?></span></td>
 	<tr>
 	<tr class="strong">
@@ -471,7 +471,7 @@
 		<td><span id="a_payer" total="<?php echo $facture['Facture']['montant']; ?>"><?php echo ''.$number->format($facture['Facture']['montant']+0); ?></span></td>
 	<tr>
 	<tr class="strong">
-		<td>RESTE A PAYER</td>
+		<td>LEFT TO PAY</td>
 		<td><span id="reste_a_payer"><?php echo ''.$number->format($facture['Facture']['reste']+0); ?></span></td>
 	<tr>
 </table>
@@ -499,16 +499,16 @@
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
 		<?php if(Configure::read('aser.xls_copy')):?>
-			<li class="link" onclick = "custom_printing('<?php echo $facture['Facture']['id']?>','<?php echo 'factures/view/'.$facture['Facture']['id'].'/'.$type.'/2'?>')" >Imprimer avec Détails</li>
+			<li class="link" onclick = "custom_printing('<?php echo $facture['Facture']['id']?>','<?php echo 'factures/view/'.$facture['Facture']['id'].'/'.$type.'/2'?>')" >Print avec Détails</li>
 		<?php endif;?>
 		<?php if(($model!='Proforma')&&(!in_array($type,array('proforma')))&&($facture['Facture']['etat'])!='annulee'):?>
-			<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle()" >Afficher/Masquer les Paiements</li>
+			<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle()" >Show/Hide les Paiements</li>
 			<li class="link" onclick = "pyt('<?php echo $this->params['pass'][0];?>','<?php echo $type;?>')" >Créer un Paiement</li>
 			<span id="pyts_links" style="display:none;">
 				<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))) :?>
-					<li class="link" onclick = "remove_pyt('off')" >Effacer un Paiement</li>
+					<li class="link" onclick = "remove_pyt('off')" >Delete un Paiement</li>
 				<?php endif;?>
 			</span>
 		<?php endif;?>
@@ -517,7 +517,7 @@
 				$config['annulee']=Configure::read('aser.annulee');
 			if((in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))&&empty($config['annulee']))
 					||in_array($session->read('Auth.Personnel.id'),$config['annulee'])) :?>
-				<li class="link" onclick = "edit_facture()" >Modifier la facture</li>
+				<li class="link" onclick = "edit_facture()" >Edit la facture</li>
 				<li class="link" onclick = "annuler_facture('<?php echo $model.'_'.$this->params['pass'][0];?>')" >Annuler la facture</li>
 			<?php endif;?>
 		<?php endif;?>
@@ -528,7 +528,7 @@
 				<li><?php echo $this->Html->link('Interface de Vente', array('controller' => 'ventes', 'action' => 'index')); ?> </li>
 			<?php endif;?>
 			<?php if(Configure::read('aser.comptabilite')):?>
-			<li class="link" onclick = "jQuery('#billView').slideToggle();jQuery('#extras_vue_cptable').slideToggle();" >Afficher/Masquer La version comptable</li>
+			<li class="link" onclick = "jQuery('#billView').slideToggle();jQuery('#extras_vue_cptable').slideToggle();" >Show/Hide La version comptable</li>
 			<?php endif;?>
 			<li><?php echo $this->Html->link(__('Afficher les Commandes envoyées',true), array('controller' => 'ventes', 'action' => 'showOrders/'.$facture['Facture']['id'])); ?> </li>
 		<?php endif;?>
@@ -558,7 +558,7 @@
 			<li class="link" onclick = "num()" >Changer le numéro</li>
 		<?php endif;?>
 		<?php if(($model=='Service')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))):?>
-			<li class="link" onclick = "facturation_services('<?php echo $id;?>')" >Modifier le service</li>
+			<li class="link" onclick = "facturation_services('<?php echo $id;?>')" >Edit le service</li>
 		<?php endif;?>
 		<li><?php echo $this->Html->link('Retour En Arrière', $referer); ?> </li>
 	</ul>

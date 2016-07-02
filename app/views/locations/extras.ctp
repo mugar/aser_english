@@ -22,8 +22,8 @@
 			<th>Opération</th>
 			<th>Montant</th>
 			<th>Reste</th>
-			<th>Monnaie</th>
-			<th>Etat Paiement</th>
+			<th>Currency</th>
+			<th>State Paiement</th>
 			<th>Date</th>
 			<th>Echéance</th>
 		
@@ -56,11 +56,11 @@
 <div class="actions">
 	<h3>Actions</h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link" onclick = "<?php echo 'facture_global('.$this->params['pass'][0].')';?>" >Facture Global</li>
 		<li class="link" onclick = "remove_facture()" >Annuler la facture</li>
 		<li class="link"  onclick = "mass_pyt('off')" >Payer en masse</a> </li>
-		<li  class="link"  onclick = "recherche()" >Options de Recherche</a> </li>
+		<li  class="link"  onclick = "recherche()" >Search Options</a> </li>
 		<li><?php echo $this->Html->link('Lister Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link('Tableau des Occupations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 	</ul>
@@ -90,7 +90,7 @@
 
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Reservation',array('id'=>'recherche','action'=>'extras'));?>
@@ -102,7 +102,7 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('depart',array('id'=>'DateDepart','type'=>'text'));			
+			echo $this->Form->input('depart',array('id'=>'DateDeparture','type'=>'text'));			
 			echo $this->Form->input('tier',array('type'=>'hidden','value'=>$tierId));				
 			echo $this->Form->input('facture',array('type'=>'hidden','value'=>$factureId));	
 			?>

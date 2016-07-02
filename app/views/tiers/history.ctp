@@ -9,15 +9,15 @@
 <?php echo $this->Form->create('Tier');?>
 <?php
 		echo $this->Form->input('Tier.id',array('label'=>'Tier id','type'=>'text'));
-		echo $this->Form->input('date1',array('label'=>'Choisissez une date début',
+		echo $this->Form->input('date1',array('label'=>'Start Date',
 												'type'=>'date',
 												'format'=>'d-m-y')
 											);									
-		echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport',
+		echo $this->Form->input('date2',array('label'=>'End Date',
 												'type'=>'date',
 												'format'=>'d-m-y')
 											);
-		echo $this->Form->end(__('Envoyer', true));
+		echo $this->Form->end(__('Save', true));
 		?>
 </fieldset>
 </div>
@@ -28,7 +28,7 @@
 <table id="Entree" class="tableau" cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Tier</th>
-			<th>Produits</th>
+			<th>Products</th>
 			<th>quantité</th>
 			<th>Montant</th>
 			<th>Paiement</th>
@@ -47,7 +47,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $Entree['Tier']['name']; ?></td>
-			<td><?php echo  $Entree['Produit']['name']; ?></td>
+			<td><?php echo  $Entree['Product']['name']; ?></td>
 			<td><?php echo  $Entree['Entree']['quantite']; ?></td>
 			<td><?php echo  $Entree['Entree']['montant']; ?></td>
 			<td><?php echo  $Entree['Entree']['paiement']; ?></td>
@@ -66,7 +66,7 @@
 <table id="sorti" class="tableau" cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Tier</th>
-			<th>Produits</th>
+			<th>Products</th>
 			<th>Elément</th>
 			<th>quantité</th>
 			<th>Montant</th>
@@ -85,7 +85,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $sorti['Tier']['name']; ?></td>
-			<td><?php echo  $sorti['Produit']['name']; ?></td>
+			<td><?php echo  $sorti['Product']['name']; ?></td>
 			<td><?php echo  $sorti['Sorti']['element']; ?></td>
 			<td><?php echo  $sorti['Sorti']['quantite']; ?></td>
 			<td><?php echo  $sorti['Sorti']['montant']; ?></td>
@@ -172,7 +172,7 @@
 <table id="Pret" class="tableau" cellpadding="0" cellspacing="0">
 	<tr >
 			<th>Tier</th>
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Pris</th>
 			<th>Remis</th>
 			<th>Reste</th>
@@ -190,7 +190,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $Pret['Tier']['name']; ?></td>
-			<td><?php echo  $Pret['Produit']['name']; ?></td>
+			<td><?php echo  $Pret['Product']['name']; ?></td>
 			<td><?php echo  $Pret['Pret']['pris']; ?></td>
 			<td><?php echo  $Pret['Pret']['remis']; ?></td>
 			<td><?php echo  $Pret['Pret']['reste']; ?></td>

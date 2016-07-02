@@ -6,4 +6,4 @@ En construction !
 		echo $this->Form->file('Config.file');
 ?> 
 </fieldset>
-		<?php echo $this->Form->end(__('Envoyer', true)); ?>-->
+		<?php echo $this->Form->end(__('Save', true)); ?>-->

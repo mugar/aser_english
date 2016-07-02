@@ -17,12 +17,12 @@
 <thead>
 	<tr>
 			<th>Date</th>
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Qté</th>
 			<th>PV</th>
 			<th>PT</th>
-			<th >N° Facture</th>
-			<th >Effacer Par</th>
+			<th >Invoice N°</th>
+			<th >Delete Par</th>
 			<th >Observation</th>
 	</tr>
 </thead>
@@ -39,7 +39,7 @@
 			
 			<td><?php echo  $vente_efface['VenteEfface']['date']; ?></td>
 			<td>
-				<?php echo $vente_efface['Produit']['name']; ?>
+				<?php echo $vente_efface['Product']['name']; ?>
 			</td>
 			<td><?php echo  $number->format($vente_efface['VenteEfface']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente_efface['VenteEfface']['PU'],$formatting); ?></td>
@@ -59,12 +59,12 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents(0)" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents(0)" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>

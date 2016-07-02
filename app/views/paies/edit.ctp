@@ -16,15 +16,15 @@
 		echo $this->Form->input('annee');
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Envoyer', true));?>
+<?php echo $this->Form->end(__('Save', true));?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(__('Effacer', true), array('action' => 'delete', $this->Form->value('Paie.id')), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $this->Form->value('Paie.id'))); ?></li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Paies', true)), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Salaires', true)), array('controller' => 'salaires', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Salaire', true)), array('controller' => 'salaires', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Paie.id')), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $this->Form->value('Paie.id'))); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Paies', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Salaires', true)), array('controller' => 'salaires', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Salaire', true)), array('controller' => 'salaires', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

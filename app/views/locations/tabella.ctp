@@ -105,9 +105,9 @@
 ?>
 <div class="tabella" id="tabella" type="locations" qty="<?php echo Configure::read('aser.conference-manual');?>">
 <div class="reservations_paging">
-	<?php echo $this->Html->link($this->Html->image('back.png', array('alt'=> 'précédent', 'title'=>'Aller au mois précédent','border' => '0')), array('controller' => 'locations', 'action' => 'tabella', $prev_month.'/'.$prev_year),array('target' => '_self', 'escape' => false)); ?>
+	<?php echo $this->Html->link($this->Html->image('back.png', array('alt'=> 'previous', 'title'=>'Aller au mois previous','border' => '0')), array('controller' => 'locations', 'action' => 'tabella', $prev_month.'/'.$prev_year),array('target' => '_self', 'escape' => false)); ?>
 	<h3 id="title"  days="<?php echo $days ?>" month="<?php echo $cur_month?>"  year="<?php echo $cur_year ?>"><?php echo '&nbsp; Locations pour le mois de '.$this->MugTime->giveMonth($cur_month).' '.$cur_year.' &nbsp;'; ?></h3>
-	<?php echo $this->Html->link($this->Html->image('next.png', array('alt'=> 'suivant', 'title'=>'Aller au mois suivant','border' => '0')), array('controller' => 'locations', 'action' => 'tabella', $next_month.'/'.$next_year),array('target' => '_self', 'escape' => false)); ?>
+	<?php echo $this->Html->link($this->Html->image('next.png', array('alt'=> 'next', 'title'=>'Aller au mois next','border' => '0')), array('controller' => 'locations', 'action' => 'tabella', $next_month.'/'.$next_year),array('target' => '_self', 'escape' => false)); ?>
 </div>
 <br />
 <br />
@@ -213,15 +213,15 @@
 <ul id="myMenu" class="contextMenu" style="display:none">
 	<li class="igikorwa"><a href="#state">Changer l'etat</a></li>
 	<li class="igikorwa"><a href="#annulee">Annulée la location</a></li>
-	<li class="igikorwa"><a href="#client">Détails du Client</a></li>
+	<li class="igikorwa"><a href="#client">Détails du Customer</a></li>
 	<li class="igikorwa"><a href="#proforma">Facture Pro-forma</a></li>
 	<li class="igikorwa"><a href="#fact_loca">Facture Location</a></li>
 	<?php if(!Configure::read('aser.conference-resto-reception')):?>
 		<li class="igikorwa"><a href="#global">Facture Globale</a></li>
 	<?php else:?>
-		<li class="igikorwa"><a href="#edit_location_bill">Modifier la facture</a></li>
+		<li class="igikorwa"><a href="#edit_location_bill">Edit la facture</a></li>
 	<?php endif;?>
-	<li class="igikorwa"><a href="#edit_location_proforma">Modifier le pro-forma</a></li>
+	<li class="igikorwa"><a href="#edit_location_proforma">Edit le pro-forma</a></li>
 	<li class="igikorwa"><a href="#trace">Historique</a></li>
 </ul>
 <!--ajax_add form -->
@@ -229,7 +229,7 @@
 <div id="location_boxe" style="display:none" title='Location pour la Salle : <span id="room_number"></span> <br><strong>Période du : <span id="arrivee"></span> au : <span id="depart"></span>'>
 
 <div class="dialog">
-<fieldset><legend>Détails Client</legend>
+<fieldset><legend>Détails Customer</legend>
 	<div id="message_tier"></div>
 	<form></form> <!--IF YOU REMOVE THIS FORM TAG VALIDATION FOR TIER FORM WON'T WORK !! -->
 <?php echo $this->element('../tiers/edit',array('action'=>'add'))?>
@@ -244,8 +244,8 @@
 	<?php echo $this->Form->create('Location',array('id'=>'locationAdd','action'=>'add'));?>
 	<span class='left'>
 		<?php
-			echo $this->Form->input('tier_id',array('id'=>'principal','label'=>'Client Principal','style'=>'width:300px;'));
-			echo $this->Form->input('monnaie',array('label'=>'monnaie', 'options'=>$facturationMonnaies));
+			echo $this->Form->input('tier_id',array('id'=>'principal','label'=>'Customer Principal','style'=>'width:300px;'));
+			echo $this->Form->input('monnaie',array('label'=>'monnaie', 'options'=>$facturationCurrencys));
 			?>
 	</span>
 	<span class="right">
@@ -396,7 +396,7 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('annee',array('id'=>'umwaka','label'=>'Année','type'=>'date','dateFormat'=>'Y'));
+			echo $this->Form->input('annee',array('id'=>'umwaka','label'=>'Year','type'=>'date','dateFormat'=>'Y'));
 		?>
 	</span>
 <div style="clear:both"></div>
@@ -408,7 +408,7 @@
 	<h3><?php __('Actions'); ?></h3>
 	<?php echo $this->element('../reservations/legend',array('model'=>'Location'));?>
 	<ul>
-		<li class="link"  onclick = "jQuery('#legend').slideToggle();" >Afficher/Masquer la Légende</li>
+		<li class="link"  onclick = "jQuery('#legend').slideToggle();" >Show/Hide la Légende</li>
 		<li class="link" onclick = "goTo()" >Afficher un mois donnée</li>  
 	</ul>
 </div>

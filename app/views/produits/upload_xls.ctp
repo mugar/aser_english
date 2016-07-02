@@ -1,10 +1,10 @@
 
-<?php echo $this->Form->create('Produit',array('enctype' => 'multipart/form-data'));?>
+<?php echo $this->Form->create('Product',array('enctype' => 'multipart/form-data'));?>
 	<fieldset>
  		<legend class="upload"><?php printf(__('Importer la liste des produits en excel', true)); ?></legend>
 	<?php
 	
-		echo $this->Form->file('Produit.file', array('type'=>'file'));
+		echo $this->Form->file('Product.file', array('type'=>'file'));
 	?>
 	</fieldset>
-<?php echo $this->Form->end(__('Envoyer', true));?>
+<?php echo $this->Form->end(__('Save', true));?>

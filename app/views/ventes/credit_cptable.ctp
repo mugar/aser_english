@@ -1,5 +1,5 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
@@ -35,12 +35,12 @@
 <br />
 <table cellpadding="0" cellspacing="0" >
 	<tr>
-		<th><? echo __('Nom du Client'); ?></th>
+		<th><? echo __('Nom du Customer'); ?></th>
 		<?php foreach($groupeComptables as $gpeCptableId=>$groupeComptable)
 				if(in_array($gpeCptableId,$monnaie['gpeCptableToShow']))
 					echo '<th>'.$groupeComptable.'</th>';
 		?>
-		<th><? echo __('P.T');?></th>
+		<th><? echo __('T.P');?></th>
 	</tr>
 	<?php foreach($tiers as $tierId=>$tier):?>
 		<? if(in_array($tierId,$monnaie['clientsToShow'])):?>
@@ -57,7 +57,7 @@
 	<? endforeach;?>
 	<? if($monnaie['tva']>0):?>
 		<tr class="strong">
-			<td><? echo __('P.T HTVA');?></td>
+			<td><? echo __('T.P WITHOUT TVA');?></td>
 			<?php foreach($groupeComptables as $gpeCptableId=>$groupeComptable)
 					if(in_array($gpeCptableId,$monnaie['gpeCptableToShow']))
 						echo '<td></td>';
@@ -74,7 +74,7 @@
 		</tr>
 	<? endif;?>	
 	<tr class="strong">
-		<td><? echo __('P.T');echo __('.TVAC');?></td>
+		<td><? echo __('T.P');echo __('.TVAC');?></td>
 		<?php foreach($groupeComptables as $gpeCptableId=>$groupeComptable)
 				if(in_array($gpeCptableId,$monnaie['gpeCptableToShow']))
 					echo '<td></td>';
@@ -92,8 +92,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

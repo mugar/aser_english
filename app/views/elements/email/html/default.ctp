@@ -20,13 +20,13 @@ Chère Madame, Cher Monsieur, Dear Madam, Dear Sir : <span style="font-weight:bo
 <br/>
 <br/>
 <br/>
-Nous avons le plaisir de vous confirmer la réservation suivante :
+Nous avons le plaisir de vous confirmer la réservation nexte :
 <br/>
 We have the pleasure to confirm the following reservation :
 <br/>
 <br/>
 <br/>
-Arrivée le, check in :	<span class="red">'.$this->MugTime->toFrench($reservation['Reservation']['arrivee']).'</span>				
+Arrival le, check in :	<span class="red">'.$this->MugTime->toFrench($reservation['Reservation']['arrivee']).'</span>				
 <br/>
 Départ le, check out :  <span class="red">'.$this->MugTime->toFrench($reservation['Reservation']['depart']).'</span>	
 <br/>

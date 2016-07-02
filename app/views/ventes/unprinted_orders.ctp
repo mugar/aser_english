@@ -17,11 +17,11 @@
 <thead>
 	<tr>
 			<th>Date</th>
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Qté Facturé</th>
 			<th>Qté Envoyé</th>
 			<th>Qté Non Envoyé</th>
-			<th >N° Facture</th>
+			<th >Invoice N°</th>
 	</tr>
 </thead>
 <tbody>
@@ -37,7 +37,7 @@
 			
 			<td><?php echo  $vente['Facture']['date']; ?></td>
 			<td>
-				<?php echo $vente['Produit']['name']; ?>
+				<?php echo $vente['Product']['name']; ?>
 			</td>
 			<td><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['printed'],$formatting); ?></td>
@@ -56,12 +56,12 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents(0)" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents(0)" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>

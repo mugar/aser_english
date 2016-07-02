@@ -20,7 +20,7 @@
 		<span class="right">
 			<?php
 				if($action=='index'){
-					echo $this->Form->input('Produit.section_id',array('options'=>$sections1,'multiple'=>true));
+					echo $this->Form->input('Product.section_id',array('options'=>$sections1,'multiple'=>true));
 				}
 			?>
 		</span>

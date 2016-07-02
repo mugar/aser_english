@@ -14,24 +14,24 @@ echo $this->Form->create('Paiement',array('name'=>'pyts','action'=>'delete'));
 		<?php if(isset($checkbox)):?>
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.pyts)"></th>
 		<?php endif;?>
-			<th>Date de Paiement</th>
+			<th>Payment Date</th>
 			<?php if(isset($facture)):?>
-				<th>Date de Facturation</th>
-				<th>N° Facture</th>
-				<th>Type De Facture</th>
+				<th>Invoicing Date</th>
+				<th>Invoice N°</th>
+				<th>Invoice Type</th>
 			<?php endif;?>
 			<?php if(isset($chambre)):?>
-				<th>Client</th>
-				<th>Compagnie</th>
+				<th>Customer</th>
+				<th>Company</th>
 				<?php if($chambre=='yes'):?>
-					<th>Chambre</th>
+					<th>Room N°</th>
 				<?php endif;?>
 			<?php endif;?>
-			<th width="150">Montant</th>
-			<th width="150">Montant équivalent</th>
-			<th>Mode de Paiement</th>
-			<th width="100">Réference</th>
-			<th>Créer par</th>
+			<th width="150">Amount</th>
+			<th width="150">Equivalent Amount</th>
+			<th>Payment Mode</th>
+			<th width="100">Reference</th>
+			<th>Created by</th>
 	</tr>
 		<?php
 		$options=array();

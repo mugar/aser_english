@@ -26,7 +26,7 @@
 	
 	<table>
 		<tr>
-			<th>Occupation pour les 3jrs suivante</th>	
+			<th>Occupation pour les 3jrs nexte</th>	
 			<th>Occupation</th>	
 		</tr>
 		<tr>
@@ -113,7 +113,7 @@
 	?>
 </table>
 <?php endif; ?>
-<h4 class="gouv">Etat des chambres</h4>
+<h4 class="gouv">State des chambres</h4>
 <table class="gouv">
 	<?php 
 //	die(debug($etages));
@@ -137,8 +137,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
 		<li><?php echo $this->Html->link('Liste des Chambres', array('controller' => 'chambres', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link('Gestion des Réservations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
+		<li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 	</ul>
 </div>

@@ -95,7 +95,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Tier', true)), array('action' => 'edit', $tier['Tier']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Tiers', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Tier', true)), array('action' => 'edit', $tier['Tier']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Tiers', true)), array('action' => 'index')); ?> </li>
 	</ul>
 </div>

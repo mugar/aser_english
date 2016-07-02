@@ -7,7 +7,7 @@
 </script>
 <div id='view'>
 <div class="document">
-<h3 id="stock" stock="<?php if(!empty($stockInfo)) echo $stockInfo['Stock']['id'];?>">Mouvements des Produits <?php if(!empty($stockInfo)) echo ' - Stock : '.strtoupper($stockInfo['Stock']['name']);?></h3>
+<h3 id="stock" stock="<?php if(!empty($stockInfo)) echo $stockInfo['Stock']['id'];?>">Mouvements des Products <?php if(!empty($stockInfo)) echo ' - Stock : '.strtoupper($stockInfo['Stock']['name']);?></h3>
 <br />
 <?php
 	if(isset($date1)){
@@ -18,7 +18,7 @@
 <br />
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr class="border">
-			<th rowspan="2">Produits</th>
+			<th rowspan="2">Products</th>
 			<th rowspan="2">Stock Initiale</th>
 			<th colspan="4">Mouvements</th>
 			<th rowspan="2">Stock Finale</th>
@@ -45,7 +45,7 @@
 			<td><?php if(isset($historique['Vente'])) echo $historique['Vente']; ?></td>
 			<td><?php if(isset($historique['Sorti'])) echo  $historique['Sorti']; ?></td>
 			<td id="perte<?php echo $i;?>" name="perte"><?php if(isset($historique['Perte'])) echo  $this->Html->link($historique['Perte'],
-				 array('controller' => 'pertes','action' => 'index', $historique['Produit']['id'],$date1,$date2),array('target'=>'_blank')); ?></td>
+				 array('controller' => 'pertes','action' => 'index', $historique['Product']['id'],$date1,$date2),array('target'=>'_blank')); ?></td>
 			<td><?php echo  $this->Form->input('reel',array('onchange'=>'perte(this)',
 																'numero'=>$i,
 																'label'=>'',
@@ -53,10 +53,10 @@
 																'style'=>'width:50px;',
 																'old_value'=>$historique['solde'],
 																'value'=>$historique['solde'],
-																'id'=>$historique['Produit']['id'],
+																'id'=>$historique['Product']['id'],
 																)); 
 			?></td>
-			<td name="pv" pv="<?php echo  $historique['Produit']['PA']; ?>"><?php echo  $historique['total_pa']; ?></td>
+			<td name="pv" pv="<?php echo  $historique['Product']['PA']; ?>"><?php echo  $historique['total_pa']; ?></td>
 	</tr>
 <?php endforeach; ?>
 <tr class="strong">
@@ -96,18 +96,18 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('action' => 'index')); ?></li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Liste des Products', array('action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link('Liste des Pertes', array('controller'=>'pertes','action' => 'index')); ?></li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Produit',array('id'=>'recherche'));?>
+	<?php echo $this->Form->create('Product',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('stock_id',array('selected'=>0,'id'=>'stockId'));
@@ -117,8 +117,8 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début'));
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('date1',array('label'=>'Start Date'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 			echo $this->Form->input('export',array('label'=>'Exporter vers excel','type'=>'checkbox'));
 		?>
 	</span>

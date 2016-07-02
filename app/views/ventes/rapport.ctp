@@ -72,9 +72,9 @@
 			<th>Facture</th>
 			<th>Montant</th>
 			<th>Montant Equivalent</th>
-			<th>Monnaie</th>
+			<th>Currency</th>
 			<th>Caisse</th>
-			<th>Mode de Paiement</th>
+			<th>Payment Mode</th>
 			<th>Réference</th>
 			<th>Paiement Par</th>
 			<th>Date</th>
@@ -159,8 +159,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><a href="#"  onclick = "print_documents(jQuery('#etat_journal').attr('closed'))" >Imprimer</a> </li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li><a href="#"  onclick = "print_documents(jQuery('#etat_journal').attr('closed'))" >Print</a> </li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Lister Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 		<li><?php
 			$action=(Configure::read('aser.touchscreen'))?'touchscreen':'index';
@@ -168,13 +168,13 @@
 	</ul>
 </div>
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche','action'=>'rapport'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('Journal.date',array('label'=>'Choisissez une date début','type'=>'text','value'=>date('Y-m-d')));
+			echo $this->Form->input('Journal.date',array('label'=>'Start Date','type'=>'text','value'=>date('Y-m-d')));
 		?>
 	</span>
 	<span class="right">

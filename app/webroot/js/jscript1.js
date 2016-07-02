@@ -69,7 +69,7 @@ function year_limits(){
                                         jQuery(this).dialog("close");
                                         document.location.href=getBase()+'limits'+'/index/'+annee;
                                     },
-                                    "Annuler": function() { jQuery(this).dialog("close");
+                                    "Cancel": function() { jQuery(this).dialog("close");
                                                          }
                                    }
                        });
@@ -226,7 +226,7 @@ function create_customer(){
     				jQuery('#fullName').attr('disabled','disabled');
     				jQuery(this).dialog("close");
     			},
-    			"Annuler": function() {jQuery(this).dialog("close");},
+    			"Cancel": function() {jQuery(this).dialog("close");},
     			}
  	});
 }
@@ -253,7 +253,7 @@ function facturation_services(factureId){
     								}
     							});
     						},
-    						"Annuler": function() { jQuery(this).dialog("close"); }
+    						"Cancel": function() { jQuery(this).dialog("close"); }
     						 }
     				});
 }
@@ -304,7 +304,7 @@ function service_boxe(action){
     					}
     				});
     			},
-    			"Fermer": function() { jQuery(this).dialog("close"); 
+    			"Close": function() { jQuery(this).dialog("close"); 
     				if(action=='edit')
     					jQuery('form[name="'+nom+'"] input[type="checkbox"]').removeAttr('checked');
     			}
@@ -368,7 +368,7 @@ function ingredient_boxe(){
     					}
     				});
     			},
-    			"Fermer": function() { jQuery(this).dialog("close"); 
+    			"Close": function() { jQuery(this).dialog("close"); 
     				jQuery('form[name="'+nom+'"] input[type="checkbox"]').removeAttr('checked');
     			}
     		}
@@ -452,7 +452,7 @@ function assign_b_num(){
     				alert("Donner un numero correcte");
     			}
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     										jQuery('form[name="'+nom+'"] input[type="checkbox"]').removeAttr('checked');
     				}
     			}
@@ -570,7 +570,7 @@ function aserb(){
     		               					});
     							      	}
     							    },
-    					            "Annuler": function() { jQuery(this).dialog("close");
+    					            "Cancel": function() { jQuery(this).dialog("close");
     					            					 }
     					           }
                        });
@@ -636,7 +636,7 @@ function abscence(cell,remove){
     				},
     			});
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     									 //removing the css
     									 jQuery('.calendar-day').removeClass('selected-day');
     									}
@@ -693,7 +693,7 @@ function executerLaPaie(){
     				},
     			});
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     			}
     		}
    		});
@@ -873,7 +873,7 @@ function chart(defaults){
     		width:390,
     		position:'top',
     		buttons: { "GO": function() {chartSearch();},
-    			"Annuler": function() { jQuery(this).dialog("close");}
+    			"Cancel": function() { jQuery(this).dialog("close");}
     		}
     });
    }
@@ -925,7 +925,7 @@ function merge(controller){
 					}
     			});
     			},
-    			"Annuler": function() { jQuery(this).dialog("close");}
+    			"Cancel": function() { jQuery(this).dialog("close");}
     		}
     });
    	 }
@@ -992,12 +992,12 @@ function edit(){
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length==1)) {
 		var id=jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').val();
 		var tr =jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked').parents('tr');
-		jQuery('<div id="edit_boxe" title="Formulaire de Modification"></div>').insertAfter('body');
+		jQuery('<div id="edit_boxe" title="Edit Form"></div>').insertAfter('body');
    		     		jQuery('#edit_boxe').dialog({ modal:true, 
     		               width:400,
     		               position:'center',
     		               global:false,
-    		               buttons: { "Modifier": function() {
+    		               buttons: { "Edit": function() {
     					            jQuery('#edit_form').ajaxSubmit({
 							            dataType:'json',
 							             success:function(ans){
@@ -1018,7 +1018,7 @@ function edit(){
     							         }
     							    });
     							    },
-    					            "Fermer": function() { jQuery(this).dialog("close"); }
+    					            "Close": function() { jQuery(this).dialog("close"); }
     					           }
                        });
     		           jQuery('#edit_boxe').load(getBase()+controller+"/edit/"+id,function(){date();});
@@ -1112,7 +1112,7 @@ function perte(p){
     								alert('Quantitée trop élevée!')
     							}
     							},
-    							"Annuler": function() { jQuery(this).dialog("close"); }
+    							"Cancel": function() { jQuery(this).dialog("close"); }
     							  }
     				});
 }
@@ -1191,16 +1191,16 @@ function mass_delete(){
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
 	info=info.split('_')[1];//to get the model and the controller
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select one element!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
-		jQuery('<div id="effacer" title="Message">Voulez vous vraiment effacer les enregistrements ?</div>')
+		jQuery('<div id="effacer" title="Message">Do you really want to delete this record?</div>')
 		.dialog({
   	 		modal:true, 
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Effacer": function() {
+    		buttons: { "Delete": function() {
     			var box=this;
     			jQuery('form[name="'+nom+'"]').attr('action',getBase()+info+'/delete');
     			jQuery(box).dialog('close');
@@ -1218,7 +1218,7 @@ function mass_delete(){
     				},
     			});
     			},
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     			}
     		}
    		});
@@ -1235,7 +1235,7 @@ function journal_comptable(journal){
     		               				jQuery(this).dialog("close");
     		               				document.location.href=getBase()+'compte_operations'+'/index/index/'+journal+'/'+mois;
     							    },
-    					            "Annuler":function(){
+    					            "Cancel":function(){
     					            				jQuery(this).dialog("close");
     					            			}
     					           }
@@ -1353,7 +1353,7 @@ function unlock(factureId,moveon){
     			width:300,
     			position:'top',
     			buttons: { 
-    				"Annuler": function() { jQuery(this).dialog("close"); 
+    				"Cancel": function() { jQuery(this).dialog("close"); 
     										goOn=false;
     					}
     			}
@@ -1463,7 +1463,7 @@ function direct_reduction(factureId,moveon){
     			width:300,
     			position:'top',
     			buttons: { 
-    				"Annuler": function() { jQuery(this).dialog("close"); 
+    				"Cancel": function() { jQuery(this).dialog("close"); 
     										goOn=false;
     					}
     			}
@@ -1671,7 +1671,7 @@ function paiement_touch(factureId,moveOn){
     			width:300,
     			position:'top',
 	    		buttons: { 
-    				"Annuler": function() { jQuery(this).dialog("close"); 
+    				"Cancel": function() { jQuery(this).dialog("close"); 
     									goOn=false;
     					}
     			}
@@ -1945,7 +1945,7 @@ function global_bill(){
     		               				document.location.href=getBase()+'tiers'+'/global_bill/'+id+'/'+date1+'/'+date2+'/'+xls;
     		               				
     							    },
-    					            "Annuler": function() { jQuery(this).dialog("close");
+    					            "Cancel": function() { jQuery(this).dialog("close");
     					            					 }
     					           }
                        });
@@ -1990,7 +1990,7 @@ function upload(){
 								
 								})
 							},
-							"Annuler": function() { jQuery(this).dialog("close");
+							"Cancel": function() { jQuery(this).dialog("close");
     					           					 }
     					     }
                        });
@@ -2014,7 +2014,7 @@ function facture_removal(factureId,consoId,moveOn){
     		position:'top',
     	//	show:'bounce',
     		buttons: { 
-    			"Annuler": function() { jQuery(this).dialog("close"); 
+    			"Cancel": function() { jQuery(this).dialog("close"); 
     									goOn=false;
     					}
     		}
@@ -2037,7 +2037,7 @@ function facture_removal(factureId,consoId,moveOn){
     						width:300,
     						position:'top',
 				    		buttons: { 
-    							"Annuler": function() { jQuery(this).dialog("close"); 
+    							"Cancel": function() { jQuery(this).dialog("close"); 
     													goOn=false;
     													}
     								}

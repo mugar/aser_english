@@ -19,7 +19,7 @@
 <?php if($action=='edit'):?>
 <div class="dialog">
 <?php endif;?>
-<?php if(isset($reservation)) echo '<fieldset><legend>'.__('Information du client').'</legend>';?>
+<?php if(isset($reservation)) echo '<fieldset><legend>'.__('Customer Information').'</legend>';?>
 <?php echo $this->Form->create('Tier',array('id'=>$id,'action'=>$action,'class'=>'client_info'));?>
 	<span class='left'>
 		<?php
@@ -28,16 +28,16 @@
 				echo $this->Form->input('Reservation.new_tier_id',array('id'=>'clientList','options'=>$tiers1,'label'=>'Selectionner un autre client'));
 			}
 			if($action=='add'){
-				echo $this->Form->input('Tier.nom',array('id'=>'clientNom'));
-				echo $this->Form->input('Tier.prenom',array('id'=>'prenom'));
+				echo $this->Form->input('Tier.nom',array('id'=>'clientNom', 'label'=>'First Name'));
+				echo $this->Form->input('Tier.prenom',array('id'=>'prenom','label'=>'Last Name'));
 			}
 			else {
 				echo $this->Form->input('Tier.id');
-				echo $this->Form->input('Tier.name',array('id'=>'fullName','label'=>'Nom & Prénom'));
+				echo $this->Form->input('Tier.name',array('id'=>'fullName','label'=>'Full Name'));
 			}
 			if($action=='edit'){
-				echo $this->Form->input('type',array('label'=>'','id'=>'op','options'=>array('client'=>'client',
-																						'fournisseur'=>'fournisseur',
+				echo $this->Form->input('type',array('label'=>'','id'=>'op','options'=>array('client'=>'customer',
+																						'fournisseur'=>'supplier',
 																						)
 															)
 										);
@@ -48,7 +48,7 @@
 			echo '<label>Compagnie</label>';
 			echo $ajax->autoComplete('Tier.compagnie','/tiers/autoComplete/compagnie');
 			echo $this->Form->input('Tier.telephone');
-			echo $this->Form->input('Tier.pers_contact',array('label'=>'Infos de la personne de contact','id'=>'pers_contact'));
+			echo $this->Form->input('Tier.pers_contact',array('label'=>'Infos about the contact person','id'=>'pers_contact'));
 			
 		?>
 	</span>
@@ -62,14 +62,14 @@
 				if(empty($this->data)) {
 					$nationalite_params['selected']='BDI';
 				}
-				echo $this->Form->input('Tier.nationalite',$nationalite_params);
+				echo $this->Form->input('Tier.nationalite',$nationalite_params, array('label'=>'Nationality'));
 			}
 			if(Configure::read('aser.POS')){
-				echo $this->Form->input('Tier.reduction',array('label'=>'Réduction en % pour le resto'));
-				echo $this->Form->input('Tier.type_reduction',array('type'=>'hidden','value'=>'Sur le total'));
+				echo $this->Form->input('Tier.reduction',array('label'=>'Restaurant discount in %'));
+				echo $this->Form->input('Tier.type_reduction',array('type'=>'hidden','value'=>'On the total'));
 			}
 			if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))){
-				echo $this->Form->input('Tier.max_dette');
+				echo $this->Form->input('Tier.max_dette', array('label'=>'Max Debt'));
 			}
 			if($action=='edit'){
 				echo $this->Form->input('Tier.actif',array('type'=>'checkbox'));
@@ -81,20 +81,20 @@
 
 	<?php if(Configure::read('aser.hotel')&&($action=='edit')&&isset($reservation)&&($model=='Reservation')):?>
 		<?php echo $this->Form->create($model,array('id'=>'res_fields'));?>
-		<fieldset><legend><?php __('Information de la réservation');?></legend>
+		<fieldset><legend><?php __('Booking Information');?></legend>
 		<span class='left'>
 		<?php
 			echo $this->Form->input($model.'.id',array('type'=>'hidden')); 
-			$puOptions['label']='Prix/Nuitée';
+			$puOptions['label']='Rate';
 			if(!in_array($reservation[$model]['etat'],array('en_attente','confirmee')))
 				 $puOptions['disabled']='disabled';
 			echo $this->Form->input($model.'.PU',$puOptions);
-			echo $this->Form->input($model.'.pax',array('label'=>'Nombre de Personnes','options'=>$pax));
+			echo $this->Form->input($model.'.pax',array('label'=>'Number of people','options'=>$pax));
 		?>
 		</span>
 		<span class='right'>
 		<?php
-			echo $this->Form->input($model.'.mode_paiement',array('label'=>'Mode de Paiement prévu'));
+			echo $this->Form->input($model.'.mode_paiement',array('label'=>'Planned Payment Mode'));
 		?>
 		</span>
 		</fieldset>

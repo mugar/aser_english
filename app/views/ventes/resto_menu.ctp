@@ -2,13 +2,13 @@
 		<fieldset class='ingredient'>
  			<legend>Liste des Boissons</legend>
 			<?php foreach($groupes as $groupe):?>
-				<?php if(!empty($groupe['Produit'])): ?>
+				<?php if(!empty($groupe['Product'])): ?>
 			<div class="items" >
 				<h4 onclick="Element.toggle($('personnel'))" style="cursor:pointer;"><?php echo $groupe['Groupe']['name']?></h4>
 				<div id="personnel">
 					<?php 
-					foreach($groupe['Produit'] as $produit) {
-						echo $this->Form->input('Produit.'.$produit['id'],array('label'=>$produit['name']));
+					foreach($groupe['Product'] as $produit) {
+						echo $this->Form->input('Product.'.$produit['id'],array('label'=>$produit['name']));
 					}
 					?>
 				</div>

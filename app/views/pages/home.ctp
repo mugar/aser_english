@@ -30,7 +30,7 @@
 		$config=Configure::read('aser');
 		if($config['hotel']){
 			echo '<li>'.$this->Html->link('Rapport Hébergement', array('controller' => 'reservations', 'action' => 'monthly')).'</li>';
-			echo '<li>'.$this->Html->link('Etat d\'Occupation', array('controller' => 'reservations', 'action' => 'etat_occupation')).'</li>';
+			echo '<li>'.$this->Html->link('State d\'Occupation', array('controller' => 'reservations', 'action' => 'etat_occupation')).'</li>';
 			echo '<li>'.$this->Html->link('Chambres à nettoyer', array('controller' => 'reservations', 'action' => 'rooms_to_clean')).'</li>';
 		}
 		if($config['pos_sales_report'])
@@ -58,12 +58,12 @@
 <?php
 	if(!empty($finis)):?>
 	<div class="menu1" >
-		<h4 onclick="jQuery('#stock').slideToggle()" style="cursor:pointer;" title="Produits dont la quantité est inférieure ou égale à leur quantité minimale">Produits en fin de stock (<?php echo count($finis);?>)</h4>
+		<h4 onclick="jQuery('#stock').slideToggle()" style="cursor:pointer;" title="Products dont la quantité est inférieure ou égale à leur quantité minimale">Products en fin de stock (<?php echo count($finis);?>)</h4>
 		<div id="stock" style="display:none">
 		<ul>
 	<?php 
 		foreach($finis as $fini) {
-			echo '<li>'.$this->Html->link($fini['Produit']['name'].' (reste : '.$fini['Produit']['qty'].')', array('controller' => 'produits', 'action' => 'view', $fini['Produit']['id'])).'</li>';
+			echo '<li>'.$this->Html->link($fini['Product']['name'].' (reste : '.$fini['Product']['qty'].')', array('controller' => 'produits', 'action' => 'view', $fini['Product']['id'])).'</li>';
 		}
 	?>
 		</ul>
@@ -75,12 +75,12 @@
 <?php
 	if(!empty($quantites)):?>
 	<div class="menu1" >
-		<h4 onclick="Element.toggle($('perime'))" style="cursor:pointer;" title="Produits qui vont être expirés en <?php echo 2 ?> mois">Produits en expiration</h4>
+		<h4 onclick="Element.toggle($('perime'))" style="cursor:pointer;" title="Products qui vont être expirés en <?php echo 2 ?> mois">Products en expiration</h4>
 		<div id="perime" style="display:none">
 		<ul>
 	<?php 
 		foreach($quantites as $quantite) {
-			echo '<li>'.$this->Html->link($quantite['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $quantite['Historique']['produit_id'],$quantite['Historique']['stock_id'])).'</li>';
+			echo '<li>'.$this->Html->link($quantite['Product']['name'], array('controller' => 'produits', 'action' => 'view', $quantite['Historique']['produit_id'],$quantite['Historique']['stock_id'])).'</li>';
 		}
 	?>
 		</ul>
@@ -90,15 +90,15 @@
 <!--  fin-->
 <!-- affichage des tiers en retard de paiement-->
 <?php
-	if(!empty($factureClients)):?>
+	if(!empty($factureCustomers)):?>
 	<div class="menu1" >
 		<h4 onclick="jQuery('#facture_client').slideToggle()" style="cursor:pointer;" title="Factures clients qui ont dépassés l'echeance de paiement">Factures clients non payée</h4>
 		<div id="facture_client" style="display:none">
 		<ul>
 	<?php 
-		foreach($factureClients as $facture) {
+		foreach($factureCustomers as $facture) {
 			if($facture['Facture']['type']=='envoyee'){
-				echo '<li>'.$this->Html->link('Facture N° '.$facture['Facture']['numero'].' de '.$facture['Tier']['name'], array('controller' => 'factures', 'action' => 'view', $facture['Facture']['id'])).'</li>';
+				echo '<li>'.$this->Html->link('Invoice N° '.$facture['Facture']['numero'].' de '.$facture['Tier']['name'], array('controller' => 'factures', 'action' => 'view', $facture['Facture']['id'])).'</li>';
 			}
 		}
 	?>
@@ -117,7 +117,7 @@ $fonction=$session->read('Auth.Personnel.fonction_id');
 	<?php 
 		foreach($factureFournisseurs as $facture) {
 			if($facture['Facture']['type']=='recu'){
-				echo '<li>'.$this->Html->link('Facture N° '.$facture['Facture']['numero'].' de '.$facture['Tier']['name'], array('controller' => 'factures', 'action' => 'view', $facture['Facture']['id'])).'</li>';
+				echo '<li>'.$this->Html->link('Invoice N° '.$facture['Facture']['numero'].' de '.$facture['Tier']['name'], array('controller' => 'factures', 'action' => 'view', $facture['Facture']['id'])).'</li>';
 			}
 		}
 	?>
@@ -151,7 +151,7 @@ $fonction=$session->read('Auth.Personnel.fonction_id');
 			<br />
 	</div>
 </div>
-<div id="chart_boxe" style="display:none" title="Options de Recherche">
+<div id="chart_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<?php echo $this->Form->create('Facture',array('id'=>'chart_form','action'=>'chart'));?>
 	<span class="left">

@@ -40,6 +40,6 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
 	</ul>
 </div>

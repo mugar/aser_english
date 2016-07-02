@@ -4,14 +4,14 @@
 
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr>
-			<th>Client</th>
+			<th>Customer</th>
 			<th>Occupant</th>
-			<th>Chambre</th>
-			<th>Arrivée</th>
+			<th>Room N°</th>
+			<th>Arrival</th>
 			<th>Départ</th>
-			<th>PU</th>
+			<th>Unit Price</th>
 			<th>Montant</th>
-			<th>Monnaie</th>
+			<th>Currency</th>
 		
 	</tr>
 		<?php
@@ -19,7 +19,7 @@
 		
 	?>
 	<tr>
-			<td><?php echo  $affectation['Client']['name']; ?></td>
+			<td><?php echo  $affectation['Customer']['name']; ?></td>
 			<td><?php echo  $affectation['Tier']['name']; ?></td>
 			<td><?php echo  $affectation['Chambre']['name']; ?></td>
 			<td><?php echo  $affectation['Reservation']['arrivee']; ?></td>
@@ -36,14 +36,14 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Tableau d\'occupation', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Affectation',array('id'=>'recherche'));?>

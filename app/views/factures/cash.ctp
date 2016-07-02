@@ -1,5 +1,5 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Facture',array('id'=>'recherche'));?>
@@ -51,10 +51,10 @@
 		</tr>
 	<?php endif;?>
 	<tr class="strong">
-		<td>MONTANT PAYEE</td>
+		<td>MONTANT PAID AMOUNT</td>
 		<td><?php echo  $number->format($montantPayee['BIF'],$formatting); ?></td>
 		<td><?php echo  $number->format($montantPayee['USD'],$formatting); ?></td>
-		<td>CREDIT PAYEE</td>
+		<td>CREDIT PAID AMOUNT</td>
 		<td><?php echo  $number->format($ca['ca_BIF']-$montantPayee['BIF']-$ca['credit_BIF'],$formatting); ?></td>
 		<td><?php echo  $number->format($ca['ca_USD']-$montantPayee['USD']-$ca['credit_USD'],$formatting); ?></td>
 	</tr>
@@ -79,7 +79,7 @@
 <br />
 <table cellpadding="0" cellspacing="0"  class="table_center">
 	<tr class="border">
-			<th colspan="6">VENTES DÛ PAYEES</th>
+			<th colspan="6">VENTES DÛ PAID AMOUNTS</th>
 			<th colspan="2">PAIEMENTS</th>
 			<th rowspan="3">TOTAL PAR MONNAIE</th>
 	</tr>
@@ -178,8 +178,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

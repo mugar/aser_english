@@ -1,19 +1,19 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Reservation',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début','type'=>'text'));	
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));	
 			
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	<span class="right">
 		<?php
 			
-			echo $this->Form->input('compagnie',array('label'=>'Compagnie du Client'));
+			echo $this->Form->input('compagnie',array('label'=>'Customer Company'));
 		?>
 	</span>
 	</form>
@@ -34,12 +34,12 @@ $config=Configure::read('aser');
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Date</th>
-			<th>Client</th>
-			<th>Compagnie</th>
-			<th>Chambre</th>
+			<th>Customer</th>
+			<th>Company</th>
+			<th>Room N°</th>
 			<th width="150">Montant</th>
-			<th>Mode de Paiement</th>
-			<th>Facture N°</th>
+			<th>Payment Mode</th>
+			<th>Invoice N°</th>
 			<th>Récu N°</th>
 			<th>Heure de Création</th>
 	</tr>
@@ -85,8 +85,8 @@ $config=Configure::read('aser');
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Gestion des Réservations', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 	</ul>
 </div>

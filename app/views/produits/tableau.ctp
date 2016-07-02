@@ -2,7 +2,7 @@
 	<h3>Tableau récapitulatif</h3>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Produits</th>
+			<th>Products</th>
 			<th>appro_jour</th>
 			<th>appro_mens</th>
 			<th>appro_annu</th>

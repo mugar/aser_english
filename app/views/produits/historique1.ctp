@@ -8,7 +8,7 @@
 <h3>
 <?php
 	if(!empty($produit)){
-		echo 'Mouvements du Produit : '.$produit['Produit']['name'] ;
+		echo 'Mouvements du Product : '.$produit['Product']['name'] ;
 	}
 ?>
 </h3>
@@ -73,25 +73,25 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Liste des Produits', array('action' => 'index')); ?></li>
+		<li class="link"  onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Liste des Products', array('action' => 'index')); ?></li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Produit',array('id'=>'recherche','action'=>'historique/'.$id));?>
+	<?php echo $this->Form->create('Product',array('id'=>'recherche','action'=>'historique/'.$id));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('Historique.date1',array('label'=>'Choisissez une date début'));				
+			echo $this->Form->input('Historique.date1',array('label'=>'Start Date'));				
 		?>
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('Historique.date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('Historique.date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>

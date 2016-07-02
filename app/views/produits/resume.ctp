@@ -6,18 +6,18 @@
 <fieldset class="recherche">
 <div id="filter" style="display:none;" class="recherche">
 <fieldset>
-<?php echo $this->Form->create('Produit');?>
+<?php echo $this->Form->create('Product');?>
 <?php
-		//echo $this->Form->input('Produit.id',array('label'=>'Produit id','type'=>'text'));
-		echo $this->Form->input('date1',array('label'=>'Choisissez une date début',
+		//echo $this->Form->input('Product.id',array('label'=>'Product id','type'=>'text'));
+		echo $this->Form->input('date1',array('label'=>'Start Date',
 												'type'=>'text',
 												'format'=>'d-m-y')
 											);									
-		echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport',
+		echo $this->Form->input('date2',array('label'=>'End Date',
 												'type'=>'text',
 												'format'=>'d-m-y')
 											);
-		echo $this->Form->end(__('Envoyer', true));
+		echo $this->Form->end(__('Save', true));
 		?>
 </fieldset>
 </div>
@@ -27,7 +27,7 @@
 <h4 style="cursor:pointer" onclick="jQuery('#Entree').toggle();" title="Réduire / Etendre" >* Entrees</h4>
 <table id="Entree" class="tableau" cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Produits</th>
+			<th>Products</th>
 			<th>Element</th>
 			<th>quantité</th>
 			<th>Montant</th>
@@ -42,7 +42,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $Entree['Produit']['name']; ?></td>
+			<td><?php echo  $Entree['Product']['name']; ?></td>
 			<td><?php echo  $Entree['Entree']['element']; ?></td>
 			<td><?php echo  $Entree['Entree']['quantite']; ?></td>
 			<td><?php echo  $Entree['Entree']['montant']; ?></td>
@@ -57,7 +57,7 @@
 <h4 style="cursor:pointer" onclick="jQuery('#sorti').toggle();" title="Réduire / Etendre" >* Sortis</h4>
 <table id="sorti" class="tableau" cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Produits</th>
+			<th>Products</th>
 			<th>Elément</th>
 			<th>quantité</th>
 			<th>Montant</th>
@@ -72,7 +72,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $sorti['Produit']['name']; ?></td>
+			<td><?php echo  $sorti['Product']['name']; ?></td>
 			<td><?php echo  $sorti['Sorti']['element']; ?></td>
 			<td><?php echo  $sorti['Sorti']['quantite']; ?></td>
 			<td><?php echo  $sorti['Sorti']['montant']; ?></td>
@@ -88,7 +88,7 @@
 <table id="Retour" class="tableau" cellpadding="0" cellspacing="0">
 	<tr >
 			<th>Opération</th>
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Element</th>
 			<th>Quantite</th>
 			<th>Montant</th>
@@ -104,7 +104,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $Retour['Retour']['operation']; ?></td>
-			<td><?php echo  $Retour['Produit']['name']; ?></td>
+			<td><?php echo  $Retour['Product']['name']; ?></td>
 			<td><?php echo  $Retour['Retour']['element']; ?></td>
 			<td><?php echo  $Retour['Retour']['quantite']; ?></td>
 			<td><?php echo  $Retour['Retour']['montant']; ?></td>
@@ -119,7 +119,7 @@
 <h4 style="cursor:pointer" onclick="jQuery('#Perte').toggle();" title="Réduire / Etendre" >* Pertes</h4>
 <table id="Perte" class="tableau" cellpadding="0" cellspacing="0">
 	<tr >
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Element</th>
 			<th>Nature</th>
 			<th>Quantite</th>
@@ -135,7 +135,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $Perte['Produit']['name']; ?></td>
+			<td><?php echo  $Perte['Product']['name']; ?></td>
 			<td><?php echo  $Perte['Perte']['element']; ?></td>
 			<td><?php echo  $Perte['Perte']['nature']; ?></td>
 			<td><?php echo  $Perte['Perte']['quantite']; ?></td>
@@ -151,7 +151,7 @@
 <h4 style="cursor:pointer" onclick="jQuery('#Pret').toggle();" title="Réduire / Etendre" >* Prets</h4>
 <table id="Pret" class="tableau" cellpadding="0" cellspacing="0">
 	<tr >
-			<th>Produit</th>
+			<th>Product</th>
 			<th>Element</th>
 			<th>Pris</th>
 			<th>Remis</th>
@@ -167,7 +167,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $Pret['Produit']['name']; ?></td>
+			<td><?php echo  $Pret['Product']['name']; ?></td>
 			<td><?php echo  $Pret['Pret']['element']; ?></td>
 			<td><?php echo  $Pret['Pret']['pris']; ?></td>
 			<td><?php echo  $Pret['Pret']['remis']; ?></td>

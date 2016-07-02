@@ -11,8 +11,8 @@
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Quantité</th>
-			<th>Produit</th>
-			<th>PU</th>
+			<th>Product</th>
+			<th>Unit Price</th>
 			<th>Montant</th>
 			<th>Stock</th>
 			<th>Observation</th>
@@ -22,8 +22,8 @@
 	
 	?>
 	<tr>
-			<td><?php echo  $number->format($sorti['Sorti']['quantite'],$formatting).' '.$unites[$sorti['Produit']['unite_id']]; ?></td>
-			<td><?php echo  $sorti['Produit']['name']; ?></td>
+			<td><?php echo  $number->format($sorti['Sorti']['quantite'],$formatting).' '.$unites[$sorti['Product']['unite_id']]; ?></td>
+			<td><?php echo  $sorti['Product']['name']; ?></td>
 			<td><?php echo  $sorti['Sorti']['PU']; ?></td>
 			<td><?php echo  $number->format($sorti['Sorti']['montant'],$formatting); ?></td>
 			<td><?php echo  $sorti['Stock']['name']; ?></td>
@@ -44,8 +44,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Sorties', array('controller' => 'sortis', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

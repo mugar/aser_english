@@ -10,8 +10,8 @@
 				echo $this->Form->input('stock_id');
 			echo $this->Form->input('quantite');
 			if($action=='edit'){
-				echo $this->Form->input('Produit.id',array('type'=>'hidden'));
-				echo $this->Form->input('Produit.unite_id',array('label'=>'Unité de Mesure'));
+				echo $this->Form->input('Product.id',array('type'=>'hidden'));
+				echo $this->Form->input('Product.unite_id',array('label'=>'Unité de Mesure'));
 			}
 			if($action=='edit'){
 				echo $this->Form->input('produit_id');

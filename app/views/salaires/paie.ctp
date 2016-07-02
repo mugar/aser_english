@@ -87,8 +87,8 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li class="link"  onclick = "executerLaPaie()" ><? echo __('Exécuter la paie');?></li>
 		<li><?php echo $this->Html->link('Lister Salaires', array('controller' => 'salaires', 'action' => 'index')); ?> </li>
 	</ul>

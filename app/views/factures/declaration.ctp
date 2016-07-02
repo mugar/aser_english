@@ -1,5 +1,5 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Facture',array('id'=>'recherche'));?>
@@ -46,7 +46,7 @@
 <br />
 <br />
 
-<h3 style="font-weight:bold;">Liste des Clients pour <?php echo $this->MugTime->giveMonth($month).' '.$year;?></h3>
+<h3 style="font-weight:bold;">Liste des Customers pour <?php echo $this->MugTime->giveMonth($month).' '.$year;?></h3>
 <br />
 <br />
 
@@ -58,9 +58,9 @@ foreach($models as $model=>$service):?>
 <br />
 <table cellpadding="0" cellspacing="0" class="border">
 	<tr class="border">
-			<th rowspan="2" width="150">Client</th>
+			<th rowspan="2" width="150">Customer</th>
 			<th rowspan="2"width="100">N°Facture</th>
-			<th colspan="2" width="250">Montant HTVA</th>
+			<th colspan="2" width="250">Montant WITHOUT TVA</th>
 			<th colspan="2" width="150">TVA</th>
 			<th colspan="2" width="250">Montant TVAC</th>		
 	</tr>
@@ -121,7 +121,7 @@ foreach($models as $model=>$service):?>
 	<tr class="border" >
 			<th rowspan="2" width="150">Libellé</th>
 			<th rowspan="2"width="100">N°Facture</th>
-			<th colspan="2" width="250">Montant HTVA</th>
+			<th colspan="2" width="250">Montant WITHOUT TVA</th>
 			<th colspan="2" width="150">TVA</th>
 			<th colspan="2" width="250">Montant TVAC</th>		
 	</tr>
@@ -149,8 +149,8 @@ foreach($models as $model=>$service):?>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick = "print_documents()" >Imprimer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link" onclick = "print_documents()" >Print</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

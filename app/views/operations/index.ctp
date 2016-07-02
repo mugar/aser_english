@@ -49,7 +49,7 @@
 <div class="operations index" id="operations" ventes="<?php echo $ids[0];?>">
 	<h2 id="test"><?php __('Gestion des Opérations');?></h2>
 	
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Operation',array('id'=>'recherche','action'=>'index/'.$mode));?>
@@ -71,8 +71,8 @@
 	<span class="right">
 		<?php
 			echo $this->Form->input('monnaie',array('options'=>$monnaies1));
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début'));
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('date1',array('label'=>'Start Date'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 			echo $this->Form->input('show',array('label'=>'Affichage',
 												'options'=>array(20=>'20',
 																50=>'50',
@@ -102,8 +102,8 @@
 		<!--<th>Caissiers</th>-->
 			<th>Montant</th>
 			<th>Libellé</th>
-			<th>Monnaie</th>
-			<th>Mode de Paiement</th>
+			<th>Currency</th>
+			<th>Payment Mode</th>
 			<th>Destination</th>
 			<th>Préciser la destination</th>
 			<?php if(false):?>
@@ -153,7 +153,7 @@
 		<?php echo $this->Form->input('mode',array('type'=>'hidden','value'=>$mode));?>
 		<?php echo $this->Form->input('id1',array('type'=>'hidden','value'=>null));?>
 		<?php echo $this->Form->input('id2',array('type'=>'hidden','value'=>null));?>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		</form>
 		
 	</tr>
@@ -189,21 +189,21 @@
 	
 
 	<div class="paging">
-		<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
-		<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 	</div>
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li class="link" onclick="actions('checkbox','bon')" >Bon de Caisse</li>
-		<li class="link" onclick="mass_delete()" >Effacer</li>
-		<li class="link" onclick="edit()" >Modifier</li>
+		<li class="link" onclick="mass_delete()" >Delete</li>
+		<li class="link" onclick="edit()" >Edit</li>
 		<li  class="link" onclick = "mass_modification('operations')" >Modification en Masse</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 	</ul>
 </div>
 <div id="mass_modification" title="Modification en masse" style="display:none">

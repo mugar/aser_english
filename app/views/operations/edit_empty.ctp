@@ -45,7 +45,7 @@
 		<?php echo $this->Form->input('mode',array('type'=>'hidden','value'=>$mode));?>
 		<?php echo $this->Form->input('id1',array('type'=>'hidden','value'=>null));?>
 		<?php echo $this->Form->input('id2',array('type'=>'hidden','value'=>null));?>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		</form>
 		
 	</tr>

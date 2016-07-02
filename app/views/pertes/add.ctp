@@ -5,9 +5,9 @@
 		<td><?php echo $this->MugTime->toFrench($perte['Perte']['date']); ?>&nbsp;</td>
 		<td><?php echo $perte['Stock']['name']; ?>&nbsp;</td>
 		<td><?php  echo $perte['Perte']['quantite'].' ';
-				if(isset($unites[$perte['Produit']['unite_id']])) echo $unites[$perte['Produit']['unite_id']] ; ?>&nbsp;</td>
+				if(isset($unites[$perte['Product']['unite_id']])) echo $unites[$perte['Product']['unite_id']] ; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($perte['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Produit']['id'],$perte['Perte']['stock_id'])); ?>
+			<?php echo $this->Html->link($perte['Product']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Product']['id'],$perte['Perte']['stock_id'])); ?>
 		</td>
 		<td><?php echo $number->format($perte['Perte']['PU'],$formatting); ?>&nbsp;</td>
 		<td><?php echo $number->format($perte['Perte']['montant'],$formatting);?>&nbsp;</td>

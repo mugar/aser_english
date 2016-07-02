@@ -24,16 +24,16 @@
 	<?php
 		echo $this->Form->input('address1',array('label'=>'Adresse 1','type'=>'text'));
 		echo $this->Form->input('address2',array('label'=>'Adresse 2','type'=>'text'));
-		echo $this->Form->input('tel',array('label'=>'Tél','type'=>'text'));
+		echo $this->Form->input('tel',array('label'=>'Tel','type'=>'text'));
 		echo $this->Form->input('nif',array('label'=>'NIF','type'=>'text'));
-		echo $this->Form->input('compte_BIF',array('label'=>'Compte BIF','type'=>'text'));
-		echo $this->Form->input('compte_USD',array('label'=>'Compte USD','type'=>'text'));
-		echo $this->Form->input('compte_EUR',array('label'=>'Compte EUR','type'=>'text'));
+		echo $this->Form->input('compte_BIF',array('label'=>'BIF Account','type'=>'text'));
+		echo $this->Form->input('compte_USD',array('label'=>'USD Account','type'=>'text'));
+		echo $this->Form->input('compte_EUR',array('label'=>'EUR Account','type'=>'text'));
 		echo $this->Form->input('email',array('label'=>'E-mail','type'=>'text'));
-		echo $this->Form->input('web',array('label'=>'Site Web','type'=>'text'));
-		echo $this->Form->input('bp',array('label'=>'Boite Postale','type'=>'text'));
-		echo $this->Form->input('signature',array('label'=>'Message Signature','type'=>'textarea'));
-		echo $this->Form->input('taux_usd',array('label'=>'taux de change DOLLAR -> BIF'));
+		echo $this->Form->input('web',array('label'=>'Web Site','type'=>'text'));
+		echo $this->Form->input('bp',array('label'=>'PO BOX','type'=>'text'));
+		echo $this->Form->input('signature',array('label'=>'Signature Message','type'=>'textarea'));
+		echo $this->Form->input('taux_usd',array('label'=>'exchange rate for DOLLAR -> BIF'));
 	?>
 	</fieldset>
 	<?php

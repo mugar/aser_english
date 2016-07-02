@@ -1,5 +1,5 @@
 <!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Options de Recherche">
+<div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
 	<?php echo $this->Form->create('Perte',array('id'=>'recherche'));?>
@@ -14,8 +14,8 @@
 	<span class="right">
 		<?php
 			echo $this->Form->input('nature',array('options'=>$natures1));
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début','type'=>'text'));				
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));	
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));	
 			if($action=='index')
 				echo $this->Form->input('show',array('label'=>'Affichage',
 												'options'=>array(20=>'20',

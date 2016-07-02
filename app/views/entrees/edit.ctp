@@ -5,12 +5,12 @@
 			echo $this->Form->input('id');
 			echo $this->Form->input('date',array('label'=>'Date d\'Opération','type'=>'text','id'=>'DateOpEdit'));
 			echo $this->Form->input('quantite');
-			echo $this->Form->input('Produit.unite_id',array('label'=>'Unité de Mesure'));
-			echo $this->Form->input('Produit.id',array('type'=>'hidden'));
+			echo $this->Form->input('Product.unite_id',array('label'=>'Unité de Mesure'));
+			echo $this->Form->input('Product.id',array('type'=>'hidden'));
 			echo $this->Form->input('produit_id');
 			echo $this->Form->input('PA',array('label'=>'Prix D\'Achat'));
 			if(!Configure::read('aser.multi_pv')){
-				echo $this->Form->input('Produit.PV',array('label'=>'Prix De Vente'));
+				echo $this->Form->input('Product.PV',array('label'=>'Prix De Vente'));
 			}
 		?>
 	</span>

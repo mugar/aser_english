@@ -63,7 +63,7 @@
 		<?php echo $this->Form->input('mode',array('type'=>'hidden','value'=>$mode));?>
 		<?php echo $this->Form->input('id1',array('type'=>'hidden','value'=>$id1));?>
 		<?php echo $this->Form->input('id2',array('type'=>'hidden','value'=>$id2));?>
-		<td><input type="submit" onclick="dbclick('yes'); return false;" value="Envoyer"/></td>
+		<td><input type="submit" onclick="dbclick('yes'); return false;" value="Save"/></td>
 		</form>
 		
 	</tr>

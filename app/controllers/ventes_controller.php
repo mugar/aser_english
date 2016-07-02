@@ -2097,7 +2097,7 @@ class VentesController extends AppController {
 		}
 		return $journal;
 	}
-	function _checkMaxDette($reste,$tierInfo,$data){
+	function _checkMaxDette($tierInfo,$reste,$data){
 		//make sure we have a client/tier first.
 		$this->_checkTier($data); 
 
@@ -2105,7 +2105,8 @@ class VentesController extends AppController {
 			$sum=$this->Vente->Facture->find('all',array('fields'=>array('sum(Facture.reste) as reste'),
 													'conditions'=>array('Facture.tier_id'=>$data['tier_id'])
 													));
-			$totalCredit=(isset($sum[0]['Facture']['reste']))?$sum[0]['Facture']['reste']+$reste:0;										
+			$totalCredit=(isset($sum[0]['Facture']['reste'])) ? $sum[0]['Facture']['reste']+$reste:0;		
+
 			if($totalCredit>$tierInfo['max_dette']){
 				die(json_encode(array('success'=>false,
 									'msg'=>'La Dette maximale de '.$tierInfo['max_dette'].' est dépassée!'

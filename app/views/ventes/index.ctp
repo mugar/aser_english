@@ -158,11 +158,11 @@
 			 }
 		?>
 		</fieldset>
-		<fieldset id="form_client"><legend>Client Info</legend>
+		<fieldset id="form_client"><legend>Customer Info</legend>
 		<?php
 			if(Configure::read('aser.hotel'))
 				echo $this->Form->input('chambre',array('id'=>'chambre'));
-			echo $this->Form->input('tier_id',array('id'=>'tierId','selected'=>0,'options'=>$tiers1,'label'=>'Client'));
+			echo $this->Form->input('tier_id',array('id'=>'tierId','selected'=>0,'options'=>$tiers1,'label'=>'Customer'));
 		?>
 		</fieldset>
 		</form>
@@ -173,14 +173,14 @@
 		<fieldset id="list_factures"><legend>Liste des Factures </legend>
 			<table cellpadding="0" cellspacing="0" id="list_factures">
 				<tr>
-					<th>N° Facture</th>
+					<th>Invoice N°</th>
 					<?php if(!$config['magasin']): ?>
 						<th>Table</th>
 					<?php endif; ?>
 					<th>Sous Total</th>
 					<th>Reduction (%)</th>
 					<th>Total</th>
-					<th>Etat</th>
+					<th>State</th>
 				<?php if(!$config['magasin']): ?>
 					<th>Serveur</th>
 				<?php endif; ?>
@@ -189,16 +189,16 @@
 				<?php echo $this->element('../ventes/list_factures',array('factures'=>$factures));?>
 			</table>
 		</fieldset>
-		<fieldset id="list_produits"><legend>Liste des Produits</legend>
+		<fieldset id="list_produits"><legend>Liste des Products</legend>
 			<table cellpadding="0" cellspacing="0" id="list_produits">
 				<tr>
 						<th></th>
 				<?php if($config['beneficiaires']): ?>
 					<th>%</th>
 				<?php endif; ?>
-					<th>Produit</th>
+					<th>Product</th>
 					<th>Quantité</th>
-					<th>PU</th>
+					<th>Unit Price</th>
 					<th>PT</th>
 					<th>Tps</th>
 				</tr>
@@ -208,7 +208,7 @@
 	<span id='third'>
 		<fieldset id="vente_info"><legend>Détails Facture</legend>
 			<span class="info">Facture: <span id="facture"></span></span>
-			<span class="info">Client : <span id="client" name=""></span></span>
+			<span class="info">Customer : <span id="client" name=""></span></span>
 			<?php if(Configure::read('aser.beneficiaires')):?>
 			<span class="info">Béneficiaire : <span id="ben"></span></span>
 				<?php if(Configure::read('aser.detailed_ben')):?>
@@ -226,7 +226,7 @@
 		<form>
 		<?php
 				echo '<span class="bouttons">';
-				echo '<span name="payment" value="1" class="boutton_selected" onclick="switcher(this)">PAYEE</span>';	
+				echo '<span name="payment" value="1" class="boutton_selected" onclick="switcher(this)">PAID AMOUNT</span>';	
 				echo '<span name="payment" value="2" class="boutton" onclick="switcher(this)">CREDIT</span>';
 				if(Configure::read('aser.bonus'))	
 					echo '<span name="payment" value="3" class="boutton" onclick="switcher(this)">BONUS</span>';	
@@ -248,33 +248,33 @@
 		<?php endif;?> 
 		<span id="add_facture" name="disable" class="boutton" title="ajouter la nouvelle consommation à la facture sélectionnée">Ajouter</span>
 		<span id="remove_facture" name="annuler" class="boutton"  title="Annuler la facture">Annuler</span>
-		<span id="remove_conso" name="disable" class="boutton"  title="Supprimer la consommation de la facture sélectionnée ">Effacer</span>
+		<span id="remove_conso" name="disable" class="boutton"  title="Supprimer la consommation de la facture sélectionnée ">Delete</span>
 		<?php if(in_array($fonction,array(3,5,8))): ?>
 			<span id="direct_reduction" name="disable" class="boutton"  title="Réduire directement le montant de la facture ">Réduction</span>
 			<span id="unlock" name="unlock" class="boutton"  title="Débloquer la facture" onclick="unlock(factureId)">Débloquer</span>
 		<?php endif;?> 
 		<span id="paiement_facture" name="classer" class="boutton" title="Clôturer la facture en marquant son état de paiement">Classer</span>
-		<span class="boutton" onclick="print_facture(factureId)" title="Imprimer la facture">Imprimer</span>
+		<span class="boutton" onclick="print_facture(factureId)" title="Print la facture">Print</span>
 		<?php if(Configure::read('aser.xls_copy')):?>
-			<span class="boutton" onclick="custom_printing(factureId, 'ventes/print_facture/'+factureId)" title="Imprimer la facture">Imprimer avec les Détails</span>
+			<span class="boutton" onclick="custom_printing(factureId, 'ventes/print_facture/'+factureId)" title="Print la facture">Print avec les Détails</span>
 		<?php endif;?>
 		<?php if($config['multi_resto']): ?>
 			<span class="boutton" onclick="parameters()" title="Configurer les paramètres">Paramètres</span>
 		<?php endif;?> 
 		<?php if($config['stock_option_caisse']): ?>
-			<span class="boutton" onclick="edit_produit()" title="Modifier un produit">Modifier Produit</span>
-			<span class="boutton" onclick="add_produit()" title="Créer un produit de type non_stockable">Créer Produit</span>
+			<span class="boutton" onclick="edit_produit()" title="Edit un produit">Edit Product</span>
+			<span class="boutton" onclick="add_produit()" title="Créer un produit de type non_stockable">Créer Product</span>
 		<?php endif;?> 
 		<?php if(!$config['magasin']): ?>
 			<span id="serveur" name="disable" class="boutton" title="Changer le Serveur">Serveur</span>
 			<span id="table" name="disable" class="boutton" title="Changer la table">Table</span>
 		<?php endif;?> 
 		<?php if(!$config['magasin']&&$config['bon']): ?>
-			<span class="boutton" onclick="ask(factureId)" title="Imprimer les bons pour le bar et la cuisine pour la facture sélectionnée">Bon</span>
+			<span class="boutton" onclick="ask(factureId)" title="Print les bons pour le bar et la cuisine pour la facture sélectionnée">Bon</span>
 		<?php endif;?> 
 		<span id ="separator" name="disable" class="boutton" title="Séparer une facture en deux ou plus">Séparateur</span>
 		<?php if($config['client_auto_creation']): ?>
-			<span class="boutton" onclick="resto_tier()" title="Créer un nouveau client">Client</span>
+			<span class="boutton" onclick="resto_tier()" title="Créer un nouveau client">Customer</span>
 		<?php endif;?>
 		<span class="boutton" onclick="document.location.href=getBase()+'ventes/journal'" title="Rapport Caisse">Rapport</span>
 	</fieldset>
@@ -284,17 +284,17 @@
 	echo $this->element('../ventes/parametres',array('bars'=>$bars,'stocks'=>$stocks,'action'=>'index'));
 }
 ?>
-<div id="edit_boxe" style="display:none" title='Modifier le produit'>
+<div id="edit_boxe" style="display:none" title='Edit le produit'>
 </div>
 <div id="add_produit" style="display:none" title='Créer un nouveau produit de type non stockable</span>'
 <div class="dialog">
 	<div id="message_produit"></div>
-	<?php echo $this->Form->create('Produit',array('id'=>'add_produit','action'=>'add'));?>
+	<?php echo $this->Form->create('Product',array('id'=>'add_produit','action'=>'add'));?>
 	<span class="left">
 		<?php
 			echo $this->element('combobox',array('n°'=>1));
 			if(Configure::read('aser.comptabilite')){
-				echo $this->Form->input('Produit.groupe_comptable_id',array('label'=>'Groupe comptable','options'=>$groupeComptables1));
+				echo $this->Form->input('Product.groupe_comptable_id',array('label'=>'Groupe comptable','options'=>$groupeComptables1));
 			}
 		?>
 	</span>
@@ -302,10 +302,10 @@
 		<?php
 			echo '<label>Nom</label>';
 			echo $ajax->autoComplete('produit','/produits/autoComplete/actif',array('id'=>'produit',
-																					'name'=>'data[Produit][name]',
+																					'name'=>'data[Product][name]',
 																					));
 			if(!Configure::read('aser.multi_pv'))
-				echo $this->Form->input('Produit.PV',array('value'=>0));
+				echo $this->Form->input('Product.PV',array('value'=>0));
 			echo $this->Form->input('type',array('value'=>'non_stockable','type'=>'hidden'));	
 		?>
 	</span>

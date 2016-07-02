@@ -46,26 +46,26 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu\'au numéro %end%', true)
+	'format' => __('Page %page% of %pages%, showing  %current% records out of %count%, from %start%, to %end%', true)
 	));
 	?>	</p>
 
 	<div class="paging">
-		<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
-		<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 	</div>
 </div>
 <div id="separator" class="back" title="Etendre" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Paie', true)), array('action' => 'add')); ?></li>
-		<li class="link" onclick="actions('checkbox','edit')" >Modifier</li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Paie', true)), array('action' => 'add')); ?></li>
+		<li class="link" onclick="actions('checkbox','edit')" >Edit</li>
 		<li class="link" onclick="actions('checkbox','view')" >Afficher</li>
-		<li class="link" onclick="actions('checkbox','delete')" >Effacer</li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Salaires', true)), array('controller' => 'salaires', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Salaire', true)), array('controller' => 'salaires', 'action' => 'add')); ?> </li>
+		<li class="link" onclick="actions('checkbox','delete')" >Delete</li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Salaires', true)), array('controller' => 'salaires', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Salaire', true)), array('controller' => 'salaires', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

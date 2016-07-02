@@ -4,14 +4,14 @@
 	<span class="left">
 		<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('name',array('label'=>'Numéro de la chambre'));
-		echo $this->Form->input('type_chambre_id',array('label'=>'Type de Chambre'));
-		echo $this->Form->input('etage',array('label'=>'N°d\'étage'));
+		echo $this->Form->input('name',array('label'=>'Room Number'));
+		echo $this->Form->input('type_chambre_id',array('label'=>'Room Type'));
+		echo $this->Form->input('etage',array('label'=>'Floor Number'));
 	?>
 	</span>
 	<span class="right">
 		<?php
-		echo $this->Form->input('operationnelle',array('label'=>'Chambre Opérationnelle','options'=>$actifs));
+		echo $this->Form->input('operationnelle',array('label'=>'Functional','options'=>$actifs));
 		echo $this->Form->input('message');
 	?>
 	</span>

@@ -6,9 +6,9 @@
 			<?php echo $mouvement['Mouvement']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Produit'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($mouvement['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $mouvement['Produit']['id'])); ?>
+			<?php echo $this->Html->link($mouvement['Product']['name'], array('controller' => 'produits', 'action' => 'view', $mouvement['Product']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Quantite'); ?></dt>
@@ -71,14 +71,14 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Mouvement', true)), array('action' => 'edit', $mouvement['Mouvement']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Effacer %s', true), __('Mouvement', true)), array('action' => 'delete', $mouvement['Mouvement']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $mouvement['Mouvement']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Mouvements', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Mouvement', true)), array('action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Produits', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Stock Sortant', true)), array('controller' => 'stocks', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Mouvement', true)), array('action' => 'edit', $mouvement['Mouvement']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Mouvement', true)), array('action' => 'delete', $mouvement['Mouvement']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $mouvement['Mouvement']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Mouvements', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Mouvement', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Products', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Stock Sortant', true)), array('controller' => 'stocks', 'action' => 'add')); ?> </li>
 		
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('First Personnel', true)), array('controller' => 'personnels', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('First Personnel', true)), array('controller' => 'personnels', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

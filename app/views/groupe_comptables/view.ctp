@@ -21,9 +21,9 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Modifier %s', true), __('Groupe Comptable', true)), array('action' => 'edit', $groupeComptable['GroupeComptable']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Effacer %s', true), __('Groupe Comptable', true)), array('action' => 'delete', $groupeComptable['GroupeComptable']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $groupeComptable['GroupeComptable']['id'])); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Groupe Comptables', true)), array('action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Groupe Comptable', true)), array('action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Groupe Comptable', true)), array('action' => 'edit', $groupeComptable['GroupeComptable']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Delete %s', true), __('Groupe Comptable', true)), array('action' => 'delete', $groupeComptable['GroupeComptable']['id']), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $groupeComptable['GroupeComptable']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Groupe Comptables', true)), array('action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Groupe Comptable', true)), array('action' => 'add')); ?> </li>
 	</ul>
 </div>

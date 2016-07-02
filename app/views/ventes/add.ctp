@@ -2,7 +2,7 @@
 <?php echo $this->Form->create('Vente');?>
 <fieldset class="resto">
  		<legend class="add"><?php printf(__('Add %s', true), __('Vente', true)); ?></legend>
- 	<fieldset id="resto_options" ><legend onclick="jQuery.toggle('#resto_options')" title="Afficher/Masquer" style="cursor:pointer;">Paramètres</legend>
+ 	<fieldset id="resto_options" ><legend onclick="jQuery.toggle('#resto_options')" title="Show/Hide" style="cursor:pointer;">Paramètres</legend>
  	<div id='resto_options'>
 		<span class="left">
 		<?php
@@ -40,17 +40,17 @@
 	<div id="resto_menu"><span id="loading" style="display:none;">Chargement ...</span></div>
 	</fieldset>
 </fieldset>
-<?php echo $this->Form->end(__('Envoyer', true));?>
+<?php echo $this->Form->end(__('Save', true));?>
 </div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Ventes', true)), array('action' => 'index'));?></li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Caisses', true)), array('controller' => 'caisses', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Créer %s', true), __('Caiss', true)), array('controller' => 'caisses', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Ventes', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Caisses', true)), array('controller' => 'caisses', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Caiss', true)), array('controller' => 'caisses', 'action' => 'add')); ?> </li>
 		
 		 
-		<li><?php echo $this->Html->link(sprintf(__('Lister/Créer %s', true), __('Tiers', true)), array('controller' => 'tiers', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Lister/Create %s', true), __('Tiers', true)), array('controller' => 'tiers', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

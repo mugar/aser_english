@@ -23,7 +23,7 @@
 	<div id="details">
 	<div id="left">
 		<span class="info"><?php if($thermal=='oui') echo 'N° '.$facture['Facture']['numero'];
-                                            else echo 'Facture N° : '.$facture['Facture']['numero'];
+                                            else echo 'Invoice N° : '.$facture['Facture']['numero'];
 		?></span>
 		<span class="info"><?php if($thermal=='oui') echo $this->MugTime->toFrench($facture['Facture']['date']);
 										else echo 'Date : '.$this->MugTime->toFrench($facture['Facture']['date']); ?></span>
@@ -49,7 +49,7 @@
 			<?php else: ?>
 				<th>Quantité</th>
 			<?php endif; ?>
-			<th>Produit</th>
+			<th>Product</th>
 		</tr>
 		<?php
 		foreach ($ventes as $vente):
@@ -59,7 +59,7 @@
 						else echo $vente['quantite'];
 					 ?>
 			</td>
-			<td><?php echo ucwords($vente['Produit']['name']); ?>&nbsp;</td>
+			<td><?php echo ucwords($vente['Product']['name']); ?>&nbsp;</td>
 		</tr>
 		<?php endforeach; ?>
 		<?php if($msg!='null'):?>

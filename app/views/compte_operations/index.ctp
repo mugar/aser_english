@@ -47,8 +47,8 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Choisissez une date début'));
-			echo $this->Form->input('date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('date1',array('label'=>'Start Date'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>
@@ -111,7 +111,7 @@
 			<td><?php echo $this->Form->input('automatik',array('label'=>'','type'=>'checkbox','checked'=>'checked','value'=>1));?></td>
 		<?php endif;?>	
 		<?php echo $this->Form->input('mode',array('type'=>'hidden','value'=>$mode));?>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		<?php echo $this->Form->input('journal',array('id'=>'compte','type'=>'hidden','value'=>$journal));?>
 		<?php echo $this->Form->input('id',array('id'=>'id','type'=>'hidden','value'=>null));?>
 		</form>
@@ -161,25 +161,25 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu\'au numéro %end%', true)
+	'format' => __('Page %page% of %pages%, showing  %current% records out of %count%, from %start%, to %end%', true)
 	));
 	?>	</p>
 
 	<div class="paging">
-		<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
-		<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 	</div>
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li class="link"  onclick = "recherche()" >Choix du journal</li>		
-		<li class="link" onclick="mass_delete()" >Effacer en Masse</li>
+		<li class="link" onclick="mass_delete()" >Delete en Masse</li>
 		<li><?php echo $this->Html->link('Grand livre', array('controller' => 'compte_operations', 'action' => 'rapport')); ?> </li>
 		<li><?php echo $this->Html->link('Balance', array('controller' => 'compte_operations', 'action' => 'balance')); ?> </li>
-		<li><?php echo $this->Html->link(sprintf(__('Lister %s', true), __('Comptes', true)), array('controller' => 'comptes', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Comptes', true)), array('controller' => 'comptes', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

@@ -7,7 +7,7 @@
 	</span>
 	<div style="clear:both"></div>
 	<button style="margin:10px 0 10px 100px ;" onclick="ingredient_add_row();return false;">Ajouter/Enlever</button>
-	<?php echo $this->Form->create('Produit',array('id'=>'ing_form','action'=>'ingredient'));?>
+	<?php echo $this->Form->create('Product',array('id'=>'ing_form','action'=>'ingredient'));?>
 		<table id="ing_table">
 			<th></th>
 			<th>Ingredient</th>

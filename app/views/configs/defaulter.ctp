@@ -35,4 +35,4 @@
 </fieldset>
 <div style="clear:both"></div>
    </div>
-		<?php echo $this->Form->end(__('Envoyer', true)); ?>
+		<?php echo $this->Form->end(__('Save', true)); ?>

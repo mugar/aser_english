@@ -1,6 +1,6 @@
 <?php $config=Configure::read('aser'); ?>
 <div class="produits index">
-	<h2 id="produits" caissier="<?php echo $caissier;?>" serveur="<?php echo $serveur;?>" fonction="<?php echo $fonction;?>"><?php __('Gestions Des Produits');?></h2>
+	<h2 id="produits" caissier="<?php echo $caissier;?>" serveur="<?php echo $serveur;?>" fonction="<?php echo $fonction;?>"><?php __('Gestions Des Products');?></h2>
 	
 	<!--recherche form -->
 <?php echo $this->element('../produits/recherche',array('action'=>'index'));?>
@@ -8,17 +8,17 @@
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	<tr>
-		<th>Nom Du Produit</th>
+		<th>Nom Du Product</th>
 		<th>Prix D'Achat</th>
 		<?php if(!Configure::read('aser.multi_pv')): ?>
 		<th>Prix De Vente</th>
 		<?php endif;?>
 		<th>Section</th>
 		<th>Groupe</th>
-		<th>Type Du Produit</th>
+		<th>Type Du Product</th>
 		<th>Unité De Mesure</th>
 		<?php if(Configure::read('aser.pharmacie')):?>
-			<th>Produit Périssable</th>
+			<th>Product Périssable</th>
 		<?php endif;?>
 		<?php if($config['advanced_stock']):?>
 			<th title="">Accompagnement</th>
@@ -28,13 +28,14 @@
 			<th>Groupe Comptable</th>
 		<?php endif;?>
 		<th>Stock Min</th>
+		<th>Description</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
 	<tr name="<?php echo $i?>">
-		<?php echo $this->Form->create('Produit',array('action'=>'add'));?>
+		<?php echo $this->Form->create('Product',array('action'=>'add'));?>
 		<td><?php echo $ajax->autoComplete($i.'produit','/produits/autoComplete/actif',array('id'=>$i.'produit',
-																					'name'=>'data[Produit][name]'));?>
+																					'name'=>'data[Product][name]'));?>
 		</td>
 		<td><?php echo $this->Form->input('PA',array('id'=>'PA','label'=>'','value'=>0));?></td>
 		<?php if(!Configure::read('aser.multi_pv')): ?>
@@ -52,7 +53,7 @@
 		<td><?php echo $this->Form->input('type',array('label'=>'',
 													'id'=>'type',
 													'selected'=>'stockable',
-													'options'=>$typeDeProduits
+													'options'=>$typeDeProducts
 													)
 										);?>
 		</td>
@@ -74,22 +75,23 @@
 			<td><?php echo $this->Form->input('groupe_comptable_id',array('label'=>'','options'=>$groupeComptables));?></td>
 		<?php endif; ?>
 		<td><?php echo $this->Form->input('min',array('label'=>'','class'=>'nullable','value'=>10));?></td>
+		<td><?php echo $this->Form->input('description',array('label'=>''));?></td>
 		<?php echo $this->Form->input('actif',array('type'=>'hidden','value'=>'oui'));?>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		</form>
 		
 	</tr>
 	<?php endfor; ?>
 </table>
 </div>
-	<?php echo $this->Form->create('Produit',array('name'=>'checkbox','id'=>'Produit_produits','action'=>'index'));?>	
+	<?php echo $this->Form->create('Product',array('name'=>'checkbox','id'=>'Product_produits','action'=>'index'));?>	
 	<table cellpadding="0" cellspacing="0">
 	<tr id="first">
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('section_id');?></th>
 			<th><?php echo $this->Paginator->sort('groupe_id');?></th>
-			<th><?php echo $this->Paginator->sort('Nom du Produit','name');?></th>
+			<th><?php echo $this->Paginator->sort('Nom du Product','name');?></th>
 			<th><?php echo $this->Paginator->sort('Prix D\'Achat','PA');?></th>
 		<?php if(!Configure::read('aser.multi_pv')): ?>
 			<th><?php echo $this->Paginator->sort('Prix De Vente','PV');?></th>
@@ -102,9 +104,9 @@
 			<th><?php echo $this->Paginator->sort('quantite');?></th>
 		<? endif;?>
 		<th><?php echo $this->Paginator->sort('Unité De Mesure','unite_id');?></th>
-		<th><?php echo $this->Paginator->sort('Type De Produit','type');?></th>
+		<th><?php echo $this->Paginator->sort('Type De Product','type');?></th>
 		<?php if(Configure::read('aser.pharmacie')): ?>
-			<th><?php echo $this->Paginator->sort('Produit Périssable','expiration');?></th>
+			<th><?php echo $this->Paginator->sort('Product Périssable','expiration');?></th>
 		<?php endif; ?>
 		<?php if($config['advanced_stock']):?>
 			<th><?php echo $this->Paginator->sort('Accompagnement','acc');?></th>
@@ -114,6 +116,7 @@
 			<th><?php echo $this->Paginator->sort('groupe_comptable_id');?></th>
 		<?php endif; ?>
 			<th><?php echo $this->Paginator->sort('min');?></th>
+			<th><?php echo $this->Paginator->sort('description');?></th>
 			<th><?php echo $this->Paginator->sort('actif');?></th>
 		</tr>
 	<?php
@@ -129,37 +132,37 @@
 		<p>
 		<?php
 		echo $this->Paginator->counter(array(
-		'format' => __('Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu\'au numéro %end%', true)
+		'format' => __('Page %page% of %pages%, showing  %current% records out of %count%, from %start%, to %end%', true)
 		));
 		?>	</p>
 
 		<div class="paging">
-			<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+			<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 		 | 	<?php echo $this->Paginator->numbers();?>
 	 |
-			<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+			<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 		</div>
 	</div>
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class= "link" onclick = "edit('produits')" >Modifier</li>
-		<li class= "link" onclick = "mass_delete()">Effacer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
+		<li class= "link" onclick = "edit('produits')" >Edit</li>
+		<li class= "link" onclick = "mass_delete()">Delete</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li class="link"  onclick="quantites()" >Afficher les Quantités</li>
 		<li class="link"  onclick="actions('checkbox','historique')" >Afficher l'Historique du Stock</li>
 		<li  class="link" onclick = "mass_modification()" >Modification en Masse</li>
 		<?php if(false&&Configure::read('aser.multi_pv')):?>
-			<li class="link"  onclick = "produit_tarifs('checkbox','index')" >Afficher/Masquer des Tarifs</li>
+			<li class="link"  onclick = "produit_tarifs('checkbox','index')" >Show/Hide des Tarifs</li>
 			<span id="produit_tarifs_links" style="display:none">
 				<li class="link"  onclick = "produit_tarifs('checkbox','add')" >Créer Tarif</li>
-				<li class="link" onclick = "produit_tarifs('checkbox','delete','produit_tarifs_form')" >Effacer Tarif</li>
+				<li class="link" onclick = "produit_tarifs('checkbox','delete','produit_tarifs_form')" >Delete Tarif</li>
 			</span>
 		<?php endif;?>
-		<li><?php echo $this->Html->link(sprintf(__('%s', true), __('Rapport Des Produits', true)), array('controller' => 'produits', 'action' => 'rapport')); ?> </li>
-		<li><?php echo $this->Html->link('Mouvements Des Produits', array('controller' => 'produits', 'action' => 'balance')); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('%s', true), __('Rapport Des Products', true)), array('controller' => 'produits', 'action' => 'rapport')); ?> </li>
+		<li><?php echo $this->Html->link('Mouvements Des Products', array('controller' => 'produits', 'action' => 'balance')); ?> </li>
 		<li class= "link" onclick = "merge('produits')" ><? echo  __('Fusionner les Enregistrements');?></li>
 		<li class="link"  onclick="actions('checkbox','trace')" >Historique des Modifications </li>
 		<?php if(Configure::read('aser.ingredient')):?>
@@ -174,7 +177,7 @@
 <div class="dialog">
 	
 	<div id="message_tarif"></div>
-	<?php echo $this->Form->create('Produit',array('id'=>'historique_form'));?>
+	<?php echo $this->Form->create('Product',array('id'=>'historique_form'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('Historique.stock_id',array('label'=>'Stock'));
@@ -182,8 +185,8 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('Historique.date1',array('label'=>'Choisissez une date début'));
-			echo $this->Form->input('Historique.date2',array('label'=>'et une date fin pour le rapport','type'=>'text'));
+			echo $this->Form->input('Historique.date1',array('label'=>'Start Date'));
+			echo $this->Form->input('Historique.date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>
@@ -193,7 +196,7 @@
 <!-- form for tarif creation -->
 <div id="tarif_boxe" style="display:none" title="Création d'un tarif">
 <div class="dialog">
-	<?php echo $this->Form->create('Produit',array('id'=>'tarifAdd','action'=>'tarif_add'));?>
+	<?php echo $this->Form->create('Product',array('id'=>'tarifAdd','action'=>'tarif_add'));?>
 	<span class="left">
 		<?php	
 			echo $this->Form->input('Tarif.name',array('label'=>'Nom','id'=>'place','options'=>$bars));
@@ -218,9 +221,9 @@
 		</span>
 		<span class="right">
 			<?php
-				echo $this->Form->input('type',array('options'=>$typeDeProduits1,
+				echo $this->Form->input('type',array('options'=>$typeDeProducts1,
 													'selected'=>0,
-												'label'=>'Type De Produit'
+												'label'=>'Type De Product'
 												));
 				if(Configure::read('aser.advanced_stock')) {
 					echo $this->Form->input('acc',array('label'=>'Accompagnement',

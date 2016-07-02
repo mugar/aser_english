@@ -6,9 +6,9 @@
 			<th>Id</th>
 			<th>Libellé</th>
 			<th>Quantité</th>
-			<th>PU</th>
+			<th>Unit Price</th>
 			<th>Montant</th>
-			<th>Monnaie</th>
+			<th>Currency</th>
 			<th>Extra ?</th>
 		</tr>
 	<?php
