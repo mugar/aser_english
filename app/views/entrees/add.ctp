@@ -4,9 +4,9 @@
 		</td>
 		<td><?php echo $this->MugTime->toFrench($entree['Entree']['date']); ?>&nbsp;</td>
 		<td><?php echo $entree['Entree']['quantite'].' ';
-				if(isset($unites[$entree['Product']['unite_id']])) echo $unites[$entree['Product']['unite_id']];?>&nbsp;</td>
+				if(isset($unites[$entree['Produit']['unite_id']])) echo $unites[$entree['Produit']['unite_id']];?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($entree['Product']['name'], array('controller' => 'produits', 'action' => 'view', $entree['Product']['id'],$entree['Entree']['stock_id'])); ?>
+			<?php echo $this->Html->link($entree['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $entree['Produit']['id'],$entree['Entree']['stock_id'])); ?>
 		</td>
 		<td><?php echo $number->format($entree['Entree']['PA'],$formatting); ?>&nbsp;</td>
 		<td><?php echo $number->format($entree['Entree']['montant'],$formatting); ?>&nbsp;</td>

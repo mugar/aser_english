@@ -47,7 +47,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $Entree['Tier']['name']; ?></td>
-			<td><?php echo  $Entree['Product']['name']; ?></td>
+			<td><?php echo  $Entree['Produit']['name']; ?></td>
 			<td><?php echo  $Entree['Entree']['quantite']; ?></td>
 			<td><?php echo  $Entree['Entree']['montant']; ?></td>
 			<td><?php echo  $Entree['Entree']['paiement']; ?></td>
@@ -85,7 +85,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $sorti['Tier']['name']; ?></td>
-			<td><?php echo  $sorti['Product']['name']; ?></td>
+			<td><?php echo  $sorti['Produit']['name']; ?></td>
 			<td><?php echo  $sorti['Sorti']['element']; ?></td>
 			<td><?php echo  $sorti['Sorti']['quantite']; ?></td>
 			<td><?php echo  $sorti['Sorti']['montant']; ?></td>
@@ -190,7 +190,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $Pret['Tier']['name']; ?></td>
-			<td><?php echo  $Pret['Product']['name']; ?></td>
+			<td><?php echo  $Pret['Produit']['name']; ?></td>
 			<td><?php echo  $Pret['Pret']['pris']; ?></td>
 			<td><?php echo  $Pret['Pret']['remis']; ?></td>
 			<td><?php echo  $Pret['Pret']['reste']; ?></td>

@@ -76,7 +76,7 @@
 				<td><?php  if(!empty($vente['Facture']['employeur'])) echo  $vente['Facture']['employeur']; ?></td>
 			<?php endif; ?>
 		<?php endif; ?>
-			<td><?php echo  $vente['Product']['name']; ?></td>
+			<td><?php echo  $vente['Produit']['name']; ?></td>
 			<td><?php echo  $vente['Vente']['quantite']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting).' '.Configure::read('aser.default_currency'); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['montant']+0,$formatting).' '.Configure::read('aser.default_currency'); ?></td>

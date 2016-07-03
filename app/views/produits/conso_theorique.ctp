@@ -22,8 +22,8 @@
 	</tr>
 	<?php foreach($produits as $produit):?>
 		<tr>
-			<td> <?php echo $produit['Product']['name'];?></td>
-			<td> <?php echo ($produit['Product']['quantite']+0).' '.$produit['Unite']['name'];?></td>
+			<td> <?php echo $produit['Produit']['name'];?></td>
+			<td> <?php echo ($produit['Produit']['quantite']+0).' '.$produit['Unite']['name'];?></td>
 		</tr>
 	<?php endforeach;?>	
 </table>

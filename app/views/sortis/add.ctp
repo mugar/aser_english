@@ -5,9 +5,9 @@
 		<td><?php echo $this->MugTime->toFrench($sorti['Sorti']['date']); ?>&nbsp;</td>
 		<td><?php echo $sorti['Stock']['name']; ?>&nbsp;</td>
 		<td><?php echo $sorti['Sorti']['quantite'].' ';
-		if(isset($unites[$sorti['Product']['unite_id']])) echo $unites[$sorti['Product']['unite_id']]; ?>&nbsp;</td>
+		if(isset($unites[$sorti['Produit']['unite_id']])) echo $unites[$sorti['Produit']['unite_id']]; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($sorti['Product']['name'], array('controller' => 'produits', 'action' => 'view', $sorti['Product']['id'],$sorti['Sorti']['stock_id'])); ?>
+			<?php echo $this->Html->link($sorti['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $sorti['Produit']['id'],$sorti['Sorti']['stock_id'])); ?>
 		</td>
 		<td><?php echo $number->format($sorti['Sorti']['PU'],$formatting); ?>&nbsp;</td>
 		<td><?php echo $number->format($sorti['Sorti']['montant'],$formatting); ?>&nbsp;</td>

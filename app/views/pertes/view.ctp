@@ -13,7 +13,7 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($perte['Product']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Product']['id'])); ?>
+			<?php echo $this->Html->link($perte['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Produit']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Nature'); ?></dt>

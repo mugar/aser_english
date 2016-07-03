@@ -32,7 +32,7 @@
 	</tr>
 	<?php foreach($produits as $produit):?>
 		<tr>
-			<td> <?php echo $this->Html->link($produit['Product']['name'], array('controller' => 'produits', 'action' => 'view', $produit['Product']['id'],0));?></td>
+			<td> <?php echo $this->Html->link($produit['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $produit['Produit']['id'],0));?></td>
 			<?php 
 		//	exit(debug($produit['stocks']));
 			foreach($produit['stocks'] as $stockQty){

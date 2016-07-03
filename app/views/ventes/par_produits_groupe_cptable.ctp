@@ -51,7 +51,7 @@
 		<?php foreach ($groupeComptable['ventes'] as $vente):?>
 			<tr>	
 				<td>
-					<?php echo $this->Html->link($vente['Product']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Product']['id'])); ?>
+					<?php echo $this->Html->link($vente['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Produit']['id'])); ?>
 				</td>
 				<td data-sort-value="<?php echo $vente['Vente']['quantite']; ?>"><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 				<td data-sort-value="<?php echo $vente['Vente']['PU']; ?>"><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>

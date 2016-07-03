@@ -39,7 +39,7 @@
 			
 			<td><?php echo  $vente_efface['VenteEfface']['date']; ?></td>
 			<td>
-				<?php echo $vente_efface['Product']['name']; ?>
+				<?php echo $vente_efface['Produit']['name']; ?>
 			</td>
 			<td><?php echo  $number->format($vente_efface['VenteEfface']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente_efface['VenteEfface']['PU'],$formatting); ?></td>

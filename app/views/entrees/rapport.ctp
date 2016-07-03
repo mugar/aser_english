@@ -23,8 +23,8 @@
 	?>
 	<tr>
 		<td><?php echo $entree['Entree']['quantite'].' ';
-				if(isset($unites[$entree['Product']['unite_id']])) echo $unites[$entree['Product']['unite_id']];?>&nbsp;</td>
-		<td><?php echo  $entree['Product']['name']; ?></td>
+				if(isset($unites[$entree['Produit']['unite_id']])) echo $unites[$entree['Produit']['unite_id']];?>&nbsp;</td>
+		<td><?php echo  $entree['Produit']['name']; ?></td>
 		<td><?php echo  $entree['Entree']['PA']; ?></td>
 		<td><?php echo  $number->format($entree['Entree']['montant'],$formatting); ?></td>
 		<td><?php echo  $entree['Entree']['type']; ?></td>

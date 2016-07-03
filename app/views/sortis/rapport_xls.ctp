@@ -25,7 +25,7 @@
 	<tr<?php echo $class;?>>
 			<td><?php echo  $groupSorti['Caiss']['name']; ?></td>
 			<td><?php echo  $groupSorti['Tier']['name']; ?></td>
-			<td><?php echo  $groupSorti['Product']['name']; ?></td>
+			<td><?php echo  $groupSorti['Produit']['name']; ?></td>
 			<td><?php echo  $groupSorti['Sorti']['element']; ?></td>
 			<td><?php echo  $groupSorti['Sorti']['quantite']; ?></td>
 			<td><?php echo  $groupSorti['Sorti']['montant']; ?></td>

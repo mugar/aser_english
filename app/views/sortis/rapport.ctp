@@ -22,8 +22,8 @@
 	
 	?>
 	<tr>
-			<td><?php echo  $number->format($sorti['Sorti']['quantite'],$formatting).' '.$unites[$sorti['Product']['unite_id']]; ?></td>
-			<td><?php echo  $sorti['Product']['name']; ?></td>
+			<td><?php echo  $number->format($sorti['Sorti']['quantite'],$formatting).' '.$unites[$sorti['Produit']['unite_id']]; ?></td>
+			<td><?php echo  $sorti['Produit']['name']; ?></td>
 			<td><?php echo  $sorti['Sorti']['PU']; ?></td>
 			<td><?php echo  $number->format($sorti['Sorti']['montant'],$formatting); ?></td>
 			<td><?php echo  $sorti['Stock']['name']; ?></td>

@@ -17,7 +17,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $groupPerte['Product']['name']; ?></td>
+			<td><?php echo  $groupPerte['Produit']['name']; ?></td>
 			<td><?php echo  $groupPerte['Perte']['element']; ?></td>
 			<td><?php echo  $groupPerte['Perte']['nature']; ?></td>
 			<td><?php echo  $groupPerte['Perte']['quantite']; ?></td>

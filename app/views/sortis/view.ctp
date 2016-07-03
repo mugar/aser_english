@@ -28,7 +28,7 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($sorti['Product']['name'], array('controller' => 'produits', 'action' => 'view', $sorti['Product']['id'])); ?>
+			<?php echo $this->Html->link($sorti['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $sorti['Produit']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Quantite'); ?></dt>

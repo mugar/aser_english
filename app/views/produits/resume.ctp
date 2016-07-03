@@ -42,7 +42,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $Entree['Product']['name']; ?></td>
+			<td><?php echo  $Entree['Produit']['name']; ?></td>
 			<td><?php echo  $Entree['Entree']['element']; ?></td>
 			<td><?php echo  $Entree['Entree']['quantite']; ?></td>
 			<td><?php echo  $Entree['Entree']['montant']; ?></td>
@@ -72,7 +72,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $sorti['Product']['name']; ?></td>
+			<td><?php echo  $sorti['Produit']['name']; ?></td>
 			<td><?php echo  $sorti['Sorti']['element']; ?></td>
 			<td><?php echo  $sorti['Sorti']['quantite']; ?></td>
 			<td><?php echo  $sorti['Sorti']['montant']; ?></td>
@@ -104,7 +104,7 @@
 	?>
 	<tr<?php echo $class;?>>
 			<td><?php echo  $Retour['Retour']['operation']; ?></td>
-			<td><?php echo  $Retour['Product']['name']; ?></td>
+			<td><?php echo  $Retour['Produit']['name']; ?></td>
 			<td><?php echo  $Retour['Retour']['element']; ?></td>
 			<td><?php echo  $Retour['Retour']['quantite']; ?></td>
 			<td><?php echo  $Retour['Retour']['montant']; ?></td>
@@ -135,7 +135,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $Perte['Product']['name']; ?></td>
+			<td><?php echo  $Perte['Produit']['name']; ?></td>
 			<td><?php echo  $Perte['Perte']['element']; ?></td>
 			<td><?php echo  $Perte['Perte']['nature']; ?></td>
 			<td><?php echo  $Perte['Perte']['quantite']; ?></td>
@@ -167,7 +167,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-			<td><?php echo  $Pret['Product']['name']; ?></td>
+			<td><?php echo  $Pret['Produit']['name']; ?></td>
 			<td><?php echo  $Pret['Pret']['element']; ?></td>
 			<td><?php echo  $Pret['Pret']['pris']; ?></td>
 			<td><?php echo  $Pret['Pret']['remis']; ?></td>

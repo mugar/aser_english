@@ -23,7 +23,7 @@
 		
 	?>
 	<tr>
-			<td><?php echo  $data['Product']; ?></td>
+			<td><?php echo  $data['Produit']; ?></td>
 			<td><?php echo  $data['Type']; ?></td>
 			<td><?php echo  $data['Section']; ?></td>
 			<td><?php echo  $data['Groupe']; ?></td>

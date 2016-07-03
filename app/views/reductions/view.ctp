@@ -8,7 +8,7 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $this->Html->link($mouvement['Product']['name'], array('controller' => 'produits', 'action' => 'view', $mouvement['Product']['id'])); ?>
+			<?php echo $this->Html->link($mouvement['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $mouvement['Produit']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Quantite'); ?></dt>

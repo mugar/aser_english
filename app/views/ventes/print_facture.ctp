@@ -108,7 +108,7 @@
 		?>
 		<tr >
 			<td><?php echo $vente['Vente']['quantite']; ?>&nbsp;</td>
-			<td><?php echo ucwords($vente['Product']['name']); ?>&nbsp;</td>
+			<td><?php echo ucwords($vente['Produit']['name']); ?>&nbsp;</td>
 			<td><?php echo $vente['Vente']['PU']; ?>&nbsp;</td>
 			<td><?php echo $vente['Vente']['montant']; ?>&nbsp;</td>
 		</tr>

@@ -6,7 +6,7 @@
 		<td><?php echo $perte['Perte']['id']; ?>&nbsp;</td>
 		<td></td>
 		<td>
-			<?php echo $this->Html->link($perte['Product']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Product']['id'])); ?>
+			<?php echo $this->Html->link($perte['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Produit']['id'])); ?>
 		</td>
 		
 		<td><?php echo $perte['Perte']['nature']; ?>&nbsp;</td>

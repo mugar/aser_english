@@ -113,21 +113,21 @@
 				
 				<?php if($config['POS']): ?>
 				<li><?php 
-						if($config['magasin']) echo $html->link(__('Point de Vente', true), '#');
-						else  echo $html->link(__('Point de Vente', true), '#');?>
+						if($config['magasin']) echo $html->link(__('Point Of Sale', true), '#');
+						else  echo $html->link(__('Restaurant Management', true), '#');?>
 						<ul>
 							<?php if(Configure::read('aser.touchscreen')):?>
-							<li class="rapport"><?php echo $this->Html->link(__('Interface De Vente', true), '/ventes/touchscreen'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/touchscreen'); ?></li>
 							<?php else : ?>
-								<li class="rapport"><?php echo $this->Html->link(__('Interface De Vente', true), '/ventes/index'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/index'); ?></li>
 							<?php endif; ?>
 							<?php if($config['pos_sales_report']):?>
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport Des Ventes', true), '/ventes/rapport'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Sales Report', true), '/ventes/rapport'); ?></li>
 							<?php endif;?>
-							<li class="rapport"><?php echo $this->Html->link(__('Rapport Des Consommations', true), '/ventes/consommations'); ?></li>
-							<li class="rapport"><?php echo $this->Html->link(__('Rapport Caisse', true), '/ventes/journal'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Sales Report By Product', true), '/ventes/consommations'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Cashier Report', true), '/ventes/journal'); ?></li>
 							<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
-								<li class="rapport"><?php echo $this->Html->link(__('Paramétrage des Journaux', true), '/journals/index'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('List of Cashier Reports', true), '/journals/index'); ?></li>
 							<?php endif; ?>
 							<? if(Configure::read('aser.comptabilite')):?>
 								<li class="rapport"><?php echo $this->Html->link(__('Synthèse des ventes journalières', true), '/ventes/syntheseCptableDVente'); ?></li>
@@ -135,9 +135,9 @@
 								<li class="rapport"><?php echo $this->Html->link(__('Ventes Par Groupes Comptable', true), '/ventes/par_produits_groupe_cptable'); ?></li>
 							<? endif;?>
 							<?php if($config['bon']):?>
-								<li class="rapport"><?php echo $this->Html->link(__('Commandes Non envoyées', true), '/ventes/unprinted_orders'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Unsent Orders', true), '/ventes/unprinted_orders'); ?></li>
 							<? endif;?>	
-							<li class="rapport"><?php echo $this->Html->link(__('Commandes Effacées', true), '/ventes/removed_orders'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Delete Orders', true), '/ventes/removed_orders'); ?></li>
 							</ul>
 				</li>
 				<?php endif; ?>

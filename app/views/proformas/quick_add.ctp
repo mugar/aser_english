@@ -8,7 +8,7 @@
 		<td name="facture" valeur="">
 		</td>
 		<td>
-			<?php echo $this->Html->link($proforma['Product']['name'], array('controller' => 'produits', 'action' => 'view', $proforma['Product']['id'])); ?>
+			<?php echo $this->Html->link($proforma['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $proforma['Produit']['id'])); ?>
 		</td>
 		<td><?php echo $proforma['Proforma']['quantite']; ?>&nbsp;</td>
 		<td><?php echo $proforma['Proforma']['PU']; ?>&nbsp;</td>

@@ -59,7 +59,7 @@
 								 'services'=>1, //a activer seulement pour les hotels
 								 'sama'=>0,//sama café mode when serveur get access to computer,
 								 'bon'=>1, //impression des bons par l'ordinateur
-								 'magasin'=>1, // a activer si c'est pas un restaurant
+								 'magasin'=>0, // a activer si c'est pas un restaurant
 								 'connexion'=>0, // a activer s'ils desirent une synchronisation entre le point de vente et le stock
 								 'multi_resto'=>0, //a activer pour les restaurants avec plusieurs point de vente
 								 'company_info'=>1, // toujours activer
@@ -73,7 +73,7 @@
 								 'name'=>'aser_english', // nom du dossier qui contient le logiciel ,
 								 'upload'=>0, // a activer pour ceux qui ulitise la version touchscreen du point de vente
 								 'swipe'=>0, // a activer si on ulitilse les cartes magnetiques pour la connexion
-								 'touchscreen'=>0, // a activer pour ceux qui ulitise la version touchscreen du point de vente
+								 'touchscreen'=>1, // a activer pour ceux qui ulitise la version touchscreen du point de vente
 								 'alerts'=>1, //  a activer pour les pharmacies ou autres entreprises qui desirent des alertes
 								 'tresorerie'=>1, // a activer s'ils utilisent le module tresorerie
 								 'stock'=>1,  // a activer s'ils utilisent le module stock

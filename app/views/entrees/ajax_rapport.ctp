@@ -7,7 +7,7 @@
 			<td><?php echo  $entree['Facture']['numero']; ?></td>
 			<td><?php echo  $entree['Facture']['etat']; ?></td>
 			<td><?php echo  $entree['Bon']['numero']; ?></td>
-			<td><?php echo  $entree['Product']['name']; ?></td>
+			<td><?php echo  $entree['Produit']['name']; ?></td>
 			<td><?php echo  $entree['Entree']['quantite']; ?></td>
 			<td><?php echo  $entree['Unite']['name']; ?></td>
 			<td><?php echo  $entree['Entree']['montant']; ?></td>

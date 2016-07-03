@@ -152,7 +152,7 @@
 			<td><?php echo  $vente['Facture']['date']; ?></td>
 			<td><?php echo $facture['Facture']['beneficiaire']; ?></td>
 		<?php endif; ?>
-			<td><?php echo  $vente['Product']['name']; ?></td>
+			<td><?php echo  $vente['Produit']['name']; ?></td>
 			<td><?php echo  $vente['Vente']['quantite']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
 			<td style="text-align=right;"><?php echo  $number->format($vente['Vente']['montant']+0,$formatting); ?></td>
@@ -264,7 +264,7 @@
 		
 	?>
 	<tr>
-			<td><?php echo  $vente['Product']['name']; ?></td>
+			<td><?php echo  $vente['Produit']['name']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['montant'],$formatting); ?></td>
@@ -355,7 +355,7 @@
 		}
 	?>
 	<tr>
-			<td><?php echo  $vente['Product']['name']; ?></td>
+			<td><?php echo  $vente['Produit']['name']; ?></td>
 			<td><?php echo  $vente['Proforma']['quantite'].' '.$vente['Unite']['name']; ?></td>
 			<td><?php echo  $number->format($vente['Proforma']['PU']); ?></td>
 			<td><?php echo  $number->format($vente['Proforma']['montant']); ?></td>

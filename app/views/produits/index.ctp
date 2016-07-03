@@ -15,7 +15,7 @@
 		<?php endif;?>
 		<th>Section</th>
 		<th>Groupe</th>
-		<th>Type Du Product</th>
+		<th>Product Type</th>
 		<th>Unité De Mesure</th>
 		<?php if(Configure::read('aser.pharmacie')):?>
 			<th>Product Périssable</th>
@@ -53,7 +53,7 @@
 		<td><?php echo $this->Form->input('type',array('label'=>'',
 													'id'=>'type',
 													'selected'=>'stockable',
-													'options'=>$typeDeProducts
+													'options'=>$typeDeProduits
 													)
 										);?>
 		</td>
@@ -221,7 +221,7 @@
 		</span>
 		<span class="right">
 			<?php
-				echo $this->Form->input('type',array('options'=>$typeDeProducts1,
+				echo $this->Form->input('type',array('options'=>$typeDeProduits1,
 													'selected'=>0,
 												'label'=>'Type De Product'
 												));

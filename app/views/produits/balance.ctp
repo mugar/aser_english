@@ -45,7 +45,7 @@
 			<td><?php if(isset($historique['Vente'])) echo $historique['Vente']; ?></td>
 			<td><?php if(isset($historique['Sorti'])) echo  $historique['Sorti']; ?></td>
 			<td id="perte<?php echo $i;?>" name="perte"><?php if(isset($historique['Perte'])) echo  $this->Html->link($historique['Perte'],
-				 array('controller' => 'pertes','action' => 'index', $historique['Product']['id'],$date1,$date2),array('target'=>'_blank')); ?></td>
+				 array('controller' => 'pertes','action' => 'index', $historique['Produit']['id'],$date1,$date2),array('target'=>'_blank')); ?></td>
 			<td><?php echo  $this->Form->input('reel',array('onchange'=>'perte(this)',
 																'numero'=>$i,
 																'label'=>'',
@@ -53,10 +53,10 @@
 																'style'=>'width:50px;',
 																'old_value'=>$historique['solde'],
 																'value'=>$historique['solde'],
-																'id'=>$historique['Product']['id'],
+																'id'=>$historique['Produit']['id'],
 																)); 
 			?></td>
-			<td name="pv" pv="<?php echo  $historique['Product']['PA']; ?>"><?php echo  $historique['total_pa']; ?></td>
+			<td name="pv" pv="<?php echo  $historique['Produit']['PA']; ?>"><?php echo  $historique['total_pa']; ?></td>
 	</tr>
 <?php endforeach; ?>
 <tr class="strong">

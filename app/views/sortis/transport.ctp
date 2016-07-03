@@ -17,7 +17,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-		<td><?php echo $sorti['Product']['name']; ?></td>
+		<td><?php echo $sorti['Produit']['name']; ?></td>
 		<td><?php echo $sorti['Tier']['name']; ?></td>
 		<td><?php echo $sorti['Sorti']['pleins']; ?></td>
 		<td><?php echo $sorti['Sorti']['transport']; ?></td>
@@ -50,7 +50,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-		<td><?php echo $tier['Product']['name']; ?></td>
+		<td><?php echo $tier['Produit']['name']; ?></td>
 		<td><?php echo $tier['Tier']['name']; ?></td>
 		<td><?php echo $tier['Sorti']['pleins']; ?></td>
 	</tr>
@@ -79,7 +79,7 @@
 		}
 	?>
 	<tr<?php echo $class;?>>
-		<td><?php echo $app['Product']['name']; ?></td>
+		<td><?php echo $app['Produit']['name']; ?></td>
 		<td><?php echo $app['Entree']['pleins']; ?></td>
 	</tr>
 <?php endforeach; ?>

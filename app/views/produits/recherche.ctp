@@ -17,7 +17,7 @@
 	<span class="right">
 		<?php
 			
-			echo $this->Form->input('type',array('options'=>$typeDeProducts1,'label'=>'Type De Product','selected'=>0));
+			echo $this->Form->input('type',array('options'=>$typeDeProduits1,'label'=>'Type De Product','selected'=>0));
 			echo $this->Form->input('actif',array('options'=>array(''=>'','oui'=>'oui','non'=>'non')));
 			if($action=='rapport'){
 				echo $this->Form->input('quantite',array('options'=>array(' > 0'=>' > 0','toutes'=>'toutes')));

@@ -224,29 +224,29 @@
 	>
 <div id="resto_layout_touch">
 	<span id="second">
-		<fieldset id="list_factures"><legend>Liste des Factures </legend>
+		<fieldset id="list_factures"><legend>Invoice List</legend>
 			<table cellpadding="0" cellspacing="0" id="list_factures">
 				<tr>
-					<th>Fact N°</th>
+					<th>Invoice N°</th>
 					<?php if(!$config['magasin']): ?>
-						<th>Table</th>
+						<th>Table N°</th>
 					<?php endif; ?>
-					<th>Sous Total</th>
+					<th>Sub Total</th>
 					<?php if(!($config['sama']&&($mode=='serveur'))): ?>
-					<th>Redu (%)</th>
+					<th>Disc (%)</th>
 					<th>Total</th>
-					<th>Reste</th>
+					<th>Left To Pay</th>
 					<?php endif; ?>
 					<th>State</th>
 				<?php if(!(($config['sama']&&($mode=='serveur'))||$config['magasin'])): ?>
-					<th>Serveur</th>
+					<th>Waiter</th>
 				<?php endif; ?>
 					<th><?php echo $this->Form->input('date_resto',array('label'=>'','value'=>$date,'id'=>'DateResto','type'=>'text'));?></th>
 				</tr>
 				<?php echo $this->element('../ventes/list_factures',array('factures'=>$factures));?>
 			</table>
 		</fieldset>
-		<fieldset id="list_produits"><legend>Liste des Products</legend>
+		<fieldset id="list_produits"><legend>Products List</legend>
 			<table cellpadding="0" cellspacing="0" id="list_produits">
 				<tr>
 				
@@ -256,13 +256,13 @@
 				<?php endif; ?>
 				<?php if($config['beneficiaires']): ?>
 					<th>Date</th>
-					<th>Béneficiaire</th>
+					<th>Beneficiary</th>
 				<?php endif; ?>
 					<th>Product</th>
-					<th>Quantité</th>
+					<th>Quantity</th>
 					<th>Unit Price</th>
-					<th>PT</th>
-					<th>Tps</th>
+					<th>Total Price</th>
+					<th>Creation Time</th>
 				</tr>
 			</table>
 		</fieldset>
@@ -272,16 +272,16 @@
 					if(($mode!='serveur')&&empty($config['annulee'])
 					||in_array($pId,$config['annulee'])): 
 			?>
-				<span id="remove_facture" name="annuler" class="boutton"  title="Annuler la facture">Annuler</span>
+				<span id="remove_facture" name="annuler" class="boutton"  title="Annuler la facture">Cancel</span>
 			<?php endif;?> 	
-				<span id="remove_conso" name="disable" class="boutton"  title="Supprimer la consommation de la facture sélectionnée ">Delete</span>
+				<span id="remove_conso" name="disable" class="boutton"  title="Supprimer la consommation de la facture sélectionnée ">Remove Product</span>
 			<?php if(!$config['magasin']): ?>
-			<span class="boutton" onclick="show_tables()" title="Configuration des tables">Tables</span>
+			<span class="boutton" onclick="show_tables()" title="Configuration des tables">Show Tables</span>
 			<?php endif;?> 	
 			<?php if($session->read('Auth.Personnel.fonction_id')!=1): ?>
-				<span id="paiement_facture_touch" name="classer" class="boutton" title="Clôturer la facture en marquant son état de paiement">Classer</span>
+				<span id="paiement_facture_touch" name="classer" class="boutton" title="Clôturer la facture en marquant son état de paiement">Close</span>
 				<?php if(false&&!$config['magasin']): ?>
-					<span  id="serveur" name="disable" class="boutton" title="Changer Serveur">Serveur</span>
+					<span  id="serveur" name="disable" class="boutton" title="Changer Serveur">Switch Waiter</span>
 				<?php endif;?> 
 			<?php endif;?>
 			<?php if(($session->read('Auth.Personnel.fonction_id')!=1)||(isset($config['impression_par_serveur'])&&$config['impression_par_serveur'])): ?> 
@@ -291,24 +291,24 @@
 					<span class="boutton" onclick="parameters()" title="Configurer les paramètres">Paramètres</span>
 				<?php endif;?> 
 			<?php if($config['sama']&&($mode!='serveur')||$config['bon']): ?>
-				<span class="boutton" onclick="ask(factureId)" title="Print les bons pour les boissons et la cuisine pour la facture sélectionnée">Bon</span>
+				<span class="boutton" onclick="ask(factureId)" title="Print les bons pour les boissons et la cuisine pour la facture sélectionnée">Order</span>
 			<?php endif;?> 
 			<?php if(false&&($config['sama']&&($mode=='serveur'))): ?>
 				<span class="boutton" onclick="confirm_order(factureId)" title="Confirmer la commande">OK</span>
 			<?php endif;?> 
 			<?php if($session->read('Auth.Personnel.fonction_id')!=1): ?>
-			<span class="boutton" onclick="document.location.href=getBase()+'ventes/journal'" title="Journal">Rapport</span>
+			<span class="boutton" onclick="document.location.href=getBase()+'ventes/journal'" title="Journal">Report</span>
 			<?php endif;?> 
-			<span id="separator" class="boutton" name="disable" title="Splitter">Separateur</span>
+			<span id="separator" class="boutton" name="disable" title="Splitter">Split</span>
 			<?php if($config['sama']&&($mode!='serveur')): ?>
-				<span class="boutton" onclick="bill_cleaner(factureId)" title="Cleaner">Nettoyeur</span>
+				<span class="boutton" onclick="bill_cleaner(factureId)" title="Cleaner">Cleaner</span>
 			<?php endif;?>
 			<?php if(!$config['magasin']): ?>
-			<span class="boutton" onclick="table_changer(factureId)" title="Changer la table">Changer la Table</span>
+			<span class="boutton" onclick="table_changer(factureId)" title="Changer la table">Switch Table</span>
 			<?php endif;?>
-			<span id="direct_reduction" name="disable" class="boutton"  title="Réduire le montant de la facture directement ">Réduction</span>
+			<span id="direct_reduction" name="disable" class="boutton"  title="Réduire le montant de la facture directement ">Add Discount</span>
 			<?php If(empty($config['annulee'])||in_array($pId,$config['annulee'])):?>
-			<span id="unlock" name="unlock" class="boutton"  title="Débloquer la facture" onclick="unlock(factureId)">Débloquer</span>
+			<span id="unlock" name="unlock" class="boutton"  title="Débloquer la facture" onclick="unlock(factureId)">Unlock</span>
 			<?php endif;?>
 		</fieldset>
 	</span>
@@ -385,11 +385,11 @@
 		<fieldset id="produit_select"><legend>Products</legend>
 			<?php 
 				foreach($produits as $produit){
-					echo '<div name="'.strtolower($produit['Product']['name']).'" id="'.$produit['Product']['id'].'" type="'.$produit['Product']['acc'].'" section="'.$produit['Groupe']['section_id'].'" groupe="'.$produit['Groupe']['id'].'"  class="produit" onclick="resto_touch_create(this)" >';
-				//	echo 'style="background:url(../img/produits/'.$produit['Product']['id'].') 0 0  no-repeat; background-position:center;">';	
+					echo '<div name="'.strtolower($produit['Produit']['name']).'" id="'.$produit['Produit']['id'].'" type="'.$produit['Produit']['acc'].'" section="'.$produit['Groupe']['section_id'].'" groupe="'.$produit['Groupe']['id'].'"  class="produit" onclick="resto_touch_create(this)" >';
+				//	echo 'style="background:url(../img/produits/'.$produit['Produit']['id'].') 0 0  no-repeat; background-position:center;">';	
 				//	echo $this->Html->image('logo.jpg', array('border' => '0','width'=>108,'height'=>50));
-					echo ucwords($produit['Product']['name']);
-						echo '<span class="prix">'.$number->format($produit['Product']['PV'],$formatting).'</span>';
+					echo ucwords($produit['Produit']['name']);
+						echo '<span class="prix">'.$number->format($produit['Produit']['PV'],$formatting).'</span>';
 					echo '</div>';
 				}
 			?>

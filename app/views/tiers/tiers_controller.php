@@ -221,7 +221,7 @@ class TiersController extends AppController {
 				$data[$key]['Matricule']=$vente['Facture']['matricule'];
 				$data[$key]['Liasse']=$vente['Facture']['liasse'];
 				$data[$key]['Employeur']=$vente['Facture']['employeur'];
-				$data[$key]['Product']=$vente['Product']['name'];
+				$data[$key]['Produit']=$vente['Produit']['name'];
 				$data[$key]['Quantité']=$vente['Vente']['quantite'];
 				$data[$key]['PU']=$vente['Vente']['PU'];
 				$data[$key]['Sous Total']=$vente['Vente']['montant'];

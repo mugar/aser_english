@@ -23,9 +23,9 @@
 	?>
 	<tr>
 			<td><?php echo  $perte['Perte']['quantite'];
-					if(isset($unites[$perte['Product']['unite_id']])) echo ' '.$unites[$perte['Product']['unite_id']]; 
+					if(isset($unites[$perte['Produit']['unite_id']])) echo ' '.$unites[$perte['Produit']['unite_id']]; 
 			?></td>
-			<td><?php echo  $perte['Product']['name']; ?></td>
+			<td><?php echo  $perte['Produit']['name']; ?></td>
 			<td><?php echo  $number->format($perte['Perte']['PU'],$formatting); ?></td>
 			<td><?php echo  $number->format($perte['Perte']['montant'],$formatting); ?></td>
 			<td><?php echo  $perte['Stock']['name']; ?></td>

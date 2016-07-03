@@ -4,7 +4,7 @@
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['id']; ?>
+			<?php echo $produit['Produit']['id']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Stock'); ?></dt>
@@ -24,40 +24,40 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Name'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['name']; ?>
+			<?php echo $produit['Produit']['name']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PA'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['PA']; ?>
+			<?php echo $produit['Produit']['PA']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PAMP'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['PAMP']; ?>
+			<?php echo $produit['Produit']['PAMP']; ?>
 			&nbsp;
 		</dd>
 		
 	<?php if($fonction!=8): ?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('marge'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['marge']; ?>
+			<?php echo $produit['Produit']['marge']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PVMP'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['PVMP']; ?>
+			<?php echo $produit['Produit']['PVMP']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('PV'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['PV']; ?>
+			<?php echo $produit['Produit']['PV']; ?>
 			&nbsp;
 		</dd>
 	<?php endif; ?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Quantite'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['quantite']; ?>
+			<?php echo $produit['Produit']['quantite']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Unite'); ?></dt>
@@ -67,32 +67,32 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Total'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['total']; ?>
+			<?php echo $produit['Produit']['total']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Currency'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['monnaie']; ?>
+			<?php echo $produit['Produit']['monnaie']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Relations'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['relations']; ?>
+			<?php echo $produit['Produit']['relations']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Minimum'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['min']; ?>
+			<?php echo $produit['Produit']['min']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Expiration'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['expiration']; ?>
+			<?php echo $produit['Produit']['expiration']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Actif'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $produit['Product']['actif']; ?>
+			<?php echo $produit['Produit']['actif']; ?>
 			&nbsp;
 		</dd>
 	</dl>
@@ -177,7 +177,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Product', true)), array('action' => 'edit', $produit['Product']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Product', true)), array('action' => 'edit', $produit['Produit']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Products', true)), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>

@@ -63,7 +63,7 @@
 		<ul>
 	<?php 
 		foreach($finis as $fini) {
-			echo '<li>'.$this->Html->link($fini['Product']['name'].' (reste : '.$fini['Product']['qty'].')', array('controller' => 'produits', 'action' => 'view', $fini['Product']['id'])).'</li>';
+			echo '<li>'.$this->Html->link($fini['Produit']['name'].' (reste : '.$fini['Produit']['qty'].')', array('controller' => 'produits', 'action' => 'view', $fini['Produit']['id'])).'</li>';
 		}
 	?>
 		</ul>
@@ -80,7 +80,7 @@
 		<ul>
 	<?php 
 		foreach($quantites as $quantite) {
-			echo '<li>'.$this->Html->link($quantite['Product']['name'], array('controller' => 'produits', 'action' => 'view', $quantite['Historique']['produit_id'],$quantite['Historique']['stock_id'])).'</li>';
+			echo '<li>'.$this->Html->link($quantite['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $quantite['Historique']['produit_id'],$quantite['Historique']['stock_id'])).'</li>';
 		}
 	?>
 		</ul>

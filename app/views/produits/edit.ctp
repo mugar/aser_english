@@ -14,7 +14,7 @@
 	<span class="right">
 		<?php
 			echo $this->Form->input('type',array('label'=>'Type de Product',
-												'options'=>$typeDeProducts,
+												'options'=>$typeDeProduits,
 												'id'=>'type'
 												));
 			echo $this->Form->input('unite_id',array('label'=>'Unité de Mesure'));

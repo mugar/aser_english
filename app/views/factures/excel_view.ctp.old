@@ -119,7 +119,7 @@ header('Content-Disposition: attachment; filename='.$filename);
 		
 	?>
 	<tr>
-			<td><?php echo  $vente['Product']['name']; ?></td>
+			<td><?php echo  $vente['Produit']['name']; ?></td>
 			<td><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['PU'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['montant'],$formatting); ?></td>

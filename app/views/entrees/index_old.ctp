@@ -38,7 +38,7 @@
 			<?php echo $this->Html->link($entree['Tier']['name'], array('controller' => 'tiers', 'action' => 'view', $entree['Tier']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($entree['Product']['name'], array('controller' => 'produits', 'action' => 'view', $entree['Product']['id'])); ?>
+			<?php echo $this->Html->link($entree['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $entree['Produit']['id'])); ?>
 		</td>
 		<td><?php echo $entree['Entree']['quantite']; ?>&nbsp;</td>
 		<td><?php echo $entree['Entree']['montant']; ?>&nbsp;</td>

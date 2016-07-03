@@ -59,7 +59,7 @@
 						else echo $vente['quantite'];
 					 ?>
 			</td>
-			<td><?php echo ucwords($vente['Product']['name']); ?>&nbsp;</td>
+			<td><?php echo ucwords($vente['Produit']['name']); ?>&nbsp;</td>
 		</tr>
 		<?php endforeach; ?>
 		<?php if($msg!='null'):?>

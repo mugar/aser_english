@@ -795,6 +795,7 @@ fieldset#actions .boutton,fieldset#actions .boutton_disabled, span.bouttons .bou
 	padding: 15px 8px !important;
 	background-image: -moz-linear-gradient(top, #f1f1d4, #e6e49f);
 	color:#333 !important;
+	font-size: 12px;
 	text-align:center;
 	text-transform:uppercase;
 	border:1px solid #aaac62;

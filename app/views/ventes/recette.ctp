@@ -58,7 +58,7 @@
 			<?php echo $this->Html->link($vente['Stock']['name'], array('controller' => 'stocks', 'action' => 'view', $vente['Stock']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($vente['Product']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Product']['id'])); ?>
+			<?php echo $this->Html->link($vente['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $vente['Produit']['id'])); ?>
 		</td>
 		<td><?php echo $vente['Vente']['quantite']; ?>&nbsp;</td>
 		<td>

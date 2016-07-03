@@ -37,7 +37,7 @@
 			
 			<td><?php echo  $vente['Facture']['date']; ?></td>
 			<td>
-				<?php echo $vente['Product']['name']; ?>
+				<?php echo $vente['Produit']['name']; ?>
 			</td>
 			<td><?php echo  $number->format($vente['Vente']['quantite'],$formatting); ?></td>
 			<td><?php echo  $number->format($vente['Vente']['printed'],$formatting); ?></td>

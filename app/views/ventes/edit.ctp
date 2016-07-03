@@ -54,7 +54,7 @@
 				<h4 onclick="Element.toggle($('personnel'))" style="cursor:pointer;"><?php echo $groupe['Groupe']['name']?></h4>
 				<div id="personnel">
 					<?php 
-					foreach($groupe['Product'] as $produit) {
+					foreach($groupe['Produit'] as $produit) {
 						echo $this->Form->input('Product.'.$produit['id'],array('label'=>$produit['name']));
 					}
 					?>

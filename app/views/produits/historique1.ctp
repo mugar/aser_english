@@ -8,7 +8,7 @@
 <h3>
 <?php
 	if(!empty($produit)){
-		echo 'Mouvements du Product : '.$produit['Product']['name'] ;
+		echo 'Mouvements du Product : '.$produit['Produit']['name'] ;
 	}
 ?>
 </h3>
