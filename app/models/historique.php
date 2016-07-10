@@ -61,6 +61,12 @@ class Historique extends AppModel {
 	);
 
 	var $belongsTo = array(
+		'Personnel' => array(
+			'className' => 'Personnel',
+			'foreignKey' => 'personnel_id',
+			'conditions' => '',
+			'order' => ''
+		),
 		'Produit' => array(
 			'className' => 'Produit',
 			'foreignKey' => 'produit_id',
@@ -100,6 +106,21 @@ class Historique extends AppModel {
 
 			}
 	}
+
+	function beforeSave($options){
+		if($this->data['Historique']['libelle'] && $this->data['Historique']['quantite']){
+			if(in_array($this->data['Historique']['libelle'], array('Sorti','Perte'))){
+				$this->data['Historique']['debit'] = null;
+				$this->data['Historique']['credit'] = $this->data['Historique']['quantite'];
+			}
+			else {
+				$this->data['Historique']['debit'] = $this->data['Historique']['quantite'];
+				$this->data['Historique']['credit'] = null;
+			}
+		}
+		return true;
+	}
+
 	function afterSave($created){
 		if(!empty($this->data['Historique']['produit_id'])){
 			$this->solde($this->data['Historique']['produit_id']);			

@@ -1,13 +1,16 @@
-<?php
+<?php 
 class HistoriquesController extends AppController {
 
 	var $name = 'Historiques';
 	
 	function beforeFilter(){
 		parent::beforeFilter();
-		$types=array('approvisionnement'=>'approvisionnement',
-							'retour_en_stock'=>'retour_en_stock',
-							'inventaire'=>'inventaire'
+
+		$this->Auth->allow('*');
+
+		$types=array('Entree'=>'Entry',
+							'Sorti'=>'Consumption',
+							'Perte'=>'Loss'
 							);
 		$types1=array(''=>'')+$types;
 		$this->set(compact('types','types1'));
@@ -22,18 +25,18 @@ class HistoriquesController extends AppController {
 													'conditions'=>array('Produit.id'=>$id),
 													));
 		if($produitInfo['Produit']['PA']==0){
-			$pa=$this->Historique->find('first',array('fields'=>array('Historique.PA'),
+			$pa=$this->Historique->find('first',array('fields'=>array('Historique.PU'),
 													'conditions'=>array('Historique.produit_id'=>$id),
 													'order'=>array('Historique.date desc')
 													));
-			$pa=$produitInfo['Produit']['PA']=(!empty($pa))?$pa['Historique']['PA']:0;	
+			$pa=$produitInfo['Produit']['PA']=(!empty($pa))?$pa['Historique']['PU']:0;	
 			$this->Historique->Produit->save($produitInfo);
 		}
 		else {
 			$pa=$produitInfo['Produit']['PA'];
 		}										
 		if($this->RequestHandler->isAjax()){
-				exit(json_encode(array('success'=>true,'PA'=>$pa)));
+				exit(json_encode(array('success'=>true,'PU'=>$pa)));
 		}
 		else {
 			$this->set('pa',$pa);
@@ -81,22 +84,22 @@ class HistoriquesController extends AppController {
 	}
 
 	function index() {
-		$entreeConditions=$this->Session->read('entreeConditions');
-		if((empty($this->data))&&(empty($entreeConditions))) {
-			$this->set('entrees', $this->paginate());
+		$historiqueConditions=$this->Session->read('historiqueConditions');
+		if((empty($this->data))&&(empty($historiqueConditions))) {
+			$this->set('historiques', $this->paginate());
 		}
 		elseif(!empty($this->data)) {
 		//building conditions
 			$cond=$this-> _conditions($this->data);
-			$entreeConditions=$cond['conditions'];
+			$historiqueConditions=$cond['conditions'];
 			
-			$this->set('entrees', $this->paginate($entreeConditions));
-			$this->Session->write('entreeConditions',$entreeConditions);
+			$this->set('historiques', $this->paginate($historiqueConditions));
+			$this->Session->write('historiqueConditions',$historiqueConditions);
 		}
 		else {
-			$this->set('entrees', $this->paginate($entreeConditions));
+			$this->set('historiques', $this->paginate($historiqueConditions));
 		}
-		//search the latest PA for the first displayed product
+		//search the latest PU for the first displayed product
 		$this->pa();
 	}
 
@@ -107,41 +110,41 @@ class HistoriquesController extends AppController {
 		$date2=$cond['date2'];
 		$total=$qty=0;
 		$grouper=true;
-		$entrees=$group=array();
+		$historiques=$group=array();
 		if(!empty($this->data)){
-			$entrees=$this->Historique->find('all',array('fields'=>array('Stock.name',
+			$historiques=$this->Historique->find('all',array('fields'=>array('Stock.name',
 																						'Produit.name','Produit.unite_id',
 																						'sum(Historique.quantite) as quantite',
 																						'sum(Historique.montant) as montant',
-																						'Historique.PA',
+																						'Historique.PU',
 																						'Historique.type'
 																						),
 																			'conditions'=>$conditions,
 																			'order'=>array('Historique.date'),
-																			'group'=>array('Stock.id','Produit.id','Historique.PA','Historique.type'),
+																			'group'=>array('Stock.id','Produit.id','Historique.PU','Historique.type'),
 																			
 																			)
 																);
-			foreach($entrees as	$entree){
-				$total+=$entree['Historique']['montant'];
-				$qty+=$entree['Historique']['quantite'];
+			foreach($historiques as	$historique){
+				$total+=$historique['Historique']['montant'];
+				$qty+=$historique['Historique']['quantite'];
 			}
 		}
 		
-		$this->set(compact('qty','entrees','date1','date2','total','grouper'));
+		$this->set(compact('qty','historiques','date1','date2','total','grouper'));
 		//for exporting to excel
 		
 		if(!empty($this->data['Historique']['xls'])&& ($this->data['Historique']['xls']==1)){
 			$data=array();
-			foreach($entrees as $key=>$entree){
-				$data[$key]['Stock']=$entree['Stock']['name'];
-				$data[$key]['Produit']=$entree['Produit']['name'];
-				$data[$key]['Quantité']=$entree['Historique']['quantite'];
-				$data[$key]['PA']=$entree['Historique']['PA'];
-				$data[$key]['PT']=$entree['Historique']['montant'];
-				$data[$key]['Type']=$entree['Historique']['type'];
+			foreach($historiques as $key=>$historique){
+				$data[$key]['Stock']=$historique['Stock']['name'];
+				$data[$key]['Produit']=$historique['Produit']['name'];
+				$data[$key]['Quantité']=$historique['Historique']['quantite'];
+				$data[$key]['PU']=$historique['Historique']['PU'];
+				$data[$key]['PT']=$historique['Historique']['montant'];
+				$data[$key]['Type']=$historique['Historique']['type'];
 			}
-			$filename=$this->Product->excel($data,array(),'entrees');
+			$filename=$this->Product->excel($data,array(),'historiques');
 			$this->redirect('/files/'.$filename);
 		}	
 	}
@@ -161,9 +164,9 @@ class HistoriquesController extends AppController {
 		if($data['Historique']['date']>date('Y-m-d')){
 			$this->_error($action, 'Cette date est incorrecte!');	
 		}
-		$data['Historique']['montant']=$data['Historique']['quantite']*$data['Historique']['PA'];
+		$data['Historique']['montant']=$data['Historique']['quantite']*$data['Historique']['PU'];
 		
-		//updating the product with the new PA = PAMP
+		//updating the product with the new PU = PUMP
 		$produitInfo=$this->Historique->Produit->find('first',array('fields'=>array('Produit.expiration',
 																					'Produit.type',
 																					'Produit.PV',
@@ -172,10 +175,10 @@ class HistoriquesController extends AppController {
 																	'conditions'=>array('id'=>$data['Historique']['produit_id']),
 																	'recursive'=>-1));
 																	
-		$current_PA=($produitInfo['Produit']['PA']<=0)?$data['Historique']['PA']:$produitInfo['Produit']['PA'];
+		$current_PU=($produitInfo['Produit']['PA']<=0)?$data['Historique']['PU']:$produitInfo['Produit']['PA'];
 		$current_Qty= $this->Product->ProductQty($data['Historique']['produit_id']);
-		$new_PA=(($current_Qty*$current_PA)+($data['Historique']['PA']*$data['Historique']['quantite']))/($current_Qty+$data['Historique']['quantite']);
-		$data['Produit']['PA']=round($new_PA); 
+		$new_PU=(($current_Qty*$current_PU)+($data['Historique']['PU']*$data['Historique']['quantite']))/($current_Qty+$data['Historique']['quantite']);
+		$data['Produit']['PA']=round($new_PU); 
 		//finished updating the product's PA = PAMP
 		
 		//expiration field checking
@@ -186,42 +189,17 @@ class HistoriquesController extends AppController {
 			else if(!$produitInfo['Produit']['expiration']&&($data['Historique']['date_expiration']!=''))
 				$data['Historique']['date_expiration']=null;
 			
-			//eben ezer specific logic
-			if(Configure::read('aser.ebenezer')&&($action=='add')&&($data['Historique']['PV']!=0)){
-				if($produitInfo['Produit']['PV']!=$data['Historique']['PV']){
-					$alert=true;
-				}
-			}
 		}
-		else {
-			$produitInfo=array();
+		if(!$this->Historique->save($data)){
+				$this->_error($action, 'Failed to save the operation');
 		}
-		//Increasing the stock level
-		$return=$this->Product->stock($data,'debit',$produitInfo);
-		//checking the return status
-	//	exit(debug($return));
-		if($return['success']){
-			//Saving the entree of goods
-		//	exit(debug($data));
-			if(!$this->Historique->save($data)){
-				$this->loadModel('Historique');
-				$this->Historique->delete($data['Historique']['historique_id']);
-				$this->_error($action, 'entree probleme');
-			}
-			//Saving the product info that may have been changed like unite de mesure
-			$this->Historique->Produit->save($data);
-		}
-		else {
-			$this->_error($action, $return['msg']);
-		}
-		
-		return $alert;
+		//Saving the product info that may have been changed like unite de mesure
+		$this->Historique->Produit->save($data);
 	}
 
 	function _show($id,$alert=false){
-		$entree=$this->Historique->find('first',array('fields'=>array(
+		$historique=$this->Historique->find('first',array('fields'=>array(
     																				'Personnel.name','Personnel.id',
-   																					'Tier.name','Tier.id',
  																					'Produit.name','Produit.id','Produit.unite_id',
 																					'Stock.name',
     																				'Historique.*'
@@ -229,15 +207,15 @@ class HistoriquesController extends AppController {
     																		'conditions'=>array('Historique.id'=>$id)
 																			)
 																);
-		$this->set(compact('entree','alert'));
+		$this->set(compact('historique','alert'));
 		$this->layout="ajax";
 		$this->render('add');
 	}
 	
 	function add() {
 		if (!empty($this->data)) {
-			$alert=$this->_logic($this->data,'add');	
-    		$this->_show($this->Historique->id,$alert);
+				$this->_logic($this->data,'add');	
+    		$this->_show($this->Historique->id);
 		}
 	}
 
@@ -264,27 +242,16 @@ class HistoriquesController extends AppController {
 		$notDeleted=0;
 		foreach($this->data['Id'] as $id){
 			if($id!=0) {
-				
-				$appro=$this->Historique->find('first',array('fields'=>array('Historique.historique_id',
-																		'Historique.personnel_id'),
-																		'conditions'=>array('Historique.id'=>$id)
-																));
-				if(true){
-					if($this->Product->productHistoryDelete($appro['Historique']['historique_id'],'Historique')){
-						$this->Historique->delete($id);
+				if($this->Historique->delete($id)){
 						$deleted[]=$id;
-					}
-					else {
-						$notDeleted++;	
-					}
 				}
 				else {
-					$notDeleted++;	
+						$notDeleted++;	
 				}
 			}
 		}
 		$msg=($notDeleted>1)?"les":"l'";
-		exit(json_encode(array('success'=>true,'deleted'=>$deleted,'notDeleted'=>$notDeleted,'msg'=>"Seul le créateur peut $msg effacer.")));
+		exit(json_encode(array('success'=>true,'deleted'=>$deleted,'notDeleted'=>$notDeleted,'msg'=>"Only the creator of the operqtion can delete the records.")));
 	}
 
 }

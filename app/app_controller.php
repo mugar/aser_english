@@ -159,6 +159,7 @@ class AppController extends Controller {
     		$forbidden=array(
     						'stocks',
     						'entrees',
+    						'historiques',
     						'sortis',
     						'mouvements',
     						'unites',
@@ -203,6 +204,7 @@ class AppController extends Controller {
 		if(in_array($this->params['controller'],
 			array('produits',
 					'entrees',
+    			'historiques',
 					'sortis',
 					'pertes',
 					'configs',
@@ -298,7 +300,7 @@ class AppController extends Controller {
 		}
 		
 		//pour les produits where they are needed
-		if(in_array($this->params['controller'],array('entrees','sortis','pertes','mouvements','ventes','reductions'))){
+		if(in_array($this->params['controller'],array('historiques','sortis','pertes','mouvements','ventes','reductions'))){
 			$this->loadModel('Produit');
 			$cond['Produit.actif']='yes';
 			if(!Configure::read('aser.magasin')&&($this->params['controller']=='pertes')){
@@ -327,7 +329,7 @@ class AppController extends Controller {
 		}
 		
 		//pour les unites de type client
-		if(in_array($this->params['controller'],array('produits','entrees','sortis','pertes','mouvements'))){
+		if(in_array($this->params['controller'],array('produits','historiques','sortis','pertes','mouvements'))){
 			$this->loadModel('Unite');
 			$unites=$this->Unite->find('list',array('order'=>array('Unite.name asc')));
 			$unites[0]='';

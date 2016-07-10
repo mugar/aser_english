@@ -57,7 +57,7 @@
 });
 </script>
 <div class="historiques index">
-	<h2>Gestion Des Entrées</h2>
+	<h2>Inventory Operations</h2>
 	
 <!--recherche form -->
 <?php echo $this->element('../historiques/recherche',array('action'=>'index'));?>
@@ -66,20 +66,16 @@
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	<tr>
-		<th>Date D'Opération</th>
-		<th>Quantité</th>
-		<th>Produit</th>
-		<th>Prix D'Achat</th>	
-		<?php if(Configure::read('aser.ebenezer')):?>
-			<th>Prix de Vente</th>
-		<?php endif;?>
+		<th>Operation Date </th>
+		<th>Operation Type</th>
+		<th>Quantity</th>
+		<th>Product</th>
+		<th>Unit Price</th>	
 		<?php if(Configure::read('aser.pharmacie')):?>
-			<th>N° De Lot</th>
-			<th>Date d'Expiration</th>
-		<?php endif;?>
-		<th>Fournisseur</th>
+			<th>Batch N°</th>
+			<th>Expiration Date</th>
+		<?php endif;?>		
 		<th>Stock</th>	
-		<th>Type d'entrée</th>	
 		<?php if (Configure::read('aser.shifts')):?>
 			<th>Shift</th>	
 		<?php endif;?>
@@ -89,19 +85,15 @@
 	<tr name="<?php echo $i?>">
 		<?php echo $this->Form->create('Historique',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('date',array('label'=>'','type'=>'text'));?></td>
+		<td><?php echo $this->Form->input('libelle',array('label'=>'','options'=>$types));?></td>
 		<td><?php echo $this->Form->input('quantite',array('id'=>'quantite','label'=>''));?></td>
 		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','label'=>'','options'=>$produits));?></td>
-		<td><?php echo $this->Form->input('PA',array('label'=>'','value'=>$pa,'id'=>'PA'));?></td>
-		<?php if(Configure::read('aser.ebenezer')):?>
-			<td><?php echo $this->Form->input('PV',array('label'=>'','value'=>0,'id'=>'PV'));?></td>
-		<?php endif;?>
+		<td><?php echo $this->Form->input('PU',array('label'=>'','value'=>$pa,'id'=>'PU'));?></td>
 		<?php if(Configure::read('aser.pharmacie')):?>
 			<td><?php echo $this->Form->input('batch',array('label'=>''));?></td>
 			<td><?php echo $this->Form->input('date_expiration',array('label'=>'','type'=>'text'));?></td>
 		<?php endif;?>
-		<td><?php echo $this->Form->input('tier_id',array('label'=>'','options'=>$tiers1,'selected'=>0));?></td>
 		<td><?php echo $this->Form->input('stock_id',array('id'=>$i.'StockId','label'=>'','options'=>$stocks));?></td>
-		<td><?php echo $this->Form->input('type',array('label'=>'','options'=>$types));?></td>
 		<?php if (Configure::read('aser.shifts')):?>
 			<td><?php echo $this->Form->input('shift',array('label'=>'','options'=>$shifts));?></td>	
 		<?php endif;?>
@@ -116,18 +108,17 @@
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
-			<th><?php echo $this->Paginator->sort('Date D\'Opération','date');?></th>
+			<th><?php echo $this->Paginator->sort('Operation Date','date');?></th>
+			<th><?php echo $this->Paginator->sort('Operation Type','libelle');?></th>
 			<th><?php echo $this->Paginator->sort('quantite');?></th>
 			<th><?php echo $this->Paginator->sort('produit_id');?></th>
-			<th><?php echo $this->Paginator->sort('Prix D\'Achat','PA');?></th>
-			<th><?php echo $this->Paginator->sort('montant');?></th>
+			<th><?php echo $this->Paginator->sort('Unit Price','PU');?></th>
+			<th><?php echo $this->Paginator->sort('Total Price','montant');?></th>
 			<?php if(Configure::read('aser.pharmacie')):?>
-				<th><?php echo $this->Paginator->sort('N° Lot','batch');?></th>
-				<th><?php echo $this->Paginator->sort('Date D\'Expiration','date_expiration');?></th>
+				<th><?php echo $this->Paginator->sort('Batch N°','batch');?></th>
+				<th><?php echo $this->Paginator->sort('Expiration Date','date_expiration');?></th>
 			<?php endif;?>
-			<th><?php echo $this->Paginator->sort('Fournisseur','tier_id');?></th>
 			<th><?php echo $this->Paginator->sort('stock_id');?></th>
-			<th><?php echo $this->Paginator->sort('type');?></th>
 			<?php if (Configure::read('aser.shifts')):?>
 				<th><?php echo $this->Paginator->sort('shift');?></th>	
 			<?php endif;?>
@@ -144,24 +135,24 @@
 	<p>
 	<?php
 	echo $this->Paginator->counter(array(
-	'format' => __('Page %page% de %pages%, affichage de %current% enregistrements sur %count% au total, à partir du numéro %start%, jusqu\'au numéro %end%', true)
+	'format' => __('Page %page% of %pages%, showing  %current% records out of %count% in  total, from %start%, to %end%', true)
 	));
 	?>	</p>
 
 	<div class="paging">
-		<?php echo $this->Paginator->prev('<< '.__('précédent', true), array(), null, array('class'=>'disabled'));?>
+		<?php echo $this->Paginator->prev('<< '.__('previous', true), array(), null, array('class'=>'disabled'));?>
 	 | 	<?php echo $this->Paginator->numbers();?>
  |
-		<?php echo $this->Paginator->next(__('suivant', true).' >>', array(), null, array('class' => 'disabled'));?>
+		<?php echo $this->Paginator->next(__('next', true).' >>', array(), null, array('class' => 'disabled'));?>
 	</div>
 </div>
-<div id="separator" class="back" title="Cacher Le Menu" onclick="hider()"></div>
+<div id="separator" class="back" title="Hide the Menu" onclick="hider()"></div>
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class= "link" onclick="edit('historiques')" >Modifier</li>
-		<li class="link" onclick="mass_delete()" >Effacer</li>
-		<li class="link"  onclick = "recherche()" >Options de Recherche</li>
-		<li><?php echo $this->Html->link('Edition De Rapport', array('action' => 'rapport')); ?></li>
+		<li class= "link" onclick="edit('historiques')" >Edit</li>
+		<li class="link" onclick="mass_delete()" >Delete</li>
+		<li class="link"  onclick = "recherche()" >Search Options</li>
+		<li><?php echo $this->Html->link('Generate Report', array('action' => 'rapport')); ?></li>
 	</ul>
 </div>
