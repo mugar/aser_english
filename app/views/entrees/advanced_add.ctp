@@ -23,7 +23,7 @@
 		
 		<td><?php echo $this->Form->input('caiss_id',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('tier_id',array('label'=>''));?></td>
-		<td><?php echo $this->Form->input('Product.stock_id',array('selected'=>0,'id'=>$i.'StockId','label'=>''));
+		<td><?php echo $this->Form->input('Produit.stock_id',array('selected'=>0,'id'=>$i.'StockId','label'=>''));
 				echo $ajax->observeField($i.'StockId',array('url' =>'/produits/stock'));?>
 		</td>
 		<td><?php echo $ajax->autoComplete($i.'produit','/produits/autoComplete',array('id'=>$i.'produit',
@@ -38,10 +38,10 @@
 																'promotion'=>'promotion'
 																)));?>
 		</td>
-		<td><?php echo $this->Form->input('livrer',array('label'=>'','options'=>array('oui'=>'oui',
-																						'non'=>'non')));?>
+		<td><?php echo $this->Form->input('livrer',array('label'=>'','options'=>array('yes'=>'yes',
+																						'no'=>'no')));?>
 		</td>
-		<td><?php echo $this->Form->input('vidange',array('label'=>'','options'=>array('oui'=>'oui','non'=>'non')));?></td>
+		<td><?php echo $this->Form->input('vidange',array('label'=>'','options'=>array('yes'=>'yes','no'=>'no')));?></td>
 		<td><?php echo $this->Form->input('date',array('label'=>'','id'=>$i.'Date','type'=>'text'));?></td>
 		<td><?php echo $this->Form->input('expiration_details',array('label'=>''));?></td>
 		<td><input type="submit" value="Save"/></td>

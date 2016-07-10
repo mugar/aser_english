@@ -56,7 +56,7 @@
 			<?php echo $salaire['Salaire']['date_debut']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Date Fin'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('End Date'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $salaire['Salaire']['date_fin']; ?>
 			&nbsp;

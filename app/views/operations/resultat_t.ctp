@@ -11,7 +11,7 @@
 <br/>
 <?php
 	if(isset($date1)&&isset($date1)){
-			echo '<h4>Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' <br/><br/>Taux de change pour USD => BIF : '.$taux.'</h4>';
+			echo '<h4>From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' <br/><br/>Taux de change pour USD => RWF : '.$taux.'</h4>';
 	}
 	
 ?>

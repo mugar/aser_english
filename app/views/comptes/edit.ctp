@@ -7,7 +7,7 @@
 		echo $this->Form->input('numero');
 		echo $this->Form->input('name');
 		echo $this->Form->input('type',array('options'=>array('actif'=>'actif','passif'=>'passif')));
-		echo $this->Form->input('actif',array('options'=>array('oui'=>'oui','non'=>'non')));
+		echo $this->Form->input('actif',array('options'=>array('yes'=>'yes','no'=>'no')));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Save', true));?>

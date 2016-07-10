@@ -43,11 +43,11 @@
 	<?php if($mode=='full'):?>
 	<tr>
 		<td>TODAY SALES</td>
-		<td><?php echo  $number->format($usd+0,$formatting).' USD, '.$number->format($bif+0,$formatting).' BIF'; ?></td>
+		<td><?php echo  $number->format($usd+0,$formatting).' USD, '.$number->format($bif+0,$formatting).' RWF'; ?></td>
 	</tr>
 	<tr>
 		<td>TODAY PAYMENTS</td>
-		<td><?php echo  $number->format($total['USD']+0,$formatting).' USD, '.$number->format($total['BIF']+0,$formatting).' BIF'.', '.$number->format($total['EUR']+0,$formatting).' EUR'; ?></td>
+		<td><?php echo  $number->format($total['USD']+0,$formatting).' USD, '.$number->format($total['RWF']+0,$formatting).' RWF'.', '.$number->format($total['EUR']+0,$formatting).' EUR'; ?></td>
 	</tr>
 	<? endif;?>
 </table>
@@ -55,7 +55,7 @@
 <br />
 <br />
 <?php if($mode=='full'):?>
-<?php if(($total['USD']+$total['BIF']+$total['EUR'])>0):?>
+<?php if(($total['USD']+$total['RWF']+$total['EUR'])>0):?>
 	<h3>TODAY PAYMENTS DETAILS</h3>
 <table cellpadding="0" cellspacing="0" id="journal_resume">
 	<tr>
@@ -207,7 +207,7 @@
 		<td colspan="3">TOTAL</td>
 		<td><?php echo $persTotal; ?></td>
 		<td colspan="4"></td>
-		<td><?php echo $usd.'_USD, '.$bif.'_BIF'; ?></td>
+		<td><?php echo $usd.'_USD, '.$bif.'_RWF'; ?></td>
 		<td colspan="5"></td>
 	</tr>
 <?php elseif($mode=='tiny'):?>

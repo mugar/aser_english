@@ -17,7 +17,7 @@
 		<?php
 			
 			echo $this->Form->input('compagnie',array('label'=>'Customer Company'));
-			echo $this->Form->input('monnaie');
+			echo $this->Form->input('monnaie',array('label'=>'Currency'));
 		?>
 	</span>
 	</form>

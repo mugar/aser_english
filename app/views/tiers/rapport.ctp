@@ -77,8 +77,8 @@
 			echo $this->Form->input('nationalite',array('value'=>'toutes'));
 			echo $this->Form->input('reduction',array('value'=>'toutes'));
 			echo $this->Form->input('actif',array('options'=>array('toutes'=>'toutes',
-																	'oui'=>'oui',
-																	'non'=>'non'
+																	'yes'=>'yes',
+																	'no'=>'no'
 																	)
 												)
 									);

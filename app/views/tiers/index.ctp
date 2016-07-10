@@ -5,7 +5,7 @@
 	});
 </script>
 <div class="tiers index">
-	<h2><?php __('Customers & Fournisseurs');?></h2>
+	<h2><?php __('Customers');?></h2>
 	<!--recherche form -->
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
@@ -13,15 +13,14 @@
 	<?php echo $this->Form->create('Tier',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('name',array('id'=>'nom','label'=>'Nom et prénom'));
+			echo $this->Form->input('name',array('id'=>'nom','label'=>'Full Name'));
 			echo $this->Form->input('type',array('options'=>array(''=>'',
-																'client'=>'client',
-																'fournisseur'=>'fournisseur'
+																'client'=>'customer',
 																)
 										));
-			echo $this->Form->input('compagnie');
+			echo $this->Form->input('compagnie',array('label'=>'Company'));
 			if(Configure::read('aser.hotel'))
-				echo $this->Form->input('chambre',array('label'=>'N° de Chambre'));
+				echo $this->Form->input('chambre',array('label'=>'Room N°'));
 			echo $this->Form->input('passport');
 		?>
 	</span>
@@ -29,11 +28,11 @@
 		<?php
 			echo $this->Form->input('telephone');
 			echo $this->Form->input('email');
-			echo $this->Form->input('nationalite',array('options'=>(array(''=>'')+$countries)));
-			echo $this->Form->input('pers_contact',array('label'=>'Infos de la Personne de Contact'));
+			echo $this->Form->input('nationalite',array('label'=>'Nationality','options'=>(array(''=>'')+$countries)));
+			echo $this->Form->input('pers_contact',array('label'=>'Infos about the contact person'));
 			echo $this->Form->input('actif',array('options'=>array(''=>'',
-																	'oui'=>'oui',
-																	'non'=>'non'
+																	'yes'=>'yes',
+																	'no'=>'no'
 																	)
 												)
 									);
@@ -49,20 +48,19 @@
 	<tr>
 		
 	
-		<th>Nom</th>
-		<th>Prénom</th>
-		<th>Type</th>	
+		<th>First Name</th>
+		<th>Last Name</th>
 		<th>Company</th>
-		<th>Télephone</th>
+		<th>Telephone</th>
 		<th>Email</th>
 		<?php if(Configure::read('aser.hotel')):?>
-			<th>Nationalité</th>
+			<th>Nationality</th>
 			<th>Passport</th>
 		<?php endif;?>
 		<?php if(Configure::read('aser.POS')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
-			<th>Réduction (%)</th>
+			<th>Discount (%)</th>
 		<?php endif;?>
-		<th>Max Dette</th>
+		<th>Max Debt</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -70,13 +68,7 @@
 		<?php echo $this->Form->create('Tier',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('nom',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('prenom',array('label'=>''));?></td>
-		<td><?php echo $this->Form->input('type',array('label'=>'','id'=>'op','options'=>array('client'=>'client',
-																									'fournisseur'=>'fournisseur',
-																									)
-															)
-										);
-			?>
-		</td>
+	
 		<td><?php echo $ajax->autoComplete('compagnie','/tiers/autoComplete/compagnie');?></td>
 		<td><?php echo $this->Form->input('telephone',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('email',array('label'=>''));?></td>
@@ -103,22 +95,20 @@
 		<tr>
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('Nom & Prénom','name');?></th>
-			<th><?php echo $this->Paginator->sort('type');?></th>
-			<th><?php echo $this->Paginator->sort('compagnie');?></th>
+			<th><?php echo $this->Paginator->sort('Full Name','name');?></th>
+			<th><?php echo $this->Paginator->sort('Company','compagnie');?></th>
 			<th><?php echo $this->Paginator->sort('telephone');?></th>
 			<th><?php echo $this->Paginator->sort('email');?></th>
 			<?php if(Configure::read('aser.hotel')):?>
-				<th><?php echo $this->Paginator->sort('nationalite');?></th>
+				<th><?php echo $this->Paginator->sort('Nationality','nationalite');?></th>
 				<th><?php echo $this->Paginator->sort('passport');?></th>
 			<?php endif; ?>
 			<?php if(Configure::read('aser.POS')):?>
-				<th><?php echo $this->Paginator->sort('Réducton (%)','reduction');?></th>
-				<th><?php echo $this->Paginator->sort('type_reduction');?></th>
+				<th><?php echo $this->Paginator->sort('Discount (%)','reduction');?></th>
 			<?php endif; ?>
-			<th><?php echo $this->Paginator->sort('max_dette');?></th>
-			<th><?php echo $this->Paginator->sort('pers_contact');?></th>
-			<th><?php echo $this->Paginator->sort('actif');?></th>
+			<th><?php echo $this->Paginator->sort('Max Debt','max_dette');?></th>
+			<th><?php echo $this->Paginator->sort('Contact Pers','pers_contact');?></th>
+			<th><?php echo $this->Paginator->sort('active','actif');?></th>
 		</tr>
 	<?php
 	foreach ($tiers as $tier) {
@@ -148,10 +138,10 @@
 		<li class= "link" onclick = "edit()" >Edit</li>
 		<li class= "link" onclick = "mass_delete()" >Delete</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li class="link"  onclick = "disable('tiers/disable')" >Activer/Désactiver</li>
-		<li class="link"  onclick = "global_bill()" >Facture Globale</li>
-		<li class= "link" onclick = "merge('tiers')" ><? echo  __('Fusionner les Enregistrements');?></li>
-		<li><?php echo $this->Html->link('Edition de Rapport', array('controller'=>'tiers','action' => 'rapport'));?></li>
+		<li class="link"  onclick = "disable('tiers/disable')" >Activate/Deactivate</li>
+		<!-- <li class="link"  onclick = "global_bill()" >Global Bill</li> -->
+		<li class= "link" onclick = "merge('tiers')" ><? echo  __('Merge customers');?></li>
+		<li><?php echo $this->Html->link('Generate Report', array('controller'=>'tiers','action' => 'rapport'));?></li>
 	</ul>
 </div>
 
@@ -160,8 +150,8 @@
 <div class="dialog" id="global_bill">
 	<span class='left'>
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Date Début','id'=>'Date1','type'=>'text'));
-			echo $this->Form->input('date2',array('label'=>'Date Fin','id'=>'Date2','type'=>'text'));
+			echo $this->Form->input('date1',array('label'=>'Start Date','id'=>'Date1','type'=>'text'));
+			echo $this->Form->input('date2',array('label'=>'End Date','id'=>'Date2','type'=>'text'));
 		?>
 	</span>
 	<span class="right">

@@ -17,12 +17,12 @@
 <div id='view'>
 <div class="document">
 <h3>
-	RESULTAT : <?php echo $number->format($marge_net,$formatting).' '.$monnaie;?>
+	SUMMARY : <?php echo $number->format($marge_net,$formatting).' '.$monnaie;?>
 </h3>
 <br/>
 <?php
 	if(isset($date1)&&isset($date1)){
-			echo '<h4>Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' <br/><br/>Taux de change pour USD => BIF : '.$taux.'</h4>';
+			echo '<h4>From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' <br/><br/>Exchange rate for USD to RWF : '.$taux.'</h4>';
 	}
 	
 ?>
@@ -36,7 +36,7 @@
 		<?php 
 			
 				echo '<tr class="categorie">';
-				echo '<td colspan="2">RECETTES</td>';
+				echo '<td colspan="2">INCOME</td>';
 				echo '</tr>';
 				
 			foreach($sections as $section) {
@@ -49,24 +49,24 @@
 			}
 			if(Configure::read('aser.hotel')){
 				echo '<tr>';
-				echo '<td>'.$this->Html->link('HEBERGEMENT', array('controller' => 'reservations', 'action' => 'monthly',$date1,$date2),array('target'=>'blank')).'</td>';
+				echo '<td>'.$this->Html->link('ACCOMODATION', array('controller' => 'reservations', 'action' => 'monthly',$date1,$date2),array('target'=>'blank')).'</td>';
 				echo '<td >'. $number->format($model['Reservation'],$formatting).'</td>';
 				echo '</tr>';
 			}
 			if(Configure::read('aser.conference')){
 				echo '<tr>';
-				echo '<td>'.$this->Html->link('SALLE DE CONFERENCE', array('controller' => 'locations', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
+				echo '<td>'.$this->Html->link('CONFERENCE ROOM', array('controller' => 'locations', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
 				echo '<td >'. $number->format($model['Location'],$formatting).'</td>';
 				echo '</tr>';
 			}
 			if(Configure::read('aser.services')){
 				echo '<tr>';
-				echo '<td>'.$this->Html->link('AUTRES SERVICES', array('controller' => 'services', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
+				echo '<td>'.$this->Html->link('EXTRAS SERVICES', array('controller' => 'services', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
 				echo '<td >'. $number->format($model['Service'],$formatting).'</td>';
 				echo '</tr>';
 			}
 				echo '<tr class="sous_total">';
-				echo '<td>TOTAL VENTES</td>';
+				echo '<td>SALES TOTAL</td>';
 				echo '<td >'. $number->format($total_ventes,$formatting).'</td>';
 				echo '</tr>';
 
@@ -76,7 +76,7 @@
 
 			if(Configure::read('aser.stock')){
 				echo '<tr>';
-				echo '<td>SORTIES STOCK</td>';
+				echo '<td>INVENTORY CONSUMPTIONS</td>';
 				echo '<td>'. $number->format($total_sortis,$formatting).'</td>';
 				echo '</tr>';
 			}
@@ -92,7 +92,7 @@
 				echo '<td >'. $number->format($depenses_by_categories[1]['montant'],$formatting).'</td>';
 				
 				echo '<tr class="strong">';
-				echo '<td >MARGE BRUTE</td>';
+				echo '<td >GROSS MARGIN</td>';
 				echo '<td >'. $number->format($marge_brute,$formatting).'</td>';
 				echo '</tr>';
 
@@ -109,10 +109,11 @@
 				echo '<tr class="sous_total">';
 				echo '<td>TOTAL '.strtoupper(Configure::read('categories.2')).'</td>';
 				echo '<td >'. $number->format($depenses_by_categories[2]['montant'],$formatting).'</td>';
-				echo '<tr class="strong">';
-				echo '<td >MARGE INTERMEDIAIRE</td>';
-				echo '<td >'. $number->format($marge_intermediaire,$formatting).'</td>';
 				echo '</tr>';
+				// echo '<tr class="strong">';
+				// echo '<td >TEMPORARY MARGIN</td>';
+				// echo '<td >'. $number->format($marge_intermediaire,$formatting).'</td>';
+				// echo '</tr>';
 
 				echo '<tr class="categorie">';
 				echo '<td colspan="2">- '.Configure::read('categories.3').'</td>';
@@ -128,7 +129,7 @@
 				echo '<td>TOTAL '.strtoupper(Configure::read('categories.3')).'</td>';
 				echo '<td >'. $number->format($depenses_by_categories[3]['montant'],$formatting).'</td>';
 				echo '<tr class="strong">';
-				echo '<td >MARGE EXPLOITATION</td>';
+				echo '<td >OPERATING MARGIN</td>';
 				echo '<td >'. $number->format($marge_exploitation,$formatting).'</td>';
 				echo '</tr>';
 
@@ -146,7 +147,7 @@
 				echo '<td>TOTAL '.strtoupper(Configure::read('categories.4')).'</td>';
 				echo '<td>'. $number->format($depenses_by_categories[4]['montant'],$formatting).'</td>';
 				echo '<tr class="strong">';
-				echo '<td >MARGE NET</td>';
+				echo '<td >NET MARGIN</td>';
 				echo '<td >'. $number->format($marge_net,$formatting).'</td>';
 				echo '</tr>';
 		?>
@@ -160,7 +161,7 @@
 	<ul>
 		<li class="link"  onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link(sprintf(__('Liste des Opérations', true), __('Type', true)), array('action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Operations Management', true), __('Type', true)), array('action' => 'index')); ?></li>
 	</ul>
 </div>
 
@@ -178,7 +179,7 @@
 	</span>
 	<span class="right">
 		<?php
-				echo $this->Form->input('taux',array('label'=>'Taux de Change','value'=>$taux));
+				echo $this->Form->input('taux',array('label'=>'Exchange rate','value'=>$taux));
 		?>
 	</span>
 	</form>

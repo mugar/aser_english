@@ -3,7 +3,7 @@
 <h3>Rapport des Entrees</h3>
 <br />
 <h4><?php echo $periode=(!is_null($date1)&&!is_null($date2))?
-						('(Période du '.$this->MugTime->toFrench($date1).' au '.$this->MugTime->toFrench($date2).' )'):
+						('(From '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' )'):
 						('');?>
 </h4>
 <br />
@@ -13,7 +13,7 @@
 		<th>Quantité</th>
 		<th>Nom Du Product</th>
 		<th>Prix D'Achat</th>
-		<th>Montant</th>
+		<th>Amount</th>
 		<th>Type d'entrée</th>
 		<th>Stock</th>
 	</tr>

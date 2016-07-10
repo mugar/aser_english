@@ -22,7 +22,7 @@
 <h3><?php echo 'Rapport des Ventes Par Products et Par Groupes Comptable';
 	?>
 	<?php if(!is_null($date1)&&!is_null($date2)) :?>
-	<h4><?php echo '<h4>(Période du '.$this->MugTime->toFrench($date1).' au ';
+	<h4><?php echo '<h4>(From '.$this->MugTime->toFrench($date1).' to ';
 			  echo 	$this->MugTime->toFrench($date2).')</h4>';
 		 ?>
 	 </h4>
@@ -115,8 +115,8 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('Facture.date1',array('label'=>'Date Début','type'=>'text'));									
-			echo $this->Form->input('Facture.date2',array('label'=>'Date Fin','type'=>'text'));
+			echo $this->Form->input('Facture.date1',array('label'=>'Start Date','type'=>'text'));									
+			echo $this->Form->input('Facture.date2',array('label'=>'End Date','type'=>'text'));
 			?>
 	</span>
 	</form>

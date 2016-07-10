@@ -288,10 +288,10 @@
 				<span class="boutton" onclick="print_facture(factureId)" title="Print la facture">Print</span>
 			<?php endif;?>
 			<?php if($config['multi_resto']): ?>
-					<span class="boutton" onclick="parameters()" title="Configurer les paramètres">Paramètres</span>
+					<span class="boutton" onclick="parameters()" title="Configurer les paramètres">Change Place</span>
 				<?php endif;?> 
 			<?php if($config['sama']&&($mode!='serveur')||$config['bon']): ?>
-				<span class="boutton" onclick="ask(factureId)" title="Print les bons pour les boissons et la cuisine pour la facture sélectionnée">Order</span>
+				<span class="boutton" onclick="ask(factureId)" title="Print les bons pour les boissons et la cuisine pour la facture sélectionnée">Send Order</span>
 			<?php endif;?> 
 			<?php if(false&&($config['sama']&&($mode=='serveur'))): ?>
 				<span class="boutton" onclick="confirm_order(factureId)" title="Confirmer la commande">OK</span>
@@ -321,12 +321,12 @@
 					echo $this->Form->input('client',array('options'=>$tiers,'label'=>'Customer','id'=>'tierId','selected'=>0));
 					echo $this->Form->input('avance',array('id'=>'avance','label'=>'Cash'));
 					echo $this->Form->input('change',array('id'=>'change','disabled'=>'disabled','value'=>0));
-					echo '<span name="payment" value="1" class="boutton_selected" onclick="switcher(this)" id="payee">PAID AMOUNT</span>';	
+					echo '<span name="payment" value="1" class="boutton_selected" onclick="switcher(this)" id="payee">PAID</span>';	
 					echo '<span name="payment" value="2" class="boutton" onclick="switcher(this)">CREDIT</span>';	
 					echo '<span name="payment" value="3" class="boutton" onclick="switcher(this)">BONUS</span>';	
-					echo '<span name="payment" value="4" class="boutton" onclick="switcher(this)">AVANCE</span>';	
+					echo '<span name="payment" value="4" class="boutton" onclick="switcher(this)">HALF PAID</span>';	
 				?>
-				<span name="payment" class="boutton" onclick="jQuery('#paiement_form').hide(),displayed=0;">MASQUER</span>
+				<span name="payment" class="boutton" onclick="jQuery('#paiement_form').hide(),displayed=0;">HIDE</span>
 			</fieldset>
 		</span>
 		<div style="margin-bottom:0px; width:*00px;">
@@ -336,15 +336,15 @@
 													'style'=>'width:50px !important; margin-top:0px !important; float:left;'
 													));
 				?>
-		<input type="text" id="filter" style="margin-left:5px !important; width:300px" placeholder="Recherche ..."/>
+		<input type="text" id="filter" style="margin-left:5px !important; width:300px" placeholder="Search ..."/>
 		<?php if(Configure::read('aser.PU')):?>
-		<input type="text" id="autrePU" style="margin-left:5px !important; width:300px;"  placeholder="Autre Prix ..."/>
+		<input type="text" id="autrePU" style="margin-left:5px !important; width:300px;"  placeholder="Custom Unit Price ..."/>
 		<?php endif;?>
 		</div>
 		<span id='serveurs' class="bouttons">
 			
 			<?php if(!$config['magasin']&&!$config['caissier_serveur']&&($session->read('Auth.Personnel.fonction_id')!=1)): ?>
-				<fieldset id="serveurs_select"><legend>Serveurs</legend>
+				<fieldset id="serveurs_select"><legend>Waiters</legend>
 				<?php 
 					foreach($serveurs as $id=>$name){
 						echo '<span id="'.$id.'" class="boutton" onclick="serveur_touch(this)">'.$name.'</span>';	
@@ -355,13 +355,13 @@
 		</span>
 		<span id='groupes' class="bouttons">
 			
-			<fieldset id="groupes_select"><legend>Filtrage Groupes</legend>
+			<fieldset id="groupes_select"><legend>Group's Filtering</legend>
 			<?php
 				echo '<div id="2" name="section" class="boutton" onclick="s_filtering(this)" style="display:none;">BAR</div>';
 				echo '<div id="1" name="section" class="boutton" onclick="s_filtering(this)"">CUISINE</div>';
 				
 				foreach($groupes as $groupe){
-					if($groupe['Groupe']['afficher']=='oui'){	
+					if($groupe['Groupe']['afficher']=='yes'){	
 						echo '<span id="'.$groupe['Groupe']['id'].'" section="'.$groupe['Groupe']['section_id'].'" class="groupe" onclick="g_filtering(this)"';	
 						echo 'style="background:url(../img/groupes/'.$groupe['Groupe']['id'].'.jpg) 0 0  no-repeat;">';	
 						echo '<div class="text">'.ucwords($groupe['Groupe']['name']).'</div>';
@@ -373,7 +373,7 @@
 			</fieldset>
 		</span>
 		<span id='sous_groupes' class="bouttons" style="display:none;">
-			<fieldset id="sous_groupes_select"><legend>Filtrage Sous Groupes</legend>
+			<fieldset id="sous_groupes_select"><legend>Group's Filtering</legend>
 			<?php 
 				echo '<div id="2" name="section" class="boutton" onclick="s_filtering(this)">BAR</div>';
 				echo '<div id="1" name="section" class="boutton" onclick="s_filtering(this)">CUISINE</div>';

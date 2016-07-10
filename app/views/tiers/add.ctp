@@ -6,7 +6,6 @@
 			<?php echo $this->Html->link($tier['Tier']['id'], array('controller' => 'tiers', 'action' => 'view', $tier['Tier']['id'])); ?>
 		</td>
 		<td name="nom"><?php echo $tier['Tier']['name']; ?>&nbsp;</td>
-		<td><?php echo $tier['Tier']['type']; ?>&nbsp;</td>
 		<td><?php echo $tier['Tier']['compagnie']; ?>&nbsp;</td>
 		<td><?php echo $tier['Tier']['telephone']; ?>&nbsp;</td>
 		<td><?php echo $tier['Tier']['email']; ?>&nbsp;</td>
@@ -16,7 +15,6 @@
 		<?php endif;?>
 		<?php if(Configure::read('aser.POS')):?>
 			<td><?php echo $tier['Tier']['reduction']; ?>&nbsp;</td>
-			<td><?php echo $tier['Tier']['type_reduction']; ?>&nbsp;</td>
 		<?php endif;?>
 		<td><?php echo $tier['Tier']['max_dette']; ?>&nbsp;</td>
 		<td><?php echo $tier['Tier']['pers_contact']; ?>&nbsp;</td>

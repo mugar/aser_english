@@ -116,7 +116,7 @@
 			<th>Prix Unitaire</th>
 		</tr>
 		<?php foreach($extras as $id=>$extra):?>
-			<?php if($extra['LocationExtra']['extra']=='oui'):?>
+			<?php if($extra['LocationExtra']['extra']=='yes'):?>
 			<tr>
 				<td><input type="checkbox" name="checkbox" value="<?php echo $id;?>"/></td>
 				<td><?php echo $this->Form->input('name',array('label'=>'','name'=>"data[extras][$id][name]",'value'=>$extra['LocationExtra']['name']));?></td>

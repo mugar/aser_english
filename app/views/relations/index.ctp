@@ -36,7 +36,7 @@
 	<tr name="<?php echo $i?>">
 		<?php echo $this->Form->create('Relation',array('action'=>'add'));?>
 		
-		<td><?php echo $this->Form->input('Product.stock_id',array('selected'=>0,'id'=>$i.'StockId','label'=>''));
+		<td><?php echo $this->Form->input('Produit.stock_id',array('selected'=>0,'id'=>$i.'StockId','label'=>''));
 				echo $ajax->observeField($i.'StockId',array('url' =>'/produits/stock'));?>
 		</td>
 		<td><?php echo $ajax->autoComplete($i.'1produit','/produits/autoComplete',array('id'=>$i.'1produit',

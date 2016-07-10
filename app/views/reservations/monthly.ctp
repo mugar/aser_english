@@ -148,20 +148,20 @@ $config=Configure::read('aser');
 		<?php endif;?>
 	<tr>
 <?php endif; ?>
-<?php if( $total['BIF']!=0):?>
+<?php if( $total['RWF']!=0):?>
 	<tr class="strong">
-		<td>TOTAL (BIF)</td>
+		<td>TOTAL (RWF)</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-		<td><?php echo  $number->format($total['BIF'],$formatting); ?></td>
+		<td><?php echo  $number->format($total['RWF'],$formatting); ?></td>
 		<?php if($config['extras']):?>
 		<td><?php echo  $number->format($extras,$formatting); ?></td>
-		<td><?php echo  $number->format($extras+$total['BIF'],$formatting); ?></td>
-		<td>BIF</td>
+		<td><?php echo  $number->format($extras+$total['RWF'],$formatting); ?></td>
+		<td>RWF</td>
 		<?php endif; ?>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>

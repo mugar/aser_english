@@ -20,7 +20,7 @@
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th>Numero</th>
 			<th>Opération</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Reste</th>
 			<th>Currency</th>
 			<th>State Paiement</th>

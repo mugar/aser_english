@@ -36,7 +36,7 @@
 <br />
 <span class="titre">Facture Globale</span>
 	<br />	<br />
-		<h4>(<?php echo 'Pour la période du '.$this->MugTime->toFrench($date1).' au '.$this->MugTime->toFrench($date2);?>)</h4>
+		<h4>(<?php echo 'Pour la période du '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2);?>)</h4>
 		<br />	<br />
 	
 <br>
@@ -60,7 +60,7 @@
 			<th width="100">Montant Payé</th>
 			<th width="100">Montant Restant</th>
 		<?php else : ?>
-			<th>Montant</th>
+			<th>Amount</th>
 		<?php endif; ?>
 	</tr>
 		<?php

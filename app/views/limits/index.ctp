@@ -34,7 +34,7 @@
 			</tr>
 			<tr>
 				<th>Date</th>
-				<th>Montant</th>
+				<th>Amount</th>
 			</tr>
 			<?php
 				$month_days=cal_days_in_month(CAL_GREGORIAN,$month,$year);

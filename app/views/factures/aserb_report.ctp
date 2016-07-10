@@ -24,7 +24,7 @@
 <h3><?php 
   echo 'LISTE DES FACTURES ENVOYES';
     if(isset($date1)&&isset($date1)){
-      echo '<h4>(Pour la période du '.$this->MugTime->toFrench($date1).' au '.$this->MugTime->toFrench($date2).' )</h4>';
+      echo '<h4>(Pour la période du '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' )</h4>';
     }
   ?>
 </h3>
@@ -34,7 +34,7 @@
       <th>Date de Création</th>
        <th>Date d'envoie</th>
       <th>Invoice N°</th>
-      <th>Montant</th>
+      <th>Amount</th>
       <th>Reste</th>
       <th>Customer</th>
       <th>Company</th>

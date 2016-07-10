@@ -6,7 +6,7 @@
 	<tr>
 			<th>Numero</th>
 			<th>Opération</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Reste</th>
 			<th>Currency</th>
 			<th>State Paiement</th>

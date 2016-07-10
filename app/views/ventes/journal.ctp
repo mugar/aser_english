@@ -28,16 +28,16 @@
 </div>
 <div id='view'>
 <div class="document">
-<h3>Rapport Caisse <?php if(!empty($journalInfo)) echo ' de '.ucfirst($journalInfo['Personnel']['name']).'';?></h3>
+<h3>Cashier Report For <?php if(!empty($journalInfo)) echo ''.ucfirst($journalInfo['Personnel']['name']).'';?></h3>
 <h4><?php if(!empty($journalInfo)) {
 			echo '(';
-			echo 'Du '.$this->MugTime->toFrench($journalInfo['Journal']['date']);
-			echo ' à '.date('H:i:s').', ';
+			echo 'Of'.$this->MugTime->toFrench($journalInfo['Journal']['date']);
+			echo ' at '.date('H:i:s').', ';
 			echo 'N° : '.$journalInfo['Journal']['numero'];
 			if($journalInfo['Journal']['closed']) 
-				echo ' State : <span id="etat_journal" closed="1">clôturée</span>';
+				echo ' State : <span id="etat_journal" closed="1">closed</span>';
 			else
-				echo ' State : <span id="etat_journal" closed="0">Non clôturée</span>';
+				echo ' State : <span id="etat_journal" closed="0">Not closed</span>';
 			echo '<span style="display:none" id="journal_id">'.$journalInfo['Journal']['id'].'</span>';
 			echo '<span style="display:none" id="personnel_id">'.$journalInfo['Journal']['personnel_id'].'</span>';
 			echo ')';
@@ -56,41 +56,41 @@
 <br />
 <table cellpadding="0" cellspacing="0" id="journal_resume">
 	<tr>
-			<th align="center" colspan="2">RESUME</th>
+			<th align="center" colspan="2">SUMMARY</th>
 	</tr>
 	<tr>
-		<td>TOTAL VENTES</td>
+		<td>TOTAL OF SALES</td>
 		<td><?php echo  $number->format($total_factures['resto']+0,$formatting); ?></td>
 	</tr>
 	<tr>
-		<td>TOTAL CASH</td>
+		<td>TOTAL OF CASH</td>
 		<td><?php echo  $number->format($total_cash['resto']+0,$formatting); ?></td>
 	</tr>
 	<tr>
-		<td>TOTAL CREDITS</td>
+		<td>TOTAL OF CREDITS</td>
 		<td><?php echo  $number->format($total_credits['resto']+0,$formatting); ?></td>
 	</tr>
 	<?php if(Configure::read('aser.bonus')):?>
 	<tr>
-		<td>TOTAL BONUS</td>
+		<td>TOTAL OF BONUS</td>
 		<td><?php echo  $number->format($bonus+0,$formatting); ?></td>
 	</tr>
 	<?php endif;?>
 	<tr>
-		<td>TOTAL PAIEMENTS</td>
+		<td>TOTAL OF PAIEMENTS</td>
 		<td><?php echo  $number->format($total_pyts['resto']+0,$formatting); ?></td>
 	</tr>
 	<tr>
-		<td>TOTAL DEPENSES</td>
+		<td>TOTAL OF EXPENSES</td>
 		<td><?php echo  $number->format($total_depenses+0,$formatting); ?></td>
 	</tr>
 	
 	<tr>
-		<td>TOTAL AJOUTS</td>
+		<td>TOTAL OF DEPOSITS</td>
 		<td><?php echo  $number->format($total_ajouts+0,$formatting); ?></td>
 	</tr>
 	<tr>
-		<td>TOTAL VERSEMENT</td>
+		<td>NET AMOUNT TO PAY</td>
 		<td id="versement"  montant="<?php echo $versement; ?>"><?php echo  $number->format($versement+0,$formatting); ?></td>
 	</tr>
 	<tr>
@@ -107,7 +107,7 @@
 	</tr>
 	<?php if(!empty($other_people_pyts['total'])):?>
 		<tr>
-			<td>PAIEMENTS CREES PAR D'AUTRES</td>
+			<td>PAYMENTS CREATED BY OTHERS</td>
 			<td><?php echo  $number->format($other_people_pyts['total']+0,$formatting); ?></td>
 		</tr>
 	<?php endif; ?>
@@ -118,11 +118,11 @@
 <br />
 <br />
 <?php if(!empty($journals)): ?>
-	<span class="titre">Rapports</span>
+	<span class="titre">Reports</span>
 <br>
 <table cellpadding="0" cellspacing="0" id="pytTab">
 	<tr>	
-			<th>Numero</th>
+			<th>Number</th>
 			<th>State</th>
 	</tr>
 	<?php
@@ -137,7 +137,7 @@
 </table>
 <?php endif; ?>
 <?php if(!$mensuelle) :?>
-<span class="titre">Factures</span>
+<span class="titre">Invoices</span>
 <br>
 <?php echo $this->Form->create('Vente',array('name'=>'checkbox','id'=>'Vente_ventes'));?>	
 <table cellpadding="0" cellspacing="0">
@@ -145,19 +145,19 @@
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th>Customer</th>
 			<th>Invoice N°</th>
-			<th>State Facture</th>
-			<th>Montant Original</th>
-			<th>Reduction %</th>
-			<th>Montant</th>
-			<th>Reste</th>
+			<th>State</th>
+			<th>Original Amount</th>
+			<th>Discount %</th>
+			<th>Final Amount</th>
+			<th>Left To Pay</th>
 			<th>Currency</th>
 			<?php if(!Configure::read('aser.magasin')):?>
-				<th>Table</th>
-				<th>Serveur</th>
+				<th>Table N°</th>
+				<th>Waiter</th>
 			<?php endif;?>
 			<th>Date</th>
-			<th>Observation</th>
-			<th>Vente</th>
+			<th>Comments</th>
+			<th>Operation Code</th>
 		
 	</tr>
 		<?php
@@ -205,19 +205,19 @@
 </tr>
 </table>
 </form>
-<span class="titre">Paiements</span>
+<span class="titre">Payments</span>
 <br>
 <table cellpadding="0" cellspacing="0" id="pytTab">
 	<tr>	
-			<th>Date de Paiement</th>
-			<th>Date de Facturation</th>
+			<th>Payment's Date</th>
+			<th>Invoicing Date</th>
 			<th>Invoice N°</th>
-			<th>Type De Facture</th>
-			<th>Montant</th>
-			<th>Montant Equivalent</th>
+			<th>Invoice Type</th>
+			<th>Amount</th>
+			<th>Equivalent Amount</th>
 			<th>Payment Mode</th>
-			<th>Réference</th>
-			<th>Personnel</th>
+			<th>Reference</th>
+			<th>Created By</th>
 	</tr>
 		<?php
 		foreach ($pyts as $pyt){
@@ -228,19 +228,19 @@
 	
 </table>
 <?php if(!empty($other_people_pyts['pyts'])):?>
-	<span class="titre">Paiements Créés par d'autres</span>
+	<span class="titre">Payments Created by others</span>
 
 	<table cellpadding="0" cellspacing="0" id="pytTab">
 	<tr>	
-			<th>Date de Paiement</th>
-			<th>Date de Facturation</th>
+			<th>Payment's Date</th>
+			<th>Invoicing Date</th>
 			<th>Invoice N°</th>
-			<th>Type De Facture</th>
-			<th>Montant</th>
-			<th>Montant Equivalent</th>
+			<th>Invoice Type</th>
+			<th>Amount</th>
+			<th>Equivalent Amount</th>
 			<th>Payment Mode</th>
-			<th>Réference</th>
-			<th>Personnel</th>
+			<th>Reference</th>
+			<th>Created By</th>
 	</tr>
 		<?php
 		foreach ($other_people_pyts['pyts'] as $pyt){
@@ -255,8 +255,8 @@
 <br>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Libéllé</th>
-			<th>Montant</th>
+			<th>Type of Expense</th>
+			<th>Amount</th>
 			<th>Description</th>
 			<th>Date</th>
 	</tr>
@@ -281,8 +281,8 @@
 <br>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Libellé</th>
-			<th>Montant</th>
+			<th>Type of Expense</th>
+			<th>Amount</th>
 			<th>Description</th>
 			<th>Date</th>
 	</tr>
@@ -318,7 +318,7 @@
 		</div>
 	</div>
 	<div class="right"><?php  
-		echo 'Signature : Caissière Principale <br />';
+		echo 'Signature : Cashier Supervisor <br />';
 	?>
 	</div>
 	<div style="clear:both"></div>
@@ -332,27 +332,27 @@
 		<li class="link"  onclick="print_documents(jQuery('#etat_journal').attr('closed'))" >Print</li>
 		<li class="link"  onclick="recherche()" >Search Options</li>
 		<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(2,4))):?>
-			<li class="link"  id="cloturer" >Clôturer le rapport</li>
+			<li class="link"  id="cloturer" >Close the report</li>
 		<?php endif;?>
 		<?php 
 		$fonctions=(Configure::read('aser.disable_transfer'))?array(3,5,8):array(2,3,5,8);
 		if(in_array($session->read('Auth.Personnel.fonction_id'),$fonctions)):?>
-			<li class="link"  onclick="transfer()" >Transfer des factures</li>
+			<li class="link"  onclick="transfer()" >Invoice Transfer</li>
 		<?php endif;?>
 		<?php if(Configure::read('aser.touchscreen')):?>
-		<li><?php echo $this->Html->link('Interface De Vente', array('controller' => 'ventes', 'action' => 'touchscreen')); ?> </li>
+		<li><?php echo $this->Html->link('Point Of Sale', array('controller' => 'ventes', 'action' => 'touchscreen')); ?> </li>
 		<?php else : ?>
-			<li><?php echo $this->Html->link('Interface De Vente', array('controller' => 'ventes', 'action' => 'index')); ?> </li>
+			<li><?php echo $this->Html->link('Point Of Sale', array('controller' => 'ventes', 'action' => 'index')); ?> </li>
 		<?php endif; ?>
-		<li class="link"  onclick="jQuery('#journal_details').slideToggle()" >Show/Hide les Détails</li>
+		<li class="link"  onclick="jQuery('#journal_details').slideToggle()" >Show/Hide the Details</li>
 		<?php if(Configure::read('aser.aserb')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
-			<li class="link"  onclick="copier_bills_dans_b(1)" >Save les factures </li>
-			<li class="link"  onclick="copier_bills_dans_b(0)" >Enlever les factures</li>
+			<li class="link"  onclick="copier_bills_dans_b(1)" >Save the invoices</li>
+			<li class="link"  onclick="copier_bills_dans_b(0)" >Remove the invoices</li>
 		<?php endif;?>
 	</ul>
 </div>
 <!-- transfer boxe -->
-<div id="trans_boxe" style="display:none" title="Transfer de Facture">
+<div id="trans_boxe" style="display:none" title="Invoice Transfer">
 <div class="dialog">
 	<div id="message_trans"></div>
 	<?php echo $this->Form->create('Vente');?>
@@ -363,7 +363,7 @@
 	</span>
 	<span class="right">
 		<?php
-		//	echo $this->Form->input('Vente.paiements',array('id'=>'paiementsBox','options'=>array('non'=>'non','oui'=>'oui'),'label'=>'Inclure Paiements'));
+		//	echo $this->Form->input('Vente.paiements',array('id'=>'paiementsBox','options'=>array('no'=>'no','yes'=>'yes'),'label'=>'Inclure Paiements'));
 			echo $this->Form->input('Vente.journal_id',array('id'=>'journalId','type'=>'hidden','value'=>$journalInfo['Journal']['id']));
 		?>
 	</span>

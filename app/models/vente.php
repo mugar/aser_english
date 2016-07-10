@@ -105,7 +105,7 @@ class Vente extends AppModel {
 																	),
 													'conditions'=>array('Vente.id'=>$this->data['Vente']['id'])
 													));
-			if((($oldVenteInfo['Facture']['etat']=='en_cours')&&(($oldVenteInfo['Facture']['classee']==0)))
+			if((($oldVenteInfo['Facture']['etat']=='in_progress')&&(($oldVenteInfo['Facture']['classee']==0)))
 				||(Configure::read('aser.aserb')==1)
 				){
 				/*

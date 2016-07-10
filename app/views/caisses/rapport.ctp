@@ -1,7 +1,7 @@
 <h3 align=center ><?php __('Rapport Trésorerie');?> <span style="font-size:13px !important; color:#367889; cursor:pointer;" onclick="jQuery('#filter').toggle();">(Options de recherche)</span></h3>
  
 <fieldset class="recherche">
-	<span style="font-size:15px !important; color:#367889;">Période entre le <?php echo $this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2) ?></span>
+	<span style="font-size:15px !important; color:#367889;">From  <?php echo $this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2) ?></span>
 	<br>
 	<br>
 <div id="filter" style="display:none;" class="recherche">

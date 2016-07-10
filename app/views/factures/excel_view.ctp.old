@@ -101,7 +101,7 @@ header('Content-Disposition: attachment; filename='.$filename);
 		}
 	?>
 	<tr>
-			<?php if((!is_null($location['LocationExtra']['heure']))&&($location['LocationExtra']['extra']=='non')):?>
+			<?php if((!is_null($location['LocationExtra']['heure']))&&($location['LocationExtra']['extra']=='no')):?>
 				<td><?php echo  $location['LocationExtra']['name'];
 						if(!empty($location['LocationExtra']['heure'])) echo ' à '.$location['LocationExtra']['heure']; 
 					?>

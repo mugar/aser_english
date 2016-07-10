@@ -5,7 +5,7 @@
 	<?php
 		$i=0;
 		echo $this->Form->input('id');
-		 echo $this->Form->input('Product.stock_id',array('id'=>$i.'StockId','label'=>''));
+		 echo $this->Form->input('Produit.stock_id',array('id'=>$i.'StockId','label'=>''));
 		echo $ajax->observeField($i.'StockId',array('url' =>'/produits/stock'));
    		echo $ajax->autoComplete($i.'1produit','/produits/autoComplete',array('id'=>$i.'1produit',
 																				'name'=>'data[PremierProduct][name]',

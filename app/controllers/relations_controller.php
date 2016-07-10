@@ -24,7 +24,7 @@ class RelationsController extends AppController {
 			$this->set('relations', $this->paginate($relationConditions));
 		}
 		$unites = $this->Relation->Unite->find('list');
-		$premiers = $this->Relation->PremierProduit->find('list',array('conditions'=>array('PremierProduit.actif'=>'oui'),
+		$premiers = $this->Relation->PremierProduit->find('list',array('conditions'=>array('PremierProduit.actif'=>'yes'),
 																		'order'=>array('PremierProduit.name asc')
 																	));
 		$premiers[0]='toutes';
@@ -43,7 +43,7 @@ class RelationsController extends AppController {
     	if ((!empty( $stockId ))&&($stockId!=0)) {
 		$produits = $this->Relation->PremierProduit->find('list',array(
 												'conditions'=>array('PremierProduit.stock_id'=>$stockId,
-																	'Produit.actif'=>'oui'
+																	'Produit.actif'=>'yes'
 																	),
 												'order'=>'PremierProduit.name asc'
 												)
@@ -94,7 +94,7 @@ class RelationsController extends AppController {
 				$this->redirect(array('action' => 'index'));
 			}
 		}
-		$groupes = $this->Relation->PremierProduit->Groupe->find('list',array('conditions'=>array('Groupe.actif'=>'oui')));
+		$groupes = $this->Relation->PremierProduit->Groupe->find('list',array('conditions'=>array('Groupe.actif'=>'yes')));
 		$this->set(compact('groupes'));
 	}
 

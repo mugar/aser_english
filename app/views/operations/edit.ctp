@@ -14,7 +14,7 @@
 		<?php
 		echo $this->Form->input('montant');
 		echo $this->Form->input('ordre');
-		echo $this->Form->input('monnaie');
+		echo $this->Form->input('monnaie',array('label'=>'Currency'));
 		echo $this->Form->input('model2',array('id'=>'model2-1','label'=>'Destination','options'=>$model2s ,'selected'=>$selected_destination));
 		echo '<span id="ajout-1">'.$this->Form->input('Operation.element2',array('label'=>'Préciser La Déstination','options'=>$elements2,'selected'=>$selected_element2)).'</span>';
 		echo $ajax->observeField('model2-1',array('url' => array('controller'=>'operations','action'=>'update/2'),'update' => 'ajout-1'));

@@ -13,7 +13,7 @@ class ReservationsController extends AppController {
 																		'Reservation.PU','Reservation.monnaie'
 																			),
 														'conditions'=>array('Reservation.tier_id'=>$tier_id,
-																			'Reservation.etat !='=>'annulee'
+																			'Reservation.etat !='=>'canceled'
 																			),
 														'order'=>array('Reservation.arrivee desc')
 														));
@@ -33,7 +33,7 @@ class ReservationsController extends AppController {
 	}
 	function arrivals(){
 	
-		$cond['Reservation.etat !=']='annulee';
+		$cond['Reservation.etat !=']='canceled';
 		if(!empty($this->data['Reservation']['date1'])){
 			$cond['Reservation.arrivee >=']=$date1=$this->data['Reservation']['date1'];
 		}
@@ -58,7 +58,7 @@ class ReservationsController extends AppController {
 																		),
 														'conditions'=>$cond,
 											));	
-		$total['BIF']=$total['USD']=0;									
+		$total['RWF']=$total['USD']=0;									
 		foreach($reservations as $i=>$reservation){
 			$total[$reservation['Reservation']['monnaie']]+=$reservation['Reservation']['montant'];
 			$reservations[$i]['Reservation']['depart']=$this->Product->increase_date($reservation['Reservation']['depart']);
@@ -254,7 +254,7 @@ class ReservationsController extends AppController {
 		$mode=(!empty($this->data['Reservation']['mode']))?($this->data['Reservation']['mode']):$mode;
 		
 		$chambres=$this->Reservation->Chambre->find('all',array('fields'=>array('Chambre.id','Chambre.name'),
-																				//	'conditions'=>array('Chambre.operationnelle'=>'oui'),
+																				//	'conditions'=>array('Chambre.operationnelle'=>'yes'),
 																					'order'=>'Chambre.name asc'
 																					)
 																		);
@@ -275,7 +275,7 @@ class ReservationsController extends AppController {
 																			'Tier.compagnie'
 																			),
 																'conditions'=>array('Reservation.chambre_id'=>$chambre['Chambre']['id'],
-																				'NOT'=>array('Reservation.etat'=>array('annulee'))
+																				'NOT'=>array('Reservation.etat'=>array('canceled'))
 																				),
 																'order'=>array('Reservation.depart asc')
 																				
@@ -336,14 +336,14 @@ class ReservationsController extends AppController {
 																						'Paiement.mode_paiement'
 																						),
 																				'conditions'=>array('Paiement.date'=>$date,
-																									'Facture.etat'=>array('payee','excedent','avance'),
+																									'Facture.etat'=>array('paid','excedent','half_paid'),
 																									'OR'=>array('Facture.operation'=>array('Reservation','Service','Location'),
 																												'Personnel.fonction_id'=>array('4'),
 																												),
 																									'NOT'=>array('Paiement.mode_paiement'=>array('remboursement','transfer'))
 																						)
 																		));
-		$total['USD']=$total['BIF']=$total['EUR']=0;  
+		$total['USD']=$total['RWF']=$total['EUR']=0;  
 		foreach($this->monnaies as $monnaie){
 			$detailPyts[$monnaie.'_cash']=0;
 			$detailPyts[$monnaie.'_cheque']=0;
@@ -387,7 +387,7 @@ class ReservationsController extends AppController {
 	 function monthly($date1=null,$date2=null){
 	 	$reservations=array();
 		$order = (Configure::read('aser.aserb')) ? 'Facture.aserb_num asc' :'Reservation.arrivee asc';
-		$total['BIF']=0;
+		$total['RWF']=0;
 		$total['USD']=0;
 		$pers=$extras=0;
 		$etat='partie';
@@ -424,14 +424,14 @@ class ReservationsController extends AppController {
 			//*/
 			if(!empty($this->data['Reservation']['bills'])){
 				switch($this->data['Reservation']['bills']){
-					case 'payee':
-						$cond1['Facture.etat']=$cond2['Facture.etat']=$cond3['Facture.etat']=$cond4['Facture.etat']=array('payee','excedent');
+					case 'paid':
+						$cond1['Facture.etat']=$cond2['Facture.etat']=$cond3['Facture.etat']=$cond4['Facture.etat']=array('paid','excedent');
 						break;
 					case 'recouvrement':
-						$cond1['Facture.etat']=$cond2['Facture.etat']=$cond3['Facture.etat']=$cond4['Facture.etat']=array('credit','avance');
+						$cond1['Facture.etat']=$cond2['Facture.etat']=$cond3['Facture.etat']=$cond4['Facture.etat']=array('credit','half_paid');
 						$cond1['Reservation.etat']=$cond2['Reservation.etat']=$cond3['Reservation.etat']=$cond4['Reservation.etat']=array('partie','credit');
 						break;
-					case 'en_cours':
+					case 'in_progress':
 						$cond1['Facture.etat']='credit';
 						$cond2['Facture.etat']='credit';
 						$cond3['Facture.etat']='credit';
@@ -472,7 +472,7 @@ class ReservationsController extends AppController {
 													)
 										);
 			foreach($part1 as $key=>$reservation){
-			if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+			if(!in_array($reservation['Reservation']['etat'],array('canceled','en_attente','confirmee'))){
 				$duree=$this->Product->diff($reservation['Reservation']['arrivee'], $reservation['Reservation']['depart'])+1;		
 				$montant=$duree*$reservation['Reservation']['PU'];
 				$part1[$key]['Reservation']['montant']=($reservation['Reservation']['demi']==1)
@@ -484,7 +484,7 @@ class ReservationsController extends AppController {
 				$extras1=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
 																					'NOT'=>array('Facture.operation'=>array('Reservation','Proforma')),
-																					'Facture.etat !='=>'annulee',
+																					'Facture.etat !='=>'canceled',
 																					'Facture.date >='=>$reservation['Reservation']['arrivee'],
 																					'Facture.date <='=>$this->Product->increase_date($reservation['Reservation']['depart'])
 																					)
@@ -527,14 +527,14 @@ class ReservationsController extends AppController {
 														:($montant);
 															
 
-				if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+				if(!in_array($reservation['Reservation']['etat'],array('canceled','en_attente','confirmee'))){
 					$total[$reservation['Reservation']['monnaie']]+=$part2[$key]['Reservation']['montant'];
 				}
 				
 				$extras2=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
 																					'NOT'=>array('Facture.operation'=>array('Reservation','Proforma')),
-																					'Facture.etat !='=>'annulee',
+																					'Facture.etat !='=>'canceled',
 																					'Facture.date >='=>$date1,
 																					'Facture.date <='=>$date2
 																					)
@@ -575,13 +575,13 @@ class ReservationsController extends AppController {
 				$part3[$key]['Reservation']['montant']=($reservation['Reservation']['demi']==1)
 														?($montant+($reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100)))
 														:($montant);
-			if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+			if(!in_array($reservation['Reservation']['etat'],array('canceled','en_attente','confirmee'))){
 					$total[$reservation['Reservation']['monnaie']]+=$part3[$key]['Reservation']['montant'];
 				}
 				$extras3=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
 																					'NOT'=>array('Facture.operation'=>array('Reservation','Proforma')),
-																					'Facture.etat !='=>'annulee',
+																					'Facture.etat !='=>'canceled',
 																					'Facture.date >='=>$date1,
 																					'Facture.date <='=>$reservation['Reservation']['depart']
 																					)
@@ -623,13 +623,13 @@ class ReservationsController extends AppController {
 				$part4[$key]['Reservation']['montant']=(false) //demi only works pour une reservation qui finit dans ce mois
 														?($montant+($reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100)))
 														:($montant);
-				if(!in_array($reservation['Reservation']['etat'],array('annulee','en_attente','confirmee'))){
+				if(!in_array($reservation['Reservation']['etat'],array('canceled','en_attente','confirmee'))){
 					$total[$reservation['Reservation']['monnaie']]+=$part4[$key]['Reservation']['montant'];
 				}
 				$extras4=$this->Reservation->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant'),
 																'conditions'=>array('Facture.tier_id'=>$reservation['Tier']['id'],
 																					'NOT'=>array('Facture.operation'=>array('Reservation','Proforma')),
-																					'Facture.etat !='=>'annulee',
+																					'Facture.etat !='=>'canceled',
 																					'Facture.date >='=>$reservation['Reservation']['arrivee'],
 																					'Facture.date <='=>$date2
 																					)
@@ -769,7 +769,7 @@ class ReservationsController extends AppController {
 																					)
 																)
 													);
-		if($reservation['Facture']['etat']=='annulee'){
+		if($reservation['Facture']['etat']=='canceled'){
 				$this->redirect(array('controller'=>'factures','action'=>'view/'.$reservation['Facture']['id']));
 		}
 
@@ -794,7 +794,7 @@ class ReservationsController extends AppController {
 		$search=$this->Reservation->find('first',array('fields'=>array('Reservation.id'),
 															'conditions'=>array('Reservation.tier_id'=>$tierId,
 																				'Reservation.arrivee'=>$departPlus1,
-																				'Reservation.etat !='=>'annulee'
+																				'Reservation.etat !='=>'canceled'
 																			),
 															)
 												);
@@ -844,7 +844,7 @@ class ReservationsController extends AppController {
 		$cond['Facture.date >=']=(empty($this->data['Reservation']['date1']))?$arrivee:$this->data['Reservation']['date1'];
 		$cond['Facture.date <=']=(empty($this->data['Reservation']['date2']))?$depart:$this->data['Reservation']['date2'];
 		
-		$cond['Facture.etat']=($payee=='yes')?array('credit','avance','payee','en_cours','cloturer'):array('credit','avance','en_cours','cloturer');
+		$cond['Facture.etat']=($payee=='yes')?array('credit','half_paid','paid','in_progress','printed'):array('credit','half_paid','in_progress','printed');
 		
 			$this->Product->company_info();
 			
@@ -870,7 +870,7 @@ class ReservationsController extends AppController {
 																'group'=>array('Facture.monnaie')
 																)
 												);
-			$devise['BIF']=$usd=($this->Conf->find('taux_usd')>0)?$this->Conf->find('taux_usd'):1;
+			$devise['RWF']=$usd=($this->Conf->find('taux_usd')>0)?$this->Conf->find('taux_usd'):1;
 			$devise['USD']=1;
 			$total_usd=0;
 			foreach($sums as $sum){
@@ -897,7 +897,7 @@ class ReservationsController extends AppController {
 							'factureId',
 							'taux_tva',
 							'extras',
-							'payee',
+							'paid',
 							'pyts',
 							'sumPyts',
 							'modePaiements',
@@ -971,7 +971,7 @@ class ReservationsController extends AppController {
 		$new_res['Reservation']['etat']=$old_state;
 		$nuitee=$this->Product->diff($new_res['Reservation']['arrivee'], $new_res['Reservation']['depart'])+1;	
 		if(empty($pu)){
-			$pu = ($old_res['Facture']['monnaie']=='BIF') ? $old_res['Reservation']['PU'] : $newRoom['TypeChambre']['montant'];
+			$pu = ($old_res['Facture']['monnaie']=='RWF') ? $old_res['Reservation']['PU'] : $newRoom['TypeChambre']['montant'];
 		}
 		$new_res['Reservation']['PU']=$pu;	
 		$new_res['Reservation']['montant']=$new_res['Reservation']['PU']*$nuitee;
@@ -1122,7 +1122,7 @@ class ReservationsController extends AppController {
 		}	
 		$factureId=$info['Reservation']['facture_id'];
 		
-		if(($state=='partie')&&!in_array($info['Facture']['etat'],array('payee','excedent'))){
+		if(($state=='partie')&&!in_array($info['Facture']['etat'],array('paid','excedent'))){
 			if($force==1){
 				$state='credit';
 			}
@@ -1132,15 +1132,15 @@ class ReservationsController extends AppController {
 		}
 		$info['Reservation']['etat']=$state;
 		
-		if(($state=='annulee')&&($factureId!=null)&&(!in_array($fonction,array(3,5)))){
+		if(($state=='canceled')&&($factureId!=null)&&(!in_array($fonction,array(3,5)))){
 			exit(json_encode(array('success'=>false,'msg'=>'Vous n\'avez pas le droit d\'annuler la réservation')));
 		}
 		
 		//annuler la facture aussi if any
-		if(($state=='annulee')&&($factureId)){
+		if(($state=='canceled')&&($factureId)){
 			$this->Product->remove_facture($factureId,'Reservation',$obs);
 		}
-		else if($state=='annulee'){
+		else if($state=='canceled'){
 			$this->Reservation->delete($id);
 		}
 		else {
@@ -1225,7 +1225,7 @@ class ReservationsController extends AppController {
 																			'Tier.id'
 																			),
 															'order'=>'Reservation.arrivee asc',
-															'conditions'=>array('Reservation.etat !='=>'annulee',
+															'conditions'=>array('Reservation.etat !='=>'canceled',
 																				'Reservation.chambre_id !='=>null,
 																				'Reservation.montant >='=>0,
 																				'Reservation.arrivee !='=>'0000-00-00',
@@ -1255,7 +1255,7 @@ class ReservationsController extends AppController {
 												  'conditions'=>array(
 												  				//	'Chambre.type_chambre_id'=>1,
 												  				//	'Chambre.id'=>1,
-												  				//	'Chambre.operationnelle'=>'oui'
+												  				//	'Chambre.operationnelle'=>'yes'
 												  					)
 													)
 									);
@@ -1286,7 +1286,7 @@ class ReservationsController extends AppController {
 															),
 												  'order'=>'Chambre.name asc',
 												  'conditions'=>array(
-												  					'Chambre.operationnelle'=>'non'
+												  					'Chambre.operationnelle'=>'no'
 												  					)
 													)
 									);
@@ -1366,7 +1366,7 @@ class ReservationsController extends AppController {
 		$results=$this->_checker($this->data,true);
 		
 	//	$conds['NOT']=array('Chambre.id'=>$results['rooms']);
-		$conds['Chambre.operationnelle']='oui';
+		$conds['Chambre.operationnelle']='yes';
 		if(!empty($this->data['Reservation']['type_chambre_id'])){
 				$conds['Chambre.type_chambre_id']=$this->data['Reservation']['type_chambre_id'];
 		}
@@ -1395,9 +1395,9 @@ class ReservationsController extends AppController {
 			$arrivee=$data['Reservation']['arrivee'];
 			$depart=$data['Reservation']['depart'];
 			$conditions=array();
-			$conditions['Reservation.etat !=']='annulee';
+			$conditions['Reservation.etat !=']='canceled';
 			$condRooms=array();
-			$condRooms['Chambre.operationnelle']='oui';
+			$condRooms['Chambre.operationnelle']='yes';
 			if(!empty($data['Reservation']['id'])){
 				$conditions['Reservation.id !=']=$data['Reservation']['id'];
 			}
@@ -1463,7 +1463,7 @@ class ReservationsController extends AppController {
 			if(!empty($data['Reservation']['chambre_id'])){
 				$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.arrivee','Reservation.depart','Reservation.chambre_id'),
 																			'conditions'=>array('Reservation.chambre_id'=>$this->data['Reservation']['chambre_id'],
-																								'Reservation.etat !='=>'annulee'
+																								'Reservation.etat !='=>'canceled'
 																								)
 																			)
 																);
@@ -1488,7 +1488,7 @@ class ReservationsController extends AppController {
 		if(isset($data['Reservation']['id'])){
 			$conditions['Reservation.id !=']=$data['Reservation']['id'];
 		}
-		$conditions['Reservation.etat !=']='annulee';
+		$conditions['Reservation.etat !=']='canceled';
 		$conditions['Reservation.chambre_id']=$data['Chambre']['id'];
 		$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.arrivee','Reservation.depart','Reservation.chambre_id'),
 																			'conditions'=>$conditions

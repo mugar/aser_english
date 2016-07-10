@@ -61,7 +61,7 @@ class ServicesController extends AppController {
 		if($date1&$date2){
 			$this->data['Facture']['date1']=$date1;
 			$this->data['Facture']['date2']=$date2;
-			$this->data['NOT']=array('Facture.etat'=>array('annulee','proforma'));
+			$this->data['NOT']=array('Facture.etat'=>array('canceled','proforma'));
 		}
 		//Building conditions
 		$conditions=array();
@@ -90,7 +90,7 @@ class ServicesController extends AppController {
 	 		$conditions['Facture.etat']=$this->data['Facture']['etat'];
 		}
 		else {
-			$conditions['Facture.etat !=']='annulee';
+			$conditions['Facture.etat !=']='canceled';
 		}
 		//exit(debug($conditions));
 		$groupServices=$this->Service->find('all',array('fields'=>array(

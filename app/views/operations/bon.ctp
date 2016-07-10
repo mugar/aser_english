@@ -50,7 +50,7 @@
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Description</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			
 	</tr>
 	<tr>

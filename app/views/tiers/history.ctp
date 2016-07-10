@@ -30,7 +30,7 @@
 			<th>Tier</th>
 			<th>Products</th>
 			<th>quantité</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Paiement</th>
 			<th>Livrer</th>
 			<th>Vidange</th>
@@ -69,7 +69,7 @@
 			<th>Products</th>
 			<th>Elément</th>
 			<th>quantité</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Paiement</th>
 			<th>Vidange</th>
 			<th>Date</th>
@@ -104,7 +104,7 @@
 <table id="Creance" class="tableau" cellpadding="0" cellspacing="0">
 	<tr >
 			<th>Tier</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Montant payé</th>
 			<th>Reste</th>
 			<th>Description</th>
@@ -138,7 +138,7 @@
 <table id="Dette" class="tableau" cellpadding="0" cellspacing="0">
 	<tr >
 			<th>Tier</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Montant payé</th>
 			<th>Reste</th>
 			<th>Description</th>

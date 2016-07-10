@@ -14,8 +14,8 @@ class TypesController extends AppController {
 			$date2=($this->data['Operation']['date2']>date('Y-m-d'))?date('Y-m-d'):$this->data['Operation']['date2'];
 			$devise['USD']=$taux=$this->data['Operation']['taux'];
 		}
-		$monnaie='BIF';
-		$devise['BIF']=1;
+		$monnaie='RWF';
+		$devise['RWF']=1;
 		$conditions['Operation.date >=']=$date1;
 		$conditions['Operation.date <=']=$date2;
 		$conditions['Operation.model']='Type';
@@ -54,7 +54,7 @@ class TypesController extends AppController {
 																	'Facture.monnaie'
 																	),
 													'conditions'=>array('Facture.Operation'=>array('Reservation','Service','Location'),
-																	    'Facture.etat'=>array('payee','credit','avance','excedent'),
+																	    'Facture.etat'=>array('paid','credit','half_paid','excedent'),
 																		'Facture.monnaie !='=>'',
 																		'OR'=>array(
 																				array('Facture.date >='=>$date1,'Facture.date <='=>$date2),
@@ -91,7 +91,7 @@ class TypesController extends AppController {
 														'conditions'=>array('Produit.groupe_id'=>$groupes, 
 																			'Facture.date >='=>$date1,
 																	    	'Facture.date <='=>$date2,
-																	    	'Facture.etat'=>array('payee','credit','avance','excedent'),
+																	    	'Facture.etat'=>array('paid','credit','half_paid','excedent'),
 																	    	'Facture.monnaie !='=>''
 																			),
 														'group'=>array('Facture.id')
@@ -122,7 +122,7 @@ class TypesController extends AppController {
 		//building conditions
 			$typeConditions=array();
 			foreach($this->data['Type'] as $key=>$value){
-				if($value!='toutes'){
+				if($value!='any'){
 					$typeConditions['Type.'.$key.' like ']=$value.'%';
 				}
 			}
@@ -154,7 +154,7 @@ class TypesController extends AppController {
 			$this->_error($action,'categorie obligatoire');
 		}
 		if($action=='add'){
-			$data['Type']['actif']='oui';
+			$data['Type']['actif']='yes';
 		}
 		$cond['Type.name']=$data['Type']['name'];
 		if(!empty($data['Type']['id'])){

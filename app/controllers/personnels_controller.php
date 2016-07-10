@@ -66,7 +66,7 @@ class PersonnelsController extends AppController {
 			$code=$match[0];
 			
 			$search=$this->Personnel->find('first',array('conditions'=>array('Personnel.code'=>$code,
-                                                                      'Personnel.actif'=>'oui'
+                                                                      'Personnel.actif'=>'yes'
                                                                       ),
 														'recursive'=>-1
 														));

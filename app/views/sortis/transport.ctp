@@ -1,4 +1,4 @@
-<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 <br>
 <table cellpadding="0" cellspacing="0">
 	<tr>
@@ -33,7 +33,7 @@
 <br>
 
 <br>
-<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Product</th>
@@ -63,7 +63,7 @@
 </table>
 	
 <br>
-<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Product</th>

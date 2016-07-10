@@ -7,7 +7,7 @@
 			<th>Tier</th>
 			<th>Invoice N°</th>
 			<th>State Facture</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Reste</th>
 			<th>Table</th>
 			<th>Personnel</th>

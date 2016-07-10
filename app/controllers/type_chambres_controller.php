@@ -6,7 +6,7 @@ class TypeChambresController extends AppController {
 	function beforeFilter(){
 		parent::beforeFilter();
 		
-		$monnaies=array('USD'=>'USD','BIF'=>'BIF');
+		$monnaies=array('USD'=>'USD','RWF'=>'RWF');
 		$this->set(compact('monnaies'));
 	}
 	

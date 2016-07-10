@@ -13,7 +13,7 @@
 	<span class="left">
 		<?php
 			echo $this->Form->input('date1',array('type'=>'date','type'=>'text','label'=>'Date Debut'));
-			echo $this->Form->input('date2',array('type'=>'date','type'=>'text','label'=>'Date Fin'));
+			echo $this->Form->input('date2',array('type'=>'date','type'=>'text','label'=>'End Date'));
 		?>
 	</span>
 	<span class="right">
@@ -63,7 +63,7 @@
 		<table cellpadding="0" cellspacing="0">
 			<tr>
 				<th>N°Facture</th>
-				<th>Montant</th>
+				<th>Amount</th>
 			</tr>
 			<?php foreach ($detail as $id=>$facture):?>
 				<?php if(is_numeric($id)):?>
@@ -95,7 +95,7 @@
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Invoices Management', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 	

@@ -7,20 +7,20 @@
 	<?php echo $this->Form->create('Facture',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('tier_id',array('selected'=>0,'options'=>$tiers1,'label'=>'Nom Du Customer'));
-			echo $this->Form->input('Tier.compagnie');
-			echo $this->Form->input('Facture.etat',array('options'=>array(''=>'',
-																		'en_cours'=>'en_cours',	
-																		'cloturer'=>'cloturer',
-																		'payee'=>'payee',
+			echo $this->Form->input('tier_id',array('selected'=>0,'options'=>$tiers1,'label'=>'Customer'));
+			echo $this->Form->input('Tier.compagnie',array('label'=>'Company'));
+			echo $this->Form->input('Facture.etat',array('label'=>'State','options'=>array(''=>'',
+																		'in_progress'=>'in_progress',	
+																		'printed'=>'printed',
+																		'paid'=>'paid',
 																		'credit'=>'credit',
-																		'avance'=>'avance',
+																		'half_paid'=>'half_paid',
 																		'bonus'=>'bonus',
-																		'annulee'=>'annulee',
-																		'non_nul'=>'Non annulee'
+																		'canceled'=>'canceled',
+																		'not_canceled'=>'Not Canceled'
 																		)
 																	));
-			echo $this->Form->input('monnaie',array('options'=>$monnaies1));
+			echo $this->Form->input('monnaie',array('options'=>$monnaies1,'label'=>'Currency'));
 			echo $this->Form->input('operation',array('options'=>$models));
 		?>
 	</span>
@@ -29,10 +29,10 @@
 			
 			echo $this->Form->input('id',array('label'=>'Facture Id','type'=>'text'));
 			echo $this->Form->input('numero',array('label'=>'Invoice N°'));
-			echo $this->Form->input('linked',array('label'=>__('Factures liées',true)));
-			echo $this->Form->input('Facture.montant');
-			echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));				
-			echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));	
+			echo $this->Form->input('linked',array('label'=>__('Linked bills',true)));
+			echo $this->Form->input('Facture.montant',array('label'=>'Amount'));
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));	
 		?>
 	</span>
 	</form>
@@ -44,16 +44,16 @@
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('tier_id');?></th>
-			<th><?php echo $this->Paginator->sort('numero');?></th>
+			<th><?php echo $this->Paginator->sort('Customer','tier_id');?></th>
+			<th><?php echo $this->Paginator->sort('Invoice N°','numero');?></th>
 			<th><?php echo $this->Paginator->sort('operation');?></th>
-			<th><?php echo $this->Paginator->sort('montant');?></th>
-			<th><?php echo $this->Paginator->sort('Reste à Payer','reste');?></th>
-			<th><?php echo $this->Paginator->sort('tva');?></th>
-			<th><?php echo $this->Paginator->sort('monnaie');?></th>
-			<th><?php echo $this->Paginator->sort('etat');?></th>
+			<th><?php echo $this->Paginator->sort('Amount','montant');?></th>
+			<th><?php echo $this->Paginator->sort('Left To Pay','reste');?></th>
+			<th><?php echo $this->Paginator->sort('VAT','tva');?></th>
+			<th><?php echo $this->Paginator->sort('Currency','monnaie');?></th>
+			<th><?php echo $this->Paginator->sort('State','etat');?></th>
 			<th><?php echo $this->Paginator->sort('date');?></th>
-			<th><?php echo $this->Paginator->sort('N° séparé','linked');?></th>
+			<th><?php echo $this->Paginator->sort('Split Invoice N°','linked');?></th>
 			<?php if(Configure::read('aser.aserb')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
 			<th><?php echo $this->Paginator->sort('inclure');?></th>
 			<?php endif;?>
@@ -106,12 +106,12 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link"  onclick="actions('checkbox','view')" >Afficher Les Détails</li>
+		<li class="link"  onclick="actions('checkbox','view')" >SHow the details</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link(__('Edition de Rapport', true), array('controller' => 'factures', 'action' => 'rapport')); ?> </li>
-		<li class="link"  onclick="actions('checkbox','trace')" >Afficher l'Historique</li>
+		<li class="link"  onclick="actions('checkbox','trace')" >Show the log</li>
 		<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
-		<li class="link"  onclick="bonus()" >Changer en bonus</li>
+		<li class="link"  onclick="bonus()" >Change state to bonus</li>
 		<?php endif;?>
 		<?php if(Configure::read('aser.aserb')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
 			<li class="link"  onclick="copier_bills_dans_b(1)" >Save les factures </li>
@@ -121,7 +121,6 @@
 		<?php endif;?>
 	</ul>
 </div>
-<!-- stock select for historique -->
 <div id="aserb_boxe" style="display:none" title="Copier les factures dans ASER B">
 <div class="dialog">
 	<span class="left">

@@ -17,8 +17,8 @@
 		<?php
 		
 			
-		echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));				
-		echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));	
+		echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
+		echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));	
 		echo $this->Form->input('show',array('label'=>'Affichage',
 												'options'=>array(20=>'20',
 																50=>'50',

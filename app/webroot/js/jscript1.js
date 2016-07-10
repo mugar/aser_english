@@ -48,7 +48,7 @@ function custom_printing(id,redirect_url){
                     generate_number(id);
                 }
                 else {
-                    alert("Le numéro souhaitez "+desired_number+" n'est pas dispo");
+                    alert("the desired number "+desired_number+" is not available");
                     custom_printing(id, redirect_url);
                 }
             }
@@ -244,7 +244,7 @@ function facturation_services(factureId){
     								success:function(ans){
     									if(ans.success){
     										jQuery('#services_boxe').dialog("close");
-    										alert('Service Enregistré!');
+    										alert('Service saved!');
     										location.reload();
     									}
     									else {
@@ -265,7 +265,7 @@ function service_boxe(action){
 	var factureId=0;
 	if(action=='edit'){
 		if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)!=1) {
-    		jQuery('<div id="alert" title="message">Sélectionné un et un seul produit !</div>')
+    		jQuery('<div id="alert" title="message">Select only one product!</div>')
     		.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     		goOn=false;
     	}
@@ -339,7 +339,7 @@ function ingredient_boxe(){
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
 	info=info.split('_')[1];//to get the model and the controller
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)!=1) {
-    	jQuery('<div id="alert" title="message">Sélectionné un et un seul produit !</div>')
+    	jQuery('<div id="alert" title="message">Select only one product!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -418,7 +418,7 @@ function assign_b_num(){
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
 	info=info.split('_')[1];//to get the model and the controller
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)!=1) {
-    	jQuery('<div id="alert" title="message">Sélectionné un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -543,7 +543,7 @@ function aserb(){
     		               				var montant_desire=parseInt(jQuery('#montant_desire').val());
     		               				var action=jQuery('#action').val(); //la fonction use 0 to confirm copy
     		               				if(montant_desire<=0){
-    		               					alert('Mettez un  Montant correct!');
+    		               					alert('Put a correct amount!');
     		               				}
     		               				/*	
     		               				else if(mois!=prev_month){ //because in javascript month are 0 indexed
@@ -560,7 +560,7 @@ function aserb(){
     		               							}
     		               							else {
     		               								if(ans.success){
-    		               									alert('Le montant trouvé est : '+ans.total_got);
+    		               									alert('The amount found is : '+ans.total_got);
     		               								}
     		               								else {
     		               									alert(ans.msg);
@@ -665,7 +665,7 @@ function executerLaPaie(){
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
 	info=info.split('_')[1];//to get the model and the controller
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only record !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -717,7 +717,7 @@ function update_tables(){
 function bonus(){
 	var nom='checkbox';
 	if(jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length<1) {
-    	jQuery('<div id="alert" title="message">Sélectionné au moins une facture!</div>')
+    	jQuery('<div id="alert" title="message">Select only one invoice!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -755,7 +755,7 @@ function bonus(){
     			}
     		}
     		else {
-    			alert('Séléctionnée une facture dont l\'état est crédit!')
+    			alert('Select an invoice which state is credit!')
     		}
    	 }
 }
@@ -763,7 +763,7 @@ function bonus(){
 function copier_bills_dans_b(action){
 	var nom='checkbox';
 	if(jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length<1) {
-    	jQuery('<div id="alert" title="message">Sélectionné au moins une facture!</div>')
+    	jQuery('<div id="alert" title="message">Select at least one invoice!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -794,7 +794,7 @@ function copier_bills_dans_b(action){
 								jQuery(val).children('td[name="inclure"]').text(action);
 							});
                             var actionTitle=(action==1)?"Copié(s)":"Enlevé(s)";
-                            alert("Facture(s) "+actionTitle);
+                            alert("Invoice(s) "+actionTitle);
 						}
 						else {
 							alert(response.msg);
@@ -884,7 +884,7 @@ function chart(defaults){
 function merge(controller){
 	var nom='checkbox';
 	if(jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length<2) {
-    	jQuery('<div id="alert" title="message">Sélectionné au moins 2 enregistrements!</div>')
+    	jQuery('<div id="alert" title="message">Select at least 2 records!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -976,7 +976,7 @@ function quantites() {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Sélectionné un et un seul Produit!</div>')
+    	jQuery('<div id="alert" title="Message">Select only one product!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -1025,7 +1025,7 @@ function edit(){
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select only one record !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -1043,7 +1043,7 @@ function chambre(controller,chambre){
 		success:function(r){
 			jQuery('#tierId option[value='+r.id+']').attr('selected','selected');
 			if(r.id==0) {
-				alert('Aucun client trouvé! vérifié avec la réception.');
+				alert('No customer found! check with the reception.');
 			}
 			if(controller=='ventes')
 				jQuery('#chambre').val('');
@@ -1109,7 +1109,7 @@ function perte(p){
     								})
     							}
     							else {
-    								alert('Quantitée trop élevée!')
+    								alert('Quantity too high!')
     							}
     							},
     							"Cancel": function() { jQuery(this).dialog("close"); }
@@ -1121,7 +1121,7 @@ function name(name){
 	var regex = /^\d|chambre/i;
 	var goOn=true;
 	if(regex.test(name)||((name.length>0)&&(name.length<3))){
-		alert('"'+name+'" n\'est pas valide comme nom de client! Mettez un nom qui ne contient pas le mot "chambre", qui ne contient pas de chiffres et qui a plus de 2 charactères.')
+		alert('"'+name+'" is not valid as customer name! put a name with does not contain the word room.')
 		return false;
 	}
 	else {
@@ -1153,13 +1153,13 @@ function delete_billet(id){
 function table_changer(factureId){
 	if(factureId!=0){
 		if(jQuery('div#pos').attr('touch')=='on'){
-			var table=prompt('Numéro de la table : ');
+			var table=prompt('Table Number : ');
 		}
 		else {
 			var table=jQuery('#VenteTable').val();
 		}
 		if(table==''){
-			alert('Remplissez le champ table!');
+			alert('Put a number in the table field!');
 		}
 		else if(table!=null) {
 			jQuery.ajax({
@@ -1182,7 +1182,7 @@ function table_changer(factureId){
  		}
 	}
 	else {
-		alert('Sélectionné une facture !');
+		alert('Select an invoice !');
 	}
 }
 
@@ -1212,9 +1212,9 @@ function mass_delete(){
 							jQuery('form[name="'+nom+'"] input[value="'+val+'"]:checkbox').parents('tr').remove();
 						});
 						if(ans.notDeleted==1)
-							alert(ans.notDeleted+ ' enregistrement n\'a pas été éffacé! '+ans.msg);
+							alert(ans.notDeleted+ ' record has not been deleted! '+ans.msg);
 						else if(ans.notDeleted>1)
-							alert(ans.notDeleted+ ' enregistrements n\'ont pas été éffacés! '+ans.msg);
+							alert(ans.notDeleted+ ' records has not been deleted! '+ans.msg);
     				},
     			});
     			},
@@ -1329,7 +1329,7 @@ function connexion(action){
 	
 function bill_cleaner(factureId){
 	if(factureId==0){
-		alert('Sélectionné une facture !')
+		alert('Select an invoice !')
 	}
 	else {
 		if(jQuery('table#list_factures tr[id="'+factureId+'"]').attr('name')=='1'){
@@ -1338,7 +1338,7 @@ function bill_cleaner(factureId){
 			zero();
 		}
 		else {
-			alert('La facture Sélectionné n\'est pas classée !');
+			alert('The invoice selected is not closed!');
 		}
 	}
 }
@@ -1474,7 +1474,7 @@ function direct_reduction(factureId,moveon){
  		 }
  		if(goOn){
 			var old_montant=parseFloat(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text());
-			var new_montant=prompt('Saisissez le nouveau montant : ');
+			var new_montant=prompt('Put the new invoice amount : ');
 			if(parseFloat(new_montant)==new_montant){
 				if(new_montant>old_montant){
 					alert('Le montant saisie est supérieur au précédent!');
@@ -1498,7 +1498,7 @@ function direct_reduction(factureId,moveon){
  		}
 	}
 	else  {
-		alert('Sélectionné une facture !')
+		alert('Select an invoice !')
 	}
 }
 function zero(){
@@ -1679,12 +1679,12 @@ function paiement_touch(factureId,moveOn){
  		}
  		else if(payed==1){
  			var avance=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
- 			var etat='payee';
+ 			var etat='paid';
  		}
  		else {
   			var avance=parseInt(jQuery('input#avance').val());
   			var montant=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
-  			var etat='avance';
+  			var etat='half_paid';
   		}
  		
  		
@@ -1855,7 +1855,7 @@ if(goOn&&!locked){  // block new items to be added before the first order has re
  else if((factureId!='creation')&&(jQuery('#pos').attr('multi_serveur')==0)){
  	var currentServeur=jQuery('table#list_factures tr[id="'+factureId+'"] td[id="waiter"]').text();
  	if((currentServeur!='')&&(serveur!=currentServeur)){
- 		alert('Le serveur doit être le même que celui qui a crée la facture!');
+ 		alert('The waiter must be the same as the one who started serving!');
  		goOn=false;
  	}
  }
@@ -1885,7 +1885,7 @@ if(goOn&&!locked){  // block new items to be added before the first order has re
 		success:function(r){
 			if(r.success){
 				if(factureId=='creation'){
-					facture_row(r.factureId,r.factureNum,r.journal,'',table,r.original,r.reduction,r.montant,r.montant,'en_cours',serveur,r.date);
+					facture_row(r.factureId,r.factureNum,r.journal,'',table,r.original,r.reduction,r.montant,r.montant,'in_progress',serveur,r.date);
 				    vente_row('',produit_id,produit,quantite,r.PU,r.PT,r.consoId,r.printed);
 					consoId=0;
 					jQuery('input#avance').text('testing');
@@ -1898,7 +1898,7 @@ if(goOn&&!locked){  // block new items to be added before the first order has re
 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(r.montant);
 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reste"]').text(r.montant);
 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(r.original);
-					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('en_cours');
+					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('in_progress');
  	                consoId=0;
 				}
 				//reseting the waiter

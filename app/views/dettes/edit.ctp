@@ -6,7 +6,7 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('tier_id');
 		echo $this->Form->input('montant');
-		echo $this->Form->input('monnaie');
+		echo $this->Form->input('monnaie',array('label'=>'Currency'));
 		echo $this->Form->input('max',array('label'=>'Maximum ou Plafond'));
 		echo $this->Form->input('type',array('options'=>array('court'=>'Court terme',
 															'moyen'=>'Moyen terme',

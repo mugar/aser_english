@@ -60,7 +60,7 @@ class LocationsController extends AppController {
 		if($date1&$date2){
 			$this->data['Facture']['date1']=$date1;
 			$this->data['Facture']['date2']=$date2;
-			$this->data['NOT']=array('Facture.etat'=>array('annulee','proforma'));
+			$this->data['NOT']=array('Facture.etat'=>array('canceled','proforma'));
 		}
 		if(!empty($this->data['Facture']['date1'])){
 			$cond['Facture.date >=']=$date1=$this->data['Facture']['date1'];
@@ -80,7 +80,7 @@ class LocationsController extends AppController {
 		if(!empty($this->data['Facture']['etat'])&&($this->data['Facture']['etat'][0]!='toutes')){
 			$cond['Facture.etat']=$this->data['Facture']['etat'];
 		}
-		$cond['Location.etat !=']='annulee';
+		$cond['Location.etat !=']='canceled';
 	//	exit(debug($cond));
 		$locations=$this->Location->find('all',array('fields'=>array(
 																	'Facture.monnaie',
@@ -155,7 +155,7 @@ class LocationsController extends AppController {
 																			),
 															'recursive'=>0,
 															'order'=>'Location.arrivee asc',
-															'conditions'=>array('Location.etat !='=>'annulee',
+															'conditions'=>array('Location.etat !='=>'canceled',
 																			'OR'=>array(array('month(Location.arrivee)'=>$mois,
 																								'year(Location.arrivee)'=>$cur_year,
 																								),
@@ -227,7 +227,7 @@ class LocationsController extends AppController {
 		$factureId=$info['Location']['facture_id'];
 		//annuler la facture aussi if any
 		switch($state){
-			case 'annulee': 
+			case 'canceled': 
 				if(!in_array($info['Location']['etat'],array('en_attente','confirmee'))&&(!in_array($this->Auth->user('fonction_id'),array(3,5)))){
 					exit(json_encode(array('success'=>false,'msg'=>'Vous n\'avez pas le droit d\'annulée cette location!')));
 				}
@@ -252,7 +252,7 @@ class LocationsController extends AppController {
 					$this->Location->Facture->save($update);
 				break;
 			case 'partie':
-					$state=($info['Facture']['etat']!='payee')?'credit':$state;
+					$state=($info['Facture']['etat']!='paid')?'credit':$state;
 				break;
 				
 		}
@@ -273,7 +273,7 @@ class LocationsController extends AppController {
 		$dispo=true;
 		$locations=$this->Location->find('all',array('fields'=>array('Location.arrivee','Location.depart','Location.salle_id'),
 													'conditions'=>array('Location.salle_id'=>$this->data['Location']['salle_id'],
-																		'Location.etat !='=>'annulee',
+																		'Location.etat !='=>'canceled',
 																		)
 													)
 																);
@@ -313,7 +313,7 @@ class LocationsController extends AppController {
 											
 			foreach($extras as $extra){
 				$go=false;
-				if((($type=='proforma')&&($extra['LocationExtra']['extra']=='non'))||(!$resto)){ //load proforma data if requested or if there is no resto data yet 
+				if((($type=='proforma')&&($extra['LocationExtra']['extra']=='no'))||(!$resto)){ //load proforma data if requested or if there is no resto data yet 
 					$go=true;
 				}
 				elseif(($type=='bill')&&($extra['LocationExtra']['extra']=='resto')){
@@ -333,10 +333,10 @@ class LocationsController extends AppController {
 			}
 			$deleteConditions['LocationExtra.location_id']=$id;
 			if($this->data['Location']['type']=='bill'){
-				$deleteConditions['LocationExtra.extra']=array('oui','resto');
+				$deleteConditions['LocationExtra.extra']=array('yes','resto');
 			}
 			elseif($this->data['Location']['type']=='proforma'){
-				$deleteConditions['LocationExtra.extra']=array('oui','non');
+				$deleteConditions['LocationExtra.extra']=array('yes','no');
 			}
 			$this->Location->LocationExtra->deleteAll($deleteConditions);
 			$this->data['Location']['arrivee']=$location['Location']['arrivee'];
@@ -403,7 +403,7 @@ class LocationsController extends AppController {
 					foreach($this->data['services'] as $service=>$detail){
 						if(!empty($detail['prix'])){
 							$extra['LocationExtra']['location_id']=$id;
-							$extra['LocationExtra']['extra']=($this->data['Location']['type']=='proforma')?'non':'resto';
+							$extra['LocationExtra']['extra']=($this->data['Location']['type']=='proforma')?'no':'resto';
 							$extra['LocationExtra']['name']=$service;
 							$extra['LocationExtra']['heure']=(!empty($detail['heure'])) ? $detail['heure']: '';
 							$extra['LocationExtra']['quantite']=(empty($detail['quantite'])) ?
@@ -429,7 +429,7 @@ class LocationsController extends AppController {
 					foreach($this->data['extras'] as $detail){
 						if(!empty($detail['prix'])&&!empty($detail['qte'])){
 							$extra['LocationExtra']['location_id']=$id;
-							$extra['LocationExtra']['extra']='oui';
+							$extra['LocationExtra']['extra']='yes';
 							$extra['LocationExtra']['name']=$detail['name'];
 							$extra['LocationExtra']['quantite']=(Configure::read('aser.conference-manual')) ?
 															   $detail['qte']:

@@ -33,9 +33,9 @@
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
 	<tr name="<?php echo $i?>">
-		<?php echo $this->Form->create('Product',array('action'=>'add'));?>
+		<?php echo $this->Form->create('Produit',array('action'=>'add'));?>
 		<td><?php echo $ajax->autoComplete($i.'produit','/produits/autoComplete/actif',array('id'=>$i.'produit',
-																					'name'=>'data[Product][name]'));?>
+																					'name'=>'data[Produit][name]'));?>
 		</td>
 		<td><?php echo $this->Form->input('PA',array('id'=>'PA','label'=>'','value'=>0));?></td>
 		<?php if(!Configure::read('aser.multi_pv')): ?>
@@ -76,7 +76,7 @@
 		<?php endif; ?>
 		<td><?php echo $this->Form->input('min',array('label'=>'','class'=>'nullable','value'=>10));?></td>
 		<td><?php echo $this->Form->input('description',array('label'=>''));?></td>
-		<?php echo $this->Form->input('actif',array('type'=>'hidden','value'=>'oui'));?>
+		<?php echo $this->Form->input('actif',array('type'=>'hidden','value'=>'yes'));?>
 		<td><input type="submit" value="Save"/></td>
 		</form>
 		
@@ -84,7 +84,7 @@
 	<?php endfor; ?>
 </table>
 </div>
-	<?php echo $this->Form->create('Product',array('name'=>'checkbox','id'=>'Product_produits','action'=>'index'));?>	
+	<?php echo $this->Form->create('Produit',array('name'=>'checkbox','id'=>'Produit_produits','action'=>'index'));?>	
 	<table cellpadding="0" cellspacing="0">
 	<tr id="first">
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
@@ -177,7 +177,7 @@
 <div class="dialog">
 	
 	<div id="message_tarif"></div>
-	<?php echo $this->Form->create('Product',array('id'=>'historique_form'));?>
+	<?php echo $this->Form->create('Produit',array('id'=>'historique_form'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('Historique.stock_id',array('label'=>'Stock'));
@@ -196,7 +196,7 @@
 <!-- form for tarif creation -->
 <div id="tarif_boxe" style="display:none" title="Création d'un tarif">
 <div class="dialog">
-	<?php echo $this->Form->create('Product',array('id'=>'tarifAdd','action'=>'tarif_add'));?>
+	<?php echo $this->Form->create('Produit',array('id'=>'tarifAdd','action'=>'tarif_add'));?>
 	<span class="left">
 		<?php	
 			echo $this->Form->input('Tarif.name',array('label'=>'Nom','id'=>'place','options'=>$bars));
@@ -240,8 +240,8 @@
 					
 				echo $this->Form->input('actif',array('label'=>'Actif',
 													'options'=>array(''=>'',
-																	'oui'=>'oui',
-																	'non'=>'non',																		)
+																	'yes'=>'yes',
+																	'no'=>'no',																		)
 															)
 										);
 			?>

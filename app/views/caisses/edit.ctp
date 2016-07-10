@@ -4,8 +4,8 @@
 	<span class="left">
 		<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('name',array('label'=>'Nom de la caisse'));
-		echo $this->Form->input('monnaie');
+		echo $this->Form->input('name',array('label'=>'Account Name'));
+		echo $this->Form->input('monnaie', array('label'=>'Currency'));
 	?>
 	</span>
 	<span class="right">

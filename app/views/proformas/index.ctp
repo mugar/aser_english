@@ -18,7 +18,7 @@
 	<tr name="<?php echo $i?>">
 		<?php echo $this->Form->create('Proforma',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('tier_id',array('label'=>''));?></td>
-		<td><?php echo $this->Form->input('Product.stock_id',array('selected'=>0,'id'=>$i.'StockId','label'=>''));
+		<td><?php echo $this->Form->input('Produit.stock_id',array('selected'=>0,'id'=>$i.'StockId','label'=>''));
 				echo $ajax->observeField($i.'StockId',array('url' =>'/produits/stock'));?>
 		</td>
 		<td><?php echo $ajax->autoComplete($i.'produit','/produits/autoComplete/appro',array('id'=>$i.'produit',

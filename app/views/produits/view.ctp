@@ -25,7 +25,7 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 <br/>
 <?php
 	if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).')';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).')';
 	}
 ?>
 <br/>
@@ -96,7 +96,7 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 		<li class="link"  onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Liste des Products', array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link('Retour En arrière', $referer); ?></li>
+		<li><?php echo $this->Html->link('Go back', $referer); ?></li>
 	</ul>
 </div>
 
@@ -104,7 +104,7 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Product',array('id'=>'recherche','action'=>'view/'.$id));?>
+	<?php echo $this->Form->create('Produit',array('id'=>'recherche','action'=>'view/'.$id));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('Historique.stock_id',array('label'=>'Stock'));

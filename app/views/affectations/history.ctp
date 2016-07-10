@@ -10,7 +10,7 @@
 			<th>Arrival</th>
 			<th>Départ</th>
 			<th>Unit Price</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Currency</th>
 		
 	</tr>

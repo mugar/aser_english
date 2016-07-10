@@ -6,9 +6,6 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
 			<th><?php echo $this->Paginator->sort('description');?></th>
-			<th><?php echo $this->Paginator->sort('personnel_id');?></th>
-			<th><?php echo $this->Paginator->sort('created');?></th>
-			<th><?php echo $this->Paginator->sort('modified');?></th>
 		</tr>
 	<?php
 	$i = 0;
@@ -26,11 +23,6 @@
 		<td><?php echo $fonction['Fonction']['id']; ?>&nbsp;</td>
 		<td><?php echo $fonction['Fonction']['name']; ?>&nbsp;</td>
 		<td><?php echo $fonction['Fonction']['description']; ?>&nbsp;</td>
-		<td>
-			<?php echo $this->Html->link($fonction['Personnel']['name'], array('controller' => 'personnels', 'action' => 'view', $fonction['Personnel']['id'])); ?>
-		</td>
-		<td><?php echo $fonction['Fonction']['created']; ?>&nbsp;</td>
-		<td><?php echo $fonction['Fonction']['modified']; ?>&nbsp;</td>
 	</tr>
 <?php  $j++; endforeach; ?>
 	</table>

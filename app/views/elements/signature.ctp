@@ -4,15 +4,15 @@
 	<div class="left">
 		<div class="text">
 		<?php
-			echo __('Signature du Caissier').'<br/><br/><br/>';	
-			echo __('Verifié par').' <br/>';	
+			echo __('Cashier Signature').'<br/><br/><br/>';	
+			echo __('Verified by').' <br/>';	
 		?>
 		
 		</div>
 	</div>
 	<div class="right"><?php  
-			echo __('Contrôleur financier').'<br/><br/><br/>';	
-		echo __('Approuvée par').'<br />';
+			echo __('Supervisor').'<br/><br/><br/>';	
+		echo __('Approved by').'<br />';
 	?>
 	</div>
 	<? elseif($modele==1):?>
@@ -26,7 +26,7 @@
 		</div>
 	</div>
 	<div class="right"><?php  
-		echo __('Signature du Caissier');	
+		echo __('Cashier Signature');	
 	?>
 	</div>
 	<? elseif($modele==2):?>

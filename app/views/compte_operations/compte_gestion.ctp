@@ -4,7 +4,7 @@
 <br />
 <?php
 	if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).')</h4>';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).')</h4>';
 		}
 ?>
 <br />	

@@ -39,7 +39,7 @@
 		<td><?php echo $this->Form->input('identifiant',array('label'=>'','class'=>'nullable'));?></td>
 		<td><?php echo $this->Form->input('mot_passe',array('label'=>'','type'=>'password','id'=>'mot_passe','class'=>'nullable'));?></td>
 		<td><?php echo $this->Form->input('confirmer',array('label'=>'','type'=>'password','class'=>'nullable'));?></td>
-		<?php echo $this->Form->input('actif',array('label'=>'','type'=>'hidden','value'=>'oui'));?>
+		<?php echo $this->Form->input('actif',array('label'=>'','type'=>'hidden','value'=>'yes'));?>
 		<td><input type="submit" value="Save"/></td>
 		</form>
 		

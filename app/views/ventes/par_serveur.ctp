@@ -9,7 +9,7 @@ $graph->SetShadow();
 $graph ->legend->Pos( 0.1,0.5,"right" ,"center");
 $graph->title->SetMargin (20); 
 
-$periode=(!is_null($date1)&&!is_null($date2))?("pour la periode entre le $date1 et le $date2"):('');
+$periode=(!is_null($date1)&&!is_null($date2))?("pour la periode entre le $date1 to $date2"):('');
 // Set A title for the plot
 $graph->title->Set("Repartition des Ventes par Personnel $periode");
 

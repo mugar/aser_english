@@ -27,7 +27,7 @@ class VentesController extends AppController {
 																						$this->data['Facture']['date2']:
 																						date('Y-m-d');
 		
-		$conditions['Facture.etat !=']='annulee';
+		$conditions['Facture.etat !=']='canceled';
 		
 		$totals['total']=$totals['quantite']=$totals['ben']=0;	
 		foreach ($groupeComptables as $i => $groupeComptable) {
@@ -195,7 +195,7 @@ class VentesController extends AppController {
 			$caissiers=$this->Vente->Facture->Personnel->find('list',
 															array('conditions'=>
 																	array('Personnel.fonction_id'=>array(2,4),
-																				'Personnel.actif'=>'oui'
+																				'Personnel.actif'=>'yes'
 																	)
 																));
 			$this->set('caissiers',$caissiers);
@@ -206,7 +206,7 @@ class VentesController extends AppController {
 	function checkCloturation($journal){
 		$factures=$this->Vente->Facture->find('all',
 											array('conditions'=>array('Journal.personnel_id'=>$journal['personnel_id'],
-																	'Facture.etat'=>array('cloturer','en_cours'),
+																	'Facture.etat'=>array('printed','in_progress'),
 																	'Facture.date <'=>$journal['date']
 																	),
 												'fields'=>array('Facture.id','Facture.date')
@@ -218,7 +218,7 @@ class VentesController extends AppController {
 				$list.=$facture['Facture']['date'].', ';
 			}
 			exit(json_encode(array('success'=>false,
-								'msg'=>'Vérifier ces dates pour des factures non classées : '.$list)));
+								'msg'=>'Check these dates for unclosed invoices : '.$list)));
 		}
 	}
 	
@@ -265,7 +265,7 @@ class VentesController extends AppController {
 			$cond['Facture.date <=']=date('Y-m-d');
 		$date2=$cond['Facture.date <='];
 		
-		$cond['Facture.etat']=array('payee','credit');
+		$cond['Facture.etat']=array('paid','credit');
 		$this->loadModel('Service');
 		//*/
 		//fetching the gpe comptable in associative array
@@ -274,7 +274,7 @@ class VentesController extends AppController {
 																							)));	
 		//creating the total arrays 
 		foreach($this->facturationMonnaies as $monnaie){
-			$total['credit'][$monnaie]=$total['payee'][$monnaie]=0;
+			$total['credit'][$monnaie]=$total['paid'][$monnaie]=0;
 		}	
 		/*
 		foreach($this->monnaies as $monnaie){
@@ -287,7 +287,7 @@ class VentesController extends AppController {
 		foreach($gpeCptables as $key=>$gpeCptable){
 			//create the placeholder all currencies
 			foreach($this->facturationMonnaies as $monnaie){
-					$gpeCptables[$key]['credit'][$monnaie]=$gpeCptables[$key]['payee'][$monnaie]=0;
+					$gpeCptables[$key]['credit'][$monnaie]=$gpeCptables[$key]['paid'][$monnaie]=0;
 			}	
 			
 			//fecthing  ventes
@@ -298,7 +298,7 @@ class VentesController extends AppController {
 			//total all credits grouped by currencies
 			foreach($this->facturationMonnaies as $monnaie){
 				$total['credit'][$monnaie]+=$gpeCptables[$key]['credit'][$monnaie];
-				$total['payee'][$monnaie]+=$gpeCptables[$key]['payee'][$monnaie];
+				$total['paid'][$monnaie]+=$gpeCptables[$key]['paid'][$monnaie];
 			}	
 			
 			/*
@@ -312,7 +312,7 @@ class VentesController extends AppController {
 			}
 			//factures ventes
 			$ventes=$this->Vente->find('all',array('fields'=>array('Vente.montant','Vente.facture_id','Facture.reduction'),
-													'conditions'=>array('Facture.etat'=>array('payee','avance'),
+													'conditions'=>array('Facture.etat'=>array('paid','half_paid'),
 																	'Facture.date'=>$date,
 																	'Produit.groupe_comptable_id'=>$gpeCptable['GroupeComptable']['id']
 																	)
@@ -352,7 +352,7 @@ class VentesController extends AppController {
 			
 			//factures services
 			$services=$this->Service->find('all',array('fields'=>array('Service.montant','Service.facture_id','Facture.reduction'),
-													'conditions'=>array('Facture.etat'=>array('payee','avance'),
+													'conditions'=>array('Facture.etat'=>array('paid','half_paid'),
 																	'Facture.date'=>$date,
 																	'TypeService.groupe_comptable_id'=>$gpeCptable['GroupeComptable']['id']
 																	)
@@ -489,7 +489,7 @@ class VentesController extends AppController {
 		$search=$this->Vente->Facture->find('first',array('fields'=>array('Facture.table','Personnel.name'),
 														//*
 															'conditions'=>array('Facture.table'=>$table,
-																				'Facture.etat'=>array('cloturer','en_cours','confirmee'),
+																				'Facture.etat'=>array('printed','in_progress','confirmee'),
 																				'Facture.operation'=>'Vente',
 																				'Facture.date'=>date('Y-m-d')
 																				),
@@ -500,7 +500,7 @@ class VentesController extends AppController {
 		if(!empty($search)){
 			if(!$return&&$this->RequestHandler->isAjax()){
 				exit(json_encode(array('success'=>false,
-									'msg'=>'Cette table : '.$table.' est déjà ouverte!',
+									'msg'=>'this table : '.$table.' is already open.',
 									'state'=>'table_red',
 									'serveur'=>$search['Personnel']['name']
 									)));
@@ -513,7 +513,7 @@ class VentesController extends AppController {
 		else {
 			if(!$return&&$this->RequestHandler->isAjax()){
 				if($exit)
-					exit(json_encode(array('success'=>true,'msg'=>'Cette table : '.$table.' est free!','state'=>'table_green','serveur'=>'')));
+					exit(json_encode(array('success'=>true,'msg'=>'This table : '.$table.' is available!','state'=>'table_green','serveur'=>'')));
 			}
 			else {
 				return array('class'=>'table_green','serveur'=>'');
@@ -531,7 +531,7 @@ class VentesController extends AppController {
 		                                                    ));
 		
 		$this->Vente->Facture->save(array('Facture'=>array('id'=>$factureId,
-															'etat'=>'en_cours',
+															'etat'=>'in_progress',
 															'reste'=>$facture['Facture']['montant'],
 															'printed'=>0,
 															'debloquer'=>$this->Auth->user('id'),
@@ -541,13 +541,13 @@ class VentesController extends AppController {
 		//trace stuff
 		$trace['Trace']['model_id']=$factureId;
 		$trace['Trace']['model']='Facture';
-		$trace['Trace']['operation']='Déblocage de la facture '.$facture['Facture']['numero'].'. De l\'etat "'.$old_state.'" à "en_cours".';
-		$trace['Trace']['operation'].=' Ancien montant : '.$facture['Facture']['montant'];
+		$trace['Trace']['operation']='Unlocking of the invoice whose number is  '.$facture['Facture']['numero'].'. from this state "'.$old_state.'" to "in_progress".';
+		$trace['Trace']['operation'].=' old amount : '.$facture['Facture']['montant'];
 		//look for the items contained in the bill .
 		$ventes = $this->Vente->find('all',array('fields'=>array('Produit.name'),
 												'conditions'=>array('Vente.facture_id'=>$factureId)
 												));
-		$trace['Trace']['operation'].=" Liste des produits : ";
+		$trace['Trace']['operation'].=" List of products : ";
 		foreach($ventes as $vente){
 			$trace['Trace']['operation'].= $vente['Produit']['name'].', ';
 		}	
@@ -602,7 +602,7 @@ class VentesController extends AppController {
 		if($this->Vente->Facture->save(array('Facture'=>$facture)))
 			exit(json_encode(array('success'=>true,'reduction'=>$facture['reduction'])));
 		else 
-			exit(json_encode(array('success'=>false,'msg'=>'Failed to save the reduction.')));
+			exit(json_encode(array('success'=>false,'msg'=>'Failed to save the discount.')));
 
 	}
 	
@@ -644,7 +644,7 @@ class VentesController extends AppController {
 												
 			}
 		}
-	//	if($this->data['Vente']['paiements']=='oui'){
+	//	if($this->data['Vente']['paiements']=='yes'){
 		if(false){ //temporary disabled
 		//	exit(debug($this->data));
 			//paiement du stock
@@ -680,10 +680,10 @@ class VentesController extends AppController {
 					//deleting the history and the old vente
 					if(!empty($vente['Vente']['historique_id'])){
 						if(!$this->Product->productHistoryDelete($vente['Vente']['historique_id'],'Historique'))
-							exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement du stock.")));
+							exit(json_encode(array('success'=>false,'msg'=>"Failed to decrease the stock quantity.")));
 					}
 					if(!$this->Vente->delete($vente['Vente']['id']))
-						exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'effacement de l'un des produits")));
+						exit(json_encode(array('success'=>false,'msg'=>"Failed to delete one of the products")));
 					
 					$qty=$vente['Vente']['quantite']; 
 					for($i=0; $i<$qty;$i++){
@@ -702,14 +702,14 @@ class VentesController extends AppController {
 							unset($vente['Vente']['historique_id']);
 						//saving
 						if(!$this->Vente->save($vente))
-							exit(json_encode(array('success'=>false,'msg'=>"un produit n'a pas été enregistré")));
+							exit(json_encode(array('success'=>false,'msg'=>"A product has not been saved")));
 					}
 				}
 			}
 			exit(json_encode(array('success'=>true)));
 		}	
 		else {
-			exit(json_encode(array('success'=>false,'msg'=>'Impossible de séparer la facture car elle déjà imprimée')));
+			exit(json_encode(array('success'=>false,'msg'=>'Unable to split the bill as it is already printed')));
 		}
 	}
 	
@@ -723,7 +723,7 @@ class VentesController extends AppController {
 		//update the old bill by putting the linked id
 		 $facture['Facture']['linked']=$factureId;
 		 if(!$this->Vente->Facture->save($facture))
-		 	exit(json_encode(array('success'=>false,'msg'=>"L'ancienne facture n'a pas été enregistrée.")));
+		 	exit(json_encode(array('success'=>false,'msg'=>"The old invoice has not been saved.")));
 		unset($this->Vente->Facture->id);
 		
 		//creating the new bill
@@ -733,7 +733,7 @@ class VentesController extends AppController {
 		$newFacture['Facture']['original']=$newFacture['Facture']['montant']=0;
 		$newFacture['Facture']['reste']=$newFacture['Facture']['tva']=$newFacture['Facture']['pyts']=0;
 		if(!$this->Vente->Facture->save($newFacture))
-			exit(json_encode(array('success'=>false,'msg'=>"La nouvelle facture n'a pas été enregistrée.")));
+			exit(json_encode(array('success'=>false,'msg'=>"The new invoice has not been saved.")));
 		
 		$newFactureId=$this->Vente->Facture->id;
 		unset($this->Vente->Facture->id);
@@ -748,7 +748,7 @@ class VentesController extends AppController {
 											'conditions'=>array('Vente.id'=>$list),
 											'fields'=> $fields
 											));
-		$failureMsg="Un des produits n'a pas été enregistré.";
+		$failureMsg="One of the products has not been saved.";
 		foreach($ventes as $vente){
 			$vente['Vente']['facture_id']=$newFactureId;
 			if($vente['Vente']['acc']){
@@ -758,7 +758,7 @@ class VentesController extends AppController {
 											));
 				$acc['Vente']['facture_id']=$newFactureId;
 				if(!$this->Vente->save($acc))
-					exit(json_encode(array('success'=>false,'msg'=>"Un des accompagnement n'a pas été enregistré.")));
+					exit(json_encode(array('success'=>false,'msg'=>"One of the garnish has not been saved.")));
 			}
 			if(!$this->Vente->save($vente))
 				exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
@@ -787,7 +787,7 @@ class VentesController extends AppController {
 	}
 	
 	function detailed_products_names(){
-		$cond['Produit.actif']='oui';
+		$cond['Produit.actif']='yes';
    		$produits = $this->Vente->Produit->find('all',array( 'fields'=>array('Produit.id',
    																			'Produit.name',
    																			'Produit.PV',
@@ -849,7 +849,7 @@ class VentesController extends AppController {
 			$found=true;
 		}
 		if(!$found){
-			exit(json_encode(array('success'=>false,'msg'=>'Cette table n\'existe pas!')));
+			exit(json_encode(array('success'=>false,'msg'=>'This table doesn\'t exist!')));
 		}
 		else {
 			$facture=$this->Vente->Facture->find('first',array('fields'=>array('Facture.id'),
@@ -878,7 +878,7 @@ class VentesController extends AppController {
 		$this->autoRender=false;
 		$this->data=(empty($data))?($this->data):($data);
 		$factureConds=$pytConds=$caisseConds=$journals=array();
-		$global='non';
+		$global='no';
 		$date=$date1='';
 		if(!empty($this->data)){
 			if($mensuelle){
@@ -931,7 +931,7 @@ class VentesController extends AppController {
 		
 			foreach($factures as $facture){
 				
-				if(!in_array($facture['Facture']['etat'],array('annulee'))){
+				if(!in_array($facture['Facture']['etat'],array('canceled'))){
 						$total_factures['resto']+=$facture['Facture']['montant'];
 						$total_credits['resto']+=$facture['Facture']['reste'];
 						
@@ -975,7 +975,7 @@ class VentesController extends AppController {
 			}												
 
 			unset($pytConds['Paiement.facture_id']);
-			$pytConds['Facture.etat !=']='annulee';
+			$pytConds['Facture.etat !=']='canceled';
 			$pytConds['NOT']=array('Paiement.facture_id'=>$facturesIds);
 		
 			$pyts=$this->Vente->Facture->Paiement->find('all',array('fields'=>array('Paiement.*',
@@ -1001,7 +1001,7 @@ class VentesController extends AppController {
 												);
 					$pyts[$key]['Tier']=$tierInfo['Tier'];
 			}
-			if($mensuelle&&Configure::read('aser.comptabilite')&&($this->data['Journal']['compta']=='oui')){
+			if($mensuelle&&Configure::read('aser.comptabilite')&&($this->data['Journal']['compta']=='yes')){
 				$this->loadModel('CompteOperation');
 				$caisseConds['Compte.numero >=']=56000000;
 				$caisseConds['Compte.numero <']=5800000;
@@ -1021,7 +1021,7 @@ class VentesController extends AppController {
 				$caisseConds['Operation.model']='Caiss';
 				$caisseConds['Operation.credit >']=0;
 				$caisseConds['Operation.credit >']=0;
-				$caisseConds['Operation.monnaie']='BIF';
+				$caisseConds['Operation.monnaie']='RWF';
 				$model1='Operation';
 				$model2='Caiss';
 				
@@ -1035,7 +1035,7 @@ class VentesController extends AppController {
 					$total_depenses+=$retrait[$model1]['credit'];
 				
 			}			
-			if($mensuelle&&Configure::read('aser.comptabilite')&&($this->data['Journal']['compta']=='oui')){
+			if($mensuelle&&Configure::read('aser.comptabilite')&&($this->data['Journal']['compta']=='yes')){
 				$caisseConds['Compte.numero >=']=56000000;
 				$caisseConds['Compte.numero <']=58000000;
 			}
@@ -1080,7 +1080,7 @@ class VentesController extends AppController {
 			
 			
 			$condPers['Personnel.fonction_id']=array(2);
-			$condPers['Personnel.actif']='oui';
+			$condPers['Personnel.actif']='yes';
 			if($this->Auth->user('fonction_id')==2){
 			//	$condPers['Personnel.id']=$this->Auth->user('id');
 			}
@@ -1151,7 +1151,7 @@ class VentesController extends AppController {
 										);
 		if($journal['Journal']['closed']==0){
 			if($this->Auth->user('id')!=$personnel_id)
-				exit(json_encode(array('success'=>false,'msg'=>"Vous n 'êtes pas celui qui a crée le journal ")));
+				exit(json_encode(array('success'=>false,'msg'=>"You are not the one who created this report ")));
 			$factures=$this->Vente->Facture->find('all',array('fields'=>array('Facture.*'),
 															'conditions'=>array('Facture.journal_id'=>$id,
 																			),
@@ -1160,21 +1160,21 @@ class VentesController extends AppController {
 		//checking first
 			$factureIds=array();
 			foreach($factures as $facture){
-				if(in_array($facture['Facture']['etat'],array('en_cours','cloturer','confirmee'))){
-					exit(json_encode(array('success'=>false,'msg'=>'la facture n° '.$facture['Facture']['numero'].' n\'est pas classée !')));
+				if(in_array($facture['Facture']['etat'],array('in_progress','printed','confirmee'))){
+					exit(json_encode(array('success'=>false,'msg'=>'Invoice n° '.$facture['Facture']['numero'].' is not closed!')));
 				}
 				else if(($facture['Facture']['reste']>=$facture['Facture']['montant'])&&
-						(!in_array($facture['Facture']['etat'],array('credit','annulee')))
+						(!in_array($facture['Facture']['etat'],array('credit','canceled')))
 						&&
 						($facture['Facture']['montant']!=0)
 						){
-					exit(json_encode(array('success'=>false,'msg'=>'la facture n° '.$facture['Facture']['numero'].' n\'est pas bien classée !')));
+					exit(json_encode(array('success'=>false,'msg'=>'Invoice n° '.$facture['Facture']['numero'].' is not well closed!')));
 				}
-				else if(!in_array($facture['Facture']['etat'],array('annulee','bonus'))){
+				else if(!in_array($facture['Facture']['etat'],array('canceled','bonus'))){
 					$pyts=$this->Vente->Facture->pyts($facture['Facture']['id']);
 				//	exit(debug($pyts));
 					if(($facture['Facture']['montant']-$facture['Facture']['reste'])!=$pyts){
-						exit(json_encode(array('success'=>false,'msg'=>'Vérifier les paiements de la facture n° '.$facture['Facture']['numero'])));		
+						exit(json_encode(array('success'=>false,'msg'=>'Check the payments of the invoice n° '.$facture['Facture']['numero'])));		
 					}
 				} 
 				$factureIds[]=$facture['Facture']['id'];
@@ -1208,7 +1208,7 @@ class VentesController extends AppController {
 		
 		if($this->Vente->Facture->Journal->save($journalData))
 			exit(json_encode(array('success'=>true,'msg'=>'succès !')));
-		else  exit(json_encode(array('success'=>false,'msg'=>"Impossible d'enregistrer")));
+		else  exit(json_encode(array('success'=>false,'msg'=>"Unable to save")));
 	}
 
 	function rapport(){
@@ -1220,7 +1220,7 @@ class VentesController extends AppController {
 		$total_ajouts=$total_depenses=$versement=0;
 		$date=$date1=null;
 		$pyts=$ajouts=$retraits=array();
-		$global='non';
+		$global='no';
 		$resultat=0;
 		if(!empty($this->data)){
 		$this->journal(null,$this->data,true);
@@ -1268,7 +1268,7 @@ class VentesController extends AppController {
 			if($this->data['Facture']['etat']!='toutes') 
 				$conditions['Facture.etat']=$this->data['Facture']['etat'];
 			else 
-				$conditions['Facture.etat !=']='annulee';
+				$conditions['Facture.etat !=']='canceled';
 				
 			if(!empty($this->data['Facture']['date1'])) {
 				$conditions['Facture.date >=']=$date1=$this->data['Facture']['date1'];
@@ -1407,7 +1407,7 @@ class VentesController extends AppController {
 				$conditions['Facture.date <=']=$date2=$this->data['Facture']['date2'];
 				$jourCond['Journal.date <=']=$date2;
 			}
-			$conditions['Facture.etat !=']='annulee';
+			$conditions['Facture.etat !=']='canceled';
 			
 			if(isset($this->data['Vente']['personnel_id'])&&($this->data['Vente']['personnel_id']!=0)) {
 				$search=$this->Vente->Facture->Personnel->find('first',array('fields'=>array('Personnel.id','Personnel.name'),
@@ -1427,7 +1427,7 @@ class VentesController extends AppController {
 				$conditions['Facture.etat']=$this->data['Facture']['etat'];
 			}	
 			else {
-				$conditions['Facture.etat !=']='annulee';
+				$conditions['Facture.etat !=']='canceled';
 			}
 			$ventes=$this->Vente->find('all',array('fields'=>array(
 																	'Produit.name',
@@ -1468,9 +1468,9 @@ class VentesController extends AppController {
 			}
 		//*/
 		}
-		$personnels = $this->Vente->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(2,4),'Personnel.actif'=>'oui')));
+		$personnels = $this->Vente->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(2,4),'Personnel.actif'=>'yes')));
 		$personnels[0]='';
-		$produits = $this->Vente->Produit->find('list',array('conditions'=>array('Produit.actif'=>'oui'),
+		$produits = $this->Vente->Produit->find('list',array('conditions'=>array('Produit.actif'=>'yes'),
 														'order'=>array('Produit.name')
 														));
 		$produits1=array('')+$produits;
@@ -1540,7 +1540,7 @@ class VentesController extends AppController {
 			$test=$this->Session->read('ignorer');
 			if(($journal['date']!=date('Y-m-d'))&&(!$test)){
 				$facture['Facture']['found']='journal_erreur';
-				$facture['Facture']['msg']='Votre Journal a une ancienne date. Vérifié si vous n\'avez pas oublié de clôturer le journal précédent.';
+				$facture['Facture']['msg']='You report has an old date. Check if you didn\'t forget to  close the previous report.';
 				$this->Session->write('ignorer',true);
 				exit(json_encode($facture['Facture']));
 			}
@@ -1587,7 +1587,7 @@ class VentesController extends AppController {
 		else {
 			$this->set('ventes', $this->paginate($venteConditions));
 		}
-		$caisses=$this->Vente->Facture->Paiement->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'oui'
+		$caisses=$this->Vente->Facture->Paiement->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'yes'
 																			)
 																));
 		
@@ -1633,7 +1633,7 @@ class VentesController extends AppController {
 		if(!Configure::read('aser.magasin')){
 			$condFact['Facture.table']=$table;
 		}
-		$condFact['Facture.etat']=array('confirmee','en_cours','cloturer');
+		$condFact['Facture.etat']=array('confirmee','in_progress','printed');
 		$condFact['Facture.date']=$date;
 		$factures=$this->Vente->Facture->find('all',array('fields'=>array('Facture.*','Personnel.name'
 																),
@@ -1648,13 +1648,13 @@ class VentesController extends AppController {
 		}
 		else {
 			$serveurs = $this->Vente->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>1,
-																						'Personnel.actif'=>'oui',
+																						'Personnel.actif'=>'yes',
 																						),
 																	'order'=>array('Personnel.name asc')
 																	)
 														);
 			$conditions=array();
-			$conditions['Produit.actif !=']='non';
+			$conditions['Produit.actif !=']='no';
    			$produits = $this->Vente->Produit->find('all',array( 'fields'=>array('Produit.id',
    																					'Groupe.section_id',
    																					'Groupe.id',
@@ -1667,7 +1667,7 @@ class VentesController extends AppController {
 																	)
 													);
 			$sections=$this->Vente->Produit->Groupe->Section->find('list');
-			$groupes=$this->Vente->Produit->Groupe->find('all',array('recursive'=>-1,'conditions'=>array('Groupe.actif'=>'oui')));
+			$groupes=$this->Vente->Produit->Groupe->find('all',array('recursive'=>-1,'conditions'=>array('Groupe.actif'=>'yes')));
 			$thermal=$this->Conf->find('thermal');
 			$change=$this->Conf->find('change');
 		//table status
@@ -1738,8 +1738,8 @@ class VentesController extends AppController {
 			$this->render('list_factures');
 		}
 		else {
-			$cond2['Groupe.afficher']='oui';
-			$cond2['Groupe.actif']='oui';
+			$cond2['Groupe.afficher']='yes';
+			$cond2['Groupe.actif']='yes';
 			$selectedSections=$this->Session->read('resto_sections');
 			if(!empty($selectedSections)){
 				$cond2['Groupe.section_id']=$selectedSections;
@@ -1754,7 +1754,7 @@ class VentesController extends AppController {
 														);
 			
 			$groupeIds=array_keys($groupes);
-			$cond3['Produit.actif']='oui';
+			$cond3['Produit.actif']='yes';
 			if(Configure::read('aser.groupes_on_index')){
 				$cond3['Produit.groupe_id']=$groupeIds[0];
 			}
@@ -1789,7 +1789,7 @@ class VentesController extends AppController {
 			$stock=$this->_find_stock(); //to set the stock to use
 			
 			$personnels = $this->Vente->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>1,//serveur fonction
-																						'Personnel.actif'=>'oui',
+																						'Personnel.actif'=>'yes',
 																						),
 																	'order'=>array('Personnel.name asc')
 																	)
@@ -1798,7 +1798,7 @@ class VentesController extends AppController {
 			$personnels[0]='';
 			$garnishList=array();
 			if(!Configure::read('aser.magasin')){
-				$garnishs=$this->Vente->Produit->find('all',array('conditions'=>array('Groupe.accompagnement'=>'oui'),
+				$garnishs=$this->Vente->Produit->find('all',array('conditions'=>array('Groupe.accompagnement'=>'yes'),
 																'fields'=>array('Produit.id','Produit.name')
 																));
 				foreach($garnishs as $garnish){
@@ -1825,7 +1825,7 @@ class VentesController extends AppController {
 	
 	function combobox(){
 		$conditions['Produit.groupe_id']=$this->data['Vente']['groupe_id'];
-		$conditions['Produit.actif !=']='non';
+		$conditions['Produit.actif !=']='no';
 		if(Configure::read('aser.multi_pv')||(Configure::read('aser.default_stock')<1)){
 			$produits = $this->Vente->Produit->find('all',array('conditions'=>$conditions,
 																'order'=>array('Produit.name asc'),
@@ -1969,7 +1969,7 @@ class VentesController extends AppController {
 				if(($test=='false')&&($msg!='COMMANDE ANNULEE')){
 					$vente['Vente']['printed']+=$diff;
 					if(!$this->Vente->save($vente))
-						exit(json_encode(array('success'=>false,'msg'=>'Probleme avec l enregistrement des quantites imprimes')));
+						exit(json_encode(array('success'=>false,'msg'=>'Unable to save the printed quantities')));
 				}
 				if($vente['Vente']['print_qty']>0){
 					$printed[$key]=$vente;
@@ -2045,7 +2045,7 @@ class VentesController extends AppController {
 		if($facture['Facture']['classee']==0){
 			$this->Vente->Facture->save(array('Facture'=>array('id'=>$factureId,
 																'printed'=>1,
-																'etat'=>'cloturer'
+																'etat'=>'printed'
 																)
 														));
 		}
@@ -2076,7 +2076,7 @@ class VentesController extends AppController {
 	function _checkTier($data){
 		if(empty($data['tier_id'])){
 			die(json_encode(array('success'=>false,
-								'msg'=>'Spécifiez le client à qui appartient cette facture'
+								'msg'=>'Please specify the customer to who belong this invoice'
 						)));
 		}		
 	}
@@ -2092,7 +2092,7 @@ class VentesController extends AppController {
 		}
 		else if(empty($factureInfo['Facture']['journal_id'])){
 				die(json_encode(array('success'=>false,
-								'msg'=>'Impossible de classer cette facture. Seul un caissier peut le faire!'
+								'msg'=>'Unable to close this invoice. Only the cashier can do it!'
 						)));
 		}
 		return $journal;
@@ -2109,7 +2109,7 @@ class VentesController extends AppController {
 
 			if($totalCredit>$tierInfo['max_dette']){
 				die(json_encode(array('success'=>false,
-									'msg'=>'La Dette maximale de '.$tierInfo['max_dette'].' est dépassée!'
+									'msg'=>'The debt limit of '.$tierInfo['max_dette'].' has been reached!'
 						)));
 			}
 		}
@@ -2127,7 +2127,7 @@ class VentesController extends AppController {
 				}
 				if($data['Paiement']['monnaie']==Configure::read('aser.default_currency')){
 					die(json_encode(array('success'=>false,
-									'msg'=>'Le montant equivalent ne peut pas etre en '.Configure::read('aser.default_currency')
+									'msg'=>'The equivalent amount cannot be in '.Configure::read('aser.default_currency')
 						)));
 				}
 			}
@@ -2149,9 +2149,9 @@ class VentesController extends AppController {
 			$data['Paiement']['facture_id']=$data['Vente']['factureId'];
 
 			if(!$this->Vente->Facture->Paiement->save($data))
-				exit(json_encode(array('success'=>false,'msg'=>"Le paiement a echoué! vérifié si la facture n'a pas d'autre paiements.")));
+				exit(json_encode(array('success'=>false,'msg'=>"Unable to save the payment! Check if the invoice does not have other payments already.")));
 		}
-		else exit(json_encode(array('success'=>false,'msg'=>"Montant de Paiement incorrecte: $amountPaid")));
+		else exit(json_encode(array('success'=>false,'msg'=>"The amount of payments is incorrect: $amountPaid")));
 	}
 	function _reduction($data,&$factureInfo){
 		$tierInfo=$this->_tierInfo($data['tier_id']);
@@ -2163,7 +2163,7 @@ class VentesController extends AppController {
 	function _closeAndSaveTheBill(&$factureInfo,$saveTheBill=true){
 		//etat and reste for some cases like payee/avance is not saved at this stage but after the payement is actually done.
 		if($saveTheBill) {
-			if(!$this->Vente->Facture->save($factureInfo)) exit(json_encode(array('success'=>false,'msg'=>'Bill failed to save!')));
+			if(!$this->Vente->Facture->save($factureInfo)) exit(json_encode(array('success'=>false,'msg'=>'The invoice failed to be saved!')));
 			
 		}
 		else  {
@@ -2177,7 +2177,7 @@ class VentesController extends AppController {
 			//trace stuff
 		$trace['Trace']['model_id']=$factureInfo['Facture']['id'];
 		$trace['Trace']['model']='Facture';
-		$trace['Trace']['operation']='Changement l\'état de "en_cours" à "'.$factureInfo['Facture']['etat'].'"';
+		$trace['Trace']['operation']='Change of state "in_progress" to "'.$factureInfo['Facture']['etat'].'"';
 		$this->Vente->Facture->Trace->save($trace);
 
 		exit(json_encode(array('success'=>true)+$factureInfo['Facture']));		
@@ -2202,15 +2202,15 @@ class VentesController extends AppController {
 		$factureInfo['Facture']['classee']=1;
 
 		//starting treatement based on status.
-		if(in_array($this->data['Vente']['etat'],array('payee','avance'))){
+		if(in_array($this->data['Vente']['etat'],array('paid','half_paid'))){
 			$amountPaid=$factureInfo['Facture']['montant'];
-			if($this->data['Vente']['etat']=='avance'){
-				$amountPaid=($factureInfo['Facture']['montant']>$this->data['Vente']['avance'])?$this->data['Vente']['avance']:$factureInfo['Facture']['montant'];
+			if($this->data['Vente']['etat']=='half_paid'){
+				$amountPaid=($factureInfo['Facture']['montant']>$this->data['Vente']['half_paid'])?$this->data['Vente']['half_paid']:$factureInfo['Facture']['montant'];
 				$reste=$factureInfo['Facture']['montant']-$amountPaid;
 				$this->_checkMaxDette($tierInfo,$reste,$this->data['Vente']);
 			}
 			//saving to modification made to the bill like the reduction/discount.
-			if(!$this->Vente->Facture->save($factureInfo)) exit(json_encode(array('success'=>false,'msg'=>'Bill failed to save!')));
+			if(!$this->Vente->Facture->save($factureInfo)) exit(json_encode(array('success'=>false,'msg'=>'Invoice failed to save!')));
 
 			$this->_createPaiement($this->data,$amountPaid,$journal,$factureInfo);
 
@@ -2245,22 +2245,22 @@ class VentesController extends AppController {
 		$facture['Facture']['original']=$totals['original'];
 		$facture['Facture']['montant']=$totals['montant'];
 
-		$facture['Facture']['avance']=($facture['Facture']['montant']>$this->data['Vente']['avance'])?$this->data['Vente']['avance']:$facture['Facture']['montant'];
+		$facture['Facture']['half_paid']=($facture['Facture']['montant']>$this->data['Vente']['half_paid'])?$this->data['Vente']['half_paid']:$facture['Facture']['montant'];
 		
 		//determining the reste
 		$facture['Facture']['etat']=$this->data['Vente']['etat'];
-		if(in_array($facture['Facture']['etat'],array('payee','bonus'))){
+		if(in_array($facture['Facture']['etat'],array('paid','bonus'))){
 			$facture['Facture']['reste']=0;
 		}
 		elseif($facture['Facture']['etat']=='credit'){
 			$facture['Facture']['reste']=$facture['Facture']['montant'];
 		}
-		elseif($this->data['Vente']['etat']=='avance'){
-			$facture['Facture']['reste']=$facture['Facture']['montant']-$facture['Facture']['avance'];
+		elseif($this->data['Vente']['etat']=='half_paid'){
+			$facture['Facture']['reste']=$facture['Facture']['montant']-$facture['Facture']['half_paid'];
 		}
 	
 		//make sure the client is set if the bill is not fully paid
-		if(in_array($facture['Facture']['etat'],array('credit','avance'))&&empty($this->data['Vente']['tier_id'])){
+		if(in_array($facture['Facture']['etat'],array('credit','half_paid'))&&empty($this->data['Vente']['tier_id'])){
 			die(json_encode(array('success'=>false,
 								'msg'=>'Spécifié le client. Car la facture n\'est pas entièrement payée!'
 						)));
@@ -2300,7 +2300,7 @@ class VentesController extends AppController {
 		$facture['Facture']['tva']=$this->Product->tva($facture['Facture']['montant']);
 
 		//max dette checking
-		if((in_array($facture['Facture']['etat'],array('credit','avance')))&&($tierInfo['max_dette']>0)){
+		if((in_array($facture['Facture']['etat'],array('credit','half_paid')))&&($tierInfo['max_dette']>0)){
 			$sum=$this->Vente->Facture->find('all',array('fields'=>array('sum(Facture.reste) as reste'),
 													'conditions'=>array('Facture.tier_id'=>$facture['Facture']['tier_id'])
 													));
@@ -2313,7 +2313,7 @@ class VentesController extends AppController {
 		}
 										
 		// Paiement stuff
-		if(($facture['Facture']['avance']>0)&&in_array($facture['Facture']['etat'],array('payee','avance','excedent'))){
+		if(($facture['Facture']['half_paid']>0)&&in_array($facture['Facture']['etat'],array('paid','half_paid','excedent'))){
 			if(!isset($this->data['Paiement'])){
 				$this->data['Paiement']['mode_paiement']='cash';
 			}//else in case the paiement box is not shown like in touchscreen mode
@@ -2329,7 +2329,7 @@ class VentesController extends AppController {
 				}
 			}
 			$data['Paiement']=$this->data['Paiement'];
-			$data['Paiement']['montant']=$facture['Facture']['avance'];
+			$data['Paiement']['montant']=$facture['Facture']['half_paid'];
 			//*
 			//journal for paiement 
 			if(in_array($this->Auth->user('fonction_id'),array(2,4))){
@@ -2382,7 +2382,7 @@ class VentesController extends AppController {
 	}
 	*/
 	function removal($factureId,$consoId,$quantite,$reduction,$obs=''){
-		$stockFailureMsg="Erreur de stock";
+		$stockFailureMsg="Stock error";
 		if($consoId=='facture'){
 			$ventes=$this->Vente->find('all',array('fields'=>array('Vente.historique_id','Vente.acc'),
 													'conditions'=>array('Vente.facture_id'=>$factureId)
@@ -2404,17 +2404,17 @@ class VentesController extends AppController {
 			if(!$this->Vente->Facture->save(array('Facture'=>array('id'=>$factureId,
 																'observation'=>$obs,
 																'classee'=>1,
-																'etat'=>'annulee'
+																'etat'=>'canceled'
 																)
 										)))
 			{ 
-				exit(json_encode(array('success'=>false,'msg'=>'Problème avec l\'enregistrement de la facture!')));
+				exit(json_encode(array('success'=>false,'msg'=>'Unable to save the invoice!')));
 			}
 
 			//trace stuff
 			$trace['Trace']['model_id']=$factureId;
 			$trace['Trace']['model']='Facture';
-			$trace['Trace']['operation']='Annulation de la facture. Motif : "'.$obs.'"';
+			$trace['Trace']['operation']='Cancellation of the invoice. Reason : "'.$obs.'"';
 			$this->Vente->Facture->Trace->save($trace);
 			
 			exit(json_encode(array('success'=>true,
@@ -2432,7 +2432,7 @@ class VentesController extends AppController {
 												);
 			$old_quantite=$vente['Vente']['quantite'];
 			if($old_quantite<$quantite){
-				exit(json_encode(array('success'=>false,'msg'=>'Impossible quantitée trop élevée !')));
+				exit(json_encode(array('success'=>false,'msg'=>'The quantity is too high!')));
 			}
 			//useful to track orders deleted after being sent to the kitchen.
 			if($vente['Vente']['quantite']<$vente['Vente']['printed']){
@@ -2472,7 +2472,7 @@ class VentesController extends AppController {
 				}
 					//vente part
 				if(!$this->Vente->save($vente))
-					exit(json_encode(array('success'=>false,'msg'=>"Problème avec l'enregistrement du produit")));
+					exit(json_encode(array('success'=>false,'msg'=>"Unable to save the product")));
 			}
 			else {
 				if(Configure::read('aser.connexion')){
@@ -2484,7 +2484,7 @@ class VentesController extends AppController {
 							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
 					}
 				}
-				$deleteMsg="Problème avec l'effacement du produit.";
+				$deleteMsg="Unable to delete the product.";
 				//vente part
 				if(!$this->Vente->delete($consoId))
 					exit(json_encode(array('success'=>false,'msg'=>$deleteMsg)));		
@@ -2516,7 +2516,7 @@ class VentesController extends AppController {
 		}
 		else {
 				exit(json_encode(array('success'=>false,
-										'msg'=>'Cliquez sur la consommation pour la sélectionnée.'
+										'msg'=>'Click on the product to select it.'
 								)
 						)
 			);
@@ -2591,10 +2591,10 @@ class VentesController extends AppController {
 
 		$facture['Tier']['name']=(empty($facture['Tier']['name']))?'':$facture['Tier']['name'];
 		if(($facture['Facture']['classee']==0)&&Configure::read('aser.beneficiaires')){
-			$facture['avance']=$facture['Facture']['avance_beneficiaire'];
+			$facture['half_paid']=$facture['Facture']['avance_beneficiaire'];
 		}
 		else {
-			$facture['avance']=$facture['Facture']['montant']-$facture['Facture']['reste'];
+			$facture['half_paid']=$facture['Facture']['montant']-$facture['Facture']['reste'];
 		}
 		exit(json_encode($facture));
 	}
@@ -2625,12 +2625,12 @@ class VentesController extends AppController {
 		//stop add users from creating bills except caissiers and serveurs.
 		if(!in_array($this->Auth->user('fonction_id'),array(1,2))&&($data['Vente']['factureId']=='creation')){
 			exit(json_encode(array('success'=>false,
-			'msg'=>'Seul les caissiers et les serveurs peuvent créer une facture!')));	
+			'msg'=>'Only cashiers can create invoices!')));	
 		}
 		//preventing any wrong call to add without the right parameters.
 		if(!isset($data['Vente']['factureId'])){
 			exit(json_encode(array('success'=>false,
-			'msg'=>'N° de la facture non spécifié!')));
+			'msg'=>'The invoice number is not specified!')));
 			
 		}
 		//checking if the table specified is correct.
@@ -2641,7 +2641,7 @@ class VentesController extends AppController {
 		//checking if the stock to use has been provided.
 		$data['Vente']['stock_id']=$stockId=$this->Session->read('resto_stock');
 		if(empty($data['Vente']['stock_id'])){
-			exit(json_encode(array('success'=>false,'msg'=>'Stock non spécifié!')));
+			exit(json_encode(array('success'=>false,'msg'=>'The Stock is not specified!')));
 		}
 	}
 	function _addJournalHandler($nembeteplus,$data){
@@ -2663,9 +2663,9 @@ class VentesController extends AppController {
 				$nembeteplus=$this->Session->read('nembeteplus');
 				//warning the user that he is about to use an old journal. 
 				if(($journal['date']!=date('Y-m-d'))&&(!$nembeteplus)){
-					$msg='Votre Journal a une date du ';
+					$msg='Your report\'s date is ';
 					$msg.=$this->Product->tofrench($journal['date']).'. ';
-					$msg.="Si vous avez oublié de le clôturer, veuillez le faire avant de poursuivre.";
+					$msg.="If you forgot to close it, please do it before moving forward";
 					$ans=array('success'=>false,'choix'=>true,'msg'=>$msg);
 					if(Configure::read('aser.disable_nembeteplus')) $ans['disable_nembeteplus']=true; 
 					exit(json_encode($ans));
@@ -2688,7 +2688,7 @@ class VentesController extends AppController {
 		//basic checkings.
 		$this->_addCheckings($this->data);
 		//initializing some variables.
-		$failToSaveMsg="Fail to save this vente.";
+		$failToSaveMsg="Failed to save this sale.";
 		//find the Point of sale we are working on.
 		$pos=(!empty($pos))?($pos):null;
 		//date for beneficiaire
@@ -2758,11 +2758,11 @@ class VentesController extends AppController {
 				$printed=$search['Vente']['printed'];
 				//j'essaie d'empecher qu'on ajoute un produit avec un PU different du premier
 				if($this->data['Vente']['PU']!=$search['Vente']['PU']){
-					exit(json_encode(array('success'=>false,'msg'=>'Le PU doit être le même que celui d\'avant!')));
+					exit(json_encode(array('success'=>false,'msg'=>'The unit price must be the same as the previous one!')));
 				}
 				// stop different pourcentage for the same product
 				if(isset($this->data['Vente']['pourcentage'])&&($this->data['Vente']['pourcentage']!=$search['Vente']['pourcentage'])){
-					exit(json_encode(array('success'=>false,'msg'=>'Le pourcentage doit être le même que celui d\'avant!')));
+					exit(json_encode(array('success'=>false,'msg'=>'The pourcentage must be the same as the previous one!')));
 				}
 				$this->data['Vente']['id']=$consoId=$search['Vente']['id'];
 				$this->data['Vente']['quantite']+=$search['Vente']['quantite'];
@@ -2795,7 +2795,7 @@ class VentesController extends AppController {
 		$factureNum=null;
 		if($this->data['Vente']['factureId']=='creation'){
 			$facture['Facture']['journal_id']=$journal['id'];
-			$facture['Facture']['etat']='en_cours';
+			$facture['Facture']['etat']='in_progress';
 			$facture['Facture']['tva_incluse']=1;
 			$facture['Facture']['date']=$journal['date'];
 			$facture['Facture']['tier_id']=($this->data['Vente']['tier_id']=='null')?NULL:$this->data['Vente']['tier_id'];
@@ -2815,7 +2815,7 @@ class VentesController extends AppController {
 					$facture['Facture']['employeur']=$this->data['Vente']['employeur'];
 				}
 			}
-			if(!$this->Vente->Facture->save($facture)) exit(json_encode(array('success'=>false,'msg'=>"Vente Add F(x) : Fail to create the bill.")));
+			if(!$this->Vente->Facture->save($facture)) exit(json_encode(array('success'=>false,'msg'=>"Failed to create the invoice.")));
 			$factureId=$this->Vente->Facture->id;
 			//determining the facture's display number
 			$factureNum=$this->Product->facture_number($factureId,'Vente');
@@ -2823,7 +2823,7 @@ class VentesController extends AppController {
 			//trace stuff
 			$trace['Trace']['model_id']=$factureId;
 			$trace['Trace']['model']='Facture';
-			$trace['Trace']['operation']='Création de la facture avec l\'état : en_cours';
+			$trace['Trace']['operation']='Creation of the invoice with the state : in_progress';
 			$this->Vente->Facture->Trace->save($trace);
 		}
 		else {
@@ -2869,7 +2869,7 @@ class VentesController extends AppController {
 						'consoId'=>$consoId,
 						'original'=>$facture['Facture']['original'],
 						'reduction'=>$facture['Facture']['reduction'],
-						'avance'=>$facture['Facture']['avance_beneficiaire'],
+						'half_paid'=>$facture['Facture']['avance_beneficiaire'],
 						'printed'=>$printed,
 						);
 		if($this->data['Vente']['factureId']=='creation'){

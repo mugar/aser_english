@@ -5,7 +5,7 @@
 <?php
 		echo $this->Form->input('stock_id',array('selected'=>0));
 		echo $this->element('combobox',array('n°'=>1,'selected'=>false));
-		echo $this->Form->input('monnaie');
+		echo $this->Form->input('monnaie',array('label'=>'Currency'));
 		echo $this->Form->input('unite_id');
 		 
 ?>
@@ -27,8 +27,8 @@
 																'gratuit'=>'gratuit',
 																'promotion'=>'promotion'
 																)));
-		echo $this->Form->input('livrer',array('options'=>array('oui'=>'oui','non'=>'non')));
-		echo $this->Form->input('echange',array('options'=>array('oui'=>'oui','non'=>'non')));
+		echo $this->Form->input('livrer',array('options'=>array('yes'=>'yes','no'=>'no')));
+		echo $this->Form->input('echange',array('options'=>array('yes'=>'yes','no'=>'no')));
 		echo $this->Form->input('nature',array('options'=>array('casses'=>'casses','impropres'=>'impropres','vols'=>'vols')));
 		
 ?>

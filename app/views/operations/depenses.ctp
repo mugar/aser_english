@@ -1,11 +1,11 @@
 
 <div id='view'>
 <div class="document">
-<h3>Rapport Des Dépenses</h3>
+<h3>Expenses Report</h3>
 <br />
 <?php
 	if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).', monnaie : '.$monnaie.')</h4>';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).', currency : '.$monnaie.')</h4>';
 	}
 	else {
 		echo '<h4>(Currency : '.$monnaie.')</h4>';
@@ -17,10 +17,10 @@
 	<tr class="border">
 			
 			<th>Date</th>
-			<th>Montant</th>
-			<th>Libellé</th>
+			<th>Amount</th>
+			<th>Description</th>
 			<th>Payment Mode</th>
-			<th>Catégorie</th>
+			<th>Category</th>
 		
 	</tr>
 	
@@ -57,7 +57,7 @@
 	<ul>
 		<li class="link"  onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link(sprintf(__('Liste des Opérations', true), __('Operation', true)), array('action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Operations Management', true), __('Operation', true)), array('action' => 'index')); ?></li>
 	</ul>
 </div>
 
@@ -69,13 +69,13 @@
 	<span class="left">
 		<?php
 			
-			echo $this->Form->input('element_id',array('label'=>'Catégorie','options'=>$list, 'selected'=>0));
-			echo $this->Form->input('mode_paiement',array('options'=>array(''=>'',
+			echo $this->Form->input('element_id',array('label'=>'Category','options'=>$list, 'selected'=>0));
+			echo $this->Form->input('mode_paiement',array('label'=>'Payment Mode','options'=>array(''=>'',
 																		'cash'=>'cash',
 																		'cheque'=>'chèque',
 																			)
 														));		
-			echo $this->Form->input('monnaie');									
+			echo $this->Form->input('monnaie',array('label'=>'Currency'));									
 		?>
 	</span>
 	<span class="right">

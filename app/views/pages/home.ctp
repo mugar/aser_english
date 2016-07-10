@@ -157,9 +157,9 @@ $fonction=$session->read('Auth.Personnel.fonction_id');
 	<span class="left">
 		<?php
 			echo $this->Form->input('choix',array('options'=>array(
-																'BIF_depenses'=>'Ventes en BIF & Dépenses',
-																'BIF_USD'=>'Ventes en BIF & USD',
-																'BIF'=>'Ventes en BIF',
+																'RWF_depenses'=>'Ventes en RWF & Dépenses',
+																'RWF_USD'=>'Ventes en RWF & USD',
+																'RWF'=>'Ventes en RWF',
 																'USD'=>'Ventes en USD',
 																'depenses'=>'Dépenses',
 																),

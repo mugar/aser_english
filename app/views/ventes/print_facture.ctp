@@ -2,7 +2,7 @@
  jQuery.noConflict();
      jQuery(document).ready(function(){
    
-		if(jQuery('div#touch').text()=='oui'){
+		if(jQuery('div#touch').text()=='yes'){
 			jQuery('div#resto_print_thermal table').css({'width':300});
 			jQuery('div#resto_print_thermal div.thx').css({'width':300});
 			jQuery('div#resto_print_thermal #details #left').css({'width':160,
@@ -37,15 +37,15 @@
 </script>
 <?php 
 		$config=Configure::read('aser');
-		$id=($thermal!='non')?('resto_print_thermal'):('resto_print');
+		$id=($thermal!='no')?('resto_print_thermal'):('resto_print');
 		echo '<div style="display:none;" id="touch">'.$thermal.'</div>';
 ?>
 <div id="<?php echo $id; ?>" >
-	<?php if($thermal!='non'):?>
+	<?php if($thermal!='no'):?>
 	<div class="thx">
 		<?php 
 		echo $header.'<br/>'; 
-		echo 'Tél : '.$tel.'<br/>'; 
+		echo 'Tel : '.$tel.'<br/>'; 
 		echo $web; 
 		?>
 	</div>
@@ -58,16 +58,16 @@
 	<div id="details">
 	<div id="left">
 		<?php if(!Configure::read('aser.xls_copy') || $show_aserb_num):?>
-		<span class="info"><?php if($thermal!='non') echo 'N° '.$facture['Facture']['numero'];
+		<span class="info"><?php if($thermal!='no') echo 'N° '.$facture['Facture']['numero'];
                                             else echo 'Invoice N° : '.$facture['Facture']['numero'];
 		?></span>
 		<?php endif;?>
 		<?php if(!$config['magasin']): ?>
-		<span class="info">Serveur : <?php echo $facture['Personnel']['name']; ?></span>
+		<span class="info">Waiter : <?php echo $facture['Personnel']['name']; ?></span>
 		<?php endif ?>
 		<span class="info"><?php  echo 'Date : '.$this->MugTime->toFrench($facture['Facture']['date']); ?></span>
 		<?php if(isset($caissiers[$facture['Journal']['personnel_id']])):?>
-			<span class="info">Caissier : <?php echo $caissiers[$facture['Journal']['personnel_id']]; ?></span>
+			<span class="info">Cashier : <?php echo $caissiers[$facture['Journal']['personnel_id']]; ?></span>
 		<?php endif ?>
 	</div>
 	<div id="right">
@@ -76,14 +76,14 @@
 			<span class="info"><?php  echo 'Customer : '.$facture['Tier']['name']; ?></span>
 			<?php endif ?>
 			<?php if(!empty($facture['Tier']['telephone'])): ?>
-			<span class="info"><?php  echo 'Tél : '.$facture['Tier']['telephone'] ?></span>
+			<span class="info"><?php  echo 'Tel : '.$facture['Tier']['telephone'] ?></span>
 			<?php endif ?>
 			<?php if(!empty($facture['Facture']['beneficiaire'])): ?>
-			<span class="info"><?php  echo 'Béneficiaire : '.$facture['Facture']['beneficiaire'] ?></span>
+			<span class="info"><?php  echo 'Beneficiary : '.$facture['Facture']['beneficiaire'] ?></span>
 			<?php endif ?>
 		<?php endif;?>
 		<span class="info"><?php  if((!empty($facture['Facture']['table'])))
-				  echo 'Table : '.$facture['Facture']['table']; ?>
+				  echo 'Table N°: '.$facture['Facture']['table']; ?>
 		</span>
 		<?php if(Configure::read('aser.multi_resto')): ?>
 			<span class="info"><?php  echo 'Place : '.Inflector::humanize($facture['Facture']['pos']) ?></span>
@@ -94,14 +94,14 @@
 	</div>
 	<table  cellpadding="0" cellspacing="0" collspan="0">
 		<tr>	
-			<?php if($thermal!='non'):?>
-			<th>Qté</th>
+			<?php if($thermal!='no'):?>
+			<th>Qty</th>
 			<?php else: ?>
-				<th>Quantité</th>
+				<th>Qty</th>
 			<?php endif; ?>
 			<th>Product</th>
-			<th>Unit Price</th>
-			<th>PT</th>
+			<th>Unit P</th>
+			<th>Total P</th>
 		</tr>
 		<?php
 		foreach ($ventes as $vente):
@@ -115,11 +115,11 @@
 		<?php endforeach; ?>
 		<?php if($facture['Facture']['reduction']!=0):?>
 		<tr>
-			<td colspan="3">SOUS TOTAL</td>
+			<td colspan="3">SUB TOTAL</td>
 			<td><?php echo $facture['Facture']['original']; ?></th>
 		</tr>
 		<tr>
-			<td colspan="3">REDUCTION</td>
+			<td colspan="3">DISCOUNT</td>
 			<td><?php echo ' - '.($facture['Facture']['original']-$facture['Facture']['montant']); ?></th>
 		</tr>
 		<?php endif; ?>
@@ -129,7 +129,7 @@
 		</tr>
 		<?php if($facture['Facture']['classee']):?>
 			<tr>
-				<td colspan="3">ETAT</td>
+				<td colspan="3">STATE</td>
 				<td><?php echo strtoupper($facture['Facture']['etat']); ?></th>
 			</tr>
 			<?php if($facture['Facture']['etat']!='payee'):?>
@@ -152,7 +152,7 @@
 			<?php endif; ?>
 		<?php endif; ?>
 	</table>
-	<?php if($thermal=='non'):?>
+	<?php if($thermal=='no'):?>
 	<?php else: ?>
 		<div class="thx">
 		<?php 

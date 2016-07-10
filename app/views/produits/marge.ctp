@@ -1,4 +1,4 @@
-<h3><?php __('Tableau des marges de la période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Tableau des marges de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Products</th>
@@ -39,7 +39,7 @@
 			?></td>
 	</tr>
 </table>
-	<?php echo $this->Form->create('Product');?>
+	<?php echo $this->Form->create('Produit');?>
 		<?php
 		echo $this->Form->input('date1',array('label'=>'Start Date',
 												'type'=>'date',

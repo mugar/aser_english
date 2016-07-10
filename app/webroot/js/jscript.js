@@ -39,7 +39,7 @@ jQuery('<div id="loca_edit" title="Modification de la location"></div>').insertA
 function transfer(){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionner une facture!</div>')
+    	jQuery('<div id="alert" title="message">Select an invoice!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -127,12 +127,12 @@ function stats(days,month,year){
 }
 
 function paiement_msg(){
-	var obs=prompt('Mettez la raison du manque de paiement : ');
+	var obs=prompt('Please input the reason for the lack of payment : ');
 	if((obs!=null)&&(obs!='')){
 		return obs;
 	}
 	else {
-		alert('Echec d\'enregistrement! veuillez réessayer.');
+		alert('Failed to save! Please try again.');
 		return 0;
 	}
 }
@@ -141,7 +141,7 @@ function state_updater(id,el,state,obs,force,heure){
 	 var controller=(jQuery('div#tabella').attr('type')=='reservations')?('reservations'):('locations');
 	 var goOn=true;
 	 if((state=='partie')&&(force==undefined)){
-	 	if(confirm('Voulez vraiment changer l\'etat à partie ? car l\'opération est irréversible!')){
+	 	if(confirm('Do you really want to change the state to checked-out? because this is an irreversible!')){
 	 		goOn=true;
 	 	}
 	 	else {
@@ -197,7 +197,7 @@ function serveur_changer(factureId){
 		var serveur_id=jQuery('#VentePersonnelId option:selected').val();
 		var serveur=jQuery('#VentePersonnelId option:selected').html();
 		if(serveur==''){
-			alert('Sélectionné un serveur !');
+			alert('Select a waiter !');
 		}
 		else {
 			jQuery.ajax({
@@ -215,7 +215,7 @@ function serveur_changer(factureId){
  		}
 	}
 	else {
-		alert('Sélectionné une facture !');
+		alert('Select an invoice !');
 	}
 }
 
@@ -331,7 +331,7 @@ function getBase(){
  	if(factureId!=0){
  			jQuery('#order')
     		.dialog({modal:true, show:'slide',hide:'clip',width:350,
-    			buttons: { "Envoyer": function() { 
+    			buttons: { "Send": function() { 
     							var msg1=(jQuery('#msg1').val()!='')?jQuery('#msg1').val():'null';
     							var msg2=(jQuery('#msg2').val()!='')?jQuery('#msg2').val():'null';
     							print_bon(factureId,0,msg1,msg2,'');
@@ -355,7 +355,7 @@ function getBase(){
  					});
  	}
  	else {
- 		alert('Sélectionné une facture!')
+ 		alert('Select an invoice!')
  	}
  }
  function print_bon(factureId,force,msg1,msg2,consoId){
@@ -440,7 +440,7 @@ function getBase(){
  			var serveur_name=jQuery('table#list_factures tr[id="'+factureId+'"] td[id="waiter"]').text();
  			var current_serveur_name=jQuery('#pos').attr('serveur_name');
  			if(serveur_name!=current_serveur_name){
- 				alert("Impossible d'imprimer une facture qui n'est pas la votre!");
+ 				alert("Impossible d'imprimer an invoice qui n'est pas la votre!");
  				goOn=false;
  			}
  		}
@@ -467,7 +467,7 @@ function getBase(){
  						jQuery('span[name="disable"]').attr('class','boutton_disabled').removeAttr('onclick').unbind('click');
  						jQuery('table#list_factures tr[id="'+factureId+'"]').attr('printed','1');
  						if(jQuery('table#list_factures tr[id="'+factureId+'"]').attr('name')=='0'){
- 							jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('cloturer');
+ 							jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('printed');
  						}
  					}
  					jQuery('#indicator').text('Patientez ...');
@@ -477,7 +477,7 @@ function getBase(){
  		}
  	}
  	else {
- 		alert('Sélectionner une facture !');
+ 		alert('Select an invoice !');
  	}
  }
  var mode=''; var ref=''; var equi=''; var monnaie='';
@@ -486,7 +486,7 @@ function getBase(){
  	if(factureId!=0){
  		var goOn=true;
  		if(moveOn==undefined){
- 			if(confirm('Voulez vous vraiment classer cette facture ?')){
+ 			if(confirm('Do you really want to cancel this invoice?')){
  				goOn=true;
  			}
  			else {
@@ -536,8 +536,8 @@ function getBase(){
  			var etat='';
  			if(payed==1){ 
  				avance=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
- 				etat='payee';
- 			}
+ 				etat='paid';
+ 		   }
  			else if(payed==2){ 
  				avance=0;
  				jQuery('input#avance').val(0);
@@ -548,7 +548,7 @@ function getBase(){
  				etat='bonus';
  			}
  			else {
- 				etat='avance';
+ 				etat='half_paid';
   				avance=parseInt(jQuery('input#avance').val());
   			}
   			etat=((avance==0)&&(payed==4))?'credit':etat;
@@ -609,7 +609,7 @@ function getBase(){
  			}
  	}
  	else {
- 		alert('Sélectionner une facture !');
+ 		alert('Select an invoice !');
  	}
  }
  
@@ -638,11 +638,11 @@ function getBase(){
  	}
  	var goOn=true;
  	if(factureId==0){
- 		alert('Sélectionné une facture!');
+ 		alert('Select an invoice!');
  		goOn=false;
  	}
  	else if((moveOn==undefined)&&(consoId=='facture')){
- 		goOn=confirm('Voulez vraiement annuler cette facture ?');
+ 		goOn=confirm('Do you want to cancel this invoice?');
  	}
  	
  	if((printed>=1)&&(moveOn==undefined)&&(goOn)){
@@ -669,7 +669,7 @@ function getBase(){
  if(goOn){
  		var obs='';
  		if((consoId=='facture')||(printed>0)){ //le motif est requis seuleemnt lors de l'annulation de la facture.
- 			obs=prompt('Veuillez mentioné le motif de l\'annulation ');
+ 			obs=prompt('Please input the reason for the cancellation');
  		}
  		if(((obs=='')||(obs==undefined)||(obs==null))&&(consoId=='facture')){
  			alert('le motif est obligatoire!');
@@ -755,7 +755,7 @@ function getBase(){
  				  		}
  				}
  				else {
- 					alert('Sélectionner un produit !');
+ 					alert('Select un produit !');
  				}
  			}
  			else { alert(response.msg);}
@@ -1003,7 +1003,7 @@ function getBase(){
 						jQuery('#VentePourcentage').attr('disabled','disabled');
 					}
 					if(factureId=='creation'){
-						facture_row(r.factureId,r.factureNum,r.journal,beneficiaire,table,r.original,r.reduction,r.montant,0,'en_cours',serveur,r.date);
+						facture_row(r.factureId,r.factureNum,r.journal,beneficiaire,table,r.original,r.reduction,r.montant,0,'in_progress',serveur,r.date);
 					    vente_row(pourcentage,produit_id,produit,quantite,r.PU,r.PT,r.consoId,r.printed);
 						vente_details(r.factureId,r.factureNum,r.montant,r.reste,r.avance,'',beneficiaire,clientId,client,matricule,liasse,employeur);
 						consoId=0;
@@ -1162,7 +1162,7 @@ function aserPrint(shrink,scale,printer){
 
 function facturation(form){
 	if((jQuery('form[name="'+form+'"] input[type="checkbox"]:checked').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné au moins un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select au moins un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -1985,7 +1985,7 @@ function mouseout(c) {
 function remove_facture(){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2025,7 +2025,7 @@ function goTo(){
 function facture_global(tierId){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)!=1) {
-    	jQuery('<div id="alert" title="message">Sélectionné un seul élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un seul élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2037,7 +2037,7 @@ function facture_global(tierId){
 function remove_pyt(){
 	var nom='pyts';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné au moins un Paiment!</div>')
+    	jQuery('<div id="alert" title="message">Select au moins un Paiment!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2066,7 +2066,7 @@ function remove_pyt(){
 function view_pyt(){
 	var nom='pyts';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné au moins un Paiement !</div>')
+    	jQuery('<div id="alert" title="message">Select au moins un Paiement !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2083,7 +2083,7 @@ function view_pyt(){
 function mass_pyt(reservation){
 	var nom='checkbox';
 	if((reservation=='off')&&(jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length==0)) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2321,8 +2321,8 @@ function annuler_facture(text){
 	if(jQuery('span#etat').text()=="annulee"){
 		alert('Facture déjà annulée !');
 	}
-	else if(confirm('Voulez vraiment annuler cette facture ??')){
-		var obs=prompt('Motif de l\'annulation : ');
+	else if(confirm('Do you really want to close this invoice?')){
+		var obs=prompt('Reason for the cancellation : ');
 		if((obs!='')&&(obs!=null)){
 			jQuery.ajax({
     			url:getBase()+'factures/remove_facture/'+factureId+'/'+model+'/'+obs,
@@ -2556,7 +2556,7 @@ function edit_produit(){
 	   	jQuery('#edit_boxe').load(getBase()+"produits/edit/"+produit_id,function(){date();});
 	}
 	else {
-		alert('Sélectionné un produit!');
+		alert('Select un produit!');
 	}
 }
 
@@ -2748,7 +2748,7 @@ function single_add(){
 					});
 					var occ=jQuery('#occupants1 option:selected').length;
 					if(occ==0){
-						alert('Sélectionné les occupants !');
+						alert('Select les occupants !');
 					}
 					else if(test.form()){
     			var tier=jQuery('select[id="principal1"] option:selected').html();
@@ -2956,7 +2956,7 @@ function actions(nom,action,affectationForm) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3058,7 +3058,7 @@ function produit_tarifs(nom,action,tarifs_form) {
 			}
 	        else {
 		        jQuery(document).ready(function(){
-    	        jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément dans la liste des tarifs !</div>')
+    	        jQuery('<div id="alert" title="Message">Select un et un seul élément dans la liste des tarifs !</div>')
     	        .dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3069,7 +3069,7 @@ function produit_tarifs(nom,action,tarifs_form) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3100,7 +3100,7 @@ function model_details(nom,action) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3203,7 +3203,7 @@ function location_extras(nom,action,extras_form) {
 			}
 	        else {
 		        jQuery(document).ready(function(){
-    	        jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément dans la liste des extras !</div>')
+    	        jQuery('<div id="alert" title="Message">Select un et un seul élément dans la liste des extras !</div>')
     	        .dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3214,7 +3214,7 @@ function location_extras(nom,action,extras_form) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Sélectionné un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3456,7 +3456,7 @@ function effacer(nom) {
 	info=info.split('_');//to get the model and the controller
 	jQuery('form[name="'+nom+'"]').attr('action',getBase()+''+info[1]+'/deleteAll/'+info[0]);
     if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="Message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3580,7 +3580,7 @@ function print_documents(action,redirect_url){
 
 function remove_docs(nom,action){
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)!=1) {
-    	jQuery('<div id="alert" title="message">Sélectionné un seul élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un seul élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3634,7 +3634,7 @@ function remove_docs(nom,action){
 function cleaner(etat){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3659,7 +3659,7 @@ function cleaner(etat){
 function disable(action){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3690,7 +3690,7 @@ function disable(action){
 function msg_gouvernante(){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3737,7 +3737,7 @@ function msg_gouvernante(){
 function documents(nom,action){
 	
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3818,7 +3818,7 @@ function mass_modification(controller) {
 	controller = (controller==undefined)?'produits':controller;
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Sélectionné un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select un élément !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {

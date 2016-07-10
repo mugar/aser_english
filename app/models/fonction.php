@@ -12,15 +12,7 @@ class Fonction extends AppModel {
 	function parentNode() {
   		return null;
 	}
-	var $belongsTo = array(
-		'Personnel' => array(
-			'className' => 'Personnel',
-			'foreignKey' => 'personnel_id',
-			'conditions' => '',
-			'fields' =>'',
-			'order' => ''
-		));
-		
+	
 	var $validate = array(
 		'date' => array(
 			'date' => array(

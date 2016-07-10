@@ -2,17 +2,17 @@
 class OperationsController extends AppController {
 
 	var $name = 'Operations';
-	var $models=array('caisses'=>'caisses',
-					'ventes'=>'ventes',
-					'depenses'=>'depenses',
+	var $models=array('caisses'=>'accounts',
+					'ventes'=>'deposits',
+					'depenses'=>'expenses',
 					);
 					
-	var $model1s=array('caisses'=>'caisses',
-					'ventes'=>'autre',
+	var $model1s=array('caisses'=>'accounts',
+					'ventes'=>'deposit',
 					
 					);
-	var $model2s=array('caisses'=>'caisses',
-					'depenses'=>'dépenses',
+	var $model2s=array('caisses'=>'accounts',
+					'depenses'=>'expenses',
 					);
 	
 	function beforeFilter(){
@@ -22,7 +22,7 @@ class OperationsController extends AppController {
 			$model1s=$this->model1s;
 			$model2s=$this->model2s;
 			$this->loadModel('Caiss');
-			$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'oui',
+			$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'yes',
 																'NOT'=>array('Caiss.id'=>$this->caissesInterdites)
 																),
       												'order'=>array('Caiss.name asc')
@@ -78,7 +78,7 @@ class OperationsController extends AppController {
 	function _types($type){
 		$this->loadModel('Type');
 		return $this->Type->find('list',array('conditions'=>array('Type.type'=>$type,
-    																	'Type.actif'=>'oui',
+    																	'Type.actif'=>'yes',
 																		),
       												'order'=>array('Type.name asc')
 																)
@@ -86,7 +86,7 @@ class OperationsController extends AppController {
 	}
 
 	function _caisses(){
-		$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'oui',
+		$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'yes',
     																		'NOT'=>array('Caiss.id'=>$this->caissesInterdites)
 																			),
       												'order'=>array('Caiss.name asc')
@@ -99,7 +99,7 @@ class OperationsController extends AppController {
 		$parts=explode(' : ',$this->data['Operation'][$index]);
 		$elements=$this->Operation->Compte->find('all',array('fields'=>array('Compte.composer'),
 																	'conditions'=>array('Compte.numero like'=>$parts[0].'%',
-																						'Compte.actif'=>'oui',
+																						'Compte.actif'=>'yes',
 																						),
 																	'order'=>array('Compte.numero')
 																));
@@ -113,7 +113,7 @@ class OperationsController extends AppController {
 		$model='Type';
 		$conditions=$cond=array();
 		$conditions['Operation.model']=$model;
-		$conditions['Operation.monnaie']=$monnaie='BIF';
+		$conditions['Operation.monnaie']=$monnaie='RWF';
 		$conditions[$model.'.type']='depense';
 		$conditions['Operation.common regexp']='(Caiss)';
 		$conditions['Operation.date >=']=$date1=date('Y-m').'-01';
@@ -163,7 +163,7 @@ class OperationsController extends AppController {
 		$conditions=$cond=array();
 		$conditions['Operation.model']=$model;
 		$conditions['Operation.mode_paiement']=$mode_paiement='cash';
-		$conditions['Operation.monnaie']=$monnaie='BIF';
+		$conditions['Operation.monnaie']=$monnaie='RWF';
 		if($model!='Caiss'){
 			$conditions[$model.'.type']=Inflector::singularize(strtolower($element));
 		}
@@ -258,7 +258,7 @@ class OperationsController extends AppController {
 		$operations=$ants=$elements=array();
 		$debit=$credit=$solde=$report=0;
 		$conditions=array();
-		$conditions['Operation.monnaie']=$monnaie='BIF';
+		$conditions['Operation.monnaie']=$monnaie='RWF';
 		$cond[$model.'.id']=$id;
 		
 		$conditions['Operation.date >=']=$date1=date('Y-m').'-01';
@@ -475,13 +475,13 @@ class OperationsController extends AppController {
 		$model1s=$this->model1s;
 		$model2s=$this->model2s;
 		$this->loadModel('Caiss');
-		$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'oui',
+		$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'yes',
 																'Caiss.id'=>$this->Product->caisses_permises()
 																),
       												'order'=>array('Caiss.name asc')
 																)
 												);
-		$caissiers =$this->Operation->Personnel->find('list',array('conditions'=>array('Personnel.actif'=>'oui',
+		$caissiers =$this->Operation->Personnel->find('list',array('conditions'=>array('Personnel.actif'=>'yes',
 																	'Personnel.fonction_id'=>2,
 																	),
       												'order'=>array('Personnel.name asc'),
@@ -531,7 +531,7 @@ class OperationsController extends AppController {
 			case 'depenses':	
 				$this->loadModel('Type');	
     			$list =$this->Type->find('list',array('conditions'=>array('Type.type'=>'depense',
-    																	'Type.actif'=>'oui',
+    																	'Type.actif'=>'yes',
 																		),
       												'order'=>array('Type.name asc')
 																)
@@ -540,7 +540,7 @@ class OperationsController extends AppController {
 			case 'ventes':	
 				$this->loadModel('Type');	
     			$list =$this->Type->find('list',array('conditions'=>array('Type.type'=>'vente',
-    																	'Type.actif'=>'oui',
+    																	'Type.actif'=>'yes',
 																		),
       												'order'=>array('Type.name asc')
 																)
@@ -548,7 +548,7 @@ class OperationsController extends AppController {
 				break;
 			case 'caisses':	
 				$this->loadModel('Caiss');	
-    			$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'oui',
+    			$list =$this->Caiss->find('list',array('conditions'=>array('Caiss.actif'=>'yes',
     																	   'Caiss.id'=>$this->Product->caisses_permises()
 																			),
       												'order'=>array('Caiss.name asc')
@@ -648,8 +648,8 @@ class OperationsController extends AppController {
 			$date2=($this->data['Operation']['date2']>date('Y-m-d'))?date('Y-m-d'):$this->data['Operation']['date2'];
 			$devise['USD']=$taux=$this->data['Operation']['taux'];
 		}
-		$monnaie='BIF';
-		$devise['BIF']=1;
+		$monnaie='RWF';
+		$devise['RWF']=1;
 		$conditions['Operation.date >=']=$date1;
 		$conditions['Operation.date <=']=$date2;
 		$conditions['Operation.model']='Type';
@@ -664,7 +664,7 @@ class OperationsController extends AppController {
 																	'Facture.monnaie'
 																	),
 													'conditions'=>array('Facture.Operation'=>array('Reservation','Service','Location'),
-																	    'Facture.etat'=>array('payee','credit','avance','excedent'),
+																	    'Facture.etat'=>array('paid','credit','half_paid','excedent'),
 																		'Facture.monnaie !='=>'',
 																		'OR'=>array(
 																				array('Facture.date >='=>$date1,'Facture.date <='=>$date2),
@@ -701,7 +701,7 @@ class OperationsController extends AppController {
 														'conditions'=>array('Produit.groupe_id'=>$groupes, 
 																			'Facture.date >='=>$date1,
 																	    	'Facture.date <='=>$date2,
-																	    	'Facture.etat'=>array('payee','credit','avance','excedent'),
+																	    	'Facture.etat'=>array('paid','credit','half_paid','excedent'),
 																	    	'Facture.monnaie !='=>''
 																			),
 														'group'=>array('Facture.id')
@@ -757,13 +757,12 @@ class OperationsController extends AppController {
 		$depenses_by_categories[1]['montant']+=$total_sortis;
 
 		$marge_brute=$total_ventes - $depenses_by_categories[1]['montant'];
-		$marge_intermediaire = $marge_brute -  $depenses_by_categories[2]['montant'];
-		$marge_exploitation = $marge_intermediaire - $depenses_by_categories[3]['montant'];
+		$marge_exploitation = $marge_brute - $depenses_by_categories[2]['montant'] - $depenses_by_categories[3]['montant'];
 		$marge_net = $marge_exploitation - $depenses_by_categories[4]['montant'];
 
 
 		$this->set(compact('model','sections','date1','date2','monnaie','total_ventes','taux',
-												'marge_brute','marge_exploitation','marge_intermediaire','marge_net','total_sortis','depenses_by_categories'
+												'marge_brute','marge_exploitation','marge_net','total_sortis','depenses_by_categories'
 			));
 	}
 	

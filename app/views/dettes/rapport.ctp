@@ -26,7 +26,7 @@
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Tier</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Maximum ou Plafond</th>
 			<th>Type</th>
 	</tr>
@@ -78,7 +78,7 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('monnaie',array('options'=>array('toutes'=>'toutes','BIF'=>'BIF','USD'=>'USD')));
+			echo $this->Form->input('monnaie',array('options'=>array('toutes'=>'toutes','RWF'=>'RWF','USD'=>'USD')));
 			echo $this->Form->input('type',array('label'=>'Dette à ',
 												'options'=>array(0=>'toutes',
 																'court'=>'court terme',

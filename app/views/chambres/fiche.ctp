@@ -121,7 +121,7 @@
 		echo '<tr>';
 		echo '<td> Etage N° '.$etage['Etage']['name'].'</td>';
 		foreach($etage['details'] as $chambre){
-			if($chambre['Chambre']['propre']=='non'){
+			if($chambre['Chambre']['propre']=='no'){
 				echo '<td title="'.$chambre['TypeChambre']['name'].'" class="'.$chambre['Chambre']['propre'].'">'.$chambre['Chambre']['name'].' A nettoyer</td>';
 			}
 			else {

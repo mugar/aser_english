@@ -9,7 +9,7 @@ echo $this->Html->image($logo['name'], array('alt'=>'test logo', 'border' => '0'
 			<?php if(!empty($company['address2'])) echo $company['address2'].'<br/>';?>	
 			<?php if(!empty($company['tel'])) echo 'Tel : '.$company['tel'].'<br/>';?>	
 			<?php if(Configure::read('aser.all_company_info')):?> 
-				<?php if(!empty($company['compte_BIF'])) echo 'BIF Account : '.$company['compte_BIF'].'<br/>';?>	
+				<?php if(!empty($company['compte_RWF'])) echo 'RWF Account : '.$company['compte_RWF'].'<br/>';?>	
 				<?php if(!empty($company['compte_USD'])) echo 'USD Account : '.$company['compte_USD'].'<br/>';?>	
 				<?php if(!empty($company['compte_EUR'])) echo 'EUR Account : '.$company['compte_EUR'].'<br/>';?>	
 				<?php if(!empty($company['nif'])) echo 'NIF : '.$company['nif'].'<br/>';?>

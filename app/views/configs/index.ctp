@@ -26,14 +26,14 @@
 		echo $this->Form->input('address2',array('label'=>'Adresse 2','type'=>'text'));
 		echo $this->Form->input('tel',array('label'=>'Tel','type'=>'text'));
 		echo $this->Form->input('nif',array('label'=>'NIF','type'=>'text'));
-		echo $this->Form->input('compte_BIF',array('label'=>'BIF Account','type'=>'text'));
+		echo $this->Form->input('compte_RWF',array('label'=>'RWF Account','type'=>'text'));
 		echo $this->Form->input('compte_USD',array('label'=>'USD Account','type'=>'text'));
 		echo $this->Form->input('compte_EUR',array('label'=>'EUR Account','type'=>'text'));
 		echo $this->Form->input('email',array('label'=>'E-mail','type'=>'text'));
 		echo $this->Form->input('web',array('label'=>'Web Site','type'=>'text'));
 		echo $this->Form->input('bp',array('label'=>'PO BOX','type'=>'text'));
 		echo $this->Form->input('signature',array('label'=>'Signature Message','type'=>'textarea'));
-		echo $this->Form->input('taux_usd',array('label'=>'exchange rate for DOLLAR -> BIF'));
+		echo $this->Form->input('taux_usd',array('label'=>'exchange rate for DOLLAR -> RWF'));
 	?>
 	</fieldset>
 	<?php
@@ -51,10 +51,10 @@
 			
 	<fieldset class="ingredient"><legend>Paramètres pour le Point de Vente</legend>
 	<?php
-		echo $this->Form->input('thermal',array('options'=>array('oui'=>'imprimante thermal','non'=>'standard avec image','standard_sans_image'=>'standard sans image'),'label'=>'Format de l\'impression'));
+		echo $this->Form->input('thermal',array('options'=>array('yes'=>'imprimante thermal','no'=>'standard avec image','standard_sans_image'=>'standard sans image'),'label'=>'Format de l\'impression'));
 		echo $this->Form->input('header',array('type'=>'textarea','label'=>'Texte d\'Entête'));
 		echo $this->Form->input('footer',array('type'=>'textarea','label'=>'Texte de Pied de Page'));
-		echo $this->Form->input('change',array('options'=>array('oui'=>'oui','non'=>'non'),'label'=>'Calcul du change'));
+		echo $this->Form->input('change',array('options'=>array('yes'=>'yes','no'=>'no'),'label'=>'Calcul du change'));
 		if($config['multi_resto']){			
 			foreach(Configure::read('bars') as $name=>$tables){
 				echo $this->Form->input($name,array('label'=>'Nom de la Place : '.Inflector::humanize($name)));

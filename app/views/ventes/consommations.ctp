@@ -19,13 +19,13 @@
 <?php $config=Configure::read('aser'); ?>
 <div id='view'>
 <div class="document">
-<h3><?php echo 'Rapport des Consommations ';
+<h3><?php echo 'Sales Report By Product';
 		if($caissier) echo '(Caissier : '.ucfirst($caissier).')';
 	?>
 	<?php if(!is_null($date1)&&!is_null($date2)) :?>
-	<h4><?php echo '<h4>(Période du '.$this->MugTime->toFrench($date1).' au ';
+	<h4><?php echo '<h4>(From '.$this->MugTime->toFrench($date1).' to ';
 			  echo 	$this->MugTime->toFrench($date2).')</h4>';
-			  echo 'Total : '.count($ventes);
+			  echo 'Records Total : '.count($ventes);
 		 ?>
 	 </h4>
 	<?php endif;?>
@@ -34,13 +34,13 @@
 <table cellpadding="0" cellspacing="0" class="aser_sort">
 <thead>
 	<tr>
-			<th width="300" data-sort="string" >Product</th>
-			<th data-sort="int">Qté</th>
-			<th width="200" data-sort="int">PV</th>
-			<th width="200" data-sort="int">PT</th>
+			<th width="300" data-sort="string" >Product Name</th>
+			<th data-sort="int">Qty</th>
+			<th width="200" data-sort="int">Sale Price</th>
+			<th width="200" data-sort="int">Total Price</th>
 			<?php if(Configure::read('aser.ingredient')):?>
-				<th width="100" data-sort="int">PA</th>
-				<th width="100" data-sort="int">BENEFICE</th>
+				<th width="100" data-sort="int">Purchase Price</th>
+				<th width="100" data-sort="int">Profit</th>
 			<?php endif;?>
 	</tr>
 </thead>
@@ -71,17 +71,17 @@
 </table>
 <table>
 	<tr>
-			<th width="300" data-sort="string" >TOTAUX</th>
-			<th data-sort="int">Qté</th>
-			<th width="200" data-sort="int">PV</th>
-			<th width="200" data-sort="int">PT</th>
+			<th width="300" data-sort="string" >TOTALS</th>
+			<th data-sort="int">Qty</th>
+			<th width="200" data-sort="int">Sale Price</th>
+			<th width="200" data-sort="int">Total Price</th>
 			<?php if(Configure::read('aser.ingredient')):?>
-				<th width="100" data-sort="int">PA</th>
-				<th width="100" data-sort="int">BENEFICE</th>
+				<th width="100" data-sort="int">Purchase Price</th>
+				<th width="100" data-sort="int">Profit</th>
 			<?php endif;?>
 	</tr>
 	<tr>
-		<td>AVANT REDUCTION</td>
+		<td>BEFORE DISCOUNT</td>
 		<td><?php echo $number->format($quantite+0,$formatting); ?></td>
 		<td>&nbsp;</td>
 		<td><?php echo $number->format($total+0,$formatting); ?></td>
@@ -91,7 +91,7 @@
 		<?php endif;?>
 	</tr>
 	<tr>
-		<td>APRES REDUCTION</td>
+		<td>AFTER DISCOUNT</td>
 		<td></td>
 		<td>&nbsp;</td>
 		<td><?php echo $number->format($totalReduit+0,$formatting); ?></td>
@@ -111,9 +111,9 @@
 		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php
 			$action=(Configure::read('aser.touchscreen'))?'touchscreen':'index';
-			 echo $this->Html->link('Interface de Vente', array('controller' => 'ventes', 'action' => $action)); 
+			 echo $this->Html->link('Point Of Sale', array('controller' => 'ventes', 'action' => $action)); 
 		?> </li>
-		<li><?php echo $this->Html->link('Liste des Products', array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Products Management', array('controller' => 'produits', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 <!--recherche form -->
@@ -124,19 +124,19 @@
 	<span class="left">
 		<?php
 			echo $this->element('combobox',array('n°'=>0));
-			echo $this->Form->input('produit_id',array('selected'=>0,'id'=>'produits','options'=>$produits1));
-			echo $this->Form->input('stock_id',array('selected'=>0,'id'=>'stockId','options'=>$stocks1));
+			echo $this->Form->input('produit_id',array('selected'=>0,'id'=>'produits', 'label'=>'Product','options'=>$produits1));
+			echo $this->Form->input('stock_id',array('selected'=>0,'id'=>'stockId', 'label'=>'Stock','options'=>$stocks1));
 			if(Configure::read('aser.comptabilite'))
-				echo $this->Form->input('Product.groupe_comptable_id',array('selected'=>0,'multiple'=>true,'options'=>$groupeComptables1));
+				echo $this->Form->input('Produit.groupe_comptable_id',array('selected'=>0,'multiple'=>true,'options'=>$groupeComptables1));
 		?>
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('personnel_id',array('selected'=>0,'label'=>'Caissier'));
-			echo $this->Form->input('Facture.date1',array('label'=>'Date Début','type'=>'text'));									
-			echo $this->Form->input('Facture.date2',array('label'=>'Date Fin','type'=>'text'));
-			echo $this->Form->input('Facture.etat',array('label'=>'State de la facture','multiple'=>true,'options'=>$etats));
-			echo $this->Form->input('xls',array('label'=>'Exporter vers xls','type'=>'checkbox'));
+			echo $this->Form->input('personnel_id',array('selected'=>0,'label'=>'Cashier'));
+			echo $this->Form->input('Facture.date1',array('label'=>'Start Date','type'=>'text'));									
+			echo $this->Form->input('Facture.date2',array('label'=>'End Date','type'=>'text'));
+			echo $this->Form->input('Facture.etat',array('label'=>'Invoice State','multiple'=>true,'options'=>$etats));
+			echo $this->Form->input('xls',array('label'=>'Export to excel','type'=>'checkbox'));
 			?>
 	</span>
 	</form>

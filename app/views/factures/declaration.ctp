@@ -65,11 +65,11 @@ foreach($models as $model=>$service):?>
 			<th colspan="2" width="250">Montant TVAC</th>		
 	</tr>
 	<tr class="border">
-			<th>BIF</th>
+			<th>RWF</th>
 			<th>USD</th>
-			<th>BIF</th>
+			<th>RWF</th>
 			<th>USD</th>
-			<th>BIF</th>
+			<th>RWF</th>
 			<th>USD</th>
 	</tr>
 		<?php
@@ -84,7 +84,7 @@ foreach($models as $model=>$service):?>
 			<td >
 				<?php echo $this->Html->link($facture['Facture']['numero'], array('controller' => 'factures', 'action' => 'view', $facture['Facture']['id'])); ?>
 			</td>
-			<?php if($facture['Facture']['monnaie']=='BIF'):?>
+			<?php if($facture['Facture']['monnaie']=='RWF'):?>
 				<td><?php echo  $number->format($facture['Facture']['montant']-$facture['Facture']['tva'],$formatting); ?></td>
 				<td></td>
 				<td ><?php echo  $number->format($facture['Facture']['tva'],$formatting); ?></td>
@@ -104,11 +104,11 @@ foreach($models as $model=>$service):?>
 	<tr class="strong">
 		<td>SOUS TOTAL</td>
 		<td></td>
-		<td><?php echo $number->format($datas[$model]['total']['htva']['BIF'],$formatting);?></td>
+		<td><?php echo $number->format($datas[$model]['total']['htva']['RWF'],$formatting);?></td>
 		<td><?php echo $number->format($datas[$model]['total']['htva']['USD'],$formatting);?></td>
-		<td><?php echo $number->format($datas[$model]['total']['tva']['BIF'],$formatting);?></td>
+		<td><?php echo $number->format($datas[$model]['total']['tva']['RWF'],$formatting);?></td>
 		<td><?php echo $number->format($datas[$model]['total']['tva']['USD'],$formatting);?></td>
-		<td><?php echo $number->format($datas[$model]['total']['montant']['BIF'],$formatting);?></td>
+		<td><?php echo $number->format($datas[$model]['total']['montant']['RWF'],$formatting);?></td>
 		<td><?php echo $number->format($datas[$model]['total']['montant']['USD'],$formatting);?></td>
 	</tr>
 </table>
@@ -126,21 +126,21 @@ foreach($models as $model=>$service):?>
 			<th colspan="2" width="250">Montant TVAC</th>		
 	</tr>
 	<tr class="border">
-			<th>BIF</th>
+			<th>RWF</th>
 			<th>USD</th>
-			<th>BIF</th>
+			<th>RWF</th>
 			<th>USD</th>
-			<th>BIF</th>
+			<th>RWF</th>
 			<th>USD</th>
 	</tr>
 	<tr class="strong">
 		<td>TOTAL GENERAL</td>
 		<td></td>
-		<td><?php echo $number->format($totals['htva']['BIF'],$formatting);?></td>
+		<td><?php echo $number->format($totals['htva']['RWF'],$formatting);?></td>
 		<td><?php echo $number->format($totals['htva']['USD'],$formatting);?></td>
-		<td><?php echo $number->format($totals['tva']['BIF'],$formatting);?></td>
+		<td><?php echo $number->format($totals['tva']['RWF'],$formatting);?></td>
 		<td><?php echo $number->format($totals['tva']['USD'],$formatting);?></td>
-		<td><?php echo $number->format($totals['montant']['BIF'],$formatting);?></td>
+		<td><?php echo $number->format($totals['montant']['RWF'],$formatting);?></td>
 		<td><?php echo $number->format($totals['montant']['USD'],$formatting);?></td>
 	</tr>
 </table>
@@ -151,7 +151,7 @@ foreach($models as $model=>$service):?>
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Invoices Management', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 	

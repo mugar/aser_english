@@ -6,9 +6,9 @@
 <fieldset class="recherche">
 <div id="filter" style="display:none;" class="recherche">
 <fieldset>
-<?php echo $this->Form->create('Product');?>
+<?php echo $this->Form->create('Produit');?>
 <?php
-		//echo $this->Form->input('Product.id',array('label'=>'Product id','type'=>'text'));
+		//echo $this->Form->input('Produit.id',array('label'=>'Product id','type'=>'text'));
 		echo $this->Form->input('date1',array('label'=>'Start Date',
 												'type'=>'text',
 												'format'=>'d-m-y')
@@ -30,7 +30,7 @@
 			<th>Products</th>
 			<th>Element</th>
 			<th>quantité</th>
-			<th>Montant</th>
+			<th>Amount</th>
 		
 	</tr>
 		<?php
@@ -60,7 +60,7 @@
 			<th>Products</th>
 			<th>Elément</th>
 			<th>quantité</th>
-			<th>Montant</th>
+			<th>Amount</th>
 		
 	</tr>
 		<?php
@@ -91,7 +91,7 @@
 			<th>Product</th>
 			<th>Element</th>
 			<th>Quantite</th>
-			<th>Montant</th>
+			<th>Amount</th>
 		
 	</tr>
 		<?php

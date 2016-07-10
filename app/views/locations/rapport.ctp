@@ -23,7 +23,7 @@
 		<?php
 		
 		echo $this->Form->input('Facture.date1',array('label'=>'Start Date','type'=>'text'));				
-		echo $this->Form->input('Facture.date2',array('label'=>'et une date fin pour la recherche','type'=>'text'));
+		echo $this->Form->input('Facture.date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>
@@ -36,7 +36,7 @@
 <br />
 	<?php
 		if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).')</h4>';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).')</h4>';
 		}
 	?>
 

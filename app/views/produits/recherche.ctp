@@ -2,7 +2,7 @@
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Product',array('id'=>'recherche','action'=>$action));?>
+	<?php echo $this->Form->create('Produit',array('id'=>'recherche','action'=>$action));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('name',array('label'=>'Nom Du Product','value'=>''));
@@ -18,7 +18,7 @@
 		<?php
 			
 			echo $this->Form->input('type',array('options'=>$typeDeProduits1,'label'=>'Type De Product','selected'=>0));
-			echo $this->Form->input('actif',array('options'=>array(''=>'','oui'=>'oui','non'=>'non')));
+			echo $this->Form->input('actif',array('options'=>array(''=>'','yes'=>'yes','no'=>'no')));
 			if($action=='rapport'){
 				echo $this->Form->input('quantite',array('options'=>array(' > 0'=>' > 0','toutes'=>'toutes')));
 				echo $this->Form->input('export',array('label'=>'Exporter Vers Excel','type'=>'checkbox'));

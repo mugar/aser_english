@@ -2,12 +2,12 @@
 <?php $config=Configure::read('aser'); ?>
 <div id='view'>
 <div class="document">
-<h3><?php echo 'Rapport Des Commandes Effacées après Envoie';
+<h3><?php echo 'Report For Removed Orders';
 	?>
 	<?php if(!is_null($date1)&&!is_null($date2)) :?>
-	<h4><?php echo '<h4>(Période du '.$this->MugTime->toFrench($date1).' au ';
+	<h4><?php echo '<h4>(From '.$this->MugTime->toFrench($date1).' to ';
 			  echo 	$this->MugTime->toFrench($date2).')</h4>';
-			  echo 'Total : '.count($vente_effaces);
+			  echo 'Records Total : '.count($vente_effaces);
 		 ?>
 	 </h4>
 	<?php endif;?>
@@ -18,12 +18,12 @@
 	<tr>
 			<th>Date</th>
 			<th>Product</th>
-			<th>Qté</th>
-			<th>PV</th>
-			<th>PT</th>
+			<th>Qty</th>
+			<th>Unit Price</th>
+			<th>Total Price</th>
 			<th >Invoice N°</th>
-			<th >Delete Par</th>
-			<th >Observation</th>
+			<th >Deleted by</th>
+			<th >Comments</th>
 	</tr>
 </thead>
 <tbody>
@@ -70,12 +70,12 @@
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));		
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));		
 		?>
 	</span>
 	<span class="right">
 		<?php							
-			echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 			?>
 	</span>
 	</form>

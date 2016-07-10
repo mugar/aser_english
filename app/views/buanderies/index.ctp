@@ -34,8 +34,8 @@
 			
 			echo $this->Form->input('numero',array('label'=>'Invoice N°'));
 			echo $this->Form->input('Facture.montant');
-			echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));				
-			echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));	
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));	
 		?>
 	</span>
 	</form>
@@ -51,7 +51,7 @@
 		<th>Date</th>
 		<th>N Chambre</th>
 		<th>Customer</th>
-		<th>Montant</th>
+		<th>Amount</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>

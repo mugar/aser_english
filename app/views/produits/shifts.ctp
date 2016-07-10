@@ -75,7 +75,7 @@
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Product',array('id'=>'recherche'));?>
+	<?php echo $this->Form->create('Produit',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('Historique.choix',array('label'=>'Type de rapport','options'=>$choixs));

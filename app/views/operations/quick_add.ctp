@@ -3,7 +3,7 @@
 		<td id="<?php echo $operation['Operation']['id'];?>">
 			<?php echo $this->Form->input('Id.'.$operation['Operation']['op_num'],array('label'=>'','type'=>'checkbox','value'=>$operation['Operation']['op_num'])); ?>
 		</td>
-		<td><?php echo $operation['Operation']['date']; ?>&nbsp;</td>
+		<td><?php echo $this->MugTime->toFrench($operation['Operation']['date']); ?>&nbsp;</td>
 		<td><?php echo $operation['Operation']['ordre']; ?>&nbsp;</td>
 		<td><?php 
 			$montant=($operation['Operation']['debit']>0)?$operation['Operation']['debit']:$operation['Operation']['credit'];

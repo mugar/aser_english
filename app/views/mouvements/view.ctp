@@ -6,7 +6,7 @@
 			<?php echo $mouvement['Mouvement']['id']; ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Produit'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $this->Html->link($mouvement['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $mouvement['Produit']['id'])); ?>
 			&nbsp;

@@ -68,7 +68,7 @@ class PaiementsController extends AppController {
 							array('Facture.monnaie'=>$monnaie,'Paiement.montant_equivalent'=>null));
 		 	}
 			else {
-				$monnaie=($chambre=='yes')?'USD':'BIF';
+				$monnaie=($chambre=='yes')?'USD':'RWF';
 				$cond['OR']=array(array('Paiement.monnaie'=>$monnaie),
 							array('Facture.monnaie'=>$monnaie,'Paiement.montant_equivalent'=>null));
 			}
@@ -89,7 +89,7 @@ class PaiementsController extends AppController {
 			$factCond['Facture.tier_id !=']=null;
 		}
 	//	exit(debug($cond));
-		$factCond['Facture.etat !=']='annulee';
+		$factCond['Facture.etat !=']='canceled';
 		$factures=$this->Paiement->Facture->find('list',array('conditions'=>$factCond,
 																'fields'=>array('Facture.id','Facture.id'),
 																'recursive'=>0
@@ -151,7 +151,7 @@ class PaiementsController extends AppController {
 																					),
 																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
-																						'Facture.etat'=>array('avance','credit'),
+																						'Facture.etat'=>array('half_paid','credit'),
 																						'Facture.tier_id'=>$locationInfo['Facture']['tier_id'],
 																						),
 																	));

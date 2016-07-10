@@ -7,7 +7,7 @@
 	<tr>
 			<th>Type</th>
 			<th>Nom</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Currency</th>
 	</tr>
 		<?php
@@ -57,7 +57,7 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('monnaie',array('options'=>array('toutes'=>'toutes','BIF'=>'BIF','USD'=>'USD')));
+			echo $this->Form->input('monnaie',array('options'=>array('toutes'=>'toutes','RWF'=>'RWF','USD'=>'USD')));
 		?>
 	</span>
 	</form>

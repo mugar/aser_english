@@ -97,7 +97,7 @@ class ProduitsController extends AppController {
 																	'Facture.date','Facture.journal_id','Facture.id'
 																	),
 													'conditions'=>array('Facture.tier_id'=>array(0,NULL),
-																		'Facture.etat'=>array('avance','excedent'),
+																		'Facture.etat'=>array('half_paid','excedent'),
 																		),
 													'group'=>array('Paiement.facture_id')
 													));
@@ -119,7 +119,7 @@ class ProduitsController extends AppController {
 					if(!$this->Paiement->save(array('Paiement'=>$newPyt))){
 						exit(debug($newPyt));
 					}
-					$paiement['Facture']['etat']='payee';
+					$paiement['Facture']['etat']='paid';
 					if(!$this->Paiement->Facture->save($paiement)){
 						exit(debug($paiement));
 					}
@@ -315,7 +315,7 @@ set_time_limit(240);    //4minutes
 																	'Groupe.name',
 																	'Groupe.id',
 																	),
-												 'conditions'=>array('Produit.actif'=>'oui'),
+												 'conditions'=>array('Produit.actif'=>'yes'),
 											     'order'=>array('Groupe.name','Produit.name')
 												 )
 											);	
@@ -633,7 +633,7 @@ set_time_limit(240);    //4minutes
 		$stockInfo=array();
 		$conditions=array();
 		$cond['Produit.type']='stockable';
-		$cond['Produit.actif']='oui';
+		$cond['Produit.actif']='yes';
 		
 		if(!empty($this->data)){
 			if($this->data['Produit']['produit_id'][0]!=0){
@@ -726,7 +726,7 @@ set_time_limit(240);    //4minutes
 			}
 			}
 		}	
-			$list=$this->Produit->find('list',array('conditions'=>array('Produit.actif'=>'oui',
+			$list=$this->Produit->find('list',array('conditions'=>array('Produit.actif'=>'yes',
 																		'Produit.type like'=>'%stockable%'
 																		),
 													'order'=>array('Produit.name')
@@ -913,7 +913,7 @@ set_time_limit(240);    //4minutes
     	if ((!empty( $stockId ))&&($stockId!=0)) {
       		$produits =$this->Produit->find('list',array('fields'=>array('Produit.id','Produit.name'),
       															'conditions'=>array('Produit.stock_id'=>$stockId,
-																					'Produit.actif'=>'oui',
+																					'Produit.actif'=>'yes',
 																					'Produit.type like'=>'%stockable%',
 																					),
 																'order'=>array('Produit.name')
@@ -922,7 +922,7 @@ set_time_limit(240);    //4minutes
     	}
     	else { 
     		$produits =$this->Produit->find('list',array('fields'=>array('Produit.id','Produit.name'),
-																'conditions'=>array('Produit.actif'=>'oui',
+																'conditions'=>array('Produit.actif'=>'yes',
 																					'Produit.type like'=>'%stockable%',
 																				),
 																'order'=>array('Produit.name')

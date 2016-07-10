@@ -8,7 +8,7 @@
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-		echo $this->Form->input('Product.name',array('value'=>'toutes'));
+		echo $this->Form->input('Produit.name',array('value'=>'toutes'));
 		?>
 	</span>
 	<span class="right">

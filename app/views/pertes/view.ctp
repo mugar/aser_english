@@ -11,7 +11,7 @@
 			<?php echo $this->Html->link($perte['Bon']['numero'], array('controller' => 'bons', 'action' => 'view', $perte['Bon']['id'])); ?>
 			&nbsp;
 		</dd>
-		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Product'); ?></dt>
+		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Produit'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
 			<?php echo $this->Html->link($perte['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $perte['Produit']['id'])); ?>
 			&nbsp;

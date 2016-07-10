@@ -10,7 +10,7 @@
 	</span>
 	<span class="right">
 		<?php			
-		echo $this->Form->input('date2',array('label'=>'et une date fin pour la recherche','type'=>'text'));
+		echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 		?>
 	</span>
 	</form>
@@ -19,11 +19,11 @@
 </div>
 <div id='view'>
 <div class="document">
-<h3>Liste des Factures Débloquées</h3>
+<h3>Unlocked Invoices Report</h3>
 <br />
 	<?php
 		if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).', '.count($factures).' factures au total)</h4>';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).', '.count($factures).' invoices  in total)</h4>';
 		}
 	?>
 
@@ -33,11 +33,11 @@
 	<tr>
 			<th width="100">Invoice N°</th>
 			<th>State</th>
-			<th width="200">Montant</th>
-			<th width="300">Reste A Payer</th>
-			<th>Serveur</th>
+			<th width="200">Amount</th>
+			<th width="300">Left to Pay</th>
+			<th>Waiter</th>
 			<th>Date</th>
-			<th>Débloquer Par</th>
+			<th>Unlocked By</th>
 			<th>Action</th>
 
 		
@@ -71,6 +71,6 @@
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Invoices Management', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

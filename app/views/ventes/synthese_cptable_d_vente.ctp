@@ -5,8 +5,8 @@
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('Facture.date1',array('type'=>'text','label'=>__('Date Début',true)));
-			echo $this->Form->input('Facture.date2',array('type'=>'text','label'=>__('Date Fin',true)));
+			echo $this->Form->input('Facture.date1',array('type'=>'text','label'=>__('Start Date',true)));
+			echo $this->Form->input('Facture.date2',array('type'=>'text','label'=>__('End Date',true)));
 		?>
 	</span>
 	
@@ -20,8 +20,8 @@
 <div id="entete">
 	<div class="right">
 	<?php  
-		echo __('Date Début').' : '.$this->MugTime->toFrench($date1).'<br/>';
-		echo __('Date Fin').' : '.$this->MugTime->toFrench($date2).'<br/>';
+		echo __('Start Date').' : '.$this->MugTime->toFrench($date1).'<br/>';
+		echo __('End Date').' : '.$this->MugTime->toFrench($date2).'<br/>';
 		?>
 		 <br/>
 	</div>
@@ -82,7 +82,7 @@
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Invoices Management', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 	

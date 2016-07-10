@@ -1,5 +1,5 @@
 <div class="types index">
-	<h2><?php __('Types d\'entrées et de dépenses');?></h2>
+	<h2><?php __('Operations Types Management');?></h2>
 	<!--recherche form -->
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
@@ -7,16 +7,16 @@
 	<?php echo $this->Form->create('Type',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('name',array('id'=>'nom','value'=>'toutes'));
-			echo $this->Form->input('type',array('options'=>$optionsForType1s
+			echo $this->Form->input('name',array('id'=>'nom','label'=>'Name','value'=>'any'));
+			echo $this->Form->input('type',array('options'=>array('any'=>'Any')+$optionsForType1s
 										));
 		?>
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('actif',array('options'=>array('toutes'=>'toutes',
-																	'oui'=>'oui',
-																	'non'=>'non'
+			echo $this->Form->input('actif',array('options'=>array('any'=>'any',
+																	'yes'=>'yes',
+																	'no'=>'no'
 																	)
 												)
 									);
@@ -30,9 +30,9 @@
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	<tr>
-		<th>Nom</th>
-		<th>Choisir le Type</th>	
-		<th>Catégorie</th>	
+		<th>Name</th>
+		<th>Choose Type</th>	
+		<th>Category</th>	
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -56,7 +56,7 @@
 			<th><?php echo $this->Paginator->sort('id');?></th>
 			<th><?php echo $this->Paginator->sort('name');?></th>
 			<th><?php echo $this->Paginator->sort('type');?></th>
-			<th>Catégorie</th>
+			<th>Category</th>
 			<th><?php echo $this->Paginator->sort('actif');?></th>
 		</tr>
 	<?php

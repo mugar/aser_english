@@ -30,7 +30,7 @@
 	<h3>Actions</h3>
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
-		<li><?php echo $this->Html->link('Retour En Arrière', array('controller'=>'factures','action'=>'view',$factureId)); ?> </li>
+		<li><?php echo $this->Html->link('Go back', array('controller'=>'factures','action'=>'view',$factureId)); ?> </li>
 
 	</ul>
 </div>

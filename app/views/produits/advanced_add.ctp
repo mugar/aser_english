@@ -23,7 +23,7 @@
 	</tr>
 	<?php for($i=0;$i<5;$i++): ?>
 	<tr name="<?php echo $i?>">
-		<?php echo $this->Form->create('Product',array('action'=>'add'));?>
+		<?php echo $this->Form->create('Produit',array('action'=>'add'));?>
 		
 		<td><?php echo $this->Form->input('stock_id',array('label'=>'','selected'=>0,'title'=>'Le nom du stock auquel appartient le produit'));?></td>
 		<td><?php echo $this->Form->input('section_id',array('id'=>$i.'SectionId','label'=>'','selected'=>0,'title'=>'Le nom de la section auquel appartient le produit'));?></td>

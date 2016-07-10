@@ -1,4 +1,4 @@
-<h3><?php __('Rapport des Dettes de la periode entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Rapport des Dettes de la periode entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Caisse</th>

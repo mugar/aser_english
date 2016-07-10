@@ -1,6 +1,6 @@
 <?php $fonction = $session->read('Auth.Personnel.fonction_id'); ?>
 <div class="produits view">
-<h2><?php  __('Product');?></h2>
+<h2><?php  __('Produit');?></h2>
 	<dl><?php $i = 0; $class = ' class="altrow"';?>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Id'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
@@ -177,7 +177,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Product', true)), array('action' => 'edit', $produit['Produit']['id'])); ?> </li>
+		<li><?php echo $this->Html->link(sprintf(__('Edit %s', true), __('Produit', true)), array('action' => 'edit', $produit['Produit']['id'])); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Products', true)), array('action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Stocks', true)), array('controller' => 'stocks', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Sections', true)), array('controller' => 'sections', 'action' => 'index')); ?> </li>

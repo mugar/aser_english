@@ -226,7 +226,7 @@
 </ul>
 <!--ajax_add form -->
 
-<div id="location_boxe" style="display:none" title='Location pour la Salle : <span id="room_number"></span> <br><strong>Période du : <span id="arrivee"></span> au : <span id="depart"></span>'>
+<div id="location_boxe" style="display:none" title='Location pour la Salle : <span id="room_number"></span> <br><strong>From : <span id="arrivee"></span> au : <span id="depart"></span>'>
 
 <div class="dialog">
 <fieldset><legend>Détails Customer</legend>

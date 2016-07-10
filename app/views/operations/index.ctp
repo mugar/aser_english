@@ -56,12 +56,12 @@
 	<span class="left">
 		<?php
 			
-			echo $this->Form->input('model1',array('label'=>'Catégorie','id'=>'cat','options'=>$options,'selected'=>0));
-			echo '<span id="choix">'.$this->Form->input('Operation.element1',array('label'=>'Choix','options'=>$choix,'selected'=>0)).'</span>';
+			echo $this->Form->input('model1',array('label'=>'Category','id'=>'cat','options'=>$options,'selected'=>0));
+			echo '<span id="choix">'.$this->Form->input('Operation.element1',array('label'=>'Choice','options'=>$choix,'selected'=>0)).'</span>';
 			echo $ajax->observeField('cat',array('url' => array('controller'=>'operations','action'=>'update/1'),'update' => 'choix'));
-			echo $this->Form->input('libelle',array('label'=>'Recherche par libellé'));
-			echo $this->Form->input('personnel_id',array('label'=>'Personnel','options'=>$personnels1));
-			echo $this->Form->input('mode_paiement',array('options'=>$modePaiements1));
+			echo $this->Form->input('libelle',array('label'=>'Search By Description'));
+			echo $this->Form->input('personnel_id',array('label'=>'Created By','options'=>$personnels1));
+			echo $this->Form->input('mode_paiement',array('label'=>'Payment Mode','options'=>$modePaiements1));
 			
 			
 			
@@ -70,10 +70,10 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('monnaie',array('options'=>$monnaies1));
+			echo $this->Form->input('monnaie',array('options'=>$monnaies1,'label'=>'Currency'));
 			echo $this->Form->input('date1',array('label'=>'Start Date'));
 			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
-			echo $this->Form->input('show',array('label'=>'Affichage',
+			echo $this->Form->input('show',array('label'=>'Pagination',
 												'options'=>array(20=>'20',
 																50=>'50',
 																100=>'100',
@@ -92,27 +92,27 @@
 	
 	<tr>
 		<th>Date</th>
-		<th>N°Ordre</th>
+		<th>Order N°</th>
 		<?php if($mode=='index'):?>
 			<th>Source :</th>
-			<th>Préciser la source</th>
+			<th>Specify the source</th>
 		<?php if(false):?>
-			<th>N° compte</th>	
+			<th>Account N°</th>	
 		<?php endif;?>
 		<!--<th>Caissiers</th>-->
-			<th>Montant</th>
-			<th>Libellé</th>
+			<th>Amount</th>
+			<th>Description</th>
 			<th>Currency</th>
 			<th>Payment Mode</th>
 			<th>Destination</th>
-			<th>Préciser la destination</th>
+			<th>Specify the destination</th>
 			<?php if(false):?>
 			<th>N° compte</th>	
 			<?php endif;?>	
 		<?php elseif($mode=='report') :?>
-			<th>Catégorie</th>
+			<th>Category</th>
 			<th>Préciser la destination</th>	
-			<th>Montant</th>
+			<th>Amount</th>
 		<?php endif;?>
 		<th>Actions</th>
 	</tr>
@@ -166,15 +166,15 @@
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('date');?></th>
-			<th><?php echo $this->Paginator->sort('ordre');?></th>
-			<th><?php echo $this->Paginator->sort('montant');?></th>
-			<th width="150"><?php echo $this->Paginator->sort('libelle');?></th>
+			<th><?php echo $this->Paginator->sort('Order N°','ordre');?></th>
+			<th><?php echo $this->Paginator->sort('Amount','montant');?></th>
+			<th width="150"><?php echo $this->Paginator->sort('Description','libelle');?></th>
 			<?php if($mode!='report'):?>
-			<th><?php echo $this->Paginator->sort('mode_paiement');?></th>
+			<th><?php echo $this->Paginator->sort('Payment Mode','mode_paiement');?></th>
 			<th><?php echo $this->Paginator->sort('Source');?></th>
 			<th><?php echo $this->Paginator->sort('Destination');?></th>
 			<?php endif;?>
-			<th><?php echo $this->Paginator->sort('personnel_id');?></th>
+			<th><?php echo $this->Paginator->sort('Created By','personnel_id');?></th>
 		</tr>
 	<?php
 	$total=0;
@@ -199,10 +199,10 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class="link" onclick="actions('checkbox','bon')" >Bon de Caisse</li>
+		<li class="link" onclick="actions('checkbox','bon')" >Print operation</li>
 		<li class="link" onclick="mass_delete()" >Delete</li>
 		<li class="link" onclick="edit()" >Edit</li>
-		<li  class="link" onclick = "mass_modification('operations')" >Modification en Masse</li>
+		<li  class="link" onclick = "mass_modification('operations')" >Mass Modification</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
 	</ul>
 </div>
@@ -210,8 +210,8 @@
 	<div class="dialog">
 		<span class="left">
 		<?php 
-			echo $this->Form->input('mode_paiement',array('options'=>$modePaiements1));
-			echo $this->Form->input('monnaie',array('options'=>$monnaies1));
+			echo $this->Form->input('mode_paiement',array('label'=>'Payment Mode','options'=>$modePaiements1));
+			echo $this->Form->input('monnaie',array('label'=>'Currency','options'=>$monnaies1));
 		?>
 		</span>
 		<span class="right">

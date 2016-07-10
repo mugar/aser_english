@@ -14,8 +14,8 @@
 		<?php
 			echo $this->Form->input('tier_id',array('selected'=>0,'options'=>$tiers1));
 			echo $this->Form->input('type',array('options'=>$types1));
-			echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));				
-			echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));		
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));		
 			if($action=='rapport')		
 				echo $this->Form->input('xls',array('label'=>'Exporter vers Excel','type'=>'checkbox'));
 		?>

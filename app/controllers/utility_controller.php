@@ -23,7 +23,7 @@ function cancel_buggy_bills(){
 	foreach($factures as $facture){
 		if(empty($facture[$facture['Facture']['operation']])){
 				//exit(debug($facture));
-				$facture['Facture']['etat']='annulee';
+				$facture['Facture']['etat']='canceled';
 				$facture['Facture']['observation']='auto_annulation';
 				$this->Facture->save($facture);
 

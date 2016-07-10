@@ -26,8 +26,8 @@
 			
 			echo $this->Form->input('numero',array('label'=>'Invoice N°'));
 			echo $this->Form->input('Facture.montant');
-			echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));				
-			echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));	
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));	
 		?>
 	</span>
 	</form>

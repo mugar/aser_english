@@ -5,8 +5,8 @@
 		echo $this->Form->input('id');
 		echo $this->Form->input('date',array('type'=>'text','id'=>'DateEdit'));
 		echo $this->Form->input('quantite',array('label'=>'Quantité'));
-		echo $this->Form->input('Product.id',array('type'=>'hidden'));
-		echo $this->Form->input('Product.unite_id',array('label'=>'Unité de Mesure'));
+		echo $this->Form->input('Produit.id',array('type'=>'hidden'));
+		echo $this->Form->input('Produit.unite_id',array('label'=>'Unité de Mesure'));
 		echo $this->Form->input('produit_id');
 		?>
 	</span>

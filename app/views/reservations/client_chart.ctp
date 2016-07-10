@@ -10,7 +10,7 @@ $graph ->legend->Pos( 0.1,0.5,"right" ,"center");
 $graph->title->SetMargin (20); 
 
 // Set A title for the plot
- $periode=(!is_null($date1)&&!is_null($date2))?("pour la periode entre le $date1 et le $date2"):(''); 
+ $periode=(!is_null($date1)&&!is_null($date2))?("pour la periode entre le $date1 to $date2"):(''); 
 $graph->title->Set("Repartition des Reservations par Customer $periode");
 
 // Create plots

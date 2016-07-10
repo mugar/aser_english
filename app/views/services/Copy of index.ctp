@@ -25,7 +25,7 @@
 		<?php
 			echo $this->Form->input('type_service_id',array('selected'=>0));
 			echo $this->Form->input('Facture.date1',array('label'=>'Start Date','type'=>'text'));				
-			echo $this->Form->input('Facture.date2',array('label'=>'et une date fin pour la recherche','type'=>'text'));	
+			echo $this->Form->input('Facture.date2',array('label'=>'End Date','type'=>'text'));	
 		?>
 	</span>
 	</form>

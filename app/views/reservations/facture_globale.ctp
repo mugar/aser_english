@@ -257,7 +257,7 @@
 	</tr>
 <?php endforeach; ?>
 <?php foreach($sums as $sum):?>
-<?php if(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']!='BIF')):?>
+<?php if(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']!='RWF')):?>
 	<tr class="strong">
 		<td>WITHOUT TVA</td>
 		<td colspan="2">&nbsp;</td>
@@ -276,7 +276,7 @@
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 	</tr>
-<?php elseif(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']=='BIF')):?>
+<?php elseif(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']=='RWF')):?>
 	<tr class="strong">
 		<td>WITHOUT TVA</td>
 		<td colspan="2">&nbsp;</td>

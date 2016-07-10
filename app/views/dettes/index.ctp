@@ -19,7 +19,7 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('monnaie',array('options'=>array('toutes'=>'toutes','BIF'=>'BIF','USD'=>'USD')));
+			echo $this->Form->input('monnaie',array('options'=>array('toutes'=>'toutes','RWF'=>'RWF','USD'=>'USD')));
 		?>
 	</span>
 	</form>
@@ -33,7 +33,7 @@
 	<tr>
 		
 		<th>Tier</th>
-		<th>Montant</th>	
+		<th>Amount</th>	
 		<th>Currency</th>
 		<th>Montant Maximal</th>
 		<th>Type</th>

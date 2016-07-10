@@ -4,7 +4,7 @@
 
 <h3> Rapport Des Ventes
 	<?php if(!is_null($date)&&!is_null($date1)) :?>
-	<h4><?php echo '<h4>(Période du '.$this->MugTime->toFrench($date).' au ';
+	<h4><?php echo '<h4>(From '.$this->MugTime->toFrench($date).' to ';
 			  echo 	$this->MugTime->toFrench($date1).')</h4>';
 		 ?>
 	 </h4>
@@ -56,7 +56,7 @@
 		<td> VERSEMENT</td>
 		<td><?php echo  $number->format($versement+0,$formatting); ?></td>
 	</tr>
-	<?php if($global=='oui'):?>
+	<?php if($global=='yes'):?>
 	<tr>
 		<td>RESULTAT</td>
 		<td><?php echo  $number->format($resultat+0,$formatting); ?></td>
@@ -70,7 +70,7 @@
 	<tr>	
 			<th>Tier</th>
 			<th>Facture</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Montant Equivalent</th>
 			<th>Currency</th>
 			<th>Caisse</th>
@@ -108,7 +108,7 @@
 <table cellpadding="0" cellspacing="0" id="depensesTab" style='display:none;'>
 	<tr>
 			<th>Libéllé</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Description</th>
 			<th>Date</th>
 	</tr>
@@ -134,7 +134,7 @@
 <table cellpadding="0" cellspacing="0" id="ajoutsTab" style='display:none;'>
 	<tr>
 			<th>Libellé</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Description</th>
 			<th>Date</th>
 	</tr>
@@ -181,9 +181,9 @@
 		<?php
 			
 			echo $this->Form->input('Journal.date1',array('label'=>'Et une date de fin','type'=>'text'));
-			echo $this->Form->input('Journal.global',array('type'=>'hidden','value'=>'non'));
+			echo $this->Form->input('Journal.global',array('type'=>'hidden','value'=>'no'));
 			if(Configure::read('aser.comptabilite'))
-				echo $this->Form->input('Journal.compta',array('label'=>'Tirer les Dépenses de la comptabilité ?','type'=>'hidden','value'=>'non'));		
+				echo $this->Form->input('Journal.compta',array('label'=>'Tirer les Dépenses de la comptabilité ?','type'=>'hidden','value'=>'no'));		
 		?>
 	</span>
 	</form>

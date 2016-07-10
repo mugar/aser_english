@@ -3,7 +3,7 @@
 <h3>Rapport des Sorties</h3>
 <br/>
 <?php 
-	$periode=(!is_null($date1)&&!is_null($date2))?('pour la période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).''):('');
+	$periode=(!is_null($date1)&&!is_null($date2))?('pour la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).''):('');
 	if($periode!='') echo '<h4>('.$periode.')</h4>';
 	?>
 <br/>
@@ -13,7 +13,7 @@
 			<th>Quantité</th>
 			<th>Product</th>
 			<th>Unit Price</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Stock</th>
 			<th>Observation</th>
 	</tr>

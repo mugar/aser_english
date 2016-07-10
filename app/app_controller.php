@@ -242,8 +242,8 @@ class AppController extends Controller {
 			$this->loadModel('Groupe');
 			$groupes=$this->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name'),
 														'order'=>array('Groupe.name asc'),
-														'conditions'=>array('Groupe.actif'=>'oui',
-																			'Groupe.afficher'=>'oui'
+														'conditions'=>array('Groupe.actif'=>'yes',
+																			'Groupe.afficher'=>'yes'
 																			)
 														));
 			$this->groupes=$groupes;
@@ -300,7 +300,7 @@ class AppController extends Controller {
 		//pour les produits where they are needed
 		if(in_array($this->params['controller'],array('entrees','sortis','pertes','mouvements','ventes','reductions'))){
 			$this->loadModel('Produit');
-			$cond['Produit.actif']='oui';
+			$cond['Produit.actif']='yes';
 			if(!Configure::read('aser.magasin')&&($this->params['controller']=='pertes')){
 				$plats_section=$this->Conf->find('plats_section');
 				$platsGroupes=$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.id'),
@@ -351,7 +351,7 @@ class AppController extends Controller {
 			$this->set(compact('groupeComptables','groupeComptables1'));
 		}
 		//options for differents select tags
-		$monnaies=array('BIF'=>'BIF','USD'=>'USD','EUR'=>'EUR');
+		$monnaies=array('RWF'=>'RWF','USD'=>'USD','EUR'=>'EUR');
 		//pour caisses et operations add add currencies like franc Rwandais
 		if(in_array($this->params['controller'],array('caisses',
 													'operations',
@@ -383,30 +383,33 @@ class AppController extends Controller {
 		$natures1=array(''=>'')+$natures;
 		$models=array(''=>'',
 					'Vente'=>'Restaurant',
-					'Location'=>'Location Salle',
-					'Reservation'=>'Réservation Chambre',
-					'Service'=>'Service Divers',
+					'Location'=>'Conference Room',
+					'Reservation'=>'Bed Room',
+					'Service'=>'Extras Services',
 					//'Proforma'=>'Proforma'
 					);
 		if(!in_array($this->params['controller'],array('tiers','reductions'))){
-			$actifs=$actifs1=array('oui'=>'Yes','non'=>'No');
+			$actifs=$actifs1=array('yes'=>'Yes','no'=>'No');
 			$actifs1[]='';
 			$this->set(compact('actifs','actifs1'));
 		}
 			
 		$taux=$this->Conf->find('taux_usd');
-		$etats=array('payee'=>'Paid',
+		$etats=array(
+					'in_progress' => 'In Progress',
+					'printed' => 'Printed',
+					'paid'=>'Paid',
 					'credit'=>'Credit',
-					'avance'=>'Advance',
+					'half_paid'=>'Half Paid',
 					'bonus'=>'Bonus',
-					'annulee'=>'Canceled'
+					'canceled'=>'Canceled'
 					);
 		$etats1=array(''=>'')+$etats;
-		$facturationMonnaies=$this->facturationMonnaies=array('BIF'=>'BIF','USD'=>'USD');
+		$facturationMonnaies=$this->facturationMonnaies=array('RWF'=>'RWF','USD'=>'USD');
 		$shifts=Configure::read('shifts');
 		$countries=Configure::read('countries');
 		$pax=array(1=>1,2=>2,3=>3);
-		$optionsForTypes=array('depense'=>'Dépense','vente'=>'Entrée');
+		$optionsForTypes=array('depense'=>'Expense','vente'=>'Deposit');
 		$optionsForType1s=array('')+$optionsForTypes;
 
 		//designed by message
@@ -446,7 +449,7 @@ class AppController extends Controller {
 																	'sum(Historique.credit) as credit'
 																	),
 													'conditions'=>array('Produit.min >'=>0,
-																		'Produit.actif'=>'oui',
+																		'Produit.actif'=>'yes',
 																		'Produit.type'=>'stockable',
 																		),
 													'group'=>array('Historique.produit_id')				
@@ -500,8 +503,8 @@ class AppController extends Controller {
 									array('controller' => 'personnels', 'action' => 'login');
  		//*     	
  		$this->Auth->loginError = "Identifiant ou mot de passe incorrect!";
-     	$this->Auth->authError = "Accès interdit !";
-     	$this->Auth->userScope = array('Personnel.actif' =>'oui');
+     	$this->Auth->authError = "Access Denied!";
+     	$this->Auth->userScope = array('Personnel.actif' =>'yes');
      	
      	//*/
    }

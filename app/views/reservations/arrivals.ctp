@@ -82,7 +82,7 @@ endforeach; ?>
 		<td>&nbsp;</td>
 	<tr>
 <?php endif; ?>
-<?php if( $total['BIF']!=0):?>
+<?php if( $total['RWF']!=0):?>
 	<tr class="strong">
 		<td><?php echo  $i; ?></td>
 		<td>&nbsp;</td>
@@ -91,7 +91,7 @@ endforeach; ?>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
-		<td><?php echo  $number->format($total['BIF'],$formatting).' BIF'; ?></td>
+		<td><?php echo  $number->format($total['RWF'],$formatting).' RWF'; ?></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>

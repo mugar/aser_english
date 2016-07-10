@@ -8,7 +8,7 @@
 		echo $this->Form->input('operation');
 		echo $this->Form->input('montant');
 		echo $this->Form->input('reste');
-		echo $this->Form->input('monnaie');
+		echo $this->Form->input('monnaie',array('label'=>'Currency'));
 		echo $this->Form->input('etat');
 		echo $this->Form->input('date');
 		echo $this->Form->input('echeance');

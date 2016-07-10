@@ -5,32 +5,26 @@
 	<?php echo $this->Form->create('Facture',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('numero',array('value'=>'','label'=>'N° de la facture'));
+			echo $this->Form->input('numero',array('value'=>'','label'=>'Invoice N°'));
 			echo $this->Form->input('tier_id',array('label'=>'Customer','multiple'=>true,'options'=>$tiers1));
-			echo $this->Form->input('Facture.etat',array('options'=>array('toutes'=>'toutes',
-																					'payee'=>'payee',
-																					'credit'=>'credit',
-																					'bonus'=>'bonus',
-																					'avance'=>'avance',
-																					'annulee'=>'annulee'
-																					),
+			echo $this->Form->input('Facture.etat',array('options'=>array(''=>'')+ $etats,
 																'multiple'=>true,
-																'selected'=>'toutes',
-																'label'=>'State de la facture'
+																'selected'=>'',
+																'label'=>'Invoice State'
 																	));
 			
-			echo $this->Form->input('operation',array('label'=>'Type de Facture','options'=>$models));
+			echo $this->Form->input('operation',array('label'=>'Invoice Type','options'=>$models));
 			if(!Configure::read('aser.magasin')&&(Configure::read('aser.POS')))
-				echo $this->Form->input('Facture.personnel_id',array('selected'=>0,'options'=>$serveurs));
+				echo $this->Form->input('Facture.personnel_id',array('label'=>'waiter','selected'=>0,'options'=>$serveurs));
 		?>
 	</span>
 	<span class="right">
 		<?php
 		
-			echo $this->Form->input('Tier.compagnie',array('value'=>''));
-		echo $this->Form->input('monnaie',array('options'=>$monnaies));
-		echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
-		echo $this->Form->input('date2',array('label'=>'et une date fin pour la recherche','type'=>'text'));
+			echo $this->Form->input('Tier.compagnie',array('value'=>'','label'=>'company'));
+		echo $this->Form->input('monnaie',array('options'=>$monnaies, 'label'=>'Currency'));
+		echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));		 		
+		echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 		//echo $this->Form->input('export',array('label'=>'Répartition par Personnel','type'=>'checkbox'));
 		?>
 	</span>
@@ -40,11 +34,11 @@
 </div>
 <div id='view'>
 <div class="document">
-<h3>Rapport des Factures<?php if($monnaie) echo ' ('.$monnaie.')';?></h3>
+<h3>Invoices Report<?php if($monnaie) echo ' ('.$monnaie.')';?></h3>
 <br />
 	<?php
 		if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).', '.count($factures).' factures au total)</h4>';
+			echo '<h4>(From '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).', '.count($factures).' invoices in total)</h4>';
 		}
 	?>
 
@@ -54,14 +48,14 @@
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
-			<th width="200">Tier</th>
-			<th width="100">Facture</th>
+			<th width="200">Customer</th>
+			<th width="100">Invoice N°</th>
 			<th>State</th>
-			<th width="200">Montant</th>
-			<th width="300">Reste A Payer</th>
+			<th width="200">Amount</th>
+			<th width="300">Left To Pay</th>
 			<th width="300">Deposit</th>
 			<?php if(!Configure::read('aser.magasin')&&(Configure::read('aser.POS'))):?>
-				<th>Serveur</th>
+				<th>Waiter</th>
 			<?php endif;?>
 			<th>Date</th>
 		
@@ -90,9 +84,9 @@
 			<td><?php echo  $this->MugTime->tofrench($facture['Facture']['date']); ?></td>
 	</tr>
 <?php endforeach; ?>
-<?php foreach(array('BIF','USD') as $monnaie):?>
+<?php foreach(array('RWF','USD') as $monnaie):?>
 	<tr class="strong" id="total" >
-		<td width="200" colspan="2">TOTAL EN (<?php echo $monnaie;?>)</td>
+		<td width="200" colspan="2">TOTAL IN (<?php echo $monnaie;?>)</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><?php echo  $number->format($sum['montant_'.$monnaie]+0,$formatting); ?></td>
@@ -113,8 +107,8 @@
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li class="link"  onclick = "mass_pyt('off')" >Paiement en masse</li>
-		<li><?php echo $this->Html->link('Liste des Factures', array('controller' => 'factures', 'action' => 'index')); ?> </li>
+		<li class="link"  onclick = "mass_pyt('off')" >Mass Payment</li>
+		<li><?php echo $this->Html->link('Invoices Management', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 	

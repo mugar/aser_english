@@ -233,7 +233,7 @@
 				echo '<span name="payment" value="4" class="boutton" onclick="switcher(this)">AVANCE</span>';	
 				echo '</span>';
 			echo $this->Form->input('avance',array('value'=>0,'id'=>'avance'));
-		if($change=='oui'){
+		if($change=='yes'){
 			echo $this->Form->input('cash',array('value'=>0,'id'=>'cash'));
 			echo $this->Form->input('change',array('value'=>0,'id'=>'change'));
 		}
@@ -289,12 +289,12 @@
 <div id="add_produit" style="display:none" title='Créer un nouveau produit de type non stockable</span>'
 <div class="dialog">
 	<div id="message_produit"></div>
-	<?php echo $this->Form->create('Product',array('id'=>'add_produit','action'=>'add'));?>
+	<?php echo $this->Form->create('Produit',array('id'=>'add_produit','action'=>'add'));?>
 	<span class="left">
 		<?php
 			echo $this->element('combobox',array('n°'=>1));
 			if(Configure::read('aser.comptabilite')){
-				echo $this->Form->input('Product.groupe_comptable_id',array('label'=>'Groupe comptable','options'=>$groupeComptables1));
+				echo $this->Form->input('Produit.groupe_comptable_id',array('label'=>'Groupe comptable','options'=>$groupeComptables1));
 			}
 		?>
 	</span>
@@ -305,7 +305,7 @@
 																					'name'=>'data[Product][name]',
 																					));
 			if(!Configure::read('aser.multi_pv'))
-				echo $this->Form->input('Product.PV',array('value'=>0));
+				echo $this->Form->input('Produit.PV',array('value'=>0));
 			echo $this->Form->input('type',array('value'=>'non_stockable','type'=>'hidden'));	
 		?>
 	</span>

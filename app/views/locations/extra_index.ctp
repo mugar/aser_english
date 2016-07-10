@@ -7,7 +7,7 @@
 			<th>Libellé</th>
 			<th>Quantité</th>
 			<th>Unit Price</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Currency</th>
 			<th>Extra ?</th>
 		</tr>

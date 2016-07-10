@@ -63,7 +63,7 @@ class Produit extends AppModel {
 		'Groupe' => array(
 			'className' => 'Groupe',
 			'foreignKey' => 'groupe_id',
-			'conditions' => array('Groupe.actif'=>'oui'),
+			'conditions' => array('Groupe.actif'=>'yes'),
 			'fields' =>array('Groupe.id,Groupe.name','Groupe.section_id'),
 			'order' => ''
 		),

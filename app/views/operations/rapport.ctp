@@ -4,14 +4,14 @@
 <h3>
 <?php
 	if(!empty($element)){
-		echo 'Historique de : '.ucfirst($element[$model]['name']) ;
+		echo 'Operations History for : '.ucfirst($element[$model]['name']) ;
 	}
 ?>
 </h3>
 <br/>
 <?php
 	if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).', monnaie : '.$monnaie.')</h4>';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).', currency : '.$monnaie.')</h4>';
 	}
 	else {
 		echo '<h4>(Currency : '.$monnaie.')</h4>';
@@ -22,18 +22,18 @@
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr>
 			<th>Date</th>
-			<th width="50">N° Ordre</th>
-			<th width="200">Libéllé</th>
+			<th width="50">Order N°</th>
+			<th width="200">Description</th>
 			<th width="200">Payment Mode</th>
-			<th width="150">Entrée</th>
-			<th width="150">Sortie</th>
-			<th width="150">Solde Progréssif</th>
-			<th>Personnel</th>
+			<th width="150">In</th>
+			<th width="150">Out</th>
+			<th width="150">Balance</th>
+			<th>Created By</th>
 		
 	</tr>
 	<?php if(!empty($ants)):?>
 	<tr class="strong">
-			<td colspan="4">REPORT</td>
+			<td colspan="4">PREVIOUS BALANCE</td>
 			<?php if($where=='debit'):?>
 				<td><?php echo  $number->format($ants[0]['Operation']['debit'],$decimal); ?></td>
 				<td><?php echo  $number->format($ants[0]['Operation']['credit'],$decimal); ?></td>
@@ -136,9 +136,9 @@
 	</span>
 	<span class="right">
 		<?php
-				echo $this->Form->input('monnaie');
-				echo $this->Form->input('mode_paiement',array('options'=>$modePaiements));
-				echo $this->Form->input('xls',array('label'=>'Exporter vers Excel','type'=>'checkbox'));
+				echo $this->Form->input('monnaie',array('label'=>'Currency'));
+				echo $this->Form->input('mode_paiement',array('label'=>'Payment Mode','options'=>$modePaiements));
+				echo $this->Form->input('xls',array('label'=>'Export to Excel','type'=>'checkbox'));
 		?>
 	</span>
 	</form>

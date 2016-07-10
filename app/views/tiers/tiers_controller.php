@@ -100,7 +100,7 @@ class TiersController extends AppController {
 				}
 			}
 			if($this->data['Tier']['actif']!='toutes'){
-				$conditions['Tier.actif']=($this->data['Tier']['actif']=='oui')?(1):(0);
+				$conditions['Tier.actif']=($this->data['Tier']['actif']=='yes')?(1):(0);
 			}
 			$tiers=$this->Tier->find('all',array('conditions'=>$conditions,
 												'recursive'=>-1,
@@ -127,7 +127,7 @@ class TiersController extends AppController {
 	function global_bill($id,$date1,$date2,$xls=0){
 		$tier=$this->Tier->find('first',array('conditions'=>array('Tier.id'=>$id)));
 		$ventes=$this->Tier->Facture->Vente->find('all',array('fields'=>array('Vente.*',
-																		'Product.name',
+																		'Produit.name',
 																		'Facture.date',
 																		'Facture.beneficiaire',
 																		'Facture.matricule',
@@ -248,7 +248,7 @@ class TiersController extends AppController {
 				}
 			}
 			if($this->data['Tier']['actif']!='toutes'){
-				$tierConditions['Tier.actif']=($this->data['Tier']['actif']=='oui')?(1):(0);
+				$tierConditions['Tier.actif']=($this->data['Tier']['actif']=='yes')?(1):(0);
 			}
 			$this->set('tiers', $this->paginate($tierConditions));
 			$this->Session->write('tierConditions',$tierConditions);

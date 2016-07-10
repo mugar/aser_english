@@ -42,7 +42,7 @@
 	<h3>Actions</h3>
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
-		<li><?php echo $this->Html->link('Retour En Arrière', $referer); ?> </li>
+		<li><?php echo $this->Html->link('Go back', $referer); ?> </li>
 
 	</ul>
 </div>

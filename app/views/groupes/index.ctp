@@ -18,9 +18,9 @@
 		
 		<td><?php echo $this->Form->input('section_id',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('name',array('label'=>''));?></td>
-		<td><?php echo $this->Form->input('afficher',array('label'=>'','options'=>array('oui'=>'oui','non'=>'non')));?></td>
+		<td><?php echo $this->Form->input('afficher',array('label'=>'','options'=>array('yes'=>'yes','no'=>'no')));?></td>
 		<?php if(!Configure::read('aser.magasin')&&Configure::read('aser.advanced_stock')):?>
-			<td><?php echo $this->Form->input('accompagnement',array('label'=>'','options'=>array('non'=>'non','oui'=>'oui')));?></td>
+			<td><?php echo $this->Form->input('accompagnement',array('label'=>'','options'=>array('no'=>'no','yes'=>'yes')));?></td>
 		<?php endif;?>
 		<td><input type="submit" value="Save"/></td>
 		</form>

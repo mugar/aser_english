@@ -1,8 +1,8 @@
-<div id='view'>
+`<div id='view'>
 <div class="document">
 <h3><?php echo 'Rapport des Services';
 		if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).')</h4>';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).')</h4>';
 		}
 	?>
 </h3>
@@ -13,8 +13,8 @@
 			<th>Facture</th>
 			<th>State de Paiement</th>
 			<th>Type Service</th>
-			<th>Montant</th>
-			<th>BIF</th>
+			<th>Amount</th>
+			<th>RWF</th>
 			<th>Date</th>
 		
 	</tr>

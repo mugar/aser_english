@@ -15,7 +15,7 @@
 		<?php if(Configure::read('aser.comptabilite')):?>
 			<th>N° compte</th>	
 		<?php endif;?>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Description</th>
 			<th>N° Pièce Justificative</th>
 			<th>Destination :</th>
@@ -26,7 +26,7 @@
 		<?php elseif($mode=='report') :?>
 			<th>Catégorie</th>
 			<th>Préciser</th>	
-			<th>Montant</th>
+			<th>Amount</th>
 		<?php endif;?>
 		<th>Actions</th>
 	</tr>

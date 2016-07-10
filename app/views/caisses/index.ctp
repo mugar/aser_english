@@ -1,13 +1,13 @@
 <div class="caisses index">
 	
-	<h2><?php __('Gestion Des Caisses');?></h2>
+	<h2><?php __('Accounts Management');?></h2>
 	
 <div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	<tr>
-		<th>Nom de la Caisse</th>
-		<th>Currency Par Défaut</th>
+		<th>Account Name</th>
+		<th>Default Currency</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -28,8 +28,8 @@
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th>Id</th>
 			<th>Name</th>
-			<th>Currency Par Défaut</th>
-			<th>Montant</th>
+			<th>Currency</th>
+			<th>Balance</th>
 			<th>Actif</th>
 		</tr>
 		<?php
@@ -54,8 +54,8 @@
 	<ul>
 		<li class= "link" onclick = "edit()" >Edit</li>
 		<li class= "link" onclick = "mass_delete()" >Delete</li>
-		<li class= "link" onclick = "actions('checkbox','view')" >Afficher l'Historique</li>
-		<li><?php echo $this->Html->link('Mouvements des Caisses', array('controller' => 'operations', 'action' => 'balance/caisses')); ?> </li>
-		<li><?php echo $this->Html->link('Gestion des Operations', array('controller' => 'operations', 'action' => 'index')); ?> </li>
+		<li class= "link" onclick = "actions('checkbox','view')" >SHow Operations history</li>
+		<li><?php echo $this->Html->link('Accounts Operations Summary', array('controller' => 'operations', 'action' => 'balance/caisses')); ?> </li>
+		<li><?php echo $this->Html->link('Operations Managment', array('controller' => 'operations', 'action' => 'index')); ?> </li>
 	</ul>
 </div>

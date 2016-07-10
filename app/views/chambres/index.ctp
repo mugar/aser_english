@@ -62,8 +62,8 @@
 		<li class="link" onclick="mass_delete()" >Delete</li>
 		<li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
 		<!--
-		<li class="link" onclick="cleaner('oui')" >Marquer "PROPRE"</li>
-		<li class="link" onclick="cleaner('non')" >Marquer "NON PROPRE"</li>
+		<li class="link" onclick="cleaner('yes')" >Marquer "PROPRE"</li>
+		<li class="link" onclick="cleaner('no')" >Marquer "NON PROPRE"</li>
 		<li class="link" onclick="msg_gouvernante()" >Enregistrer un message</li>
 		<li><?php echo $this->Html->link('Fiche gouvernante', array('controller' => 'chambres', 'action' => 'fiche')); ?> </li>
 		-->	

@@ -1,6 +1,6 @@
 <?php echo $this->element('../produits/nullable');?>
 <div class="dialog">
-<?php echo $this->Form->create('Product',array('id'=>'edit_form'));?>
+<?php echo $this->Form->create('Produit',array('id'=>'edit_form'));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('id');
@@ -33,7 +33,7 @@
 				echo $this->Form->input('groupe_comptable_id');
 			echo $this->Form->input('min',array('label'=>'Stock Minimale'));
 			echo $this->Form->input('description',array('type'=>'text'));
-			echo $this->Form->input('actif',array('options'=>array('oui'=>'oui','non'=>'non'),'id'=>'actif'));
+			echo $this->Form->input('actif',array('options'=>array('yes'=>'yes','no'=>'no'),'id'=>'actif'));
 			echo $this->Form->input('old_name',array('type'=>'hidden'));
 	?>
 	</span>

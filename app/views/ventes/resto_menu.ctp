@@ -8,7 +8,7 @@
 				<div id="personnel">
 					<?php 
 					foreach($groupe['Produit'] as $produit) {
-						echo $this->Form->input('Product.'.$produit['id'],array('label'=>$produit['name']));
+						echo $this->Form->input('Produit.'.$produit['id'],array('label'=>$produit['name']));
 					}
 					?>
 				</div>

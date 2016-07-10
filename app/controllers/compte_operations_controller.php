@@ -172,7 +172,7 @@ class CompteOperationsController extends AppController {
 		$parts=explode(' : ',$this->data['CompteOperation'][$index]);
 		$comptes=$this->CompteOperation->Compte->find('all',array('fields'=>array('Compte.composer'),
 																	'conditions'=>array('Compte.numero like'=>$parts[0].'%',
-																						'Compte.actif'=>'oui',
+																						'Compte.actif'=>'yes',
 																						),
 																	'order'=>array('Compte.numero')
 																));
@@ -389,7 +389,7 @@ class CompteOperationsController extends AppController {
 			$this->set('compteOperations', $this->paginate($compteOperationConditions));
 		}
 		$comptes=$this->CompteOperation->Compte->find('list',array('fields'=>array('Compte.id','Compte.composer'),
-																	'conditions'=>array('Compte.actif'=>'oui')
+																	'conditions'=>array('Compte.actif'=>'yes')
 																	));
 		$journal=(isset($compteOperationConditions['CompteOperation.journal']))?
 					($compteOperationConditions['CompteOperation.journal']):0;
@@ -397,7 +397,7 @@ class CompteOperationsController extends AppController {
 		$compte='Journal Des Opérations Diverses';
 		if($journal!=0){
 			$info=$this->CompteOperation->Compte->find('first',array('fields'=>array('Compte.name'),
-																	'conditions'=>array('Compte.actif'=>'oui',
+																	'conditions'=>array('Compte.actif'=>'yes',
 																						'Compte.id'=>$journal
 																						)
 																	));
@@ -406,7 +406,7 @@ class CompteOperationsController extends AppController {
 				$compte='Journal '.$info['Compte']['name'].' (<span id="solde">'.$solde.'</span>)';
 		}
 		$journals=$this->CompteOperation->Compte->find('list',array('fields'=>array('Compte.id','Compte.name'),
-																	'conditions'=>array('Compte.actif'=>'oui',
+																	'conditions'=>array('Compte.actif'=>'yes',
 																						'Compte.numero >='=>56000000,
 																						'Compte.numero <='=>58000000
 																						)
@@ -512,7 +512,7 @@ class CompteOperationsController extends AppController {
 			$this->data = $this->CompteOperation->read(null, $id);
 		}
 		$comptes=$this->CompteOperation->Compte->find('list',array('fields'=>array('Compte.id','Compte.composer'),
-																	'conditions'=>array('Compte.actif'=>'oui')
+																	'conditions'=>array('Compte.actif'=>'yes')
 																	));
 		$this->set(compact('comptes', 'personnels'));
 	}

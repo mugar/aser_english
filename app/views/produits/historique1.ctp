@@ -15,7 +15,7 @@
 <br/>
 <?php
 	if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).')';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).')';
 	}
 ?>
 <br/>
@@ -83,7 +83,7 @@
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Product',array('id'=>'recherche','action'=>'historique/'.$id));?>
+	<?php echo $this->Form->create('Produit',array('id'=>'recherche','action'=>'historique/'.$id));?>
 	<span class="left">
 		<?php
 			echo $this->Form->input('Historique.date1',array('label'=>'Start Date'));				

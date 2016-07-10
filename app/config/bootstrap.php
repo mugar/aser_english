@@ -91,7 +91,7 @@
 								 'cloturer'=>1, // if on cloture automatique le journal at the beginning of each day
 								 'multi_pv'=>0, // dsi le produit peut avoir plusieurs prix differents,
 								 'pharmacie'=>0, // si l'entreprise est une pharmacie active les batch number & date d'expiration
-								 'default_currency'=>'BIF',
+								 'default_currency'=>'RWF',
 								 'PU'=>1,
 								 'proforma'=>0,
 								 'one_time_printing'=>0, // a activer s'ils veulent que les factures tickets soient imprimes une seule fois au maximum
@@ -99,7 +99,7 @@
 								 'auto_logout'=>0, // a activer s'ils desirent une deconnexion automatique apres 30 secondes d'inactivites
 								 'database'=>'aser',
 								 'aserb'=>0, // a activer pour belair seulement
-								 'silhouette'=>1, // a activer pour silhouette seulement,
+								 'silhouette'=>0, // a activer pour silhouette seulement,
 								 'impression_par_serveur'=>0, //wether to allow a waiter to print a bill
 								 'multi_serveur'=>0, // multi waiter working on the same bill
 								 'ingredient'=>1, // a activer si le client desire mettre la composition de chaque plat ou produit et ainsi connaitre le PA des produits composes
@@ -126,7 +126,7 @@
 								 'belair'=>1,
 									'gestion_reduction'=>1,
 								//	'kcc'=>0, // to enable/disable Kings conference specific features
-									'xls_copy'=>1,
+									'xls_copy'=>0,
 									'all_company_info'=>1
 								 )
 					); 
@@ -175,7 +175,7 @@
 	* categeories de depenses.
 	*/
 
-	Configure::write('categories',array(0=>'',1=>'Intrants',2=>"Produits d'entretien",3=>"Frais de fonctionement", 4=>"Investissement", 5=>"Stock et Autres"));
+	Configure::write('categories',array(0=>'Deposit',1=>'Production',2=>"Maintenance",3=>"Operations", 4=>"Investment", 5=>"Inventory and Others"));
 	/**
 	* List of countries
 	*/				

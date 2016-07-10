@@ -2,12 +2,12 @@
 <?php $config=Configure::read('aser'); ?>
 <div id='view'>
 <div class="document">
-<h3><?php echo 'Rapport Des Commandes Non envoyées ';
+<h3><?php echo 'Report for Not Sent Orders';
 	?>
 	<?php if(!is_null($date1)&&!is_null($date2)) :?>
-	<h4><?php echo '<h4>(Période du '.$this->MugTime->toFrench($date1).' au ';
+	<h4><?php echo '<h4>(From '.$this->MugTime->toFrench($date1).' to ';
 			  echo 	$this->MugTime->toFrench($date2).')</h4>';
-			  echo 'Total : '.count($ventes);
+			  echo 'Records total : '.count($ventes);
 		 ?>
 	 </h4>
 	<?php endif;?>
@@ -18,9 +18,9 @@
 	<tr>
 			<th>Date</th>
 			<th>Product</th>
-			<th>Qté Facturé</th>
-			<th>Qté Envoyé</th>
-			<th>Qté Non Envoyé</th>
+			<th>Invoiced Qty</th>
+			<th>Sent Qty</th>
+			<th>Not Sent Qty</th>
 			<th >Invoice N°</th>
 	</tr>
 </thead>
@@ -67,12 +67,12 @@
 	<?php echo $this->Form->create('Vente',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('date1',array('label'=>'Date Début','type'=>'text'));		
+			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));		
 		?>
 	</span>
 	<span class="right">
 		<?php							
-			echo $this->Form->input('date2',array('label'=>'Date Fin','type'=>'text'));
+			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
 			?>
 	</span>
 	</form>

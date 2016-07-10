@@ -5,7 +5,7 @@
 	<?php
 		echo $this->Form->input('tier_id');
 		echo $this->Form->input('montant');
-		echo $this->Form->input('monnaie');
+		echo $this->Form->input('monnaie',array('label'=>'Currency'));
 		echo $this->Form->input('max',array('label'=>'Montant Maximal'));
 		echo $this->Form->input('date_limite',array('type'=>'text'));
 		 

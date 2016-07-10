@@ -2,7 +2,7 @@
 <div class="document">
 <h3><?php echo 'Rapport des Réservations';
 		if(isset($date1)){
-			echo 'de la période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2);
+			echo 'de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2);
 		}
 	?>
 </h3>
@@ -19,7 +19,7 @@
 			<th>Arrivee</th>
 			<th>Departure</th>
 			<th>Unit Price</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Currency</th>
 			<th>State Réservation</th>
 		

@@ -8,7 +8,7 @@
 		echo $this->Form->input('quantite');
 		echo $this->Form->input('PU');
 		echo $this->Form->input('montant');
-		echo $this->Form->input('monnaie');	?>
+		echo $this->Form->input('monnaie',array('label'=>'Currency'));	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Save', true));?>
 </div>

@@ -37,7 +37,7 @@ class BuanderiesController extends AppController {
 				$factureConditions['Facture.etat']=$this->data['Facture']['etat'];
 			}
 			elseif($this->data['Facture']['etat']=='non_nul'){
-				$factureConditions['Facture.etat !=']='annulee';
+				$factureConditions['Facture.etat !=']='canceled';
 			}
 			if($this->data['Facture']['montant']!='') {
 		 		$factureConditions['Facture.montant']=$this->data['Facture']['montant'];

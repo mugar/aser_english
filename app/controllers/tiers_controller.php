@@ -112,7 +112,7 @@ class TiersController extends AppController {
 				}
 			}
 			if($this->data['Tier']['actif']!='toutes'){
-				$conditions['Tier.actif']=($this->data['Tier']['actif']=='oui')?(1):(0);
+				$conditions['Tier.actif']=($this->data['Tier']['actif']=='yes')?(1):(0);
 			}
 		}
 		$tiers=$this->Tier->find('all',array('conditions'=>$conditions,
@@ -162,7 +162,7 @@ class TiersController extends AppController {
 														'conditions'=>array('Facture.tier_id'=>$id,
 																			'Facture.date >='=>$date1,
 																			'Facture.date <='=>$date2,
-																			'Facture.etat'=>array('credit','avance'),
+																			'Facture.etat'=>array('credit','half_paid'),
 																			'Facture.operation'=>'Vente'
 																			),
 														'order'=>array('Vente.id asc')
@@ -191,7 +191,7 @@ class TiersController extends AppController {
 														'conditions'=>array('Tier.id'=>$id,
 																			'Facture.date >='=>$date1,
 																			'Facture.date <='=>$date2,
-																			'Facture.etat'=>array('credit','avance'),
+																			'Facture.etat'=>array('credit','half_paid'),
 																			'Facture.operation'=>'Vente'
 																			),
 														'order'=>array('Facture.date asc')
@@ -204,7 +204,7 @@ class TiersController extends AppController {
 														'conditions'=>array(
 																			'Facture.date >='=>$date1,
 																			'Facture.date <='=>$date2,
-																			'Facture.etat'=>array('credit','avance'),
+																			'Facture.etat'=>array('credit','half_paid'),
 																			'Facture.operation'=>'Vente',
 																			'Facture.tier_id'=>$id
 																			)
@@ -287,7 +287,7 @@ class TiersController extends AppController {
 				}
 			}
 			if($this->data['Tier']['actif']!=''){
-				$tierConditions['Tier.actif']=($this->data['Tier']['actif']=='oui')?(1):(0);
+				$tierConditions['Tier.actif']=($this->data['Tier']['actif']=='yes')?(1):(0);
 			}
 			if(!empty($this->data['Tier']['chambre'])){
 				$tierid=$this->Tier->Reservation->find('first',array('fields'=>array('Reservation.tier_id'),

@@ -21,7 +21,7 @@
 		<table id="serv_table">
 			<th></th>
 			<th>Description</th>
-			<th>Montant</th>
+			<th>Amount</th>
 			<?php foreach($services as $i=>$service):?>
 				<tr>
 					<td><input type="checkbox" name="checkbox" value="<?php echo $i;?>"/></td>

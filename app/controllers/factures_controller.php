@@ -49,7 +49,7 @@ class FacturesController extends AppController {
 	*/
 
 	function aserb_report(){
-		$cond['Facture.etat !=']='annulee';
+		$cond['Facture.etat !=']='canceled';
 		$cond['Facture.aserb_num >']=0;
 		
     if(!empty($this->data['Facture']['date1'])){
@@ -389,7 +389,7 @@ class FacturesController extends AppController {
 		$facture=$this->_factureFind('first',$conditions,'Reservation');
 		$success=true;
 		
-		if(in_array($facture['Facture']['etat'],array('bonus','annulee'))){
+		if(in_array($facture['Facture']['etat'],array('bonus','canceled'))){
 			$success=false;
 		}
 		else if($type=='SEARCH'){ 
@@ -649,7 +649,7 @@ class FacturesController extends AppController {
 		$cond=array('Facture.operation'=>'Vente',
 					'Facture.date >='=>$date1,
 					'Facture.date <='=>$date2,
-					'Facture.etat'=>array('payee','credit')
+					'Facture.etat'=>array('paid','credit')
 					);
 		$factures=$this->Facture->find('all',array('fields'=>array('sum(Facture.montant) as montant','Facture.date','Facture.operation'),
 													'conditions'=>$cond,
@@ -753,15 +753,15 @@ class FacturesController extends AppController {
 	function credit($id=null){
 		$show_less = false;
 		if(is_null($id)){
-			$cond=array('Facture.etat'=>array('credit','avance'),
-					'Facture.monnaie'=>array('BIF','USD'),
+			$cond=array('Facture.etat'=>array('credit','half_paid'),
+					'Facture.monnaie'=>array('RWF','USD'),
 					'Facture.reste >'=>0, 
 					'Facture.montant >'=>0
 					);
 		}
 		else {
 			$cond['Facture.tier_id']=$id;
-			$cond['Facture.etat !=']='annulee';
+			$cond['Facture.etat !=']='canceled';
 			$tierInfo=$this->Facture->Tier->find('first',array('conditions'=>array("Tier.id"=>$id),
 															'fields'=>array("Tier.name"),
 																'recursive'=>-1
@@ -882,7 +882,7 @@ class FacturesController extends AppController {
 	
 	function _depenses($months,$parts1,$parts2){
 		$cond['Operation.model']='Type';
-		$cond['Operation.monnaie']='BIF';
+		$cond['Operation.monnaie']='RWF';
 		$cond['Type.type']='depense';
 		$cond['Operation.common regexp']='(Caiss)';
 		$this->loadModel('Operation');
@@ -908,7 +908,7 @@ class FacturesController extends AppController {
 			$date1=($month<10)?($parts1[0].'-0'.$month.'-01'):($parts1[0].'-'.$month.'-01');
 			$date2=($month<10)?($parts2[0].'-0'.$month.'-'.$days):($parts2[0].'-'.$month.'-'.$days);
 						
-			$cond['Facture.etat']=array('payee','avance','credit','excedent','bonus');
+			$cond['Facture.etat']=array('paid','half_paid','credit','excedent','bonus');
 			$cond['OR']=array(array('Facture.date >='=>$date1,'Facture.date <='=>$date2),
 								array('Facture.id'=>$this->Product->factures($date1, $date2))
 						);
@@ -954,7 +954,7 @@ class FacturesController extends AppController {
 		
 		$parts1=explode('-',$date1);
 		$parts2=explode('-',$date2);
-		$devise['BIF']=1;
+		$devise['RWF']=1;
 		$months=array();
 		for($i=($parts1[1]*1);$i<=($parts2[1]*1);$i++){
 			$months[$i]=0;
@@ -962,15 +962,15 @@ class FacturesController extends AppController {
 		//monthly report
 		$title='Courbe d\'évolution mensuelle ';
 		switch($this->data['Facture']['choix']){
-			case 'BIF_USD':
+			case 'RWF_USD':
 				$series[]=$this->_ventes($months,'', $parts1, $parts2,$devise);
-				$labels[]='BIF + USD';
-				$title.='des ventes en BIF & USD';
+				$labels[]='RWF + USD';
+				$title.='des ventes en RWF & USD';
 				break;
-			case 'BIF':
-				$series[]=$this->_ventes($months,'BIF', $parts1, $parts2,$devise);
-				$labels[]='BIF';
-				$title.='des ventes en BIF';
+			case 'RWF':
+				$series[]=$this->_ventes($months,'RWF', $parts1, $parts2,$devise);
+				$labels[]='RWF';
+				$title.='des ventes en RWF';
 				break;
 			case 'USD':
 				$series[]=$this->_ventes($months,'USD', $parts1, $parts2,$devise);
@@ -980,14 +980,14 @@ class FacturesController extends AppController {
 			case 'depenses':
 				$series[]=$this->_depenses($months, $parts1, $parts2);
 				$labels[]='Dépenses';
-				$title.='des dépenses en BIF';
+				$title.='des dépenses en RWF';
 				break;
-			case 'BIF_depenses':
-				$series[]=$this->_ventes($months,'BIF', $parts1, $parts2,$devise);
+			case 'RWF_depenses':
+				$series[]=$this->_ventes($months,'RWF', $parts1, $parts2,$devise);
 				$series[]=$this->_depenses($months, $parts1, $parts2);
-				$labels[]='Ventes en BIF';
+				$labels[]='Ventes en RWF';
 				$labels[]='Dépenses';
-				$title.='des ventes et des dépenses en BIF';
+				$title.='des ventes et des dépenses en RWF';
 				break;
 		}
 		$Xaxis=array();
@@ -1008,7 +1008,7 @@ class FacturesController extends AppController {
 		}
 		//conds
 		$pytCond['Facture.monnaie !=']='';
-		$pytCond['Facture.etat']=array('en_cours','cloturer','payee','credit','avance','excedent');
+		$pytCond['Facture.etat']=array('in_progress','printed','paid','credit','half_paid','excedent');
 		$factCond=$pytCond;
 		$pytCond['Paiement.date']=$date;
 		$pytCond['NOT']=array('Paiement.mode_paiement'=>array('','transfer'));
@@ -1057,17 +1057,17 @@ class FacturesController extends AppController {
 		$days=$this->Product->diff($date1,$date2)+1;
 		$datas=array();
 		
-		$total['ca_BIF']=$total['ca_USD']=0;
-		$total['credit_BIF']=$total['credit_USD']=0;
-		$total['pyt_BIF']=$total['pyt_USD']=$total['pyt_EUR']=0;
-		$total['bonus_BIF']=$total['bonus_USD']=0;
+		$total['ca_RWF']=$total['ca_USD']=0;
+		$total['credit_RWF']=$total['credit_USD']=0;
+		$total['pyt_RWF']=$total['pyt_USD']=$total['pyt_EUR']=0;
+		$total['bonus_RWF']=$total['bonus_USD']=0;
 		
 		for($i=0;$i<$days; $i++){
 			$datas[$i]['date']=$date=$this->Product->increase_date($date1,$i);
-			$datas[$i]['ca_BIF']=$datas[$i]['ca_USD']=0;
-			$datas[$i]['credit_BIF']=$datas[$i]['credit_USD']=0;
-			$datas[$i]['pyt_BIF']=$datas[$i]['pyt_USD']=$datas[$i]['pyt_EUR']=0;
-			$datas[$i]['bonus_BIF']=$datas[$i]['bonus_USD']=0;
+			$datas[$i]['ca_RWF']=$datas[$i]['ca_USD']=0;
+			$datas[$i]['credit_RWF']=$datas[$i]['credit_USD']=0;
+			$datas[$i]['pyt_RWF']=$datas[$i]['pyt_USD']=$datas[$i]['pyt_EUR']=0;
+			$datas[$i]['bonus_RWF']=$datas[$i]['bonus_USD']=0;
 		
 			$factures=$this->Facture->find('all',array('fields'=>array('Facture.montant',
 																	'Facture.reste',
@@ -1081,7 +1081,7 @@ class FacturesController extends AppController {
 																						'Facture.monnaie !='=>'',
 																						// 'Facture.operation !='=>'Reservation',
 																						// 'Facture.monnaie'=>'USD',
-																						'Facture.etat'=>array('payee','credit','bonus','avance','excedent')
+																						'Facture.etat'=>array('paid','credit','bonus','half_paid','excedent')
 																						),
 																	));
 		
@@ -1126,7 +1126,7 @@ class FacturesController extends AppController {
 																	'conditions'=>array('Paiement.date'=>$date,
 																						'Facture.monnaie !='=>'',
 																						'NOT'=>array('Paiement.mode_paiement'=>array('','transfer','remboursement')),
-																						'Facture.etat'=>array('payee','credit','bonus','avance','excedent')
+																						'Facture.etat'=>array('paid','credit','bonus','half_paid','excedent')
 																						),
 																	));
 																	
@@ -1143,12 +1143,12 @@ class FacturesController extends AppController {
 			}
 				
 			$total['name']='TOTAL';
-		 	$total['ca_BIF']+=$datas[$i]['ca_BIF'];
+		 	$total['ca_RWF']+=$datas[$i]['ca_RWF'];
 		 	$total['ca_USD']+=$datas[$i]['ca_USD'];
-		 	$total['credit_BIF']+=$datas[$i]['credit_BIF'];
+		 	$total['credit_RWF']+=$datas[$i]['credit_RWF'];
 		 	$total['credit_USD']+=$datas[$i]['credit_USD'];
-			$total['bonus_BIF']+=$datas[$i]['bonus_BIF'];
-			$total['pyt_BIF']+=$datas[$i]['pyt_BIF'];
+			$total['bonus_RWF']+=$datas[$i]['bonus_RWF'];
+			$total['pyt_RWF']+=$datas[$i]['pyt_RWF'];
 			$total['pyt_USD']+=$datas[$i]['pyt_USD'];
 			$total['pyt_EUR']+=$datas[$i]['pyt_EUR'];
 		}
@@ -1289,7 +1289,7 @@ class FacturesController extends AppController {
 		$conditions['Facture.date <=']=$date2;
 		if(Configure::read('aser.database')!='aserb')
 			$conditions['Facture.inclure']=1;
-		$conditions['Facture.etat']=array('payee','credit');
+		$conditions['Facture.etat']=array('paid','credit');
 	//	$conditions['Facture.monnaie !=']='';
 		$conditions['Facture.montant >']=0;
 		
@@ -1349,31 +1349,31 @@ class FacturesController extends AppController {
 			foreach($models as $model=>$service){
 				$excelData[$i]['Client']=$service;
 				$excelData[$i]['Numero']='';
-				$excelData[$i]['Htva_(BIF)']='';
+				$excelData[$i]['Htva_(RWF)']='';
 				$excelData[$i]['Htva_(USD)']='';
-				$excelData[$i]['Tva_(BIF)']='';
+				$excelData[$i]['Tva_(RWF)']='';
 				$excelData[$i]['Tva_(USD)']='';
-				$excelData[$i]['Montant_(BIF)']='';
+				$excelData[$i]['Montant_(RWF)']='';
 				$excelData[$i]['Montant_(USD)']='';
 				$i++;
 				if(!empty($datas[$model]['factures'])){
 					foreach($datas[$model]['factures'] as $facture){
 						$excelData[$i]['Client']=(empty($facture['Tier']['name']))?'PASSANT':$facture['Tier']['name'];
 						$excelData[$i]['Numero']=$facture['Facture']['numero'];
-						if($facture['Facture']['monnaie']=='BIF'){
-							$excelData[$i]['Htva_(BIF)']=$facture['Facture']['montant']-$facture['Facture']['tva'];
+						if($facture['Facture']['monnaie']=='RWF'){
+							$excelData[$i]['Htva_(RWF)']=$facture['Facture']['montant']-$facture['Facture']['tva'];
 							$excelData[$i]['Htva_(USD)']=0;
-							$excelData[$i]['Tva_(BIF)']=$facture['Facture']['tva'];
+							$excelData[$i]['Tva_(RWF)']=$facture['Facture']['tva'];
 							$excelData[$i]['Tva_(USD)']=0;
-							$excelData[$i]['Montant_(BIF)']=$facture['Facture']['montant'];
+							$excelData[$i]['Montant_(RWF)']=$facture['Facture']['montant'];
 							$excelData[$i]['Montant_(USD)']=0;
 						}
 						else {
-							$excelData[$i]['Htva_(BIF)']=0;
+							$excelData[$i]['Htva_(RWF)']=0;
 							$excelData[$i]['Htva_(USD)']=$facture['Facture']['montant']-$facture['Facture']['tva'];
-							$excelData[$i]['Tva_(BIF)']=0;
+							$excelData[$i]['Tva_(RWF)']=0;
 							$excelData[$i]['Tva_(USD)']=$facture['Facture']['tva'];
-							$excelData[$i]['Montant_(BIF)']=0;
+							$excelData[$i]['Montant_(RWF)']=0;
 							$excelData[$i]['Montant_(USD)']=$facture['Facture']['montant'];
 						}
 						$i++;
@@ -1396,7 +1396,7 @@ class FacturesController extends AppController {
 	function rapport($date1=null,$date2=null,$monnaie='',$bonus='no'){
 		$factures=$sum=array();
 		$goOn=false;
-		foreach(array('USD','BIF') as $currency){ // use of currency instead of monnaie to avoid confict
+		foreach(array('USD','RWF') as $currency){ // use of currency instead of monnaie to avoid confict
 			$sum['montant_'.$currency]=$sum['reste_'.$currency]=$sum['deposit_'.$currency]=0;
 		}
 		if(($date1!=null)&&($date2!=null)){
@@ -1405,7 +1405,7 @@ class FacturesController extends AppController {
 										);
 			$factureConditions['Facture.monnaie']=$monnaie;
 			if($bonus=='no'){
-				$factureConditions['Facture.etat']=array('credit','avance');
+				$factureConditions['Facture.etat']=array('credit','half_paid');
 			}
 			else {
 				$factureConditions['Facture.etat']=array('bonus');
@@ -1423,11 +1423,11 @@ class FacturesController extends AppController {
 				$factureConditions['Tier.compagnie like']='%'.$this->data['Tier']['compagnie'].'%';
 			}
 		//	exit(debug($this->data));
-			if($this->data['Facture']['etat'][0]!='toutes') {
+			if(!empty($this->data['Facture']['etat'][0])) {
 				$factureConditions['Facture.etat']=$this->data['Facture']['etat'];
 			}
 			else {
-				$factureConditions['Facture.etat !=']='annulee';
+				$factureConditions['Facture.etat !=']='canceled';
 			}
 			
 			if($this->data['Facture']['operation']!='') {
@@ -1522,7 +1522,7 @@ class FacturesController extends AppController {
 			}
 		}
 		$serveurs = $this->Facture->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(1,2),
-																					'Personnel.actif'=>'oui',
+																					'Personnel.actif'=>'yes',
 																						),
 																	'order'=>array('Personnel.name asc')
 																	)
@@ -1560,10 +1560,10 @@ class FacturesController extends AppController {
 				$factureConditions['Tier.compagnie']=$this->data['Tier']['compagnie'];
 			}
 			if(($this->data['Facture']['etat']!='')&&($this->data['Facture']['etat']!='non_nul')) {
-				$factureConditions['Facture.etat']=($this->data['Facture']['etat']=='en_cours')?array('en_cours','cloturer'):$this->data['Facture']['etat'];
+				$factureConditions['Facture.etat']=($this->data['Facture']['etat']=='in_progress')?array('in_progress','printed'):$this->data['Facture']['etat'];
 			}
 			elseif($this->data['Facture']['etat']=='non_nul'){
-				$factureConditions['Facture.etat !=']='annulee';
+				$factureConditions['Facture.etat !=']='canceled';
 			}
 			
 			if($this->data['Facture']['operation']!='') {
@@ -1594,7 +1594,7 @@ class FacturesController extends AppController {
 	function _room(&$facture){
 		$info=$this->Facture->Reservation->find('first',array('conditions'=>array('Reservation.arrivee <='=>$facture['Facture']['date'],
 																			'Reservation.depart >='=>$facture['Facture']['date'],
-																			'Reservation.etat !='=>'annulee',
+																			'Reservation.etat !='=>'canceled',
 																			'Reservation.tier_id'=>$facture['Facture']['tier_id']
 																			),
 														'fields'=>array('Chambre.name')
@@ -1624,7 +1624,7 @@ class FacturesController extends AppController {
 				$fields=array('Proforma.*','Produit.name');
 				break;
 			case 'Reservation':
-				if($facture['Facture']['etat']!='annulee')
+				if($facture['Facture']['etat']!='canceled')
 					$this->redirect(array('controller'=>'reservations','action'=>'facture_globale/'.$id));
 				else
 					$fields=array('Reservation.*','Chambre.name','Facture.date');
@@ -1687,10 +1687,10 @@ class FacturesController extends AppController {
 			$conditions['LocationExtra.location_id']=$locationInfo['Location']['id'];
 			
 			if(in_array($type,array('standard','globale'))){
-				$conditions['LocationExtra.extra']=array('oui','resto');
+				$conditions['LocationExtra.extra']=array('yes','resto');
 			}
 			elseif($type=='proforma'){
-				$conditions['LocationExtra.extra']=array('oui','non');
+				$conditions['LocationExtra.extra']=array('yes','no');
 			}
 			$modelInfos=$this->LocationExtra->find('all',array('conditions'=>$conditions,
 													'recursive'=>-1,
@@ -1726,7 +1726,7 @@ class FacturesController extends AppController {
 																					),
 																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
-																						'Facture.etat'=>array('payee','excedent','avance','bonus','credit'),
+																						'Facture.etat'=>array('paid','excedent','half_paid','bonus','credit'),
 																						'Facture.tier_id'=>$facture['Tier']['id'],
 																						),
 																	));
@@ -1742,7 +1742,7 @@ class FacturesController extends AppController {
 																					),
 																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
-																						'Facture.etat'=>array('payee','excedent','avance','bonus','credit'),
+																						'Facture.etat'=>array('paid','excedent','half_paid','bonus','credit'),
 																						'Facture.tier_id'=>$facture['Tier']['id'],
 																						),
 																	));

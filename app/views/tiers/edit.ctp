@@ -36,11 +36,11 @@
 				echo $this->Form->input('Tier.name',array('id'=>'fullName','label'=>'Full Name'));
 			}
 			if($action=='edit'){
-				echo $this->Form->input('type',array('label'=>'','id'=>'op','options'=>array('client'=>'customer',
-																						'fournisseur'=>'supplier',
-																						)
-															)
-										);
+				// echo $this->Form->input('type',array('label'=>'','id'=>'op','options'=>array('client'=>'customer',
+				// 																		'fournisseur'=>'supplier',
+				// 																		)
+				// 											)
+				// 						);
 			}
 			else {
 				echo $this->Form->input('type',array('label'=>'','type'=>'hidden','value'=>'client'));

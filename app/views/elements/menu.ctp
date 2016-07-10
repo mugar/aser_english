@@ -64,19 +64,19 @@
 					</ul>
 				</li>
 				<?php endif;?>
-				<li><?php echo $this->Html->link(__('Customers & Fournisseurs', true), '#'); ?>
+				<li><?php echo $this->Html->link(__('Customers & Invoices', true), '#'); ?>
 					<ul>
-						<li class="folder"><?php echo $this->Html->link(__('Customers & Fournisseurs', true), '/tiers/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Customers Management', true), '/tiers/index'); ?></li>
 						<?php if(Configure::read('aser.gestion_reduction')):?>
-							<li class="folder"><?php echo $this->Html->link(__('Gestion des Réductions', true), '/reductions'); ?></li>
+							<li class="folder"><?php echo $this->Html->link(__('Discounts Management', true), '/reductions'); ?></li>
 						<?php endif;?>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Factures', true), '/factures/index'); ?>
+						<li class="folder"><?php echo $this->Html->link(__('Invoices Management', true), '/factures/index'); ?>
 							<ul>	
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport des Factures', true), '/factures/rapport'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Ventes Mensuelle', true), '/factures/monthly'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport Journalier', true), '/factures/cash'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport des Paiements', true), '/paiements/payment/no'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Liste des Débiteurs', true), '/factures/credit'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Invoices Report', true), '/factures/rapport'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Monthly Sales Report', true), '/factures/monthly'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Daily Report', true), '/factures/cash'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Payments Report', true), '/paiements/payment/no'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Debtors Report', true), '/factures/credit'); ?></li>
 								<?php if((Configure::read('aser.aserb')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5)))||
 									in_array(Configure::read('aser.name'),array('aserb','belair'))	
 								):?>
@@ -93,7 +93,7 @@
 									<li class="rapport"><?php echo $this->Html->link(__('Impression Journalière', true), '/factures/show_bills'); ?></li>
 								<?php endif;?>	
 								<?php if($config['POS']):?>
-									<li class="rapport"><?php echo $this->Html->link(__('Factures Débloquées', true), '/ventes/unlocked_bills'); ?></li>
+									<li class="rapport"><?php echo $this->Html->link(__('Unlocked Invoices Report', true), '/ventes/unlocked_bills'); ?></li>
 								<? endif;?>	
 								<?php if(Configure::read('aser.xls_copy')):?>
 									<li class="rapport"><?php echo $this->Html->link(__('Factures envoyées', true), '/factures/aserb_report'); ?></li>
@@ -114,7 +114,7 @@
 				<?php if($config['POS']): ?>
 				<li><?php 
 						if($config['magasin']) echo $html->link(__('Point Of Sale', true), '#');
-						else  echo $html->link(__('Restaurant Management', true), '#');?>
+						else  echo $html->link(__('Restaurant', true), '#');?>
 						<ul>
 							<?php if(Configure::read('aser.touchscreen')):?>
 							<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/touchscreen'); ?></li>
@@ -135,9 +135,9 @@
 								<li class="rapport"><?php echo $this->Html->link(__('Ventes Par Groupes Comptable', true), '/ventes/par_produits_groupe_cptable'); ?></li>
 							<? endif;?>
 							<?php if($config['bon']):?>
-								<li class="rapport"><?php echo $this->Html->link(__('Unsent Orders', true), '/ventes/unprinted_orders'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Not Sent Orders', true), '/ventes/unprinted_orders'); ?></li>
 							<? endif;?>	
-							<li class="rapport"><?php echo $this->Html->link(__('Delete Orders', true), '/ventes/removed_orders'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Removed Orders', true), '/ventes/removed_orders'); ?></li>
 							</ul>
 				</li>
 				<?php endif; ?>
@@ -192,43 +192,24 @@
 				<?php endif; ?>
 				
 				<?php if(Configure::read('aser.tresorerie')):?>
-				<li><?php echo $this->Html->link(__('Trésorerie', true), '#'); ?>
+				<li><?php echo $this->Html->link(__('Cash Management', true), '#'); ?>
 					<ul>
-						<li class="money"><?php echo $this->Html->link(__('Gestion des caisses', true), '/caisses/index'); ?>
+						<li class="money"><?php echo $this->Html->link(__('Accounts Management', true), '/caisses/index'); ?>
 							<ul>
-								<li class="rapport"><?php echo $this->Html->link(__('Mouvements des caisses', true), '/operations/balance/caisses'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Operations Summary', true), '/operations/balance/caisses'); ?></li>	
+								<li class="rapport"><?php echo $this->Html->link(__('Expenses Report', true), '/operations/depenses'); ?></li>
 							</ul>
 						</li>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Opérations', true), '/operations/index'); ?>	
+						<li class="folder"><?php echo $this->Html->link(__('Operations Management', true), '/operations/index'); ?>	
 						</li>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des types d\'Entrées & Dépenses', true), '/types/index'); ?>	
-							<ul>
-								<li class="rapport"><?php echo $this->Html->link(__('Rapport Dépenses', true), '/operations/depenses'); ?></li>
-							</ul>
-						</li>
-						<li class="rapport"><?php echo $this->Html->link('RESULTAT', '/operations/resultat'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Operations Types', true), '/types/index'); ?></li>
+						<li class="rapport"><?php echo $this->Html->link('SUMMARY Report', '/operations/resultat'); ?></li>
 						<!--
 							<li class="folder"><?php echo $this->Html->link(__('Gestion des Caisses interdites', true), '/caisse_interdites/index'); ?></li>
 						-->
 					</ul>
 				</li>
 				<?php endif;?>
-				<?php if(false&&$config['comptabilite']): ?>
-				<li><?php echo $this->Html->link(__('Comptabilité', true), '#'); ?>
-					<ul>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Comptes', true), '/comptes/index'); ?></li>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Opérations', true), '/compte_operations/index'); ?>
-				      		<ul>
-				      			<li class="rapport"><?php echo $this->Html->link(__('Enregistrement des Reports', true), '/compte_operations/index/report'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Grand Livre', true), '/compte_operations/rapport'); ?></li>
-								<li class="rapport"><?php echo $this->Html->link(__('Balance', true), '/compte_operations/balance'); ?></li>	
-								<li class="rapport"><?php echo $this->Html->link(__('Charges d\'Exploitation', true), '/compte_operations/charges'); ?></li>	
-								<li class="rapport"><?php echo $this->Html->link(__('Solde de Gestion', true), '/compte_operations/compte_gestion'); ?></li>		
-							</ul>
-						</li>
-					</ul>
-				</li>
-				<?php endif; ?>
 				<li><?php echo $this->Html->link(__('Configuration', true), '#'); ?>
 					<ul>
 						<li class="rapport"><?php echo $this->Html->link(__('Paramétrage du logiciel', true), '/configs/index'); ?></li>

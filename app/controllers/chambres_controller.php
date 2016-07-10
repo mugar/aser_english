@@ -77,7 +77,7 @@ class ChambresController extends AppController {
 				exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
 		}
 		if($action=='add'){
-			$data['Chambre']['operationnelle']='oui';
+			$data['Chambre']['operationnelle']='yes';
 		}
 		$cond['Chambre.name']=$data['Chambre']['name'];
 		if(!empty($data['Chambre']['id'])){

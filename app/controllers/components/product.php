@@ -47,8 +47,8 @@ class ProductComponent extends Object {
 		
 		if(!empty($company_info['tel'])) {$sheet->setCellValueByColumnAndRow(0, $row, 'Tél : '.$company_info['tel']); $row++; }	
 		if(!empty($company_info['email'])) {$sheet->setCellValueByColumnAndRow(0, $row, 'Email : '.$company_info['email']);$row++; }		
-		if(!empty($company_info['compte_BIF'])) {$sheet->setCellValueByColumnAndRow(0, $row, 'Compte Bancaire : '.$company_info['compte_BIF']);$row++; }
-		if(!empty($company_info['compte_BIF'])) {$sheet->setCellValueByColumnAndRow(0, $row, 'NIF : '.$company_info['nif']);$row++; }	
+		if(!empty($company_info['compte_RWF'])) {$sheet->setCellValueByColumnAndRow(0, $row, 'Compte Bancaire : '.$company_info['compte_RWF']);$row++; }
+		if(!empty($company_info['compte_RWF'])) {$sheet->setCellValueByColumnAndRow(0, $row, 'NIF : '.$company_info['nif']);$row++; }	
 
 		
 		$parallelRow=1;
@@ -92,7 +92,7 @@ class ProductComponent extends Object {
 		$row++;
 		if($data['model']=='Location'){
 			foreach ($data['modelInfos'] as $location){
-				if((!is_null($location['LocationExtra']['heure']))&&($location['LocationExtra']['extra']=='non')){
+				if((!is_null($location['LocationExtra']['heure']))&&($location['LocationExtra']['extra']=='no')){
 					$value=$location['LocationExtra']['name'];
 					if(!empty($location['LocationExtra']['heure'])) $value.=' à '.$location['LocationExtra']['heure']; 
 				}
@@ -452,7 +452,7 @@ class ProductComponent extends Object {
 		$company['address1']=$this->Conf->find('address1');	
 		$company['address2']=$this->Conf->find('address2');	
 		$company['tel']=$this->Conf->find('tel');	
-		$company['compte_BIF']=$this->Conf->find('compte_BIF');		
+		$company['compte_RWF']=$this->Conf->find('compte_RWF');		
 		$company['compte_USD']=$this->Conf->find('compte_USD');	
 		$company['compte_EUR']=$this->Conf->find('compte_EUR');
 		$company['nif']=$this->Conf->find('nif');	
@@ -958,7 +958,7 @@ class ProductComponent extends Object {
 				$conditions['Produit.code']=$name; // numeric only means it's a code bar
 			}
 			$conditions['Produit.stock_id']=$stockId;
-			$conditions['Produit.actif']='oui';
+			$conditions['Produit.actif']='yes';
 				
    			$produitId=$this->Produit->find('first', array('conditions' =>$conditions,
  	   														'fields' => array('Produit.id'),
@@ -1425,7 +1425,7 @@ class ProductComponent extends Object {
 		}
 	
 		//echanger contre relations
-		$echange=(!empty($modelInfo[$model]['echange'])&&($modelInfo[$model]['echange']=='oui'))?(true):(false);
+		$echange=(!empty($modelInfo[$model]['echange'])&&($modelInfo[$model]['echange']=='yes'))?(true):(false);
     	if(in_array('echange',$relations)&&$echange){
 			$params['id']=$produitInfo['Produit']['id'];
 			$params['quantite']=$quantityRemoved;
@@ -1556,7 +1556,7 @@ class ProductComponent extends Object {
 	function remove_facture($factureId,$model,$obs=''){
 		$this->autoRender=false;
 		$this->Model=ClassRegistry::init($model);
-		$this->Model->Facture->save(array('Facture'=>array('id'=>$factureId,'etat'=>'annulee','classee'=>1,'observation'=>$obs)));
+		$this->Model->Facture->save(array('Facture'=>array('id'=>$factureId,'etat'=>'canceled','classee'=>1,'observation'=>$obs)));
 		
 		if($model=='Proforma'){
 			$proformas=$this->Model->find('all',array('fields'=>array('Proforma.id'),
@@ -1578,7 +1578,7 @@ class ProductComponent extends Object {
 											)
 								);
 			foreach($records as $record){
-				$record[$model]['etat']='annulee';
+				$record[$model]['etat']='canceled';
 				$this->Model->save($record);
 			}
 		}
@@ -1735,13 +1735,13 @@ class ProductComponent extends Object {
 		//pour determiner l'etat de la facture en fonction de tous les paiements jusqu'a ce jour
 		$facture['Facture']['reste']=$facture['Facture']['montant']-$pytTotal;
 		if($facture['Facture']['reste']==0){
-			$facture['Facture']['etat']='payee';	
+			$facture['Facture']['etat']='paid';	
 		}
 		else if($facture['Facture']['reste']==$facture['Facture']['montant']){
 			$facture['Facture']['etat']='credit';
 		}
 		else if(($facture['Facture']['reste']>0)&&($facture['Facture']['reste']<$facture['Facture']['montant'])){
-			$facture['Facture']['etat']='avance';
+			$facture['Facture']['etat']='half_paid';
 		}
 		else if($facture['Facture']['reste']<0){
 			$facture['Facture']['etat']='excedent';
@@ -1821,10 +1821,10 @@ class ProductComponent extends Object {
 		if($model!='Proforma'){
 			$montantPayee=(!empty($data['Paiement']['montant']))?($data['Paiement']['montant']):(0);
 			//payment  stuff
-			if($data['Facture']['etat']=='payee'){
+			if($data['Facture']['etat']=='paid'){
 				$montantCaisse=$montantTotal;
 			}
-			elseif($data['Facture']['etat']=='avance'){
+			elseif($data['Facture']['etat']=='half_paid'){
 				$montantCaisse=$montantPayee;
 			}
 			else {
@@ -1945,12 +1945,12 @@ class ProductComponent extends Object {
     	if ((!empty( $sectionId ))&&($sectionId!=0)) {
       		$groupes =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name'),
       															'conditions'=>array('Groupe.section_id'=>$sectionId,
-																					'Groupe.actif'=>'oui'
+																					'Groupe.actif'=>'yes'
 																					)));
     	}
     	else { 
     		$groupes =$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.name'),
-																'conditions'=>array('Groupe.actif'=>'oui')
+																'conditions'=>array('Groupe.actif'=>'yes')
 																));
 		}
     	$groupes[0]='---';
@@ -1977,10 +1977,10 @@ class ProductComponent extends Object {
 		$cond['Produit.name like']=$name.'%';
 		if($filter=='appro'){
 			$cond['Produit.type like']='%stockable%';
-			$cond['Produit.actif']='oui';
+			$cond['Produit.actif']='yes';
 		}
 		else if($filter=='') {
-			$cond['Produit.actif']='oui';
+			$cond['Produit.actif']='yes';
 		}
   		$this->Controller->set('produits', $this->Produit->find('all', array(
 			 'conditions' => $cond,
@@ -2202,8 +2202,8 @@ class ProductComponent extends Object {
 		$datas=array();
 		$rubriques=array('ca','credit','bonus');
 		
-		$default_currency = Configure::read('aser.default_currency'); //BIF in general.
-		$en_cours=0;
+		$default_currency = Configure::read('aser.default_currency'); //RWF in general.
+		$in_progress=0;
 
 		//initialisation du tableau des paiements
 		foreach($this->Controller->modePaiements as $mode=>$modeName){
@@ -2219,31 +2219,31 @@ class ProductComponent extends Object {
 			}
 		}
 		
-		$old_credit['BIF']=$old_credit['USD']=0;
+		$old_credit['RWF']=$old_credit['USD']=0;
 		
 		//Details factures bif
-		$vente1['BIF_BIF']=$vente1['BIF_USD']=$vente1['BIF_EUR']=0;
-		$vente2['BIF_BIF']=$vente2['BIF_USD']=$vente2['BIF_EUR']=0;
+		$vente1['RWF_RWF']=$vente1['RWF_USD']=$vente1['RWF_EUR']=0;
+		$vente2['RWF_RWF']=$vente2['RWF_USD']=$vente2['RWF_EUR']=0;
 		//Details factures usd
-		$vente1['USD_BIF']=$vente1['USD_USD']=$vente1['USD_EUR']=0;
-		$vente2['USD_BIF']=$vente2['USD_USD']=$vente2['USD_EUR']=0;
+		$vente1['USD_RWF']=$vente1['USD_USD']=$vente1['USD_EUR']=0;
+		$vente2['USD_RWF']=$vente2['USD_USD']=$vente2['USD_EUR']=0;
 		
 		//Details pyts factures bif
-		$pyt1['BIF_BIF']=$pyt1['BIF_USD']=$pyt1['BIF_EUR']=0;
-		$pyt2['BIF_BIF']=$pyt2['BIF_USD']=$pyt2['BIF_EUR']=0;
+		$pyt1['RWF_RWF']=$pyt1['RWF_USD']=$pyt1['RWF_EUR']=0;
+		$pyt2['RWF_RWF']=$pyt2['RWF_USD']=$pyt2['RWF_EUR']=0;
 		//Details pyts factures usd
-		$pyt1['USD_BIF']=$pyt1['USD_USD']=$pyt1['USD_EUR']=0;
-		$pyt2['USD_BIF']=$pyt2['USD_USD']=$pyt2['USD_EUR']=0;
+		$pyt1['USD_RWF']=$pyt1['USD_USD']=$pyt1['USD_EUR']=0;
+		$pyt2['USD_RWF']=$pyt2['USD_USD']=$pyt2['USD_EUR']=0;
 		
-		$old_pyt['USD']=$old_pyt['BIF']=0;
-		$paid['USD']=$paid['BIF']=0;
+		$old_pyt['USD']=$old_pyt['RWF']=0;
+		$paid['USD']=$paid['RWF']=0;
 		
-		$remb['BIF']=$remb['USD']=0;
+		$remb['RWF']=$remb['USD']=0;
 		
-		$ca['ca_USD']=$ca['ca_BIF']=$ca['credit_BIF']=$ca['credit_USD']=$ca['deposit_USD']=$ca['deposit_BIF']=0;
-		$ca['consumed_BIF']=$ca['consumed_USD']=0;
+		$ca['ca_USD']=$ca['ca_RWF']=$ca['credit_RWF']=$ca['credit_USD']=$ca['deposit_USD']=$ca['deposit_RWF']=0;
+		$ca['consumed_RWF']=$ca['consumed_USD']=0;
 		$list=array();
-		$en_cours_ids=  array();
+		$in_progress_ids=  array();
 		$factures=$this->Facture->find('all',array('fields'=>array('Facture.montant',
 																	'Facture.reste',
 																	'Facture.monnaie',
@@ -2257,11 +2257,11 @@ class ProductComponent extends Object {
 			foreach($factures as $key=>$facture){
 				//getting the total des factures en cours et cloturer
 				if(($facture['Facture']['monnaie']==$default_currency)
-					&&in_array($facture['Facture']['etat'], array('en_cours','cloturer'))
+					&&in_array($facture['Facture']['etat'], array('in_progress','printed'))
 					){
 
-					$en_cours+=$facture['Facture']['montant'];
-					$en_cours_ids[]=$facture['Facture']['id'].' '.$facture['Facture']['montant'].' '.$facture['Facture']['date'].' '.$facture['Facture']['etat'];
+					$in_progress+=$facture['Facture']['montant'];
+					$in_progress_ids[]=$facture['Facture']['id'].' '.$facture['Facture']['montant'].' '.$facture['Facture']['date'].' '.$facture['Facture']['etat'];
 					continue;
 				}
 
@@ -2408,17 +2408,17 @@ class ProductComponent extends Object {
 			$credit['USD']=$ca['ca_USD']-$montantPayee['USD'];
 		}
 		
-		if($old_credit['BIF']<=$ca['ca_BIF']){
-			$montantPayee['BIF']=$old_credit['BIF'];
-			$credit['BIF']=$ca['ca_BIF']-$montantPayee['BIF'];
-			$ca['deposit_BIF']=($ca['deposit_BIF']>$old_credit['BIF'])?0:$ca['deposit_BIF'];
-			$consumed['BIF']=0;
+		if($old_credit['RWF']<=$ca['ca_RWF']){
+			$montantPayee['RWF']=$old_credit['RWF'];
+			$credit['RWF']=$ca['ca_RWF']-$montantPayee['RWF'];
+			$ca['deposit_RWF']=($ca['deposit_RWF']>$old_credit['RWF'])?0:$ca['deposit_RWF'];
+			$consumed['RWF']=0;
 		}
 		else {
-			$consumed['BIF']=$old_pyt['BIF']-$paid['BIF'];
-			$montantPayee['BIF']=$old_credit['BIF']-$ca['deposit_BIF']-$consumed['BIF'];
-			$montantPayee['BIF']=($montantPayee['BIF']<0)?0:$montantPayee['BIF'];
-			$credit['BIF']=$ca['ca_BIF']-$montantPayee['BIF'];
+			$consumed['RWF']=$old_pyt['RWF']-$paid['RWF'];
+			$montantPayee['RWF']=$old_credit['RWF']-$ca['deposit_RWF']-$consumed['RWF'];
+			$montantPayee['RWF']=($montantPayee['RWF']<0)?0:$montantPayee['RWF'];
+			$credit['RWF']=$ca['ca_RWF']-$montantPayee['RWF'];
 		}
 		$this->Controller->set(compact(
 									'consumed',
@@ -2435,7 +2435,7 @@ class ProductComponent extends Object {
 									'total',
 									'date',
 									'remb',
-									'en_cours'
+									'in_progress'
 								));	
 	}
 	
@@ -2562,7 +2562,7 @@ class ProductComponent extends Object {
 																				'Reservation.facture_id',
 																	),
 													'conditions'=>array('Reservation.facture_id !='=>null,
-																		'Reservation.etat !='=>'annulee',
+																		'Reservation.etat !='=>'canceled',
 																		'OR'=>array(array('Reservation.arrivee >='=>$date1,
 																						'Reservation.depart <='=>$date2),
 																					array('Reservation.arrivee <'=>$date1,

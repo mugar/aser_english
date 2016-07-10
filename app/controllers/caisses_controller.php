@@ -67,7 +67,7 @@ class CaissesController extends AppController {
 		}
 	
 		if($action=='add'){
-			$data['Caiss']['actif']='oui';
+			$data['Caiss']['actif']='yes';
 		}
 		$cond['Caiss.name']=$data['Caiss']['name'];
 		if(!empty($data['Caiss']['id'])){

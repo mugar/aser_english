@@ -1,11 +1,11 @@
 
 <div id='view'>
 <div class="document">
-<h3>Mouvements des <?php echo $element;?></h3>
+<h3>Operations Summary</h3>
 <br />
 <?php
 	if(isset($date1)){
-			echo '<h4>(Période entre le '.$this->MugTime->toFrench($date1).' et le '.$this->MugTime->toFrench($date2).')</h4>';
+			echo '<h4>(From  '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).')</h4>';
 			echo '<h4>( monnaie : '.$monnaie.', Mode Paiement: '.$mode_paiement.')</h4>';
 	}
 	else {
@@ -17,15 +17,15 @@
 <br />
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr class="border">
-			<th rowspan="2"><?php echo $element;?></th>
-			<th rowspan="2">Report</th>
-			<th colspan="2">Mouvements</th>
-			<th rowspan="2">Solde</th>
+			<th rowspan="2">ACCOUNTS</th>
+			<th rowspan="2">PREVIOUS BALANCE</th>
+			<th colspan="2">MOVEMENTS</th>
+			<th rowspan="2">BALANCES</th>
 		
 	</tr>
 	<tr class="border">
-			<th>Entrée</th>
-			<th>Sortie</th>
+			<th>IN</th>
+			<th>OUT</th>
 	</tr>
 		<?php
 	foreach ($elements as $operation):
@@ -80,9 +80,9 @@
 	<span class="left">
 		<?php
 			
-			echo $this->Form->input('element_id',array('label'=>$element,'options'=>$list,'multiple'=>true, 'selected'=>0));
-			echo $this->Form->input('monnaie');		
-			echo $this->Form->input('mode_paiement');									
+			echo $this->Form->input('element_id',array('label'=>'Account','options'=>$list,'multiple'=>true, 'selected'=>0));
+			echo $this->Form->input('monnaie',array('label'=>'Currency'));		
+			echo $this->Form->input('mode_paiement',array('label'=>'Payment Mode'));								
 		?>
 	</span>
 	<span class="right">

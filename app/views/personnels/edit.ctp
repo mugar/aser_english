@@ -3,7 +3,7 @@
      jQuery(document).ready(function(){
 	jQuery('#params').change(function(){
 		var params=jQuery(this).val();
- 		if(params!='non'){
+ 		if(params!='no'){
  			jQuery('.nullable').removeAttr('disabled');
  		}
  		else {
@@ -18,9 +18,9 @@
 		<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('name',array('label'=>'Nom & Prénom'));
-		echo $this->Form->input('actif',array('id'=>'actif','options'=>array('oui'=>'oui','non'=>'non')));
+		echo $this->Form->input('actif',array('id'=>'actif','options'=>array('yes'=>'yes','no'=>'no')));
 		echo $this->Form->input('fonction_id',array('id'=>'fonction'));
-		echo $this->Form->input('params',array('id'=>'params','label'=>'Changer les Paramètres de Connexion','options'=>array('non'=>'non','oui'=>'oui')));
+		echo $this->Form->input('params',array('id'=>'params','label'=>'Changer les Paramètres de Connexion','options'=>array('no'=>'no','yes'=>'yes')));
 	?>
 	</span>
 	<span class="right">

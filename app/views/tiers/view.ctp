@@ -73,7 +73,7 @@
 		<legend>Dettes</legend>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Montant</th>
+			<th>Amount</th>
 			<th>Maximum ou Plafond</th>
 			<th>Type</th>
 		</tr>

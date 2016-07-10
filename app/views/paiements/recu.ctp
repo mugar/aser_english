@@ -49,6 +49,6 @@
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li><?php echo $this->Html->link('Gestions Des Factures', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
-		<li><?php echo $this->Html->link('Retour En Arrière', $referer); ?> </li>
+		<li><?php echo $this->Html->link('Go back', $referer); ?> </li>
 	</ul>
 </div>
