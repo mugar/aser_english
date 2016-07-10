@@ -974,6 +974,9 @@ class ProductComponent extends Object {
 	 *stock management function
 	 */
     function stock(&$modelInfo,$where,$produitInfo=array(),$silent=false) {
+    	$historiqueIds = [];
+    	$historiqueIds1 = [];
+    	$historiqueIds2 = [];
     	//setting useful variable
     	$failureMsg1='Erreur dans l\'enregistrement de l\'historique du stock!';
 

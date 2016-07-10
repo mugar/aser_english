@@ -1197,3 +1197,84 @@ Aco: Ventes/touchscreen in [/var/www/aser/cake/libs/controller/components/acl.ph
 2016-07-10 17:26:30 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Groupe.actif' in 'where clause'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
 2016-07-10 17:26:30 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Groupe.actif' in 'on clause'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
 2016-07-10 17:26:30 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/app_controller.php, line 321]
+2016-07-10 20:34:01 Warning: Warning (2): implode() [<a href='http://php.net/function.implode'>function.implode</a>]: Invalid arguments passed in [/var/www/aser_english/app/controllers/components/product.php, line 1133]
+2016-07-10 20:34:01 Warning: Warning (2): implode() [<a href='http://php.net/function.implode'>function.implode</a>]: Invalid arguments passed in [/var/www/aser_english/app/controllers/components/product.php, line 1134]
+2016-07-10 20:34:16 Warning: Warning (2): implode() [<a href='http://php.net/function.implode'>function.implode</a>]: Invalid arguments passed in [/var/www/aser_english/app/controllers/components/product.php, line 1133]
+2016-07-10 20:34:16 Warning: Warning (2): implode() [<a href='http://php.net/function.implode'>function.implode</a>]: Invalid arguments passed in [/var/www/aser_english/app/controllers/components/product.php, line 1134]
+2016-07-10 20:37:00 Warning: Warning (2): implode() [<a href='http://php.net/function.implode'>function.implode</a>]: Invalid arguments passed in [/var/www/aser_english/app/controllers/components/product.php, line 1135]
+2016-07-10 20:53:09 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [actif] => yes
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Historiques/index in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]
+2016-07-10 21:17:25 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [actif] => yes
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Historiques/index in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]
+2016-07-10 21:18:13 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [actif] => yes
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Historiques/index in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]
+2016-07-10 21:18:59 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [actif] => yes
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Historiques/index in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]

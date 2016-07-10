@@ -4,7 +4,7 @@
 	<span class="left">
 		<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('name',array('label'=>'Nom Du Stock'));
+		echo $this->Form->input('name',array('label'=>'Stock Name'));
 	?>
 	</span>
 	</form>

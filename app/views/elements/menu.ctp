@@ -7,9 +7,7 @@
 		<div id="menu">
 			<ul id="nav">
 				<?php if(Configure::read('aser.POS')):?>
-					<li><?php echo $html->link(__('Stock', true), '#'); ?>
-						<ul>
-							<li class="folder"><?php echo $this->Html->link(__('Products Configuration', true), '#'); ?>
+					<li><?php echo $html->link(__('Products Management', true), '#'); ?>
 								<ul>	
 									<?php if(Configure::read('aser.stock')):?>
 										<li class="folder"><?php echo $this->Html->link(__('Stocks Management', true), '/stocks/index'); ?></li>
@@ -37,29 +35,9 @@
 											</ul>
 										<?endif;?>
 									</li>
-								</ul>
-							</li>
-							<?php if(Configure::read('aser.stock')):?>
-								<li class="folder"><?php echo $this->Html->link(__('Gestion des Opérations', true), '#'); ?>			
-									<ul>
-										<li class="folder"><?php echo $this->Html->link(__('Gestion des Entrées', true), '/entrees/index'); ?>
-											<ul>
-												<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/entrees/rapport'); ?></li>
-											</ul>
-										</li>
-										<li class="folder"><?php echo $this->Html->link(__('Gestion des Sorties', true), '/sortis/index'); ?>
-											<ul>
-												<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/sortis/rapport'); ?></li>
-											</ul>
-										</li>
-										<li class="folder"><?php echo $this->Html->link(__('Gestion des Pertes', true), '/pertes/index'); ?>
-											<ul>
-												<li class="rapport"><?php echo $this->Html->link(__('Rapport Pertes', true), '/pertes/rapport'); ?></li>
-											</ul>
-										</li>
-										<li  class="folder"><?php echo $this->Html->link(__('Gestion des Mouvements', true), '/mouvements/index'); ?></li>
-									</ul>	
-								</li>
+									<?php if(Configure::read('aser.stock')):?>
+										<li class="folder"><?php echo $this->Html->link(__('Inventory Operations', true), '/historiques/index'); ?></li>
+										<li  class="folder"><?php echo $this->Html->link(__('Stock Movements', true), '/mouvements/index'); ?></li>
 							<?php endif;?>
 					</ul>
 				</li>

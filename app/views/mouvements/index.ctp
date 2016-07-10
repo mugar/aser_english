@@ -1,5 +1,5 @@
 <div class="mouvements index">
-	<h2><?php __('Gestion Des Mouvements');?></h2>
+	<h2><?php __('Stocks Movements');?></h2>
 	
 	
 <div id="recherche_boxe" style="display:none" title="Search Options">
@@ -8,9 +8,9 @@
 	<?php echo $this->Form->create('Mouvement',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('produit_id',array('selected'=>0,'options'=>$produits1));
-			echo $this->Form->input('stock_sortant_id',array('selected'=>0,'options'=>$stocks1));
-			echo $this->Form->input('stock_entrant_id',array('selected'=>0,'options'=>$stocks1));
+			echo $this->Form->input('produit_id',array('label'=>'Product','selected'=>0,'options'=>$produits1));
+			echo $this->Form->input('stock_sortant_id',array('label'=>'From','selected'=>0,'options'=>$stocks1));
+			echo $this->Form->input('stock_entrant_id',array('label'=>'To','selected'=>0,'options'=>$stocks1));
 		?>
 	</span>
 	<span class="right">
@@ -19,7 +19,7 @@
 			
 		echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
 		echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));	
-		echo $this->Form->input('show',array('label'=>'Affichage',
+		echo $this->Form->input('show',array('label'=>'Pagination',
 												'options'=>array(20=>'20',
 																50=>'50',
 																100=>'100',
@@ -37,10 +37,10 @@
 	
 	<tr>
 		<th>Date</th>
-		<th>Quantité</th>		
+		<th>Quantity</th>		
 		<th>Product</th>
-		<th>Stock Sortant</th>
-		<th>Stock Entrant</th>
+		<th>From</th>
+		<th>To</th>
 		<?php if (Configure::read('aser.shifts')):?>
 			<th>Shift</th>	
 		<?php endif;?>
@@ -70,14 +70,14 @@
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('date');?></th>
-			<th><?php echo $this->Paginator->sort('quantite');?></th>
-			<th><?php echo $this->Paginator->sort('produit_id');?></th>
-			<th><?php echo $this->Paginator->sort('stock_sortant_id');?></th>
-			<th><?php echo $this->Paginator->sort('stock_entrant_id');?></th>
+			<th><?php echo $this->Paginator->sort('Qty','quantite');?></th>
+			<th><?php echo $this->Paginator->sort('Product','produit_id');?></th>
+			<th><?php echo $this->Paginator->sort('From','stock_sortant_id');?></th>
+			<th><?php echo $this->Paginator->sort('To','stock_entrant_id');?></th>
 			<?php if (Configure::read('aser.shifts')):?>
 				<th><?php echo $this->Paginator->sort('shift');?></th>	
 			<?php endif;?>
-			<th><?php echo $this->Paginator->sort('personnel_id');?></th>
+			<th><?php echo $this->Paginator->sort('Created By','personnel_id');?></th>
 		</tr>
 	<?php
 	foreach ($mouvements as $mouvement){

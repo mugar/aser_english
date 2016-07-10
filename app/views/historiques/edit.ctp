@@ -1,26 +1,34 @@
-<div class="historiques form">
-<?php echo $this->Form->create('Historique');?>
-	<fieldset>
- 		<legend class="edit"><?php printf(__('Edit %s', true), __('Historique', true)); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('num_operation');
-		echo $this->Form->input('num_debit');
-		echo $this->Form->input('num_credit');
-		echo $this->Form->input('model');
-		echo $this->Form->input('id_element');
-		echo $this->Form->input('libelle');
-		echo $this->Form->input('debit');
-		echo $this->Form->input('credit');	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Save', true));?>
-</div>
-<div class="actions">
-	<h3><?php __('Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Html->link(__('Delete', true), array('action' => 'delete', $this->Form->value('Historique.id')), null, sprintf(__('Voulez vous vraiment effacer l\'enregistrement N° %s ?', true), $this->Form->value('Historique.id'))); ?></li>
-		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Historiques', true)), array('action' => 'index'));?></li>
-		
-	</ul>
+<div class="dialog">
+<?php echo $this->Form->create('Historique',array('id'=>'edit_form'));?>
+	<span class="left">
+		<?php
+			echo $this->Form->input('id');
+			echo $this->Form->input('date',array('label'=>'Date d\'Opération','type'=>'text','id'=>'DateOpEdit'));
+			echo $this->Form->input('quantite');
+			echo $this->Form->input('Produit.unite_id',array('label'=>'Unité de Mesure'));
+			echo $this->Form->input('Produit.id',array('type'=>'hidden'));
+			echo $this->Form->input('produit_id');
+			echo $this->Form->input('PA',array('label'=>'Prix D\'Achat'));
+			if(!Configure::read('aser.multi_pv')){
+				echo $this->Form->input('Produit.PV',array('label'=>'Prix De Vente'));
+			}
+		?>
+	</span>
+	<span class="right">
+		<?php
+			if(Configure::read('aser.pharmacie')){
+				echo $this->Form->input('batch',array('label'=>'N° De Lot'));
+				echo $this->Form->input('date_expiration',array('label'=>'Date d\'expiration','type'=>'text','id'=>'DateExpEdit'));
+			}
+			echo $this->Form->input('tier_id',array('options'=>$tiers1));
+			echo $this->Form->input('stock_id');
+			echo $this->Form->input('type');
+			if (Configure::read('aser.shifts'))
+				echo $this->Form->input('shift',array('options'=>$shifts));
+			echo $this->Form->input('personnel_id',array('type'=>'hidden'));
+			echo $this->Form->input('historique_id',array('type'=>'hidden'));
+		?>
+	</span>
+	</form>
+<div style="clear:both"></div>
 </div>
