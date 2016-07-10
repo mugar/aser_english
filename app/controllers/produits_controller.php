@@ -614,12 +614,16 @@ set_time_limit(240);    //4minutes
 		
 		$unites = $this->Produit->Unite->find('list');
 		$unites[0]='';
+		$garnishOptions = array('avec'=>'with',
+														'acc'=>'its a garnish',
+														'sans'=>'without'
+														);
 		$choixs=array('mvt'=>'Mouvements',
 					'e'=>'Entrées',
 					's'=>'Sorties',
 					'p'=>'Pertes'
 					);
-		$this->set(compact('unites','choixs','bars'));
+		$this->set(compact('unites','choixs','bars','garnishOptions'));
 		parent::beforeFilter();	
 	}
 	//*/

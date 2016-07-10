@@ -9,20 +9,20 @@
 				<?php if(Configure::read('aser.POS')):?>
 					<li><?php echo $html->link(__('Stock', true), '#'); ?>
 						<ul>
-							<li class="folder"><?php echo $this->Html->link(__('Configuration des Products', true), '#'); ?>
+							<li class="folder"><?php echo $this->Html->link(__('Products Configuration', true), '#'); ?>
 								<ul>	
 									<?php if(Configure::read('aser.stock')):?>
-										<li class="folder"><?php echo $this->Html->link(__('Gestion des stocks', true), '/stocks/index'); ?></li>
+										<li class="folder"><?php echo $this->Html->link(__('Stocks Management', true), '/stocks/index'); ?></li>
 									<?endif;?>
-									<li class="folder"><?php echo $this->Html->link(__('Gestion des sections', true), '/sections/index'); ?></li>
-									<li class="folder"><?php echo $this->Html->link(__('Gestion des groupes', true), '/groupes/index'); ?></li>
+									<li class="folder"><?php echo $this->Html->link(__('Sections Management', true), '/sections/index'); ?></li>
+									<li class="folder"><?php echo $this->Html->link(__('Groups Management', true), '/groupes/index'); ?></li>
 									<?php if(Configure::read('aser.comptabilite')):?>
 										<li class="folder"><?php echo $this->Html->link(__('Gestion des Groupes Comptables', true), '/groupe_comptables/index'); ?></li>
 									<?endif;?>
 									<?php if(Configure::read('aser.stock')):?>
-										<li class="folder"><?php echo $this->Html->link(__('Gestion des Unités de Mesure', true), '/unites/index'); ?></li>
+										<li class="folder"><?php echo $this->Html->link(__('Measuring Units Management', true), '/unites/index'); ?></li>
 									<?endif;?>
-									<li class="folder"><?php echo $this->Html->link(__('Gestion des produits', true), '/produits/index'); ?>
+									<li class="folder"><?php echo $this->Html->link(__('Products Management', true), '/produits/index'); ?>
 				    					<?php if(Configure::read('aser.stock')):?>
 				    	  					<ul>
 												<li class="rapport"><?php echo $this->Html->link(__('Rapport Des Products', true), '/produits/rapport'); ?></li>
