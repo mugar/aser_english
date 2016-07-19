@@ -11,7 +11,7 @@
 		<?php
 			echo $this->Form->input('id',array('type'=>'text','value'=>'toutes','label'=>'Numero'));
 			echo $this->Form->input('tier_id',array('selected'=>0));
-			echo $this->Form->input('arrivee',array('type'=>'text','id'=>'DateArrivee'));
+			echo $this->Form->input('checked_in',array('type'=>'text','id'=>'DateArrivee'));
 		?>
 	</span>
 	<span class="right">
@@ -19,13 +19,13 @@
 			echo $this->Form->input('depart',array('type'=>'text','id'=>'DateDeparture'));
 			echo $this->Form->input('type_chambre_id',array('selected'=>0));
 			echo $this->Form->input('choix',array('options'=>array('toutes'=>'toutes',
-																'arrivees'=>'arrivees',
+																'checked_ins'=>'checked_ins',
 																'departs'=>'departs',
 																'actif'=>'actif',
 																'avenir'=>'avenir',
 																'en_cours'=>'en_cours',
 																'passee'=>'passee',
-																'annulee'=>'annulee',
+																'canceled'=>'canceled',
 																)));
 		?>
 	</span>
@@ -45,7 +45,7 @@
 			<th><?php echo $this->Paginator->sort('nombre');?></th>
 			<th><?php echo $this->Paginator->sort('adultes');?></th>
 			<th><?php echo $this->Paginator->sort('enfants');?></th>
-			<th><?php echo $this->Paginator->sort('arrivee');?></th>
+			<th><?php echo $this->Paginator->sort('checked_in');?></th>
 			<th><?php echo $this->Paginator->sort('depart');?></th>
 			<th><?php echo $this->Paginator->sort('PU');?></th>
 			<th><?php echo $this->Paginator->sort('montant');?></th>
@@ -85,7 +85,7 @@
 		<td><?php echo $reservation['Reservation']['nombre']; ?>&nbsp;</td>
 		<td><?php echo $reservation['Reservation']['adultes']; ?>&nbsp;</td>
 		<td><?php echo $reservation['Reservation']['enfants']; ?>&nbsp;</td>
-		<td><?php echo $reservation['Reservation']['arrivee']; ?>&nbsp;</td>
+		<td><?php echo $reservation['Reservation']['checked_in']; ?>&nbsp;</td>
 		<td><?php echo $reservation['Reservation']['depart']; ?>&nbsp;</td>
 		<td><?php echo $reservation['Reservation']['PU']; ?>&nbsp;</td>
 		<td><?php echo $reservation['Reservation']['montant']; ?>&nbsp;</td>

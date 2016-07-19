@@ -140,28 +140,28 @@
 			$options['tier_name']=$locatio['tier_name'];
 			$options['facture_id']=$locatio['facture_id'];
 			
-			if($month_first_day<=$locatio['arrivee']) { 
-				$diff=$this->MugTime->diff($month_first_day,$locatio['arrivee']); //the $diff will serve like a temp variable 
+			if($month_first_day<=$locatio['checked_in']) { 
+				$diff=$this->MugTime->diff($month_first_day,$locatio['checked_in']); //the $diff will serve like a temp variable 
 			//	$diff++;
 				if($diff<=$days) { //days contain the number of days for current month
 					$diff=$diff-$current_position;
-					$month_left_days=$month_left_days-$diff; //determing how many days are left for the current month after the reservation arrivee
+					$month_left_days=$month_left_days-$diff; //determing how many days are left for the current month after the reservation checked_in
 					$limit=$diff; //limit for the $i counter variable in which to use normal td css second 
 					$i=0;//determine where to start creating td cells for the current reservation
-					show(null,$current_position,$i,$limit);//display of the first part of td table cells before the reservation arrivee
-					$diff=$this->MugTime->diff($locatio['arrivee'],$locatio['depart']);
+					show(null,$current_position,$i,$limit);//display of the first part of td table cells before the reservation checked_in
+					$diff=$this->MugTime->diff($locatio['checked_in'],$locatio['depart']);
 					$diff++;
 					if($diff<=$month_left_days) {
 						$limit=$diff;
 						$i=0;
-						//display of the second part of td table cells after the reservation arrivee
+						//display of the second part of td table cells after the reservation checked_in
 						show($class,$current_position,$i,$limit,$options);
 						$month_left_days=$month_left_days-$diff;//contains now left days after the reservation depart
 					}
 					else {
 						$limit=$month_left_days;
 						$i=0;
-						//display of the second part of td table cells after the reservation arrivee
+						//display of the second part of td table cells after the reservation checked_in
 						show($class,$current_position,$i,$limit,$options);
 						$month_left_days=0;//contains now left days after the reservation depart
 					}	
@@ -212,7 +212,7 @@
 <!--menu contextuel-->
 <ul id="myMenu" class="contextMenu" style="display:none">
 	<li class="igikorwa"><a href="#state">Changer l'etat</a></li>
-	<li class="igikorwa"><a href="#annulee">Annulée la location</a></li>
+	<li class="igikorwa"><a href="#canceled">Annulée la location</a></li>
 	<li class="igikorwa"><a href="#client">Détails du Customer</a></li>
 	<li class="igikorwa"><a href="#proforma">Facture Pro-forma</a></li>
 	<li class="igikorwa"><a href="#fact_loca">Facture Location</a></li>
@@ -226,7 +226,7 @@
 </ul>
 <!--ajax_add form -->
 
-<div id="location_boxe" style="display:none" title='Location pour la Salle : <span id="room_number"></span> <br><strong>From : <span id="arrivee"></span> au : <span id="depart"></span>'>
+<div id="location_boxe" style="display:none" title='Location pour la Salle : <span id="room_number"></span> <br><strong>From : <span id="checked_in"></span> au : <span id="depart"></span>'>
 
 <div class="dialog">
 <fieldset><legend>Détails Customer</legend>
@@ -245,14 +245,14 @@
 	<span class='left'>
 		<?php
 			echo $this->Form->input('tier_id',array('id'=>'principal','label'=>'Customer Principal','style'=>'width:300px;'));
-			echo $this->Form->input('monnaie',array('label'=>'monnaie', 'options'=>$facturationCurrencys));
+			echo $this->Form->input('monnaie',array('label'=>'monnaie', 'options'=>$facturationMonnaies));
 			?>
 	</span>
 	<span class="right">
 		<?php
 			echo $this->Form->input('nombre',array('onchange'=>'proforma_qty(this)','label'=>'Nombre de personnes','id'=>'pers'));
 			echo $this->Form->input('jours',array('label'=>'','disabled'=>'disabled','id'=>'jours','style'=>'display:none;'));
-			echo $this->Form->input('Facture.tva_incluse',array('type'=>'checkbox','checked'=>'checked','label'=>'TVA_incluse'));
+			echo $this->Form->input('Facture.tva_incluse',array('type'=>'checkbox','checked'=>'checked','label'=>'VAT_incluse'));
 			echo $this->Form->input('type',array('type'=>'hidden','value'=>'proforma'));
 		?>
 	</span>

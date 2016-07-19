@@ -45,8 +45,8 @@
 			</div>
 		 <?php 
 		 //exit(debug($locationInfo));
-		 if($model=='Location' && $locationInfo['Location']['arrivee'] && $locationInfo['Location']['depart']){
-		 	echo 'Check In Date : '.$this->MugTime->toFrench($locationInfo['Location']['arrivee']);
+		 if($model=='Location' && $locationInfo['Location']['checked_in'] && $locationInfo['Location']['depart']){
+		 	echo 'Check In Date : '.$this->MugTime->toFrench($locationInfo['Location']['checked_in']);
 			echo '<br/>';
 			echo 'Check Out Date : '.$this->MugTime->toFrench($locationInfo['Location']['depart']);
 			}
@@ -93,11 +93,11 @@
 
 	?>
 	<?php 
-		$nuitee=$this->MugTime->diff( $book['Reservation']['arrivee'], $book['Reservation']['depart'])+1;
+		$nuitee=$this->MugTime->diff( $book['Reservation']['checked_in'], $book['Reservation']['depart'])+1;
 		for($i=0;$i<$nuitee;$i++):
 	?>
 			<tr>
-				<td><?php echo  $this->MugTime->toFrench($this->MugTime->increase_date($book['Reservation']['arrivee'],$i)); ?></td>
+				<td><?php echo  $this->MugTime->toFrench($this->MugTime->increase_date($book['Reservation']['checked_in'],$i)); ?></td>
 				<td><?php echo  $book['Chambre']['name']; ?></td>
 				<td><?php echo  $number->format($book['Reservation']['PU'],$formatting); ?></td>
 			</tr>
@@ -503,7 +503,7 @@
 		<?php if(Configure::read('aser.xls_copy')):?>
 			<li class="link" onclick = "custom_printing('<?php echo $facture['Facture']['id']?>','<?php echo 'factures/view/'.$facture['Facture']['id'].'/'.$type.'/2'?>')" >Print with Details</li>
 		<?php endif;?>
-		<?php if(($model!='Proforma')&&(!in_array($type,array('proforma')))&&($facture['Facture']['etat'])!='annulee'):?>
+		<?php if(($model!='Proforma')&&(!in_array($type,array('proforma')))&&($facture['Facture']['etat'])!='canceled'):?>
 			<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle()" >Show/Hide the Payments</li>
 			<li class="link" onclick = "pyt('<?php echo $this->params['pass'][0];?>','<?php echo $type;?>')" >New Payment</li>
 			<span id="pyts_links" style="display:none;">
@@ -512,11 +512,11 @@
 				<?php endif;?>
 			</span>
 		<?php endif;?>
-		<?php if($facture['Facture']['etat']!='annulee'):?>
+		<?php if($facture['Facture']['etat']!='canceled'):?>
 			<?php 
-				$config['annulee']=Configure::read('aser.annulee');
-			if((in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))&&empty($config['annulee']))
-					||in_array($session->read('Auth.Personnel.id'),$config['annulee'])) :?>
+				$config['canceled']=Configure::read('aser.canceled');
+			if((in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))&&empty($config['canceled']))
+					||in_array($session->read('Auth.Personnel.id'),$config['canceled'])) :?>
 				<li class="link" onclick = "edit_facture()" >Edit the invoice</li>
 				<li class="link" onclick = "annuler_facture('<?php echo $model.'_'.$this->params['pass'][0];?>')" >Cancel The Invoice</li>
 			<?php endif;?>

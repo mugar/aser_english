@@ -60,9 +60,9 @@ foreach($models as $model=>$service):?>
 	<tr class="border">
 			<th rowspan="2" width="150">Customer</th>
 			<th rowspan="2"width="100">N°Facture</th>
-			<th colspan="2" width="250">Montant WITHOUT TVA</th>
-			<th colspan="2" width="150">TVA</th>
-			<th colspan="2" width="250">Montant TVAC</th>		
+			<th colspan="2" width="250">Montant WITHOUT VAT</th>
+			<th colspan="2" width="150">VAT</th>
+			<th colspan="2" width="250">Montant VAT Included</th>		
 	</tr>
 	<tr class="border">
 			<th>RWF</th>
@@ -121,9 +121,9 @@ foreach($models as $model=>$service):?>
 	<tr class="border" >
 			<th rowspan="2" width="150">Libellé</th>
 			<th rowspan="2"width="100">N°Facture</th>
-			<th colspan="2" width="250">Montant WITHOUT TVA</th>
-			<th colspan="2" width="150">TVA</th>
-			<th colspan="2" width="250">Montant TVAC</th>		
+			<th colspan="2" width="250">Montant WITHOUT VAT</th>
+			<th colspan="2" width="150">VAT</th>
+			<th colspan="2" width="250">Montant VAT Included</th>		
 	</tr>
 	<tr class="border">
 			<th>RWF</th>

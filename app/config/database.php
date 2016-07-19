@@ -79,29 +79,11 @@ class DATABASE_CONFIG {
 		'host' => 'localhost',
 		'login' => 'root',
 		'password' => 'qpcmz',
-		'database' => 'aser',
+		'database' => 'aser_english',
 		'prefix' => '',
 	);
 	
-	var $aserb = array(
-		'driver' => 'mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'qpcmz',
-		'database' => 'aserb',
-		'prefix' => '',
-	);
 	
-	var $autre = array(
-		'driver' => 'mysql',
-		'persistent' => false,
-		'host' => 'localhost',
-		'login' => 'root',
-		'password' => 'qpcmz',
-		'database' => 'old_autre',
-		'prefix' => '',
-	);
 	
 }
 ?>

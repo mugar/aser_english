@@ -4,63 +4,81 @@ class TypeServicesController extends AppController {
 	var $name = 'TypeServices';
 
 	function index() {
-		$this->set('typeServices', $this->paginate());
+		$this->TypeService->recursive = 0;
+		$this->set('type_services', $this->paginate());
 	}
 
-	function view($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(sprintf(__('Id pour %s incorrecte !', true), 'type service'));
-			$this->redirect(array('action' => 'index'));
+	function _logic($data,$action){
+		$this->TypeService->set($data);
+		if(!$this->TypeService->validates()){
+			$failureMsg='Le Nom est obligatoire!';
+			if($action=='add')
+				exit('failure_'.$failureMsg);
+			else 
+				exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
 		}
-		$this->set('typeService', $this->TypeService->read(null, $id));
+		$this->TypeService->save($data);
 	}
-
+	
+	function _show($id){
+		$this->set('type_service',$this->TypeService->find('first',array('fields'=>array('TypeService.*'),
+    														'conditions'=>array('TypeService.id'=>$id)
+															)
+											));
+		$this->layout="ajax";
+		$this->render('add');
+	}
+	
 	function add() {
 		if (!empty($this->data)) {
-			$this->TypeService->create();
-			if ($this->TypeService->save($this->data)) {
-				$this->Session->setFlash(sprintf(__('Informations enregistrées', true), 'type service'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(sprintf(__('Impossible d\'enregistrer. Réessayer S.V.P.', true), 'type service'));
-			}
+			$this->_logic($this->data,'add');	
+    		$this->_show($this->TypeService->id);
 		}
-		$personnels = $this->TypeService->Personnel->find('list');
-		$this->set(compact('personnels'));
 	}
 
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(sprintf(__('Id pour %s incorrecte !', true), 'type service'));
-			$this->redirect(array('action' => 'index'));
-		}
-		if (!empty($this->data)) {
-			if ($this->TypeService->save($this->data)) {
-				$this->Session->setFlash(sprintf(__('Informations enregistrées', true), 'type service'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(sprintf(__('Impossible d\'enregistrer. Réessayer S.V.P.', true), 'type service'));
+	function edit($id = null,$edit='yes') {
+		if($edit=='yes'){
+			if (!empty($this->data)) {
+				$this->_logic($this->data,'edit');
+				exit(json_encode(array('success'=>true,'msg'=>'Modifications Saved')));
+			}
+			else {
+				$this->data = $this->TypeService->find('first',array('fields'=>array('TypeService.*'),
+																		'conditions'=>array('TypeService.id'=>$id),
+																		'recursive'=>-1
+																		));
 			}
 		}
-		if (empty($this->data)) {
-			$this->data = $this->TypeService->read(null, $id);
+		else {
+			$this->_show($id);
 		}
-		$personnels = $this->TypeService->Personnel->find('list');
-		$this->set(compact('personnels'));
 	}
 
 	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(sprintf(__('Id pour %s incorrecte !', true), 'type service'));
-			$this->redirect(array('action'=>'index'));
+		$notDeleted=0;
+		$deleted=array();
+		foreach($this->data['Id'] as $id){
+			if($id!=0) {
+			
+				$test1=$this->TypeService->Service->find('first',array('conditions'=>array('Service.type_service_id'=>$id),
+																'recursive'=>-1
+												));
+				if (!empty($test1)){
+					$notDeleted++;
+				}
+				else {
+					$this->TypeService->delete($id);
+					$deleted[]=$id;
+				}
+			}
 		}
-		if ($this->TypeService->delete($id)) {
-			$this->Session->setFlash(sprintf(__('Enregistrement effacé', true), 'Type service'));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->Session->setFlash(sprintf(__('Impossible d\'effacer !', true), 'Type service'));
-		$this->redirect(array('action' => 'index'));
+		$msg="Vérifié s'il n'y a pas des produits ou groupes enregistrés sur ";
+		$msg=($notDeleted>1)?$msg.'ces type_services.':$msg.'cette type_service.';
+		exit(json_encode(array('success'=>true,
+							'deleted'=>$deleted,
+							'notDeleted'=>$notDeleted,
+							'msg'=>$msg
+							)));
 	}
-
 }
 ?>

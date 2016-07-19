@@ -1648,7 +1648,7 @@ td.changee {
 	border:  2px solid #FFE7A1 !important;
 		
 }
-td.confirmee {
+td.confirmed {
 	background: #2B6FB6 !important;
 	border:  2px solid #FFE7A1 !important;
 }
@@ -1657,20 +1657,20 @@ td.credit {
 	background: #D7C80A !important;
 	border:  2px solid #FFE7A1 !important;
 }
-td.arrivee {
+td.checked_in {
 	background: #800000 !important;
 	border:  2px solid #FFE7A1 !important;
 }
 
-td.partie {
+td.checked_out {
 	background: #000000 !important;
 	border:  2px solid #FFE7A1 !important;
 }
-td.en_attente {
+td.pending {
 	background: orange !important;
 	border:  2px solid #880000 !important;
 }
-td.confirmee, td.annulee, td.en_attente,td.arrivee ,td.partie,td.oui,td.non,td.disabled,td.changee,td.credit{
+td.confirmed, td.canceled, td.pending,td.checked_in ,td.checked_out,td.oui,td.non,td.disabled,td.changee,td.credit{
 	font-size:10px;
 	font-weight: bolder;
 	color:white;
@@ -1714,6 +1714,12 @@ td.confirmee, td.annulee, td.en_attente,td.arrivee ,td.partie,td.oui,td.non,td.d
 	cursor:pointer;
 	background:url(../img/delete.png) top left no-repeat;
 }
+div#legend {
+	position: absolute;
+	margin-top: 30px;
+	z-index: 10000000000;
+}
+
 table#legend {
 	width:200px;
 	border:2px solid #555;
@@ -1729,20 +1735,20 @@ table#legend tr {
 	height:25px;
 }
 /*
-td.confirmee-middle {
+td.confirmed-middle {
 	background: #00AA00 !important;
 	border-top: 2px solid #880000 !important;
 	border-bottom: 2px solid #880000 !important;
 		
 }
-td.confirmee-start {
+td.confirmed-start {
 	background: #00AA00 !important;
 	border:  2px solid #880000 !important;
 	border-right: 1px dotted #999933 !important;
 	-moz-border-radius-bottomleft: 10px;
 	-moz-border-radius-topleft: 10px;
 }
-td.confirmee-end {
+td.confirmed-end {
 	background: #00AA00 !important;
 	border:  2px solid #880000 !important;
 	border-left: 1px dotted #999933 !important;
@@ -1750,19 +1756,19 @@ td.confirmee-end {
 	-moz-border-radius-topright: 10px;
 		
 }
-td.annulee-middle {
+td.canceled-middle {
 	background: #880000 !important;
 	border-top: 2px solid yellow !important;
 	border-bottom: 2px solid yellow !important;		
 }
-td.annulee-start {
+td.canceled-start {
 	background: #880000 !important;
 	border:  2px solid yellow !important;
 	border-right: 1px dotted #999933 !important;
 	-moz-border-radius-bottomleft: 10px;
 	-moz-border-radius-topleft: 10px;
 }
-td.annulee-end {
+td.canceled-end {
 	background: #880000 !important;
 	border:  2px solid yellow !important;
 	border-left: 1px dotted #999933 !important;

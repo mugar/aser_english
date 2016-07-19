@@ -24,7 +24,7 @@
 	<span class='left'>
 		<?php
 			if(Configure::read('aser.hotel')&&($action=='edit')&&empty($reservation[$model]['facture_id'])&&!isset($context)){
-				echo '<button onclick="create_customer();return false;">Créer un client </button>';
+				echo '<button onclick="create_customer();return false;">Create a customer</button>';
 				echo $this->Form->input('Reservation.new_tier_id',array('id'=>'clientList','options'=>$tiers1,'label'=>'Selectionner un autre client'));
 			}
 			if($action=='add'){
@@ -86,7 +86,7 @@
 		<?php
 			echo $this->Form->input($model.'.id',array('type'=>'hidden')); 
 			$puOptions['label']='Rate';
-			if(!in_array($reservation[$model]['etat'],array('en_attente','confirmee')))
+			if(!in_array($reservation[$model]['etat'],array('pending','confirmed')))
 				 $puOptions['disabled']='disabled';
 			echo $this->Form->input($model.'.PU',$puOptions);
 			echo $this->Form->input($model.'.pax',array('label'=>'Number of people','options'=>$pax));

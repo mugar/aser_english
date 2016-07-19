@@ -71,7 +71,7 @@
 	<tr>
 		<td><?php echo $this->Form->input('vip',array('label'=>'')); ?></td>	
 		<td><?php echo $this->Form->input('groupe',array('label'=>'')); ?></td>	
-		<td><?php echo $this->Form->input('arrivee',array('label'=>'')); ?></td>	
+		<td><?php echo $this->Form->input('checked_in',array('label'=>'')); ?></td>	
 		<td><?php echo $this->Form->input('depart',array('label'=>'')); ?></td>	
 		<td><?php echo $this->Form->input('chambre',array('label'=>'')); ?></td>
 	</tr>

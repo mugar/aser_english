@@ -4,9 +4,9 @@
 	<?php echo $this->Form->create('Reservation',array('id'=>'resAdd','action'=>'add'));?>
 	<span class="left">
 		<?php			
-			echo $this->Form->input('arrivee',array('value'=>0));
+			echo $this->Form->input('checked_in',array('value'=>0));
 			echo $this->Form->input('depart',array('value'=>0));
-			echo $this->Form->input('arrivee');
+			echo $this->Form->input('checked_in');
 			echo $this->Form->input('option',array('type'=>'checkbox','label'=>'cochez pour utilisez une autre date départ'));
 			echo $this->Form->input('autre_depart',array('label'=>'Autre Date de départ','type'=>'date'));
 			echo $this->Form->input('commentaire');		
@@ -26,7 +26,7 @@
 																									'Autre'=>'Autre'
 																									)
 																							));
-			echo $this->Form->input('etat',array('options'=>array('en_attente'=>'en_attente','confirmee'=>'confirmee')));
+			echo $this->Form->input('etat',array('options'=>array('pending'=>'pending','confirmed'=>'confirmed')));
 		?>
 	</span>
 	</form>

@@ -38,7 +38,7 @@
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Arrivee'); ?></dt>
 		<dd<?php if ($i++ % 2 == 0) echo $class;?>>
-			<?php echo $reservation['Reservation']['arrivee']; ?>
+			<?php echo $reservation['Reservation']['checked_in']; ?>
 			&nbsp;
 		</dd>
 		<dt<?php if ($i % 2 == 0) echo $class;?>><?php __('Departure'); ?></dt>

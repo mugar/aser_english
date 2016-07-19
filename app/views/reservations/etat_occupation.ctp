@@ -10,7 +10,7 @@
 <?php if($mode!='tiny'):?>
 <table cellpadding="0" cellspacing="0" id="journal_resume">
 	<tr>
-			<th align="center" colspan="2">RESUME</th>
+			<th align="center" colspan="2">SUMMARY</th>
 	</tr>
 	
 	<tr>
@@ -89,7 +89,7 @@
 				<th align="center">Invoice  N°</th>
 				<th align="center">Invoice State</th>
 			<?php endif;?>
-			<th align="center">Departureure Time</th>
+			<th align="center">Departure Time</th>
 	</tr>
 	<?php 
 	foreach($departuresDetails as $detail):?>
@@ -142,7 +142,7 @@
 			<th>Pax</th>
 			<th>Company</th>
 			<th>Arrival</th>
-			<th>Departureure</th>
+			<th>Departure</th>
 			<?php if($mode!='tiny'):?>
 				<th>Rate</th>
 				<? if($mode=='full'):?>
@@ -159,7 +159,7 @@
 	$persTotal=0;
 	foreach ($chambres as $chambre):
 		$class = null;
-		if (isset($chambre['Reservation']['arrivee'])&&($chambre['Reservation']['arrivee']==date('Y-m-d'))) {
+		if (isset($chambre['Reservation']['checked_in'])&&($chambre['Reservation']['checked_in']==date('Y-m-d'))) {
 			$class = 'active';
 		}
 		if(!empty($chambre['Reservation']['pax'])){
@@ -169,7 +169,7 @@
 	<?php if(($mode!='tiny')||
 			(($mode=='tiny')&&
 			  isset($chambre['Reservation']['etat'])&&
-			  !in_array($chambre['Reservation']['etat'],array('en_attente','partie'))
+			  !in_array($chambre['Reservation']['etat'],array('pending','checked_out'))
 			)):
 		if($mode=='tiny'){
 			//$persTotal+=$chambre['Reservation']['pax'];
@@ -183,7 +183,7 @@
 			<td><?php if(isset($chambre['Tier']['id'])) echo $chambre['Tier']['nationalite']; ?></td>
 			<td><?php if(isset($chambre['Reservation'])) echo $chambre['Reservation']['pax']; ?></td>
 			<td><?php if(isset($chambre['Tier']['compagnie'])) echo  $chambre['Tier']['compagnie']; ?></td>
-			<td><?php if(isset($chambre['Reservation']['arrivee'])) echo  $this->MugTime->toFrench($chambre['Reservation']['arrivee']); ?></td>
+			<td><?php if(isset($chambre['Reservation']['checked_in'])) echo  $this->MugTime->toFrench($chambre['Reservation']['checked_in']); ?></td>
 			<td><?php if(isset($chambre['Reservation']['depart'])) echo  $this->MugTime->toFrench($chambre['Reservation']['depart']); ?></td>
 			<?php if($mode!='tiny'):?>
 				<td><?php if(isset($chambre['Reservation']['nuitee'])) echo  $chambre['Reservation']['nuitee']; ?></td>

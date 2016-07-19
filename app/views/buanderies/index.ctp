@@ -23,8 +23,8 @@
 																		'credit'=>'credit',
 																		'avance'=>'avance',
 																		'bonus'=>'bonus',
-																		'annulee'=>'annulee',
-																		'non_nul'=>'Non annulee'
+																		'canceled'=>'canceled',
+																		'non_nul'=>'Non canceled'
 																		)
 																	));
 		?>

@@ -170,7 +170,7 @@ above, provided that you also meet all of these conditions:
     stating that you changed the files and the date of any change.
 
     c) You must cause the whole of the work to be licensed at no
-    charge to all third parties under the terms of this License.
+    charge to all third checked_outs under the terms of this License.
 
     d) If a facility in the modified Library refers to a function or a
     table of data to be supplied by an application program that uses
@@ -234,7 +234,7 @@ medium customarily used for software interchange.
   If distribution of object code is made by offering access to copy
 from a designated place, then offering equivalent access to copy the
 source code from the same place satisfies the requirement to
-distribute the source code, even though third parties are not
+distribute the source code, even though third checked_outs are not
 compelled to copy the source along with the object code.
 
   5. A program that contains no derivative of any portion of the
@@ -350,9 +350,9 @@ permitted, and provided that you do these two things:
 the Library except as expressly provided under this License.  Any
 attempt otherwise to copy, modify, sublicense, link with, or
 distribute the Library is void, and will automatically terminate your
-rights under this License.  However, parties who have received copies,
+rights under this License.  However, checked_outs who have received copies,
 or rights, from you under this License will not have their licenses
-terminated so long as such parties remain in full compliance.
+terminated so long as such checked_outs remain in full compliance.
 
   9. You are not required to accept this License, since you have not
 signed it.  However, nothing else grants you permission to modify or
@@ -368,7 +368,7 @@ Library), the recipient automatically receives a license from the
 original licensor to copy, distribute, link with or modify the Library
 subject to these terms and conditions.  You may not impose any further
 restrictions on the recipients' exercise of the rights granted herein.
-You are not responsible for enforcing compliance by third parties with
+You are not responsible for enforcing compliance by third checked_outs with
 this License.
 
   11. If, as a consequence of a court judgment or allegation of patent

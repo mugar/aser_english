@@ -22,7 +22,7 @@
 			<td><?php echo  $affectation['Customer']['name']; ?></td>
 			<td><?php echo  $affectation['Tier']['name']; ?></td>
 			<td><?php echo  $affectation['Chambre']['name']; ?></td>
-			<td><?php echo  $affectation['Reservation']['arrivee']; ?></td>
+			<td><?php echo  $affectation['Reservation']['checked_in']; ?></td>
 			<td><?php echo  $affectation['Reservation']['depart']; ?></td>
 			<td><?php echo  $affectation['Reservation']['PU']; ?></td>
 			<td><?php echo  $affectation['Reservation']['montant']; ?></td>

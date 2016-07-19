@@ -1,5 +1,5 @@
 <div class="stocks index">
-	<h2><?php __('Gestion Des Stocks');?></h2>
+	<h2><?php __('Stocks Management');?></h2>
 		<br>
 <div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">

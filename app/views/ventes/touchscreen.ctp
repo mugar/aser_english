@@ -8,7 +8,7 @@
 			var etat_facture=jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text();
 			var classement=jQuery('table#list_factures tr[id="'+factureId+'"]').attr('name');
 			var printed=jQuery('table#list_factures tr[id="'+factureId+'"]').attr('printed');
-			 if((factureId!=0)&&(etat_facture!='annulee')&&(classement!='1')&&(printed!='1'))
+			 if((factureId!=0)&&(etat_facture!='canceled')&&(classement!='1')&&(printed!='1'))
   				 resto_create(factureId);
 		 }	
 	});
@@ -45,7 +45,7 @@
 			else {
 				var print=true;
 			}
-			 if(print&&key_press&&(factureId!=0)&&(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text()!='annulee')){
+			 if(print&&key_press&&(factureId!=0)&&(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text()!='canceled')){
   				//	 print_facture(factureId);
   			}
 		 }	
@@ -269,8 +269,8 @@
 		<fieldset id="actions"><legend>Actions</legend>
 			<?php 
 					$pId=$session->read('Auth.Personnel.id'); //personnel id
-					if(($mode!='serveur')&&empty($config['annulee'])
-					||in_array($pId,$config['annulee'])): 
+					if(($mode!='serveur')&&empty($config['canceled'])
+					||in_array($pId,$config['canceled'])): 
 			?>
 				<span id="remove_facture" name="annuler" class="boutton"  title="Annuler la facture">Cancel</span>
 			<?php endif;?> 	
@@ -307,7 +307,7 @@
 			<span class="boutton" onclick="table_changer(factureId)" title="Changer la table">Switch Table</span>
 			<?php endif;?>
 			<span id="direct_reduction" name="disable" class="boutton"  title="Réduire le montant de la facture directement ">Add Discount</span>
-			<?php If(empty($config['annulee'])||in_array($pId,$config['annulee'])):?>
+			<?php If(empty($config['canceled'])||in_array($pId,$config['canceled'])):?>
 			<span id="unlock" name="unlock" class="boutton"  title="Débloquer la facture" onclick="unlock(factureId)">Unlock</span>
 			<?php endif;?>
 		</fieldset>

@@ -7,7 +7,7 @@
 </script>
 <div id='view'>
 <div class="document">
-<h3 id="stock" stock="<?php if(!empty($stockInfo)) echo $stockInfo['Stock']['id'];?>">Mouvements des Products <?php if(!empty($stockInfo)) echo ' - Stock : '.strtoupper($stockInfo['Stock']['name']);?></h3>
+<h3 id="stock" stock="<?php if(!empty($stockInfo)) echo $stockInfo['Stock']['id'];?>">Products Inventory Movements<?php if(!empty($stockInfo)) echo ' - Stock : '.strtoupper($stockInfo['Stock']['name']);?></h3>
 <br />
 <?php
 	if(isset($date1)){
@@ -19,17 +19,17 @@
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr class="border">
 			<th rowspan="2">Products</th>
-			<th rowspan="2">Stock Initiale</th>
-			<th colspan="4">Mouvements</th>
-			<th rowspan="2">Stock Finale</th>
-			<th rowspan="2">Valeur (PA)</th>
+			<th rowspan="2">Intial Qty</th>
+			<th colspan="4">Movements</th>
+			<th rowspan="2">Final Qty</th>
+			<th rowspan="2">Purchase Price</th>
 		
 	</tr>
 	<tr class="border">
-			<th>Entrée</th>
-			<th>Vente</th>
-			<th>Sortie</th>
-			<th>Perte</th>
+			<th>Entry</th>
+			<th>Sale</th>
+			<th>Consumption</th>
+			<th>Loss</th>
 	</tr>
 		<?php
 		$i=0;
@@ -46,7 +46,9 @@
 			<td><?php if(isset($historique['Sorti'])) echo  $historique['Sorti']; ?></td>
 			<td id="perte<?php echo $i;?>" name="perte"><?php if(isset($historique['Perte'])) echo  $this->Html->link($historique['Perte'],
 				 array('controller' => 'pertes','action' => 'index', $historique['Produit']['id'],$date1,$date2),array('target'=>'_blank')); ?></td>
-			<td><?php echo  $this->Form->input('reel',array('onchange'=>'perte(this)',
+			<td><?php echo  $this->Form->input('reel',array(
+																//'onchange'=>'perte(this)',
+																'disabled'=>'disabled',
 																'numero'=>$i,
 																'label'=>'',
 																'nom'=>'reel',
@@ -72,7 +74,7 @@
 </table>
 <br />
 <br />
-<div class="bas_page">
+<div class="bas_page" style="display: none;">
 	<div class="left">
 		<?php  
 		echo 'Controleur';
@@ -98,8 +100,8 @@
 	<ul>
 		<li class="link"  onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Liste des Products', array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link('Liste des Pertes', array('controller'=>'pertes','action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link('Products Management', array('action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link('Inventory Operations', array('controller'=>'historiques','action' => 'index')); ?></li>
 	</ul>
 </div>
 
@@ -119,7 +121,7 @@
 		<?php
 			echo $this->Form->input('date1',array('label'=>'Start Date'));
 			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));
-			echo $this->Form->input('export',array('label'=>'Exporter vers excel','type'=>'checkbox'));
+			echo $this->Form->input('export',array('label'=>'Export to excel','type'=>'checkbox'));
 		?>
 	</span>
 	</form>

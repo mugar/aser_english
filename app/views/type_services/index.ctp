@@ -1,37 +1,45 @@
-<div class="typeServices index">
-	<h2><?php __('Type Services');?></h2>
-	<?php echo $this->Form->create('TypeService',array('name'=>'checkbox','id'=>'TypeService_typeServices'));?>
+<div class="type_services index">
+	<h2><?php __('Service Types Management');?></h2>
+		<br>
+<div id="quick_add">
+	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
+	<tr>
+		<th>Service Type Name</th>
+		<th>Service Type code</th>
+		<th>Amount in RWF</th>
+		<th>Actions</th>
+	</tr>
+	<?php for($i=0;$i<1;$i++): ?>
+	<tr name="<?php echo $i?>">
+		<?php echo $this->Form->create('TypeService',array('action'=>'add'));?>
+		<td><?php echo $this->Form->input('name',array('label'=>''));?></td>
+		<td><?php echo $this->Form->input('code',array('label'=>''));?></td>
+		<td><?php echo $this->Form->input('montant',array('label'=>''));?></td>
+		<td><input type="submit" value="Save"/></td>
+		</form>
+		
+	</tr>
+	<?php endfor; ?>
+</table>
+</div>
+	<?php echo $this->Form->create('TypeService',array('name'=>'checkbox','id'=>'TypeService_type_services'));?>	
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
-			<th><?php echo $this->Paginator->sort('name');?></th>
-			<th><?php echo $this->Paginator->sort('description');?></th>
-			<? if(Configure::read('aser.comptabilite')):?>
-			<th><?php echo $this->Paginator->sort('groupe_comptable_id');?></th>
-			<? endif;?>
-			<th><?php echo $this->Paginator->sort('personnel_id');?></th>
+			<th><?php echo $this->Paginator->sort('id');?></th>
+			<th><?php echo $this->Paginator->sort('Name','name');?></th>
+			<th><?php echo $this->Paginator->sort('code');?></th>
+			<th><?php echo $this->Paginator->sort('Amount','montant');?></th>
 		</tr>
 	<?php
 	
-	foreach ($typeServices as $typeService):
+	foreach ($type_services as $type_service){
+		echo $this->element('../type_services/add',array('type_service'=>$type_service));
+	}
 		
 	?>
-	<tr>
-		<td>
-			<?php echo $this->Form->input('Id.'.$typeService['TypeService']['id'].'',array('label'=>'','type'=>'checkbox','value'=>$typeService['TypeService']['id'])); ?>
-		</td>
-		<td><?php echo $typeService['TypeService']['name']; ?>&nbsp;</td>
-		<td><?php echo $typeService['TypeService']['description']; ?>&nbsp;</td>
-		<? if(Configure::read('aser.comptabilite')):?>
-			<td><?php if(isset($groupeComptables[$typeService['TypeService']['groupe_comptable_id']]))
-						echo $groupeComptables[$typeService['TypeService']['groupe_comptable_id']]; ?>&nbsp;</td>
-		<? endif;?>
-		<td>
-			<?php echo $this->Html->link($typeService['Personnel']['name'], array('controller' => 'personnels', 'action' => 'view', $typeService['Personnel']['id'])); ?>
-		</td>
-	</tr>
-<?php endforeach; ?>
+	
 	</table>
 </form>
 	<p>
@@ -52,9 +60,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Type Service', true)), array('action' => 'add')); ?></li>
-		<li class="link" onclick="actions('checkbox','edit')" >Edit</li>
-		<li class="link" onclick="actions('checkbox','delete')" >Delete</li>
-		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Services', true)), array('controller' => 'services', 'action' => 'index')); ?> </li>
+		<li class= "link" onclick = "edit()" >Edit</li>
+		<li class= "link" onclick = "mass_delete()" >Delete</li>
 	</ul>
 </div>

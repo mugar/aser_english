@@ -3,7 +3,9 @@
 			<?php echo $this->Form->input('Id.'.$historique['Historique']['id'].'',array('label'=>'','type'=>'checkbox','value'=>$historique['Historique']['id'])); ?>
 		</td>
 		<td><?php echo $this->MugTime->toFrench($historique['Historique']['date']); ?>&nbsp;</td>
-		<td><?php echo $types[$historique['Historique']['libelle']]; ?>&nbsp;</td>
+		<td><?php echo $inventory_operation_types[$historique['Historique']['libelle']]; ?>&nbsp;</td>
+		<td><?php echo $historique['Historique']['supplier']; ?>&nbsp;</td>
+		<td><?php echo $historique['Historique']['invoice_no']; ?>&nbsp;</td>
 		<td><?php echo $historique['Historique']['quantite'].' ';
 				if(isset($unites[$historique['Produit']['unite_id']])) echo $unites[$historique['Produit']['unite_id']];?>&nbsp;</td>
 		<td>

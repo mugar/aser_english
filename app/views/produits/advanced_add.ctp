@@ -25,9 +25,9 @@
 	<tr name="<?php echo $i?>">
 		<?php echo $this->Form->create('Produit',array('action'=>'add'));?>
 		
-		<td><?php echo $this->Form->input('stock_id',array('label'=>'','selected'=>0,'title'=>'Le nom du stock auquel appartient le produit'));?></td>
-		<td><?php echo $this->Form->input('section_id',array('id'=>$i.'SectionId','label'=>'','selected'=>0,'title'=>'Le nom de la section auquel appartient le produit'));?></td>
-		<td><?php echo '<span id="groupe'.$i.'">'.$this->Form->input('groupe_id',array('label'=>'','selected'=>0,'title'=>'Le nom du groupe auquel appartient le produit')).'</span>';
+		<td><?php echo $this->Form->input('stock_id',array('label'=>'','selected'=>0,'title'=>'Le nom du stock auquel apchecked_outnt le produit'));?></td>
+		<td><?php echo $this->Form->input('section_id',array('id'=>$i.'SectionId','label'=>'','selected'=>0,'title'=>'Le nom de la section auquel apchecked_outnt le produit'));?></td>
+		<td><?php echo '<span id="groupe'.$i.'">'.$this->Form->input('groupe_id',array('label'=>'','selected'=>0,'title'=>'Le nom du groupe auquel apchecked_outnt le produit')).'</span>';
     		echo $ajax->observeField($i.'SectionId', array('url' => 'updateGroupe/1','update' => 'groupe'.$i,
     		'loading'=>'jQuery("#loading'.$i.'").attr("class","advanced_loading").show();',
     		'complete'=>'jQuery("#loading'.$i.'").attr("class","advanced_loading").hide();'

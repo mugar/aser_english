@@ -47,7 +47,7 @@
 <?php $ids=Configure::read('ventes');
 ?>
 <div class="operations index" id="operations" ventes="<?php echo $ids[0];?>">
-	<h2 id="test"><?php __('Gestion des Opérations');?></h2>
+	<h2 id="test"><?php __('Cash Operations Management');?></h2>
 	
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">

@@ -25,7 +25,7 @@
 		echo $this->Form->input('address1',array('label'=>'Adresse 1','type'=>'text'));
 		echo $this->Form->input('address2',array('label'=>'Adresse 2','type'=>'text'));
 		echo $this->Form->input('tel',array('label'=>'Tel','type'=>'text'));
-		echo $this->Form->input('nif',array('label'=>'NIF','type'=>'text'));
+		echo $this->Form->input('nif',array('label'=>'TIN','type'=>'text'));
 		echo $this->Form->input('compte_RWF',array('label'=>'RWF Account','type'=>'text'));
 		echo $this->Form->input('compte_USD',array('label'=>'USD Account','type'=>'text'));
 		echo $this->Form->input('compte_EUR',array('label'=>'EUR Account','type'=>'text'));
@@ -40,7 +40,7 @@
 		echo $this->Form->input('date_ask',array('id'=>'date_ask','label'=>'Date des factures','options'=>array('automatique'=>'automatique','manuel'=>'manuel')));
 		echo $this->Form->input('date_given',array('label'=>'Date choisie' ,'id'=>'Date_given'));
 		echo $this->Form->input('warning',array('label'=>'Message d\' avertissement','type'=>'textarea'));
-		echo $this->Form->input('tva',array('label'=>'taux de la TVA'));
+		echo $this->Form->input('tva',array('label'=>'taux de la VAT'));
 		if(Configure::read('aser.gouvernance')){
 			echo $this->Form->input('recouche',array('label'=>'Nombre de nuitée avant la recouche à blanc'));
 		}

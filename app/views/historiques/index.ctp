@@ -68,6 +68,8 @@
 	<tr>
 		<th>Operation Date </th>
 		<th>Operation Type</th>
+		<th>Supplier</th>
+		<th>Invoice N°</th>
 		<th>Quantity</th>
 		<th>Product</th>
 		<th>Unit Price</th>	
@@ -85,7 +87,9 @@
 	<tr name="<?php echo $i?>">
 		<?php echo $this->Form->create('Historique',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('date',array('label'=>'','type'=>'text'));?></td>
-		<td><?php echo $this->Form->input('libelle',array('label'=>'','options'=>$types));?></td>
+		<td><?php echo $this->Form->input('libelle',array('label'=>'','options'=>$inventory_operation_types));?></td>
+		<td><?php echo $this->Form->input('supplier',array('label'=>''));?></td>
+		<td><?php echo $this->Form->input('invoice_no',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('quantite',array('id'=>'quantite','label'=>''));?></td>
 		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','label'=>'','options'=>$produits));?></td>
 		<td><?php echo $this->Form->input('PU',array('label'=>'','value'=>$pa,'id'=>'PU'));?></td>
@@ -110,8 +114,10 @@
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('Operation Date','date');?></th>
 			<th><?php echo $this->Paginator->sort('Operation Type','libelle');?></th>
-			<th><?php echo $this->Paginator->sort('quantite');?></th>
-			<th><?php echo $this->Paginator->sort('produit_id');?></th>
+			<th><?php echo $this->Paginator->sort('supplier');?></th>
+			<th><?php echo $this->Paginator->sort('invoice_no');?></th>
+			<th><?php echo $this->Paginator->sort('Quantity','quantite');?></th>
+			<th><?php echo $this->Paginator->sort('Product','produit_id');?></th>
 			<th><?php echo $this->Paginator->sort('Unit Price','PU');?></th>
 			<th><?php echo $this->Paginator->sort('Total Price','montant');?></th>
 			<?php if(Configure::read('aser.pharmacie')):?>
@@ -122,7 +128,7 @@
 			<?php if (Configure::read('aser.shifts')):?>
 				<th><?php echo $this->Paginator->sort('shift');?></th>	
 			<?php endif;?>
-			<th><?php echo $this->Paginator->sort('personnel_id');?></th>
+			<th><?php echo $this->Paginator->sort('Created By','personnel_id');?></th>
 		</tr>
 	<?php
 	foreach ($historiques as $historique){

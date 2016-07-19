@@ -191,6 +191,18 @@ class VentesController extends AppController {
 	}
 	
 	function beforeFilter(){
+		$pos_type = $this->Session->read('pos_type');
+		if(in_array($pos_type,array('services','magasin'))){
+			Configure::write('aser.magasin', 1);
+			Configure::write('aser.touchscreen', 0);
+			Configure::write('aser.connexion', 0);
+		}
+		else {
+			Configure::write('aser.magasin', 0);
+			Configure::write('aser.touchscreen', 1);
+			Configure::write('aser.connexion', 1);
+		}
+
 		if(in_array($this->params['action'],array('print_facture','journal'))){
 			$caissiers=$this->Vente->Facture->Personnel->find('list',
 															array('conditions'=>
@@ -489,7 +501,7 @@ class VentesController extends AppController {
 		$search=$this->Vente->Facture->find('first',array('fields'=>array('Facture.table','Personnel.name'),
 														//*
 															'conditions'=>array('Facture.table'=>$table,
-																				'Facture.etat'=>array('printed','in_progress','confirmee'),
+																				'Facture.etat'=>array('printed','in_progress','confirmed'),
 																				'Facture.operation'=>'Vente',
 																				'Facture.date'=>date('Y-m-d')
 																				),
@@ -1160,7 +1172,7 @@ class VentesController extends AppController {
 		//checking first
 			$factureIds=array();
 			foreach($factures as $facture){
-				if(in_array($facture['Facture']['etat'],array('in_progress','printed','confirmee'))){
+				if(in_array($facture['Facture']['etat'],array('in_progress','printed','confirmed'))){
 					exit(json_encode(array('success'=>false,'msg'=>'Invoice n° '.$facture['Facture']['numero'].' is not closed!')));
 				}
 				else if(($facture['Facture']['reste']>=$facture['Facture']['montant'])&&
@@ -1508,7 +1520,7 @@ class VentesController extends AppController {
 		$vente=$this->Vente->find('first',array('fields'=>array('Vente.facture_id',
 																),
 													'conditions'=>array('Vente.printed'=>0,
-																		'Facture.etat'=>'confirmee',
+																		'Facture.etat'=>'confirmed',
 																		'Facture.fetched'=>0,
 																		),
 													'order'=>array('Vente.id asc')
@@ -1601,7 +1613,7 @@ class VentesController extends AppController {
 		$this->set(compact('tiers','unites','caisses'));
 	}
 	function confirm_order($factureId){
-		$this->Vente->Facture->save(array('Facture'=>array('id'=>$factureId,'etat'=>'confirmee','printed'=>0)));
+		$this->Vente->Facture->save(array('Facture'=>array('id'=>$factureId,'etat'=>'confirmed','printed'=>0)));
 		exit(json_encode(array('success'=>true,'msg'=>'OK')));
 	}
 	
@@ -1633,7 +1645,7 @@ class VentesController extends AppController {
 		if(!Configure::read('aser.magasin')){
 			$condFact['Facture.table']=$table;
 		}
-		$condFact['Facture.etat']=array('confirmee','in_progress','printed');
+		$condFact['Facture.etat']=array('confirmed','in_progress','printed');
 		$condFact['Facture.date']=$date;
 		$factures=$this->Vente->Facture->find('all',array('fields'=>array('Facture.*','Personnel.name'
 																),
@@ -1716,8 +1728,20 @@ class VentesController extends AppController {
 	}
 	
 	//*/
-	function index($date=null) {
-		$date=(is_null($date))?(date('Y-m-d')):($date);
+	function index($date='null',$services='no') {
+
+		if($services == 'yes'){
+			Configure::write('aser.magasin', 1);
+			Configure::write('aser.touchscreen', 0);
+			$this->Session->write('pos_type','services');
+		}
+		else {
+			Configure::write('aser.magasin', 0);
+			Configure::write('aser.touchscreen', 0);
+			$this->Session->write('pos_type','standard');
+		}
+
+		$date=($date=='null')?(date('Y-m-d')):($date);
 		$fonction=$this->Auth->user('fonction_id');
 		//fetching the bills
 		if(in_array($fonction,array(2,4))){
@@ -1725,6 +1749,12 @@ class VentesController extends AppController {
 		}
 		$cond1['Facture.operation']='Vente';
 		$cond1['Facture.date']=$date;
+		if($services == 'yes'){
+			$services_factures = $this->Vente->find('list',array('fields'=>array('Vente.facture_id','Vente.id'),
+																											'conditions'=>array('Vente.produit_id in (select produits.id from produits where produits.groupe_id in (select groupes.id from groupes where groupes.section_id = 3)) ')
+					));
+			$cond1['Facture.id'] = array_keys($services_factures);
+		}
 	
 		$factures=$this->Vente->Facture->find('all',array('fields'=>array('Facture.*','Personnel.name'
 																),
@@ -1740,10 +1770,8 @@ class VentesController extends AppController {
 		else {
 			$cond2['Groupe.afficher']='yes';
 			$cond2['Groupe.actif']='yes';
-			$selectedSections=$this->Session->read('resto_sections');
-			if(!empty($selectedSections)){
-				$cond2['Groupe.section_id']=$selectedSections;
-				$this->data['Produit']['section_id']=$selectedSections;
+			if($services == 'yes'){
+				$cond2['Groupe.section_id']=3;
 			}
 			
 			
@@ -1755,9 +1783,11 @@ class VentesController extends AppController {
 			
 			$groupeIds=array_keys($groupes);
 			$cond3['Produit.actif']='yes';
-			if(Configure::read('aser.groupes_on_index')){
+			// if(Configure::read('aser.groupes_on_index')){
+			if($services == 'yes'){
 				$cond3['Produit.groupe_id']=$groupeIds[0];
 			}
+
 			if(Configure::read('aser.multi_pv')||(Configure::read('aser.default_stock')<1)){
 				$produits = $this->Vente->Produit->find('all',array( 'fields'=>array('Produit.id',
    																				'Produit.name',

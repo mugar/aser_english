@@ -4,7 +4,7 @@
 <?php echo $this->Form->create('Reservation',array('id'=>'availability'));?>
 	<?php
 		echo $this->Form->input('type_chambre_id');
-		echo $this->Form->input('arrivee');
+		echo $this->Form->input('checked_in');
 		echo $this->Form->input('depart');
 	?>
 <?php echo $this->Form->end();?>

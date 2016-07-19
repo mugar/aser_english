@@ -89,7 +89,7 @@ function add_row(param){
      		var tr='<tr>';
      		tr=tr+'<td><input type="text" name="vip"/></td>';
      		tr=tr+'<td><input type="text" name="groupe"/></td>';
-     		tr=tr+'<td><input type="text" name="arrivee"/></td>';
+     		tr=tr+'<td><input type="text" name="checked_in"/></td>';
      		tr=tr+'<td><input type="text" name="depart"/></td>';
      		tr=tr+'<td><input type="text" name="chambre"/></td>';
      		tr=tr+'</tr>';
@@ -140,7 +140,7 @@ function paiement_msg(){
 function state_updater(id,el,state,obs,force,heure){
 	 var controller=(jQuery('div#tabella').attr('type')=='reservations')?('reservations'):('locations');
 	 var goOn=true;
-	 if((state=='partie')&&(force==undefined)){
+	 if((state=='checked_out')&&(force==undefined)){
 	 	if(confirm('Do you really want to change the state to checked-out? because this is an irreversible!')){
 	 		goOn=true;
 	 	}
@@ -167,7 +167,7 @@ function state_updater(id,el,state,obs,force,heure){
 									}
 								}
     							jQuery(el).attr('class',ans.state);
-    							if((state=='arrivee')&&((jQuery(el).attr('facture')==0)||(jQuery(el).attr('facture')==undefined))){
+    							if((state=='checked_in')&&((jQuery(el).attr('facture')==0)||(jQuery(el).attr('facture')==undefined))){
     								createFactureByRightClick(0,id,el,'facture',state);
     							}
     						}
@@ -684,7 +684,7 @@ function getBase(){
  			success:function(response){
  			if(response.success){
  				if(consoId=='facture'){
- 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('annulee');
+ 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('canceled');
  					//disabling forbidden actions
  					jQuery('span[name="disable"]').attr('class','boutton_disabled').removeAttr('onclick').unbind('click');
  					jQuery('span[name="classer"]').attr('class','boutton_disabled').removeAttr('onclick').unbind('click');
@@ -850,18 +850,18 @@ function getBase(){
  	if(jQuery('table#list_factures tr[id="'+id+'"]').length==0){
  		var tr='<tr id="'+id+'"  onclick="activated(this)" name="0" beneficiaire="'+beneficiaire+'" journal="'+journal+'">';
  		tr=tr+'<td id="num">'+factureNum+'</td>';
- 		if(jQuery('#pos').attr('magasin')==0){
+ 		if((jQuery('#pos').attr('magasin')==0)||(jQuery('#pos').attr('controller')=='services')){
  			tr=tr+'<td id="table">'+table+'</td>';
  		}
  		tr=tr+'<td id="original">'+original+'</td>';
  		tr=tr+'<td id="reduction">'+reduction+'</td>';
  		tr=tr+'<td id="montant">'+montant+'</td>';
 	
-	 	if(jQuery('#pos').attr('touch')=='on'){
+	 	if((jQuery('#pos').attr('touch')=='on')||(jQuery('#pos').attr('controller')=='services')){
 	 		tr=tr+'<td id="reste">'+reste+'</td>';
 	 	}
  		tr=tr+'<td id="etat">'+etat+'</td>';
- 		if(jQuery('#pos').attr('magasin')==0){
+ 		if((jQuery('#pos').attr('magasin')==0)||(jQuery('#pos').attr('controller')=='services')){
  			tr=tr+'<td id="waiter">'+serveur+'</td>';
  		}
  		tr=tr+'<td id="date">'+date+'</td>';
@@ -927,6 +927,8 @@ function getBase(){
  }
  
  function resto_create(factureId){
+  var controller = jQuery('#pos').attr('controller');
+  var model = jQuery('#pos').attr('model');
  	var quantite=jQuery('#VenteQuantite').val();
  	var pourcentage=jQuery('#VentePourcentage').val();
  	var produit_id=jQuery('select#produits  option:selected').val();
@@ -967,35 +969,36 @@ function getBase(){
  		var beneficiaire=jQuery('span#ben').text();
  		var reduction=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text());
  	}
- 	if((beneficiaire!='')&&(pourcentage=='')){
+ 	if((beneficiaire!='')&&(pourcentage=='')&&(controller =='ventes')){
  		alert('Le Pourcentage n\'est pas spécifié !');
  	}
  	else if(quantite==''){
  		alert('La quantité n\'est pas spécifiée !');
  	}
- 	else if((table=='')&&(factureId=='creation')){
+ 	else if((table=='')&&(factureId=='creation')&&(controller =='ventes')){
  		alert('La table n\'est pas spécifiée !');
  	}
- 	else if((serveurId==0)&&(factureId=='creation')){
+ 	else if((serveurId==0)&&(factureId=='creation')&&(controller =='ventes')){
  		alert('Le serveur n\'est pas spécifié !');
  	}
  	else {
  	//	alert(clientId);
  		jQuery('#vente_add').ajaxSubmit({
-			data:{ 'data[Vente][quantite]':quantite,
-				'data[Vente][tier_id]':clientId,
-				'data[Vente][serveur_id]':serveurId,
-				'data[Vente][table]':table,
-				'data[Vente][factureId]':factureId,
-				'data[Vente][reduction]':reduction,
-				'data[Vente][PU]':PU,
-				'data[Vente][beneficiaire]':beneficiaire,
-				'data[Vente][pourcentage]':pourcentage,
-				'data[Vente][acc_id]':garnishId,
-				'data[Vente][matricule]':matricule,
-				'data[Vente][liasse]':liasse,
-				'data[Vente][employeur]':employeur
-			},
+		data:{ "data[Vente][quantite]":quantite,
+        'data[Vente][produit_id]': produit_id,
+        'data[Vente][tier_id]':clientId,
+        'data[Vente][serveur_id]':serveurId,
+        'data[Vente][table]':table,
+        'data[Vente][factureId]':factureId,
+        'data[Vente][reduction]':reduction,
+        'data[Vente][PU]':PU,
+        'data[Vente][beneficiaire]':beneficiaire,
+        'data[Vente][pourcentage]':pourcentage,
+        'data[Vente][acc_id]':garnishId,
+        'data[Vente][matricule]':matricule,
+        'data[Vente][liasse]':liasse,
+        'data[Vente][employeur]':employeur
+    },
 			dataType:'json',
 			success:function(r){
 				if(r.success){
@@ -1003,6 +1006,11 @@ function getBase(){
 						jQuery('#VentePourcentage').attr('disabled','disabled');
 					}
 					if(factureId=='creation'){
+            if(controller =='services'){
+              serveur = 'r.personnel_name';
+              table = ''
+            }
+
 						facture_row(r.factureId,r.factureNum,r.journal,beneficiaire,table,r.original,r.reduction,r.montant,0,'in_progress',serveur,r.date);
 					    vente_row(pourcentage,produit_id,produit,quantite,r.PU,r.PT,r.consoId,r.printed);
 						vente_details(r.factureId,r.factureNum,r.montant,r.reste,r.avance,'',beneficiaire,clientId,client,matricule,liasse,employeur);
@@ -1030,14 +1038,16 @@ function getBase(){
  					jQuery('#VentePourcentage').val('');
  					jQuery('#VenteGarnish').val(0);
  					
- 					//updating the quantity in produit full name
- 					var full_name=jQuery('select#produits  option:selected').html();
- 					if(full_name.split('_').length==3){
- 					  	var new_quantite=parseInt(full_name.split('_')[1])-parseInt(quantite);
- 					  	new_quantite=(new_quantite<0)?0:new_quantite;
- 					  	jQuery('select[id="produits"] option[value="'+produit_id+'"]')
- 					  	.html(full_name.split('_')[0]+'_'+new_quantite+'_'+full_name.split('_')[2]);
- 					}
+          if(controller == 'ventes'){
+   					//updating the quantity in produit full name
+   					var full_name=jQuery('select#produits  option:selected').html();
+   					if(full_name.split('_').length==3){
+   					  	var new_quantite=parseInt(full_name.split('_')[1])-parseInt(quantite);
+   					  	new_quantite=(new_quantite<0)?0:new_quantite;
+   					  	jQuery('select[id="produits"] option[value="'+produit_id+'"]')
+   					  	.html(full_name.split('_')[0]+'_'+new_quantite+'_'+full_name.split('_')[2]);
+   					}
+          }
 				}
 				else if(r.choix!=undefined){
 					journal_msg(r);
@@ -1202,7 +1212,7 @@ function resizer(){
     var month=0
     var year=0
     var days=0
-	jQuery('td.confirmee,td.en_attente,td.arrivee')
+	jQuery('td.confirmed,td.pending,td.checked_in')
 	.resizable({
 		handles: 'e',
 		ghost:true,
@@ -1276,7 +1286,7 @@ function resizer(){
 var dropped=false;
 function dragger(){
 	
-	jQuery( 'td.confirmee,td.en_attente,td.arrivee')
+	jQuery( 'td.confirmed,td.pending,td.checked_in')
 	.draggable({disabled: false ,
 				addClasses:false,
 				cursor:'move',
@@ -1342,7 +1352,7 @@ function dropper(){
 	jQuery( 'td.selection' )
 	.droppable({disabled: false ,
 				addClasses:false,
-				accept: 'td.confirmee,td.en_attente,td.arrivee',
+				accept: 'td.confirmed,td.pending,td.checked_in',
 			//	activeClass:'selection',
 				greedy:true,
 				hoverClass:'hovered',
@@ -1393,10 +1403,10 @@ var times = 0;
 var row;
 var startingPoint;
 var cellClass;
-var class_regex = /^(confirmee|en_attente|partie|arrivee|changee|credit)$/; //I really love regex :D
+var class_regex = /^(confirmed|pending|checked_out|checked_in|changee|credit)$/; //I really love regex :D
 
 function rightClick(){
-	selector='td.confirmee,td.partie,td.en_attente,td.arrivee,td.changee,td.credit';
+	selector='td.confirmed,td.checked_out,td.pending,td.checked_in,td.changee,td.credit';
 	jQuery(selector).contextMenu(
 		{ menu: 'myMenu'},
 		function(action, el, pos) {
@@ -1610,7 +1620,7 @@ function rightClick(){
 					break;
 				case 'client' :
 					var controller=(jQuery('div#tabella').attr('type')=='reservations')?('reservations'):('locations');
-           			jQuery('<div id="client_edit" title="Affichage/Modification des informations du client"></div>').insertAfter('body');
+           			jQuery('<div id="client_edit" title="Customer Information"></div>').insertAfter('body');
    		     		jQuery('#client_edit').dialog({ modal:true, 
     					   show:'slide',
     		               hide:'clip',
@@ -1661,7 +1671,7 @@ function rightClick(){
     		               position:'top',
     		               buttons: { "Change": function() {
     		               				var state=jQuery('#stateSelect').val();
-    		               				if(state=='partie'){
+    		               				if(state=='checked_out'){
     		               					var heure=jQuery('#departureTimeHour').val()+'.'+
     		               							jQuery('#departureTimeMinute').val()+'.'+
     		               							jQuery('#departureTimeMeridian').val();
@@ -1689,7 +1699,7 @@ function rightClick(){
     								success:function(ans){
     									if(ans.success){
     										jQuery('#services_boxe').dialog("close");
-    										alert('Service Enregistré!');
+    										alert('Service invoice saved!');
     									}
     									else {
     										alert(ans.msg);
@@ -1701,7 +1711,7 @@ function rightClick(){
     						 }
     				});
     				break;
-				 case 'annulee':
+				 case 'canceled':
 				 var type=(jQuery('div#tabella').attr('type')=='reservations')?('booking'):('rental');
 				 var controller=(jQuery('div#tabella').attr('type')=='reservations')?('reservations'):('locations');
 				 if(confirm('Do you really want to cancel this '+type+' ?')){
@@ -1715,7 +1725,7 @@ function rightClick(){
 						jQuery.ajax({
 				 			type:'GET',
 				 			dataType:'json',
-				 			url:getBase()+controller+'/state_updater/'+reservation_id+'/annulee/'+motif,
+				 			url:getBase()+controller+'/state_updater/'+reservation_id+'/canceled/'+motif,
 							success:function(ans){
 								if(ans.success){
 									location.reload();
@@ -1765,7 +1775,7 @@ var endPoint;
     	var month;
         var year;
         var days;
-        var arrivee;
+        var checked_in;
         var depart;
         
 function mouseup(){
@@ -1777,7 +1787,7 @@ jQuery('*').mouseup(function() {
     	 month=parseInt(jQuery('#title').attr('month'));
          year=jQuery('#title').attr('year');
          days=parseInt(jQuery('#title').attr('days'));
-         arrivee=year+'-'+formater(month)+'-'+formater(startingPoint);
+         checked_in=year+'-'+formater(month)+'-'+formater(startingPoint);
          depart=year+'-'+formater(month)+'-'+formater(endPoint);
         jQuery('.details').remove();
         //removing certains fields
@@ -1804,7 +1814,7 @@ jQuery('*').mouseup(function() {
     		} );
 		    
        jQuery('#room_number').text(row);
-       jQuery('#arrivee').text(arrivee);
+       jQuery('#checked_in').text(checked_in);
        jQuery('#depart').text(depart);
         times=0;
         isdown = 0;
@@ -1822,7 +1832,7 @@ function resAdd(){
     var state=jQuery('select[id="ReservationEtat"] option:selected').val();
 					
 	jQuery('#resAdd').ajaxSubmit({
-		data:{ 'data[Reservation][arrivee]':arrivee,
+		data:{ 'data[Reservation][checked_in]':checked_in,
 			'data[Reservation][depart]':depart,
 			'data[Reservation][room]':row,
 			'data[type]':'single',
@@ -1847,9 +1857,9 @@ function resAdd(){
 				rightClick();
 				jQuery('td.selection').removeAttr('class');
     			jQuery('#booking_boxe strong').remove();
-    			alert('Réservation créée');
+    			alert('Booking Successfully Created');
     			//affiche of facture div
-    			if(state=='arrivee'){
+    			if(state=='checked_in'){
     				jQuery('#factureDiv').show();								
     			}
     			else {
@@ -1858,8 +1868,8 @@ function resAdd(){
     					location.reload();
     				}
     			}
-    			//fill the facture date with arrivee date
-    			jQuery('#DateFact').val(arrivee);
+    			//fill the facture date with checked_in date
+    			jQuery('#DateFact').val(checked_in);
     		}
     		else { alert(response.msg);
     		}
@@ -1872,14 +1882,14 @@ function locationAdd(){
     								var tier_id=jQuery('select[id="principal"] option:selected').val();
 
     								var autre_date_depart=jQuery('#Date_autre_depart').val();
-    								var state='en_attente';
+    								var state='pending';
     								
     							jQuery('form#location-extras input').each(function(){
     								jQuery(this).appendTo('form#locationAdd').css('display','none').attr('class','extra');
     							});
     					           jQuery('form#locationAdd').ajaxSubmit({
 							             beforeSend:function(){ jQuery('#message_res').html('<span id="loading">Enregistrement...</span>');},
-							             data:{ 'data[Location][arrivee]':arrivee,
+							             data:{ 'data[Location][checked_in]':checked_in,
 							             		'data[Location][depart]':depart,
 							             		'data[Location][salle]':row,
 							             		'data[Location][message]':jQuery('#LocationMessage').val(),
@@ -1985,7 +1995,7 @@ function mouseout(c) {
 function remove_facture(){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2025,7 +2035,7 @@ function goTo(){
 function facture_global(tierId){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)!=1) {
-    	jQuery('<div id="alert" title="message">Select un seul élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2083,7 +2093,7 @@ function view_pyt(){
 function mass_pyt(reservation){
 	var nom='checkbox';
 	if((reservation=='off')&&(jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length==0)) {
-    	jQuery('<div id="alert" title="message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -2252,10 +2262,10 @@ jQuery('#availability_boxe').dialog({
     		width:390,
     		position:'top',
     	//	show:'bounce',
-    		buttons: { "Vérifier": function() {
+    		buttons: { "Check": function() {
     			var test=jQuery("form#dispo").validate({
  					rules:{
- 						 'data[Reservation][arrivee]': {required:true,date:true},
+ 						 'data[Reservation][checked_in]': {required:true,date:true},
  						 'data[Reservation][depart]': {required:true,date:true},
  					}
 				});
@@ -2282,17 +2292,17 @@ jQuery('#availability_boxe').dialog({
 							if(response.success){
 								jQuery('#availability_boxe').dialog('close');
 								jQuery('div#alert').remove();
-								 jQuery('<div id="alert" title="Résultats de la recherche"></div>')
+								 jQuery('<div id="alert" title="Search Results"></div>')
     	        	                              .dialog({modal:true, show:'slide',hide:'clip',position:'center',width:350,
     							                       	buttons: { "Ok": function() { jQuery(this).dialog("close");
 								             						}
 								             				}
     								                     });
-    							var msg=(cat!='')?' de type '+cat:'';
-    							msg=(etage!='')?msg+' à l\'étage N°'+etage:msg+'';
-								jQuery('#alert').append('<div class="message">'+response.available+' chambre(s) '+msg+' sont disponibles.</div>');
+    							var msg=(cat!='')?' of type '+cat:'';
+    							msg=(etage!='')?msg+' on floor N°'+etage:msg+'';
+								jQuery('#alert').append('<div class="message">'+response.available+' room(s) '+msg+' are available.</div>');
 								jQuery('div.message').css({'margin-bottom':'10px','z-index':0});
-								jQuery('#alert').append('<label>Liste</label><select id="chambres_dispo"></select>');
+								jQuery('#alert').append('<label>List</label><select id="chambres_dispo"></select>');
 								jQuery.each(response.freeRooms, function(i, val) {
      								jQuery("select#chambres_dispo").prepend('<option value="'+i+'">'+val+'</option>');
        							 });
@@ -2318,8 +2328,8 @@ jQuery('#availability_boxe').dialog({
 function annuler_facture(text){
 	var model=text.split('_')[0];
 	var factureId=text.split('_')[1];
-	if(jQuery('span#etat').text()=="annulee"){
-		alert('Facture déjà annulée !');
+	if(jQuery('span#etat').text()=="canceled"){
+		alert('Invoice already canceled!');
 	}
 	else if(confirm('Do you really want to close this invoice?')){
 		var obs=prompt('Reason for the cancellation : ');
@@ -2337,7 +2347,7 @@ function annuler_facture(text){
     		});
     	}
     	else {
-    		alert('Motif obligatoire !');
+    		alert('The reason is mandatory!');
     	}
    }
 }
@@ -2372,10 +2382,10 @@ function edit_facture(factureId){
 }
 function createFactureByRightClick(facture_id,reservation_id,el,action,state){
 	if((facture_id!='0')&&(facture_id!=undefined)){
-		alert('Facture déjà créée!');
+		alert('Invoice already Created');
 	}
-	else if(!state.match('arrivee')){
-		alert('On peut créer la facture seulement si le client est déjà arrivée!');
+	else if(!state.match('checked_in')){
+		alert('You can only create the invoice if the customer has checked in!');
 	}
 	else {
 		
@@ -2387,7 +2397,7 @@ function createFactureByRightClick(facture_id,reservation_id,el,action,state){
 		jQuery('#facture').dialog({ modal:true, 
     		position:'top',
     		width:390,
-    		buttons: { "Enregister": function() { 		
+    		buttons: { "Save": function() { 		
 			//validation stuff
     		var test=jQuery("#facture_form").validate({
  				rules:{
@@ -2399,14 +2409,14 @@ function createFactureByRightClick(facture_id,reservation_id,el,action,state){
 			});
 			if(test.form()){
 	    		jQuery('#facture_form').ajaxSubmit({
-					beforeSend:function(){ jQuery('#message').text('Enregistrement...');},
+					beforeSend:function(){ jQuery('#message').text('Saving...');},
 					complete:function(){ jQuery('#message').text('');},
 					dataType:'JSON',
 					data:{'data[Id][0]':reservation_id},
 					success:function(response){
 						jQuery(el).attr('facture',response.facture_id);
 						jQuery('#'+action).dialog("close");
-    	                alert('Facture enregistrée!');
+    	                alert('Invoice Saved!');
     				},
     			});
     		}
@@ -2492,8 +2502,9 @@ function tier(){
 								 jQuery('<option value='+response.id+' selected>'+nom+'</option>').prependTo('#principal1');
 								 jQuery('<option value='+response.id+' selected>'+nom+'</option>').prependTo('#clientList');
 							//	 jQuery('<option value='+response.id+' >'+nom+'</option>').prependTo('#occupants1');
-								alert('Client '+nom+' enregistré !');
+								alert('Customer '+nom+' is successfully saved');
 								jQuery("form#tierAdd")[0].reset();
+                jQuery("#last_reservation").val('');
     						}
     						else { 
     							alert(response.msg);
@@ -2683,7 +2694,7 @@ function affectation(params){
 					complete:function(){ jQuery('#message_aff').html('')},
 					dataType:'json',
 					data:{
-						'data[Reservation][arrivee]':params.arrivee,
+						'data[Reservation][checked_in]':params.checked_in,
 						'data[Reservation][depart]':params.depart,
 						'data[TypeChambre][capacite]':params.capacite,
 						'data[Reservation][id]':params.id,
@@ -2727,7 +2738,7 @@ function single_add(){
 				jQuery.validator.addMethod(
 					"depart",
 					function(value, element) {
-						var arri=jQuery('form#resAdd1 input[name="data[Reservation][arrivee]"]').val();
+						var arri=jQuery('form#resAdd1 input[name="data[Reservation][checked_in]"]').val();
 						if(value>=arri){
 							return true
 						}
@@ -2741,7 +2752,7 @@ function single_add(){
  							rules:{
  								'data[Reservation][adultes]': {required:true,number:true},
  								'data[Reservation][enfants]': {required:true,number:true},
- 								'data[Reservation][arrivee]': {required:true,date:true},
+ 								'data[Reservation][checked_in]': {required:true,date:true},
  								'data[Reservation][depart]': {required:true,date:true,depart:true},
  								'data[Reservation][PU]': {number:true},
  							}
@@ -2754,8 +2765,8 @@ function single_add(){
     			var tier=jQuery('select[id="principal1"] option:selected').html();
     			var tier_id=jQuery('select[id="principal1"] option:selected').val();
     			var row=jQuery('select[id="chambre1"] option:selected').html();
-    			var arrivee=jQuery('#DateArrivee1').val();
-    			var start=parseInt(arrivee.split('-')[2]);
+    			var checked_in=jQuery('#DateArrivee1').val();
+    			var start=parseInt(checked_in.split('-')[2]);
     			var depart=jQuery('#DateDepart1').val();
     			var depart_month=parseInt(depart.split('-')[1]);
     			var month=parseInt(jQuery('#title').attr('month'));
@@ -2766,7 +2777,7 @@ function single_add(){
 					beforeSend:function(){ jQuery('#message_res1').html('<span id="loading">Enregistrement...</span>')},
 					complete:function(){ jQuery('#message_res1').html('')},
 					data:{
-						'data[Reservation][arrivee]':arrivee,
+						'data[Reservation][checked_in]':checked_in,
 						'data[Reservation][depart]':depart,
 						'data[Reservation][room]':row,
 						'data[type]':'single',
@@ -2779,7 +2790,7 @@ function single_add(){
 										'tier_id':tier_id,
 										'start':start,
 										'end':end,
-										'arrivee':arrivee,
+										'checked_in':checked_in,
 										'depart':depart,
 										'id':response.id,
 										'month':month,
@@ -2825,9 +2836,9 @@ function multi_add(){
     			var tier=jQuery('select[id="principal"] option:selected').html();
     			var tier_id=jQuery('select[id="principal"] option:selected').val();
     			var nombre=parseInt(jQuery('#nombre').val());
-    			var arrivee=jQuery('#DateArrivee').val();
+    			var checked_in=jQuery('#DateArrivee').val();
     			var depart=jQuery('#DateDepart').val()
-    			var start=parseInt(arrivee.split('-')[2]);
+    			var start=parseInt(checked_in.split('-')[2]);
     			var end=parseInt(depart.split('-')[2]);
     			var state=jQuery('select[id="ReservationEtat"] option:selected').html();
     			jQuery('#resAdd').ajaxSubmit({
@@ -2845,7 +2856,7 @@ function multi_add(){
 										'tier_id':tier_id,
 										'start':start,
 										'end':end,
-										'arrivee':arrivee,
+										'checked_in':checked_in,
 										'depart':depart,
 										'id':response.id,
 										'month':parseInt(jQuery('#title').attr('month')),
@@ -2956,7 +2967,7 @@ function actions(nom,action,affectationForm) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select only one record !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3058,7 +3069,7 @@ function produit_tarifs(nom,action,tarifs_form) {
 			}
 	        else {
 		        jQuery(document).ready(function(){
-    	        jQuery('<div id="alert" title="Message">Select un et un seul élément dans la liste des tarifs !</div>')
+    	        jQuery('<div id="alert" title="Message">Select only one record!</div>')
     	        .dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3069,7 +3080,7 @@ function produit_tarifs(nom,action,tarifs_form) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select only one record !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3100,7 +3111,7 @@ function model_details(nom,action) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select only one record !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3189,7 +3200,7 @@ function location_extras(nom,action,extras_form) {
     									jQuery('#effacer').remove();
     								jQuery(row).hide('fade')
     						        jQuery(row).remove();
-    	                                jQuery('<div id="alert" title="Message">Extra effacé !</div>')
+    	                                jQuery('<div id="alert" title="Message">Extra deleted!</div>')
     	                                .dialog({modal:true, show:'slide',hide:'clip',
     						                      	buttons: { "Ok": function() { jQuery(this).dialog("close");
     		                                      		 } }
@@ -3203,7 +3214,7 @@ function location_extras(nom,action,extras_form) {
 			}
 	        else {
 		        jQuery(document).ready(function(){
-    	        jQuery('<div id="alert" title="Message">Select un et un seul élément dans la liste des extras !</div>')
+    	        jQuery('<div id="alert" title="Message">Select only one record!</div>')
     	        .dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3214,7 +3225,7 @@ function location_extras(nom,action,extras_form) {
 	}
 	else {
 		jQuery(document).ready(function(){
-    	jQuery('<div id="alert" title="Message">Select un et un seul élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select only one record !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',
     							buttons: { "Ok": function() { jQuery(this).dialog("close"); } }
     							});
@@ -3288,7 +3299,7 @@ function validator(){
 	          'depenses':{number:true},
 	          'location':{number:true},
 	          'date_depart':{date:true},
-	          'date_arrivee':{date:true},
+	          'date_checked_in':{date:true},
 	          'date1':{date:true},
 	          'duree':{required:true},
 	          'montant_location':{number:true},
@@ -3456,7 +3467,7 @@ function effacer(nom) {
 	info=info.split('_');//to get the model and the controller
 	jQuery('form[name="'+nom+'"]').attr('action',getBase()+''+info[1]+'/deleteAll/'+info[0]);
     if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="Message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="Message">Select only one record !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3473,7 +3484,7 @@ function effacer(nom) {
 function print_documents(action,redirect_url){
  // alert("action = "+action+" , url = "+url+", "+getBase()+redirect_url);
 	if((action!='')&&(action=='0')){
-		alert(" clôturer d'abord le journal !");
+		alert(" close first the report");
 	}
 	else {
 		if(jQuery.browser.mozilla){
@@ -3580,7 +3591,7 @@ function print_documents(action,redirect_url){
 
 function remove_docs(nom,action){
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)!=1) {
-    	jQuery('<div id="alert" title="message">Select un seul élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3634,7 +3645,7 @@ function remove_docs(nom,action){
 function cleaner(etat){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3659,7 +3670,7 @@ function cleaner(etat){
 function disable(action){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3690,7 +3701,7 @@ function disable(action){
 function msg_gouvernante(){
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3737,7 +3748,7 @@ function msg_gouvernante(){
 function documents(nom,action){
 	
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
@@ -3762,7 +3773,7 @@ function documents(nom,action){
     							//hide:'clip',
     							position:'top',
     							width:390,
-    							buttons: { "Enregister": function() { 		
+    							buttons: { "Save": function() { 		
     								//*
     								//validation stuff
     								var test=jQuery('#'+action+'_form').validate({
@@ -3818,7 +3829,7 @@ function mass_modification(controller) {
 	controller = (controller==undefined)?'produits':controller;
 	var nom='checkbox';
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Select un élément !</div>')
+    	jQuery('<div id="alert" title="message">Select only one record !!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {

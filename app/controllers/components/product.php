@@ -140,7 +140,7 @@ class ProductComponent extends Object {
 				//adding eventual ventes in case of a global bill.
 			foreach ($data['modelInfos'] as $reservation){
 				$sheet->setCellValueByColumnAndRow(0, $row, 'Chambre N° '.$reservation['Chambre']['name']); 
-				$sheet->setCellValueByColumnAndRow(1, $row, ($this->diff($reservation['Reservation']['arrivee'],$reservation['Reservation']['depart'])+1).' nuitée(s)'); 
+				$sheet->setCellValueByColumnAndRow(1, $row, ($this->diff($reservation['Reservation']['checked_in'],$reservation['Reservation']['depart'])+1).' nuitée(s)'); 
 				$sheet->setCellValueByColumnAndRow(2, $row, $reservation['Reservation']['PU']);
 				$sheet->setCellValueByColumnAndRow(3, $row, $reservation['Reservation']['montant']);
 				$sheet->getStyle($this->cellsToMergeByColsRow(0,3,$row))->applyFromArray(array('borders'=>$borderStyle));
@@ -2022,7 +2022,7 @@ class ProductComponent extends Object {
 			return '';
 		else if($type=='french'){
 			$parts=explode('-',$date);
-			return $parts[2].'/'.$parts[1].'/'.$parts[0];
+			return $parts[1].'/'.$parts[2].'/'.$parts[0];
 		}
 		else {
 			$parts=explode('/',$date);
@@ -2476,7 +2476,7 @@ class ProductComponent extends Object {
 	function factureMontantRes($factures,$monnaie=null){
 		$this->Reservation=ClassRegistry::init('Reservation');
 		foreach($factures as $facture){
-			$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.arrivee',
+			$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.checked_in',
 																			'Reservation.depart',
 																			'Reservation.PU',
 																			'Reservation.demi',
@@ -2488,7 +2488,7 @@ class ProductComponent extends Object {
 			$montantFact=0;
 			foreach($reservations as $reservation){
 				$depart=($reservation['Reservation']['depart']>date('Y-m-d'))?date('Y-m-d'):$reservation['Reservation']['depart'];
-				$montantRes=($this->diff($reservation['Reservation']['arrivee'],$depart)+1)*$reservation['Reservation']['PU'];
+				$montantRes=($this->diff($reservation['Reservation']['checked_in'],$depart)+1)*$reservation['Reservation']['PU'];
 				if(($reservation['Reservation']['depart']<date('Y-m-d'))&&($reservation['Reservation']['demi']>0)){
 					$montantRes+=$reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100);
 				}
@@ -2500,7 +2500,7 @@ class ProductComponent extends Object {
 	
 	function extract_amount(&$facture,$date1,$date2){
 		$this->Reservation=ClassRegistry::init('Reservation');
-		$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.arrivee',
+		$reservations=$this->Reservation->find('all',array('fields'=>array('Reservation.checked_in',
 																			'Reservation.depart',
 																			'Reservation.PU',
 																			'Reservation.demi',
@@ -2512,31 +2512,31 @@ class ProductComponent extends Object {
 		$montantFact=$montantFactTest=0;
 		foreach($reservations as $reservation){
 			$depart=$reservation['Reservation']['depart'];
-			$originalArrival=$reservation['Reservation']['arrivee'];
+			$originalArrival=$reservation['Reservation']['checked_in'];
 			$skip=false;
 			$montantRes=$montantResTest=0;
 			//1st case : periode incluse dans la reservation
-			if(($reservation['Reservation']['arrivee']>=$date1)&&($reservation['Reservation']['depart']<=$date2)){
+			if(($reservation['Reservation']['checked_in']>=$date1)&&($reservation['Reservation']['depart']<=$date2)){
 				//use the same arrival & departure dates	
 			}
 			//2nd case : //reservations qui s'etende au dela de la periode de deux cotes'
-			else if(($reservation['Reservation']['arrivee']<$date1)&&($reservation['Reservation']['depart']>$date2)){
-				$reservation['Reservation']['arrivee']=$date1;
+			else if(($reservation['Reservation']['checked_in']<$date1)&&($reservation['Reservation']['depart']>$date2)){
+				$reservation['Reservation']['checked_in']=$date1;
 				$reservation['Reservation']['depart']=$date2;
 			}
-			//3rd case : //reservations dont l'arrivee e avant la période mais qui finit quand meme dans cette periode'
-			else if(($reservation['Reservation']['arrivee']<$date1)&&($reservation['Reservation']['depart']<=$date2)&&($reservation['Reservation']['depart']>=$date1)){
-				$reservation['Reservation']['arrivee']=$date1;
+			//3rd case : //reservations dont l'checked_in e avant la période mais qui finit quand meme dans cette periode'
+			else if(($reservation['Reservation']['checked_in']<$date1)&&($reservation['Reservation']['depart']<=$date2)&&($reservation['Reservation']['depart']>=$date1)){
+				$reservation['Reservation']['checked_in']=$date1;
 			}
 			//4th case : // reservation qui commence dans cette periode e fini ailleur
-			else if(($reservation['Reservation']['arrivee']>=$date1)&&($reservation['Reservation']['arrivee']<=$date2)&&($reservation['Reservation']['depart']>$date2)){
+			else if(($reservation['Reservation']['checked_in']>=$date1)&&($reservation['Reservation']['checked_in']<=$date2)&&($reservation['Reservation']['depart']>$date2)){
 				$reservation['Reservation']['depart']=$date2;
 			}
 			else {
 				$skip=true;
 			}
 			if(!$skip){
-				$montantRes=($this->diff($reservation['Reservation']['arrivee'],$reservation['Reservation']['depart'])+1)*$reservation['Reservation']['PU'];
+				$montantRes=($this->diff($reservation['Reservation']['checked_in'],$reservation['Reservation']['depart'])+1)*$reservation['Reservation']['PU'];
 				$montantResTest=($this->diff($originalArrival,$reservation['Reservation']['depart'])+1)*$reservation['Reservation']['PU'];
 				if((($reservation['Reservation']['depart']==$depart)&&($depart<date('Y-m-d')))&&($reservation['Reservation']['demi']>0)){
 					$montantRes+=round($reservation['Reservation']['PU']*($reservation['Reservation']['tauxDemi']/100));
@@ -2566,16 +2566,16 @@ class ProductComponent extends Object {
 																	),
 													'conditions'=>array('Reservation.facture_id !='=>null,
 																		'Reservation.etat !='=>'canceled',
-																		'OR'=>array(array('Reservation.arrivee >='=>$date1,
+																		'OR'=>array(array('Reservation.checked_in >='=>$date1,
 																						'Reservation.depart <='=>$date2),
-																					array('Reservation.arrivee <'=>$date1,
+																					array('Reservation.checked_in <'=>$date1,
 																						'Reservation.depart >'=>$date2),
-																					array('Reservation.arrivee <'=>$date1,
+																					array('Reservation.checked_in <'=>$date1,
 																						'Reservation.depart <='=>$date2,
 																						'Reservation.depart >='=>$date1
 																						),
-																					array('Reservation.arrivee >='=>$date1,
-																						'Reservation.arrivee <='=>$date2,
+																					array('Reservation.checked_in >='=>$date1,
+																						'Reservation.checked_in <='=>$date2,
 																						'Reservation.depart >'=>$date2
 																						),
 																					),
@@ -2728,9 +2728,9 @@ class ProductComponent extends Object {
 		$this->Reservation=ClassRegistry::init('Reservation');
 		$tierid=$this->Reservation->find('first',array('fields'=>array('Reservation.tier_id'),
 													'conditions'=>array('Chambre.name' =>$chambre,
-																		'Reservation.arrivee <='=>date('Y-m-d'),
+																		'Reservation.checked_in <='=>date('Y-m-d'),
 																		'Reservation.depart >='=>$this->increase_date(date('Y-m-d'),-1),
-																		'Reservation.etat'=>'arrivee'
+																		'Reservation.etat'=>'checked_in'
 																		),
 														)
 											);

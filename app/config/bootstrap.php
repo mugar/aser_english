@@ -106,7 +106,7 @@
 								 'modele_signature'=>1,
 								 'shifts'=>0, //1 si les shifts de travail pour le stock sont actives
 								 'table_show_waiter'=>1 ,// 1 si on veut afficher sur chaque table le nom du serveur en question
-								 'annulee'=>array(), // annulee contient la liste des id des personnes qui peuvent annuler les factures exclusivement
+								 'canceled'=>array(), // canceled contient la liste des id des personnes qui peuvent annuler les factures exclusivement
 								 'chg_num'=>0,
 								 'mahanaim'=>0, //option speciale pour les services d'entretien de machine,
 								 'choix_tva'=>1, //option to choose between tva incluse ou non incluse,

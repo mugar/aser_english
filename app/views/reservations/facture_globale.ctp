@@ -64,7 +64,7 @@
 			?>
 		</div>
 		<?php
-			echo 'Check In Date : '.$this->MugTime->toFrench($arrivee);
+			echo 'Check In Date : '.$this->MugTime->toFrench($checked_in);
 			echo '<br/>';
 			echo 'Check Out Date : '.$this->MugTime->toFrench($depart);
 			echo '<br/>';
@@ -108,9 +108,9 @@
 
 	?>
 	<?php 
-		$nuitee=$this->MugTime->diff( $book['Reservation']['arrivee'], $book['Reservation']['depart'])+1;
+		$nuitee=$this->MugTime->diff( $book['Reservation']['checked_in'], $book['Reservation']['depart'])+1;
 		for($i=0;$i<$nuitee;$i++):
-			$date=$this->MugTime->increase_date($book['Reservation']['arrivee'],$i);
+			$date=$this->MugTime->increase_date($book['Reservation']['checked_in'],$i);
 			$class=($date>date('Y-m-d'))?'active':'';
 			$totalReservation+=$book['Reservation']['PU'];
 	?>
@@ -147,7 +147,7 @@
 	?>
 	<tr>
 		<td><?php echo __( 'Room N° ').$book['Chambre']['name']; ?></td>
-		<td><?php echo  $nuitee=$this->MugTime->diff( $book['Reservation']['arrivee'], $book['Reservation']['depart'])+1;
+		<td><?php echo  $nuitee=$this->MugTime->diff( $book['Reservation']['checked_in'], $book['Reservation']['depart'])+1;
 				echo _(' bed night(s)');		
 			?>
 		</td>
@@ -168,13 +168,13 @@
 <?php endif;?>
 <?php if($reservation['Facture']['tva']!=0):?>
 	<tr class="strong">
-		<td><? echo __('T.P WITHOUT TVA');?></td>
+		<td><? echo __('T.P WITHOUT VAT');?></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span id="a_payer"><?php echo ''.$number->format(($reservation['Facture']['montant']-$reservation['Facture']['tva'])+0,$formatting); ?></span></td>
 	</tr>
 	<tr class="strong">
-		<td>TVA</td>
+		<td>VAT</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span id="a_payer"><?php echo ''.$number->format($reservation['Facture']['tva']+0,$formatting); ?></span></td>
@@ -182,27 +182,27 @@
 <?php endif;?>
 
 <tr class="strong">
-		<td><? echo __('T.P'); if($reservation['Facture']['tva']!=0) echo __('.TVAC');?></td>
+		<td><? echo __('T.P'); if($reservation['Facture']['tva']!=0) echo __('.VAT Included');?></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><?php echo ''.$number->format($totalReservation,$formatting); ?></span></td>
 </tr>
 	<? if($detailed):?>
 		<tr class="strong">
-			<td><? echo __('CONSUMMED BED NIGHTS '); if($reservation['Facture']['tva']!=0) echo '(TVAC)';?></td>
+			<td><? echo __('CONSUMMED BED NIGHTS '); if($reservation['Facture']['tva']!=0) echo '(VAT Included)';?></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td><span id="a_payer"><?php echo ''.$number->format($reservation['Facture']['montant']+0,$formatting); ?></span></td>
 		</tr>
 	<? endif;?>
 	<tr class="strong">
-		<td><? echo __('MONTANT PAYE');?></td>
+		<td><? echo __('PAID AMOUNT');?></td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span id="a_payer"><?php echo ''.$number->format($reservation['Facture']['montant']-$reservation['Facture']['reste']+0,$formatting); ?></span></td>
 	</tr>
 	<tr class="strong">
-		<td>LEFT TO PAY (en <?php echo $reservation['Facture']['monnaie']?>)</td>
+		<td>LEFT TO PAY (in <?php echo $reservation['Facture']['monnaie']?>)</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td id="facture_reste"><?php echo $number->format($totalReservation-$reservation['Facture']['montant']+$reservation['Facture']['reste']+0,$formatting); ?></td>
@@ -259,7 +259,7 @@
 <?php foreach($sums as $sum):?>
 <?php if(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']!='RWF')):?>
 	<tr class="strong">
-		<td>WITHOUT TVA</td>
+		<td>WITHOUT VAT</td>
 		<td colspan="2">&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($sum['Facture']['montant']-$sum['Facture']['tva'])+0,$formatting); ?></span></td>
 		<td>&nbsp;</td>
@@ -268,7 +268,7 @@
 		<td>&nbsp;</td>
 	</tr>
 	<tr class="strong">
-		<td>TVA</td>
+		<td>VAT</td>
 		<td colspan="2">&nbsp;</td>
 		<td><span><?php echo ''.$number->format($sum['Facture']['tva']+0,$formatting); ?></span></td>
 		<td>&nbsp;</td>
@@ -278,7 +278,7 @@
 	</tr>
 <?php elseif(($sum['Facture']['tva']!=0)&&($reservation['Facture']['monnaie']=='RWF')):?>
 	<tr class="strong">
-		<td>WITHOUT TVA</td>
+		<td>WITHOUT VAT</td>
 		<td colspan="2">&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($sum['Facture']['montant']-$sum['Facture']['tva'])+0,$formatting); ?></span></td>
 		<td>&nbsp;</td>
@@ -287,7 +287,7 @@
 		<td>&nbsp;</td>
 	</tr>
 	<tr class="strong">
-		<td>TVA</td>
+		<td>VAT</td>
 		<td colspan="2">&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span><?php echo ''.$number->format($sum['Facture']['tva']+0,$formatting); ?></span></td>
@@ -416,8 +416,8 @@ else {
 		<?php if(Configure::read('aser.xls_copy')):?>
 			<li class="link" onclick = "custom_printing('<?php echo $factureId ?>','<?php echo 'reservations/facture_globale/'.$factureId.'/'.$payee.'/1/2'?>')" >Print with Details</li>
 		<?php endif;?>
-		<? if((in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))&&empty($config['annulee']))
-					||in_array($session->read('Auth.Personnel.id'),$config['annulee'])) :?>
+		<? if((in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))&&empty($config['canceled']))
+					||in_array($session->read('Auth.Personnel.id'),$config['canceled'])) :?>
 				<li class="link" onclick = "annuler_facture('<?php echo 'Reservation_'.$reservation['Facture']['id'];?>')" >Cancel the Invoice</li>
 			<?php endif;?>
 		<li class="link" onclick="jQuery('#accomodation').slideToggle()" title="Afficher ou masquer l'Hébergement" >Show/Hide Accommodation</li>

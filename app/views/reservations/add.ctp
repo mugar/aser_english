@@ -8,12 +8,12 @@
 		echo $this->Form->input('nombre',array('class'=>''));
 		echo $this->Form->input('adultes');
 		echo $this->Form->input('enfants');
-		echo $this->Form->input('arrivee',array('type'=>'text','id'=>'ArriveeDate'));
+		echo $this->Form->input('checked_in',array('type'=>'text','id'=>'ArriveeDate'));
 		echo $this->Form->input('depart',array('type'=>'text','id'=>'DepartureDate'));
 		echo $this->Form->input('discount');
-		echo $this->Form->input('etat',array('options'=>array('confirmee'=>'confirmee',
-															'annulee'=>'annulee',
-															'en_attente'=>'en_attente'
+		echo $this->Form->input('etat',array('options'=>array('confirmed'=>'confirmed',
+															'canceled'=>'canceled',
+															'pending'=>'pending'
 															)));
 		echo $this->Form->input('commentaire');
 		

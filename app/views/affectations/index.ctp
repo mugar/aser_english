@@ -20,11 +20,11 @@
 			echo $this->Form->input('Reservation.id',array('label'=>'Numero de la Réservation','type'=>'text'));
 			echo $this->Form->input('tier_id',array('selected'=>0,'label'=>'Occupant'));
 			echo $this->Form->input('Reservation.etat',array('options'=>array(0=>'toutes',
-																			'en_attente'=>'en attente',
-																			'confirmee'=>'confirmée',
-																			'arrivee'=>'arrivée',
-																			'partie'=>'partie',
-																			'annulee'=>'annulée'
+																			'pending'=>'en attente',
+																			'confirmed'=>'confirmée',
+																			'checked_in'=>'arrivée',
+																			'checked_out'=>'checked_out',
+																			'canceled'=>'annulée'
 																			)
 																));
 		?>

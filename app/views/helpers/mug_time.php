@@ -43,7 +43,7 @@
 		function toFrench($mysql_format) {
 			if(!empty($mysql_format)){
 		 		$mysql_format=explode('-',$mysql_format);
-				$french_format=$mysql_format[1].'/'.$mysql_format[2].'/'.$mysql_format[0];
+				$french_format=$mysql_format[2].'/'.$mysql_format[1].'/'.$mysql_format[0];
 				return $french_format;
 			 }
 		}

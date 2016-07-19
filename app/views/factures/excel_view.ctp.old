@@ -139,13 +139,13 @@ header('Content-Disposition: attachment; filename='.$filename);
 <?php endforeach; ?>
 <?php if($facture['Facture']['tva']!=0) :?>
 	<tr class="strong">
-		<td>WITHOUT TVA</td>
+		<td>WITHOUT VAT</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format(($facture['Facture']['montant']-$facture['Facture']['tva'])+0,$formatting); ?></span></td>
 	<tr>
 	<tr class="strong">
-		<td>TVA</td>
+		<td>VAT</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td><span ><?php echo ''.$number->format($facture['Facture']['tva']+0,$formatting); ?></span></td>

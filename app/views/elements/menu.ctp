@@ -6,11 +6,26 @@
 	<? if($enabled):?> 
 		<div id="menu">
 			<ul id="nav">
+				<?php if(Configure::read('aser.stock')):?>
+				<li><?php echo $html->link(__('Inventory Management', true), '#'); ?>
+					<ul>
+						<li class="folder"><?php echo $this->Html->link(__('Stocks Management', true), '/stocks/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Inventory Operations', true), '/historiques/index'); ?></li>
+						<li  class="folder"><?php echo $this->Html->link(__('Stock Movements', true), '/mouvements/index'); ?></li>
+						<li class="rapport"><?php echo $this->Html->link(__('Products Movements Report', true), '/produits/balance'); ?></li>
+						<li class="rapport"><?php echo $this->Html->link(__('Inventory State Report', true), '/produits/rapport'); ?></li>
+						<!-- <li class="rapport"><?php echo $this->Html->link(__('Evolution journalière', true), '/produits/monthly'); ?>
+						</li> -->
+						<!-- <li class="rapport"><?php echo $this->Html->link(__('State journalier', true), '/produits/shifts'); ?></li>
+						<li class="rapport"><?php echo $this->Html->link(__('Conso Théoriques', true), '/produits/conso_theorique'); ?></li> -->
+					</ul>
+					<?endif;?>
+				</li>
 				<?php if(Configure::read('aser.POS')):?>
 					<li><?php echo $html->link(__('Products Management', true), '#'); ?>
 								<ul>	
 									<?php if(Configure::read('aser.stock')):?>
-										<li class="folder"><?php echo $this->Html->link(__('Stocks Management', true), '/stocks/index'); ?></li>
+										
 									<?endif;?>
 									<li class="folder"><?php echo $this->Html->link(__('Sections Management', true), '/sections/index'); ?></li>
 									<li class="folder"><?php echo $this->Html->link(__('Groups Management', true), '/groupes/index'); ?></li>
@@ -21,26 +36,14 @@
 										<li class="folder"><?php echo $this->Html->link(__('Measuring Units Management', true), '/unites/index'); ?></li>
 									<?endif;?>
 									<li class="folder"><?php echo $this->Html->link(__('Products Management', true), '/produits/index'); ?>
-				    					<?php if(Configure::read('aser.stock')):?>
-				    	  					<ul>
-												<li class="rapport"><?php echo $this->Html->link(__('Rapport Des Products', true), '/produits/rapport'); ?></li>
-												<li class="rapport"><?php echo $this->Html->link(__('Mouvements Des Products', true), '/produits/balance'); ?></li>
-												<li class="rapport"><?php echo $this->Html->link(__('Evolution journalière', true), '/produits/monthly'); ?></li>
-												
-												<!-- <li class="rapport"><?php echo $this->Html->link(__('State journalier', true), '/produits/shifts'); ?></li>
-												<li class="rapport"><?php echo $this->Html->link(__('Conso Théoriques', true), '/produits/conso_theorique'); ?></li> -->
-												<?php if($session->read('Auth.Personnel.fonction_id') == 3):?>
+										<ul>
+											<?php if($session->read('Auth.Personnel.fonction_id') == 3):?>
 												<li class="upload"><?php echo $this->Html->link(__('Importer des produits', true), '/produits/upload_xls'); ?></li>
-												<?php endif;?>
-											</ul>
-										<?endif;?>
+											<?php endif;?>
+										</ul>	
 									</li>
-									<?php if(Configure::read('aser.stock')):?>
-										<li class="folder"><?php echo $this->Html->link(__('Inventory Operations', true), '/historiques/index'); ?></li>
-										<li  class="folder"><?php echo $this->Html->link(__('Stock Movements', true), '/mouvements/index'); ?></li>
-							<?php endif;?>
-					</ul>
-				</li>
+								</ul>
+						</li>
 				<?php endif;?>
 				<li><?php echo $this->Html->link(__('Customers & Invoices', true), '#'); ?>
 					<ul>
@@ -90,12 +93,12 @@
 				</li>
 				
 				<?php if($config['POS']): ?>
-				<li><?php 
-						if($config['magasin']) echo $html->link(__('Point Of Sale', true), '#');
-						else  echo $html->link(__('Restaurant', true), '#');?>
+				<li><?php  echo $html->link(__('Point Of Sale', true), '#');?>
 						<ul>
 							<?php if(Configure::read('aser.touchscreen')):?>
-							<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/touchscreen'); ?></li>
+								<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/touchscreen'); ?></li>	
+							<?php elseif(Configure::read('aser.new_services')):?>
+								<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/index/null/yes'); ?></li>
 							<?php else : ?>
 								<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/index'); ?></li>
 							<?php endif; ?>
@@ -158,8 +161,8 @@
 				<?php if($config['services']): ?>
 				<li><?php echo $html->link(__('Services', true), '#'); ?>
 					<ul>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Type de Services', true), '/type_services/index'); ?></li>
-						<li class="folder"><?php echo $this->Html->link(__('Gestion des Services', true), '/services/index'); ?>
+						<li class="folder"><?php echo $this->Html->link(__('Service Types Management', true), '/type_services/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Services Management', true), '/services/index'); ?>
 							<ul>
 								<li class="rapport"><?php echo $this->Html->link(__('Edition de rapport', true), '/services/rapport'); ?></li>
 							</ul>

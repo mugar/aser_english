@@ -96,7 +96,7 @@
 	<?php echo $this->Form->create('Reservation',array('id'=>'recherche','action'=>'extras'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('arrivee',array('id'=>'DateArrivee','type'=>'text'));
+			echo $this->Form->input('checked_in',array('id'=>'DateArrivee','type'=>'text'));
 			
 		?>
 	</span>

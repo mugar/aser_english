@@ -4,7 +4,7 @@
 																		'payee'=>'payee',
 																		'credit'=>'credit',
 																		'avance'=>'avance',
-																		'annulee'=>'annulee',
+																		'canceled'=>'canceled',
 																	)));
 	}
 	else {

@@ -12,7 +12,7 @@ echo $this->Html->image($logo['name'], array('alt'=>'test logo', 'border' => '0'
 				<?php if(!empty($company['compte_RWF'])) echo 'RWF Account : '.$company['compte_RWF'].'<br/>';?>	
 				<?php if(!empty($company['compte_USD'])) echo 'USD Account : '.$company['compte_USD'].'<br/>';?>	
 				<?php if(!empty($company['compte_EUR'])) echo 'EUR Account : '.$company['compte_EUR'].'<br/>';?>	
-				<?php if(!empty($company['nif'])) echo 'NIF : '.$company['nif'].'<br/>';?>
+				<?php if(!empty($company['nif'])) echo 'TIN : '.$company['nif'].'<br/>';?>
 				<?php if(!empty($company['email'])) echo 'E-mail : '.$company['email'].'<br/>';?>
 				<?php if(!empty($company['bp'])) echo 'PO BOX : '.$company['bp'].'<br/>';?>
 			<?php endif;?>

@@ -54,7 +54,7 @@
 <div class="document">
 <h3><?php 
 $config=Configure::read('aser');
-	echo 'Rapport Mensuelle d\'Hébergement';
+	echo 'Accomodation Monthly Report';
 		if(isset($date1)){
 			echo '<h4>( '.$this->MugTime->toFrench($date1).'-'.$this->MugTime->toFrench($date2).' )</h4>';
 		}
@@ -98,7 +98,7 @@ $config=Configure::read('aser');
 			</td>
 			<td><?php echo  $reservation['Tier']['compagnie']; ?></td>
 			<td><?php echo  $reservation['Chambre']['name']; ?></td>
-			<td><?php echo  $this->MugTime->toFrench($reservation['Reservation']['arrivee']); ?></td>
+			<td><?php echo  $this->MugTime->toFrench($reservation['Reservation']['checked_in']); ?></td>
 			<td><?php echo  $this->MugTime->toFrench($reservation['Reservation']['depart']); ?></td>
 			<td><?php echo  $number->format($reservation['Reservation']['PU'],$formatting); ?></td>
 			<?php if($config['extras']):?>

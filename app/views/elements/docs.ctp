@@ -65,11 +65,11 @@
    //decide what to show or hide based on payment selection
 	jQuery('#select_paiement').change(function(){
 		var etat=jQuery('#select_paiement option:selected').html();
- 		if(etat=='payee'){
+ 		if(etat=='paid'){
  			jQuery('input[id*="Paiement"],select[id*="Paiement"]').removeAttr('disabled');
  			jQuery('#PaiementMontant').attr('disabled','disabled');
  		}
- 		else if(etat=='avance'){
+ 		else if(etat=='half_paid'){
  			jQuery('input[id*="Paiement"],select[id*="Paiement"]').removeAttr('disabled');
  		}
  		else {
@@ -89,7 +89,7 @@
 	
 	});
 </script>
-	<div id="facture" style="display:none" title="Enregistrement d'une facture">
+	<div id="facture" style="display:none" title="Invoice Creation">
 		<div class="dialog">
 			<div id="message"></div>
 		<?php echo $this->Form->create('Facture',array('id'=>'facture_form','action'=>'create_facture'));?>
@@ -106,7 +106,7 @@
 				<?php	
 					$config=Configure::read('aser');
 					if($config['tva'])
-						echo $this->Form->input('Facture.inclure_tva',array('label'=>'Inclure la tva','type'=>'checkbox','checked'=>'checked'));
+						echo $this->Form->input('Facture.inclure_tva',array('label'=>'Include VAT','type'=>'checkbox','checked'=>'checked'));
 					echo $this->Form->input('Document.action',array('type'=>'hidden','value'=>'facture'));
 					echo $this->Form->input('Document.model',array('type'=>'hidden','value'=>$model));
 				?>	
@@ -115,23 +115,23 @@
 			<span class="left">
 				<?php
 					echo $this->Form->input('Facture.date',array('type'=>'text'));
-					echo $this->Form->input('Facture.etat',array('options'=>array(
+					echo $this->Form->input('Facture.etat',array('label'=>'state','options'=>array(
 																				'credit'=>'credit',
-																				'payee'=>'payee',
-																				'avance'=>'avance',
+																				'paid'=>'paid',
+																				'half_paid'=>'half_paid',
 																				),
 																			'id'=>'select_paiement'
 																		));
 					$config=Configure::read('aser');
-					echo $this->Form->input('Paiement.montant',array('disabled'=>'disabled'));
+					echo $this->Form->input('Paiement.montant',array('label'=>'amount','disabled'=>'disabled'));
 					
 					?>
 			</span>
 			<span class="right">
 				<?php	
-					echo $this->Form->input('Paiement.montant_equivalent',array('id'=>'PaiementEqui'));
-					echo $this->Form->input('Paiement.monnaie',array('id'=>'monnaie','disabled'=>'disabled'));																	
-					echo $this->Form->input('Paiement.mode_paiement');
+					echo $this->Form->input('Paiement.montant_equivalent',array('label'=>'Equivalent Amount','id'=>'PaiementEqui'));
+					echo $this->Form->input('Paiement.monnaie',array('id'=>'monnaie','label'=>'Currency','disabled'=>'disabled'));																	
+					echo $this->Form->input('Paiement.mode_paiement',array('label'=>'Payment Mode'));
 					echo $this->Form->input('Paiement.reference');
 					echo $this->Form->input('Document.action',array('type'=>'hidden','value'=>'facture'));
 					echo $this->Form->input('Document.model',array('type'=>'hidden','value'=>$model));

@@ -149,7 +149,7 @@ class PaiementsController extends AppController {
 
 		$factures_ids = $this->Paiement->Facture->find('list',array('fields'=>array('Facture.id'
 																					),
-																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
+																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['checked_in'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
 																						'Facture.etat'=>array('half_paid','credit'),
 																						'Facture.tier_id'=>$locationInfo['Facture']['tier_id'],

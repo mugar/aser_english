@@ -1,6 +1,6 @@
 
 <div class="chambres index">
-	<h2><?php __('Gestion Des Chambres');?></h2>
+	<h2><?php __('Room Management');?></h2>
 	
 <div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">

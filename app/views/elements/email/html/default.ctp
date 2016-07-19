@@ -26,7 +26,7 @@ We have the pleasure to confirm the following reservation :
 <br/>
 <br/>
 <br/>
-Arrival le, check in :	<span class="red">'.$this->MugTime->toFrench($reservation['Reservation']['arrivee']).'</span>				
+Arrival le, check in :	<span class="red">'.$this->MugTime->toFrench($reservation['Reservation']['checked_in']).'</span>				
 <br/>
 Départ le, check out :  <span class="red">'.$this->MugTime->toFrench($reservation['Reservation']['depart']).'</span>	
 <br/>

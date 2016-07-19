@@ -7,13 +7,6 @@ class HistoriquesController extends AppController {
 		parent::beforeFilter();
 
 		$this->Auth->allow('*');
-
-		$types=array('Entree'=>'Entry',
-							'Sorti'=>'Consumption',
-							'Perte'=>'Loss'
-							);
-		$types1=array(''=>'')+$types;
-		$this->set(compact('types','types1'));
 	}
 	
 	function pa($id=null){
@@ -47,8 +40,8 @@ class HistoriquesController extends AppController {
 		$conditions=array();
 		$date1=$date2=null;
 		if(!empty($data)) {
-			if($data['Historique']['type']!='') {
-				$conditions['Historique.type']=$data['Historique']['type'];
+			if($data['Historique']['libelle']!='') {
+				$conditions['Historique.libelle']=$data['Historique']['libelle'];
 			}
 			if($data['Historique']['produit_id']!=0) {
 				$conditions['Historique.produit_id']=$data['Historique']['produit_id'];
@@ -63,8 +56,11 @@ class HistoriquesController extends AppController {
 																						)
 																			);
 			}
-			if($data['Historique']['tier_id']!=0) {
-				$conditions['Historique.tier_id']=$data['Historique']['tier_id'];
+			if($data['Historique']['supplier']!='') {
+				$conditions['Historique.supplier like']='%'.$data['Historique']['supplier'].'%';
+			}
+			if($data['Historique']['invoice_no']!='') {
+				$conditions['Historique.invoice_no like']='%'.$data['Historique']['invoice_no'].'%';
 			}
 			if($this->data['Historique']['stock_id']!=0){
 				$conditions['Historique.stock_id']=$data['Historique']['stock_id'];
@@ -117,11 +113,11 @@ class HistoriquesController extends AppController {
 																						'sum(Historique.quantite) as quantite',
 																						'sum(Historique.montant) as montant',
 																						'Historique.PU',
-																						'Historique.type'
+																						'Historique.libelle'
 																						),
 																			'conditions'=>$conditions,
 																			'order'=>array('Historique.date'),
-																			'group'=>array('Stock.id','Produit.id','Historique.PU','Historique.type'),
+																			'group'=>array('Stock.id','Produit.id','Historique.PU','Historique.libelle'),
 																			
 																			)
 																);
@@ -138,11 +134,11 @@ class HistoriquesController extends AppController {
 			$data=array();
 			foreach($historiques as $key=>$historique){
 				$data[$key]['Stock']=$historique['Stock']['name'];
-				$data[$key]['Produit']=$historique['Produit']['name'];
-				$data[$key]['Quantité']=$historique['Historique']['quantite'];
+				$data[$key]['Product']=$historique['Produit']['name'];
+				$data[$key]['Qty']=$historique['Historique']['quantite'];
 				$data[$key]['PU']=$historique['Historique']['PU'];
 				$data[$key]['PT']=$historique['Historique']['montant'];
-				$data[$key]['Type']=$historique['Historique']['type'];
+				$data[$key]['operation_type']=$historique['Historique']['libelle'];
 			}
 			$filename=$this->Product->excel($data,array(),'historiques');
 			$this->redirect('/files/'.$filename);
@@ -163,6 +159,9 @@ class HistoriquesController extends AppController {
 		}
 		if($data['Historique']['date']>date('Y-m-d')){
 			$this->_error($action, 'Cette date est incorrecte!');	
+		}
+		if($action == 'add'){
+			$data['Historique']['personnel_id']=$this->Auth->user('id');	
 		}
 		$data['Historique']['montant']=$data['Historique']['quantite']*$data['Historique']['PU'];
 		

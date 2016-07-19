@@ -5,15 +5,15 @@
 	<?php
 		echo $this->Form->input('tier_id');
 		echo $this->Form->input('salle_id');
-		echo $this->Form->input('arrivee',array('id'=>'DateEntree','type'=>'text'));
+		echo $this->Form->input('checked_in',array('id'=>'DateEntree','type'=>'text'));
 		echo $this->Form->input('depart',array('id'=>'DateSortie','type'=>'text'));
 		echo $this->Form->input('moment',array('options'=>array('avant-midi'=>'avant-midi',
 																'apres-midi'=>'apres-midi',
 																'soir'=>'soir'
 																)
 											));
-		echo $this->Form->input('etat',array('options'=>array('confirmee'=>'confirmeé',
-																'annulee'=>'annuleé',
+		echo $this->Form->input('etat',array('options'=>array('confirmed'=>'confirmeé',
+																'canceled'=>'annuleé',
 																)
 											));
 	?>

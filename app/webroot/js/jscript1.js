@@ -988,7 +988,8 @@ function edit(){
 	var nom='checkbox';
 	//to get the model and the controller
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
-	controller=info.split('_')[1];
+	controller= (info.split('_').length == 2) ? info.split('_')[1] : info.split('_')[1]+'_'+info.split('_')[2];
+    
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').length==1)) {
 		var id=jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"])').val();
 		var tr =jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked').parents('tr');
@@ -1524,7 +1525,7 @@ function confirm_order(factureId){
  			url:getBase()+'ventes/confirm_order/'+factureId,
  			dataType:'JSON',
  			success:function(response){
- 				jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('confirmee');
+ 				jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('confirmed');
 				//disabling some action
 				jQuery('span[name="disable"]').attr('class','boutton_disabled').removeAttr('onclick').unbind('click');
 			 //	jQuery('table#list_factures tr[id="'+factureId+'"]').attr('printed','1');
@@ -2063,7 +2064,7 @@ function facture_removal(factureId,consoId,moveOn){
  			success:function(response){
  			if(response.success){
  				if(consoId=='facture'){
- 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('annulee');
+ 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text('canceled');
  					//disabling forbidden actions
  					jQuery('span[name="disable"]').attr('class','boutton_disabled').removeAttr('onclick').unbind('click');
  					jQuery('span[name="classer"]').attr('class','boutton_disabled').removeAttr('onclick').unbind('click');

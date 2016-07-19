@@ -9,7 +9,7 @@
 			<th><?php echo $this->Paginator->sort('tier_id');?></th>
 			<th><?php echo $this->Paginator->sort('facture_id');?></th>
 			<th><?php echo $this->Paginator->sort('salle_id');?></th>
-			<th><?php echo $this->Paginator->sort('arrivee');?></th>
+			<th><?php echo $this->Paginator->sort('checked_in');?></th>
 			<th><?php echo $this->Paginator->sort('depart');?></th>
 			<th><?php echo $this->Paginator->sort('Heure d\'entrée','entree');?></th>
 			<th><?php echo $this->Paginator->sort('Heure d\'entrée','sortie');?></th>
@@ -37,7 +37,7 @@
 		<td>
 			<?php echo $this->Html->link($location['Salle']['name'], array('controller' => 'salles', 'action' => 'view', $location['Salle']['id'])); ?>
 		</td>
-		<td><?php echo $location['Location']['arrivee']; ?>&nbsp;</td>
+		<td><?php echo $location['Location']['checked_in']; ?>&nbsp;</td>
 		<td><?php echo $location['Location']['depart']; ?>&nbsp;</td>
 		<td><?php echo $location['Location']['entree']; ?>&nbsp;</td>
 		<td><?php echo $location['Location']['sortie']; ?>&nbsp;</td>

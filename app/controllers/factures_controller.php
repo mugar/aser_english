@@ -399,7 +399,7 @@ class FacturesController extends AppController {
 																'conditions'=>array('Reservation.facture_id'=>$id),
 																'order'=>array('Reservation.depart desc')
 																));
-			if(in_array($reservation['Reservation']['etat'],array('partie','credit'))){
+			if(in_array($reservation['Reservation']['etat'],array('checked_out','credit'))){
 				$cond['Paiement.facture_id']=$id;
 				if(strtotime(date('Y-m-d'))>=strtotime('2014-03-01')){
 					$cond['Paiement.mode_paiement']=array('cash','visa');
@@ -1592,7 +1592,7 @@ class FacturesController extends AppController {
 		}
 	}
 	function _room(&$facture){
-		$info=$this->Facture->Reservation->find('first',array('conditions'=>array('Reservation.arrivee <='=>$facture['Facture']['date'],
+		$info=$this->Facture->Reservation->find('first',array('conditions'=>array('Reservation.checked_in <='=>$facture['Facture']['date'],
 																			'Reservation.depart >='=>$facture['Facture']['date'],
 																			'Reservation.etat !='=>'canceled',
 																			'Reservation.tier_id'=>$facture['Facture']['tier_id']
@@ -1675,11 +1675,11 @@ class FacturesController extends AppController {
 			$locationInfo=$modelInfos[0];
 			$location=array();
 			if($locationInfo['Location']['location']!=0){
-				//$periode='<br/>(Pour la période du '.$this->_date_format($locationInfo['Location']['arrivee']).' au '.$this->_date_format($locationInfo['Location']['depart']).')';
+				//$periode='<br/>(Pour la période du '.$this->_date_format($locationInfo['Location']['checked_in']).' au '.$this->_date_format($locationInfo['Location']['depart']).')';
 				//$location[0]['LocationExtra']['name']='Location de la salle '.$locationInfo['Salle']['name'].' '.$periode;
 				$location[0]['LocationExtra']['name']='Salle : '.$locationInfo['Salle']['name'];
 				$location[0]['LocationExtra']['heure']=null;
-				$location[0]['LocationExtra']['quantite']=$this->Product->diff($locationInfo['Location']['arrivee'],$locationInfo['Location']['depart'])+1;
+				$location[0]['LocationExtra']['quantite']=$this->Product->diff($locationInfo['Location']['checked_in'],$locationInfo['Location']['depart'])+1;
 				$location[0]['LocationExtra']['PU']=$locationInfo['Location']['PU'];
 				$location[0]['LocationExtra']['montant']=$locationInfo['Location']['location'];
 				$location[0]['LocationExtra']['monnaie']=$locationInfo['Location']['monnaie'];
@@ -1724,7 +1724,7 @@ class FacturesController extends AppController {
 																					'Facture.etat',
 																					'Facture.id'
 																					),
-																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
+																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['checked_in'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
 																						'Facture.etat'=>array('paid','excedent','half_paid','bonus','credit'),
 																						'Facture.tier_id'=>$facture['Tier']['id'],
@@ -1740,7 +1740,7 @@ class FacturesController extends AppController {
 																					'Service.description',
 																					'Facture.id'
 																					),
-																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['arrivee'],
+																	'conditions'=>array('Facture.date >='=>$locationInfo['Location']['checked_in'],
 																						'Facture.date <='=>$locationInfo['Location']['depart'],
 																						'Facture.etat'=>array('paid','excedent','half_paid','bonus','credit'),
 																						'Facture.tier_id'=>$facture['Tier']['id'],

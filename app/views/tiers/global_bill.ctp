@@ -121,7 +121,7 @@
 
 <?php if($tva!=0) :?>
 	<tr class="strong">
-		<td>WITHOUT TVA</td>
+		<td>WITHOUT VAT</td>
 		<?php if(Configure::read('aser.beneficiaires')):?>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -136,7 +136,7 @@
 		<td><span ><?php echo ''.$number->format(($montant-$tva)+0,$formatting).' '.Configure::read('aser.default_currency'); ?></span></td>
 	</tr>
 	<tr class="strong">
-		<td>TVA</td>
+		<td>VAT</td>
 		<?php if(Configure::read('aser.beneficiaires')):?>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>

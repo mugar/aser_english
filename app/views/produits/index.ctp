@@ -43,7 +43,7 @@
 		<?php else : ?>
 			<?php echo $this->Form->input('PV',array('type'=>'hidden','value'=>0));?>
 		<?php endif;?>
-		<td><?php echo $this->Form->input('section_id',array('id'=>$i.'SectionId','label'=>'','selected'=>0,'title'=>'Le nom de la section auquel appartient le produit'));
+		<td><?php echo $this->Form->input('section_id',array('id'=>$i.'SectionId','label'=>'','selected'=>0,'title'=>'Le nom de la section auquel apchecked_outnt le produit'));
 				echo $ajax->observeField($i.'SectionId', array('url' => 'updateGroupe/0/1','update' => 'groupe'.$i,
     		'loading'=>'jQuery("#loading'.$i.'").attr("class","advanced_loading").show();',
     		'complete'=>'jQuery("#loading'.$i.'").attr("class","advanced_loading").hide();'

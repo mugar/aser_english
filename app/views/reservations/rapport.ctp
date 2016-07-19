@@ -42,7 +42,7 @@
 			<td><?php echo  $groupReservation['Reservation']['nombre']; ?></td>
 			<td><?php echo  $groupReservation['Reservation']['adultes']; ?></td>
 			<td><?php echo  $groupReservation['Reservation']['enfants']; ?></td>
-			<td><?php echo  $groupReservation['Reservation']['arrivee']; ?></td>
+			<td><?php echo  $groupReservation['Reservation']['checked_in']; ?></td>
 			<td><?php echo  $groupReservation['Reservation']['depart']; ?></td>
 			<td><?php echo  $groupReservation['Reservation']['PU']; ?></td>
 			<td><?php echo  $groupReservation['Reservation']['montant']; ?></td>
@@ -88,11 +88,11 @@
 			echo $this->Form->input('type_chambre_id',array('selected'=>0,'label'=>'Catégorie de la chambre'));
 			echo $this->Form->input('etat',array('label'=>'Choisir l\'etat',
 												'options'=>array('toutes'=>'toutes',
-																'confirmee'=>'confirmee',
-																'en_attente'=>'en_attente',
-																'partie'=>'partie',
-																'arrivee'=>'arrivee',
-																'annulee'=>'annulee'
+																'confirmed'=>'confirmed',
+																'pending'=>'pending',
+																'checked_out'=>'checked_out',
+																'checked_in'=>'checked_in',
+																'canceled'=>'canceled'
 																)
 												)
 									);

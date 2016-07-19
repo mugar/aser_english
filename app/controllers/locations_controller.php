@@ -47,7 +47,7 @@ class LocationsController extends AppController {
 	function current_guests(){
 		$date=date('Y-m-d');
 		$guests=$this->Location->find('list',array('conditions'=>array(
-																		'Location.arrivee <='=>$date,
+																		'Location.checked_in <='=>$date,
 																		'Location.depart >='=>$date,
 																		),
 													'fields'=>array('Location.tier_id','Location.tier_id')
@@ -89,7 +89,7 @@ class LocationsController extends AppController {
 																	'Facture.montant',
 																	'Facture.reste',
 																	'Facture.etat',
-																	'Location.arrivee',
+																	'Location.checked_in',
 																	'Location.depart',
 																	'Tier.name',
 																	'Tier.compagnie',
@@ -103,7 +103,7 @@ class LocationsController extends AppController {
 		foreach($locations as $key=>$location){
 			$montant+=$location['Facture']['montant'];
 			$reste+=$location['Facture']['reste'];
-			$locations[$key]['Location']['jours']=$this->Product->diff($location['Location']['arrivee'],$location['Location']['depart'])+1;
+			$locations[$key]['Location']['jours']=$this->Product->diff($location['Location']['checked_in'],$location['Location']['depart'])+1;
 		}
 		$this->set(compact('locations','date1','date2','montant','reste'));
 	}
@@ -145,7 +145,7 @@ class LocationsController extends AppController {
 		$days=cal_days_in_month(CAL_GREGORIAN,$cur_month,$cur_year); //to get how manys days within the current month
 		$mois=(in_array($cur_month,array(10,11,12)))?$cur_month:'0'.$cur_month; 
 		$locations=$this->Location->find('all',array('fields'=>array('Location.id',
-																	'Location.arrivee',
+																	'Location.checked_in',
 																	'Location.depart',
 																	'Location.etat',
 																	'Location.facture_id',
@@ -154,10 +154,10 @@ class LocationsController extends AppController {
 																	'Salle.name'
 																			),
 															'recursive'=>0,
-															'order'=>'Location.arrivee asc',
+															'order'=>'Location.checked_in asc',
 															'conditions'=>array('Location.etat !='=>'canceled',
-																			'OR'=>array(array('month(Location.arrivee)'=>$mois,
-																								'year(Location.arrivee)'=>$cur_year,
+																			'OR'=>array(array('month(Location.checked_in)'=>$mois,
+																								'year(Location.checked_in)'=>$cur_year,
 																								),
 																						array('month(Location.depart)'=>$mois,
 																							'year(Location.depart)'=>$cur_year,
@@ -183,7 +183,7 @@ class LocationsController extends AppController {
 			$details['tier_id']=$location['Tier']['id'];			
 			$details['location_id']=$location['Location']['id'];		
 			$details['facture_id']=(!empty($location['Location']['facture_id']))?($location['Location']['facture_id']):(0);	
-			$details['arrivee']=$location['Location']['arrivee'];
+			$details['checked_in']=$location['Location']['checked_in'];
 			$details['depart']=$location['Location']['depart'];
 			$roomsDetails[$location['Salle']['name']][$i]=$details;
 			$i++;
@@ -191,10 +191,10 @@ class LocationsController extends AppController {
 		//	die(debug($roomsDetails));
 		$salles1 = $this->Location->Salle->find('list',array('order'=>'Salle.name asc'));
 		
-		$etats=array('en_attente'=>'En attente',
-					'confirmee'=>'Confirmée',
-					'arrivee'=>'Arrivée',
-					'partie'=>'Partie',
+		$etats=array('pending'=>'En attente',
+					'confirmed'=>'Confirmée',
+					'checked_in'=>'Arrivée',
+					'checked_out'=>'Partie',
 					);
 		$this->set(compact('days',
 						   'roomsDetails',
@@ -221,37 +221,37 @@ class LocationsController extends AppController {
 																),
 												'conditions'=>array('Location.id'=>$id),
 												));
-		if(($info['Location']['etat']=='partie')&&(!in_array($this->Auth->user('fonction_id'),array(3,5)))){
+		if(($info['Location']['etat']=='checked_out')&&(!in_array($this->Auth->user('fonction_id'),array(3,5)))){
 			exit(json_encode(array('success'=>false,'msg'=>'Location Non Modifiable!')));
 		}
 		$factureId=$info['Location']['facture_id'];
 		//annuler la facture aussi if any
 		switch($state){
 			case 'canceled': 
-				if(!in_array($info['Location']['etat'],array('en_attente','confirmee'))&&(!in_array($this->Auth->user('fonction_id'),array(3,5)))){
+				if(!in_array($info['Location']['etat'],array('pending','confirmed'))&&(!in_array($this->Auth->user('fonction_id'),array(3,5)))){
 					exit(json_encode(array('success'=>false,'msg'=>'Vous n\'avez pas le droit d\'annulée cette location!')));
 				}
 				$this->Product->remove_facture($factureId,'Location',$obs);
 				break;
-			case 'arrivee':
+			case 'checked_in':
 				if($info['Facture']['etat']=='proforma'){
 					$update['Facture']['etat']='credit';
 					$update['Facture']['id']=$factureId;
 					$this->Location->Facture->save($update);
 				}
 				break;
-			case 'en_attente':
+			case 'pending':
 					$update['Facture']['etat']='proforma';
 					$update['Facture']['id']=$factureId;
 					$this->Location->Facture->save($update);
 				break;
 			
-			case 'confirmee':
+			case 'confirmed':
 					$update['Facture']['etat']='proforma';
 					$update['Facture']['id']=$factureId;
 					$this->Location->Facture->save($update);
 				break;
-			case 'partie':
+			case 'checked_out':
 					$state=($info['Facture']['etat']!='paid')?'credit':$state;
 				break;
 				
@@ -271,14 +271,14 @@ class LocationsController extends AppController {
 
 	function _checker($data){
 		$dispo=true;
-		$locations=$this->Location->find('all',array('fields'=>array('Location.arrivee','Location.depart','Location.salle_id'),
+		$locations=$this->Location->find('all',array('fields'=>array('Location.checked_in','Location.depart','Location.salle_id'),
 													'conditions'=>array('Location.salle_id'=>$this->data['Location']['salle_id'],
 																		'Location.etat !='=>'canceled',
 																		)
 													)
 																);
 		foreach($locations as $location){
-			if(($this->data['Location']['arrivee']<=$location['Location']['depart'])and($this->data['Location']['depart']>=$location['Location']['arrivee'])) {
+			if(($this->data['Location']['checked_in']<=$location['Location']['depart'])and($this->data['Location']['depart']>=$location['Location']['checked_in'])) {
 				$dispo=false;
 			}
 		}
@@ -298,7 +298,7 @@ class LocationsController extends AppController {
 		
 			$this->data=$location;
 			$this->data['Location']['date']=$location['Facture']['date'];
-			$jrs=$this->Product->diff($this->data['Location']['arrivee'], $this->data['Location']['depart'])+1;
+			$jrs=$this->Product->diff($this->data['Location']['checked_in'], $this->data['Location']['depart'])+1;
 			$extras=$this->Location->LocationExtra->find('all',array('conditions'=>array('LocationExtra.location_id'=>$id),
 																	'recursive'=>-1
 														));
@@ -328,7 +328,7 @@ class LocationsController extends AppController {
 			$this->set(compact('extras','type','salles'));
 		}
 		else {
-			if($location['Location']['etat']=='partie'){
+			if($location['Location']['etat']=='checked_out'){
 				exit(json_encode(array('success'=>false,'msg'=>'Location Non Modifiable!')));
 			}
 			$deleteConditions['LocationExtra.location_id']=$id;
@@ -339,7 +339,7 @@ class LocationsController extends AppController {
 				$deleteConditions['LocationExtra.extra']=array('yes','no');
 			}
 			$this->Location->LocationExtra->deleteAll($deleteConditions);
-			$this->data['Location']['arrivee']=$location['Location']['arrivee'];
+			$this->data['Location']['checked_in']=$location['Location']['checked_in'];
 			$this->data['Location']['depart']=$location['Location']['depart'];
 		//	$this->data['Location']['salle_id']=$location['Location']['salle_id'];
 			$this->data['Location']['facture_id']=$location['Location']['facture_id'];
@@ -388,11 +388,11 @@ class LocationsController extends AppController {
 				$this->data['Location']['depart'] = (!empty($this->data['Location']['autre_date_depart']))?
 																							$this->data['Location']['autre_date_depart']:
 																							$this->data['Location']['depart'];
-				$jrs=$this->Product->diff($this->data['Location']['arrivee'], $this->data['Location']['depart'])+1;
+				$jrs=$this->Product->diff($this->data['Location']['checked_in'], $this->data['Location']['depart'])+1;
 				$this->data['Location']['PU']=$montant;
 				$this->data['Location']['location']=$jrs*$montant;
 	//			$this->data['Location']['monnaie']=Configure::read('aser.default_currency');
-				$this->data['Location']['etat']=($edit)?$this->data['Location']['etat']:'en_attente';
+				$this->data['Location']['etat']=($edit)?$this->data['Location']['etat']:'pending';
 				if(!$this->Location->save($this->data)){
 					exit(json_encode(array('success'=>false, 'msg'=>'Avec la création de la location!')));
 				}
@@ -423,7 +423,7 @@ class LocationsController extends AppController {
 					}
 				}	
 				unset($extra);
-				//calcul des extras qui font partie permanante de la facture location
+				//calcul des extras qui font checked_out permanante de la facture location
 				if(isset($this->data['extras'])){	//calcul des extras
 			//	exit(debug($this->data));
 					foreach($this->data['extras'] as $detail){

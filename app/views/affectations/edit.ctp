@@ -8,7 +8,7 @@
 		echo $this->Form->input('chambre_id');
 		echo $this->Form->input('tier_id');
 		echo $this->Form->input('etat');
-		echo $this->Form->input('heure_arrivee');
+		echo $this->Form->input('heure_checked_in');
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__('Save', true));?>

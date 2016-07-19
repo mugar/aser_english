@@ -13,7 +13,7 @@ class ServicesController extends AppController {
 	function gerer($factureId=0){
 	//	exit(debug($this->data));
 		
-		if(!empty($this->data['Service'])){
+		if(!empty($this->data['Vente'])){
 		//	exit(debug($this->data));
 			$factureId=$this->data['facture_id'];
 			//deleting the data already stored first
@@ -21,7 +21,7 @@ class ServicesController extends AppController {
 				$this->Service->deleteAll(array('Service.facture_id'=>$factureId));
 			//saving now the new data
 			$montantTotal=0;
-			foreach($this->data['Service'] as $service){
+			foreach($this->data['Vente'] as $service){
 				$serv['Service']['type_service_id']=$this->data['type_service_id'];
 				$serv['Service']['facture_id']=$factureId;
 				$serv['Service']['description']=$service['description'];
@@ -73,11 +73,11 @@ class ServicesController extends AppController {
 			$conditions['Facture.date <=']=$date2=$this->data['Facture']['date2'];
 			
 		}
-		if(isset($this->data['Service']['tier_id'])&&($this->data['Service']['tier_id']!=0)) {
-			$conditions['Service.tier_id']=$this->data['Service']['tier_id'];
+		if(isset($this->data['Vente']['tier_id'])&&($this->data['Vente']['tier_id']!=0)) {
+			$conditions['Service.tier_id']=$this->data['Vente']['tier_id'];
 		}
-		if(isset($this->data['Service']['type_service_id'])&&($this->data['Service']['type_service_id'][0]!=0)) {
-	 		$conditions['Service.type_service_id']=$this->data['Service']['type_service_id'];
+		if(isset($this->data['Vente']['type_service_id'])&&($this->data['Vente']['type_service_id'][0]!=0)) {
+	 		$conditions['Service.type_service_id']=$this->data['Vente']['type_service_id'];
 		}
 		
 		if(isset($this->data['Facture']['numero'])&&($this->data['Facture']['numero']!='toutes')) {
@@ -129,51 +129,58 @@ class ServicesController extends AppController {
 	
 	
 
-	function index() {
-		$serviceConditions=$this->Session->read('serviceConditions');
-		if((empty($this->data))&&(empty($serviceConditions))) {
-			$this->set('services', $this->paginate());
+	function index($date=null) {
+		$date=(is_null($date))?(date('Y-m-d')):($date);
+		$fonction=$this->Auth->user('fonction_id');
+		//fetching the bills
+		if(in_array($fonction,array(2,4))){
+			$cond1['Facture.personnel_id']=$this->Auth->user('id');
 		}
-		elseif(!empty($this->data)) {
-		//building conditions
-			$serviceConditions=array();
-			if($this->data['Facture']['numero']!='') {
-				$serviceConditions['Facture.numero LIKE']='%'.$this->data['Facture']['numero'].'%';
-			}
-			if($this->data['Service']['tier_id']!=0) {
-				$serviceConditions['Service.tier_id']=$this->data['Service']['tier_id'];
-			}
-			if($this->data['Service']['type_service_id']!=0) {
-				$serviceConditions['Service.type_service_id']=$this->data['Service']['type_service_id'];
-			}
-			if($this->data['Facture']['etat']!='') {
-				$serviceConditions['Facture.etat']=$this->data['Facture']['etat'];
-			}
-			
-			if($this->data['Service']['montant']!='') {
-		 		$serviceConditions['Service.montant']=$this->data['Service']['montant'];
-			}
-			if($this->data['Facture']['monnaie']!='') {
-		 		$serviceConditions['OR']= array('Facture.monnaie'=>$this->data['Facture']['monnaie'],
-		 										'Service.monnaie'=>$this->data['Facture']['monnaie'],
-												);
-			}
-		 	if($this->data['Facture']['date1']!='') {
-		 		$serviceConditions['Facture.date >=']=$this->data['Facture']['date1'];
-			}
-			if($this->data['Facture']['date2']!='') {
-		 		$serviceConditions['Facture.date <=']=$this->data['Facture']['date2'];
-			}
-			$this->set('services', $this->paginate($serviceConditions));
-			$this->Session->write('serviceConditions',$serviceConditions);
+		$cond1['Facture.operation']='Service';
+		$cond1['Facture.date']=$date;
+	
+		$factures=$this->Service->Facture->find('all',array('fields'=>array('Facture.*','Tier.name','Personnel.name'
+																),
+													'conditions'=>$cond1,
+													'order'=>'Facture.id desc'
+													)
+										);
+		if($this->RequestHandler->isAjax()){
+			$this->set(compact('factures'));
+			$this->layout="ajax";
+			$this->render('list_factures');
 		}
 		else {
-			$this->set('services', $this->paginate($serviceConditions));
-		}
+			$type_services = $this->Service->TypeService->find('list',array( 'fields'=>array('TypeService.id','TypeService.full_name'),
+																	'order'=>array('TypeService.name asc'),
+																	)
+													);
+			}
+			$thermal=$this->Conf->find('thermal');
+			$change=$this->Conf->find('change');
 		
-		$typeServices=$this->Service->TypeService->find('list');
-		$typeServices[0]='toutes';
-		$this->set(compact('caisses','tiers','typeServices'));
+		
+			$personnels = $this->Service->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>2,//caissier fonction
+																						'Personnel.actif'=>'yes',
+																						),
+																	'order'=>array('Personnel.name asc')
+																	)
+														);
+			
+			$personnels[0]='';
+			
+			// exit(debug($type_services));
+			$this->set(compact('type_services',
+								'personnels',
+								'factures',
+								'sections',
+								'date',
+								'thermal',
+								'change',
+								'tiers',
+								'fonction'
+								));
+		
 	}
 
 	function view($id = null) {
@@ -192,82 +199,283 @@ class ServicesController extends AppController {
 		if(isset($this->data['Facture']['id'])){
 			$data['Facture']['id']=$this->data['Facture']['id']; // this one is set only when modifying the service 
 		}
-		$data['Facture']['date']=$this->data['Service']['date'];
+		$data['Facture']['date']=$this->data['Vente']['date'];
 		$data['Document']['model']='Service';
 		$this->Product->create_facture($data);
 	}
 	
-	function add() {
-		if (!empty($this->data)) {
-			$this->Service->create();
-			if ($this->Service->save($this->data)) {
-				$this->Session->setFlash(sprintf(__('Informations enregistrées', true), 'service'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(sprintf(__('Impossible d\'enregistrer. Réessayer S.V.P.', true), 'service'));
+	function removal($factureId,$consoId,$quantite,$reduction,$obs=''){
+		$stockFailureMsg="Stock error";
+		if($consoId=='facture'){
+			$ventes=$this->Service->find('all',array('fields'=>array('Service.historique_id','Service.acc'),
+													'conditions'=>array('Service.facture_id'=>$factureId)
+													)
+												);
+			//product stuff
+			foreach($ventes as $vente){
+				if(Configure::read('aser.connexion')){
+					if(!empty($vente['Service']['historique_id'])){
+						if(!$this->Product->productHistoryDelete($vente['Service']['historique_id'],'Historique'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+
+						if(!$this->Product->productHistoryDelete($vente['Service']['acc'],'Service'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+					}
+				}
 			}
+			//annulation de la facture 
+			if(!$this->Service->Facture->save(array('Facture'=>array('id'=>$factureId,
+																'observation'=>$obs,
+																'classee'=>1,
+																'etat'=>'canceled'
+																)
+										)))
+			{ 
+				exit(json_encode(array('success'=>false,'msg'=>'Unable to save the invoice!')));
+			}
+
+			//trace stuff
+			$trace['Trace']['model_id']=$factureId;
+			$trace['Trace']['model']='Facture';
+			$trace['Trace']['operation']='Cancellation of the invoice. Reason : "'.$obs.'"';
+			$this->Service->Facture->Trace->save($trace);
+			
+			exit(json_encode(array('success'=>true,
+								)
+						)
+			);
 		}
-		$tiers = $this->Service->Tier->find('list',array('order'=>'Tier.name asc',
-														'conditions'=>array('Tier.actif'=>1)
+		elseif($consoId!=0) {
+			$fields=array('Service.*',
+						'Facture.date'
+						);
+			$vente=$this->Service->find('first',array('fields'=>$fields,
+													'conditions'=>array('Service.id'=>$consoId)
+													)
+												);
+			$old_quantite=$vente['Service']['quantite'];
+			if($old_quantite<$quantite){
+				exit(json_encode(array('success'=>false,'msg'=>'The quantity is too high!')));
+			}
+			//useful to track orders deleted after being sent to the kitchen.
+			if($vente['Service']['quantite']<$vente['Service']['printed']){
+				$this->_create_vente_efface($vente,$quantite,$obs);
+			}
+
+			$vente['Service']['quantite']-=$quantite;
+			$vente['Service']['montant']=$vente['Service']['quantite']*$vente['Service']['PU'];
+			
+			//useful to track orders deleted after being sent to the kitchen.
+			if($vente['Service']['quantite']<$vente['Service']['printed']){
+				$old_printed=$vente['Service']['printed'];
+				$vente['Service']['printed']=$vente['Service']['quantite'];
+				$qte_printed_removed=	$old_printed-$vente['Service']['printed'];
+				$this->_create_vente_efface($vente,$qte_printed_removed,$obs);
+			}
+	
+			if(($old_quantite-$quantite)>0){
+				if(Configure::read('aser.connexion')){		
+					//stock part
+					$return=$this->Product->stock($vente,'credit');
+					if(!$return['success'])
+						exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+
+					//acc
+					if(!empty($vente['Service']['acc'])){
+						$acc=$this->Service->find('first',array('fields'=>$fields,
+															'conditions'=>array('Service.id'=>$vente['Service']['acc'])
+															)
+													);
+						if(!empty($acc)){
+							$return=$this->Product->stock($acc,'credit');
+							if(!$return['success'])
+								exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+						}
+					}
+				}
+					//vente part
+				if(!$this->Service->save($vente))
+					exit(json_encode(array('success'=>false,'msg'=>"Unable to save the product")));
+			}
+			else {
+				if(Configure::read('aser.connexion')){
+					if(!empty($vente['Service']['historique_id'])){
+						if(!$this->Product->productHistoryDelete($vente['Service']['historique_id'],'Historique'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+
+						if(!$this->Product->productHistoryDelete($vente['Service']['acc'],'Service'))
+							exit(json_encode(array('success'=>false,'msg'=>$stockFailureMsg)));
+					}
+				}
+				$deleteMsg="Unable to delete the product.";
+				//vente part
+				if(!$this->Service->delete($consoId))
+					exit(json_encode(array('success'=>false,'msg'=>$deleteMsg)));		
+				//gestion des accompagnents
+				if(!is_null($vente['Service']['acc'])){
+					if(!$this->Service->delete($vente['Service']['acc']))
+						exit(json_encode(array('success'=>false,'msg'=>$deleteMsg)));	
+				}
+			}
+			//$sum=$this->Product->bill_total($factureId, $reduction);
+			//fetching the info of the updated bill
+			$facture=$this->Service->Facture->find('first',array('conditions'=>array('Facture.id'=>$factureId),
+																		'fields'=>array('Facture.original',
+																						'Facture.montant',
+																						'Facture.reste',
+																						'Facture.avance_beneficiaire as avance'
+																				),
+																		'recursive'=> -1
+																));
+			
+			exit(json_encode(array('success'=>true,
+									'quantite'=>$vente['Service']['quantite'],
+									'PT'=>$vente['Service']['montant'],
+									)
+									+
+							$facture['Facture']
+						)
+			);
+		}
+		else {
+				exit(json_encode(array('success'=>false,
+										'msg'=>'Click on the product to select it.'
+								)
+						)
+			);
+		}
+	}
+	
+	function add($nembeteplus=0){
+		//date to use
+		$date = date('Y-m-d');
+
+		//initializing some variables.
+		$failToSaveMsg="Failed to save this sale.";
+		$data['Service']['date']=$date;
+		$data['Service']['quantite']=$this->data['Vente']['quantite'];
+		$data['Service']['type_service_id']=$this->data['Vente']['produit_id'];
+
+		//setting up the reduction in vente array. this will force the bill when updated 
+		//on aftersave callback to recalculate the reduction
+		$this->data['Vente']['reduction']=0; //ignoring for now reduction stuff
+		//getting the montant to use
+		$type_service=$this->Service->TypeService->find('first',array('fields'=>array(
+																			'TypeService.montant',
+																			'TypeService.id'
+																			),
+																	'conditions'=>array('TypeService.id'=>$data['Service']['type_service_id'])
+																	)
+													);
+		if(empty($this->data['Vente']['PU'])){							
+				$data['Service']['PU']=$type_service['TypeService']['montant'];
+		}
+		$montant=$data['Service']['montant']=$data['Service']['PU']*$data['Service']['quantite'];
+		
+		
+		//look for a previous vente to add up to. or create a new if none else with same details (produit_id, PU) is found.
+		$found=false;
+		if($this->data['Vente']['factureId']!='creation'){
+			$factureId=$this->data['Vente']['factureId'];
+			$conditions['Service.facture_id']=$factureId;
+			$conditions['Service.type_service_id']=$data['Vente']['type_service_id'];
+			
+			$search=$this->Service->find('first',array('fields'=>array('Service.id',
+																	'Service.quantite',
+																	'Service.printed',
+																	'Service.type_service_id',
+																	'Service.montant',
+																	'Service.PU',
+																	'Facture.date'
+																	),
+														'conditions'=>$conditions,
+														)
+										);
+										
+			if(!empty($search)){
+				$found=true;
+				$printed=$search['Service']['printed'];
+				//j'essaie d'empecher qu'on ajoute un produit avec un PU different du premier
+				if($this->data['Vente']['PU']!=$search['Service']['PU']){
+					exit(json_encode(array('success'=>false,'msg'=>'The unit price must be the same as the previous one!')));
+				}
+				
+				$data['Service']['id']=$consoId=$search['Service']['id'];
+				$data['Service']['quantite']+=$search['Service']['quantite'];
+				$data['Service']['montant']+=$search['Service']['montant'];
+				
+			}
+														
+		}
+	//	*/
+		//if no similar vente is found.
+		if(!$found){
+			$consoId=null;
+			$printed=0;
+		}
+
+	
+
+		//facture stuff
+		$factureNum=null;
+		if($this->data['Vente']['factureId']=='creation'){
+			$facture['Facture']['etat']='in_progress';
+			$facture['Facture']['tva_incluse']=1;
+			$facture['Facture']['date']=$date;
+			$facture['Facture']['tier_id']=($this->data['Vente']['tier_id']=='null')?NULL:$this->data['Vente']['tier_id'];
+			$facture['Facture']['reduction']=$this->data['Vente']['reduction'];
+			$facture['Facture']['monnaie']=Configure::read('aser.default_currency');
+			$facture['Facture']['operation']='Service';	
+			$facture['Facture']['personnel_id']=$this->Auth->user('id');
+			
+			if(!$this->Service->Facture->save($facture)) exit(json_encode(array('success'=>false,'msg'=>"Failed to create the invoice.")));
+			$factureId=$this->Service->Facture->id;
+			//determining the facture's display number
+			$factureNum=$this->Product->facture_number($factureId,'Service');
+			
+			//trace stuff
+			$trace['Trace']['model_id']=$factureId;
+			$trace['Trace']['model']='Facture';
+			$trace['Trace']['operation']='Creation of the invoice with the state : in_progress';
+			$this->Service->Facture->Trace->save($trace);
+		}
+		else {
+			$factureId=$this->data['Vente']['factureId'];
+		}
+	
+		
+		$this->data['Vente']['id']=$consoId; //quand on ajoute to an existing vente
+		if(!$this->Service->save($this->data)) exit(json_encode(array('success'=>false,'msg'=>$failToSaveMsg)));
+
+		$consoId=$this->Service->id; //quand on cree un nouveau
+		
+
+		//fetching the bill with updated totals for display.
+		$facture=$this->Service->Facture->find('first',array('fields'=>array('Facture.original','Facture.montant','Facture.reduction',
+																		'Facture.reste','Facture.avance_beneficiaire'
+																			),
+															'conditions'=>array('Facture.id'=>$factureId)
 															));
-		$typeServices = $this->Service->TypeService->find('list');
-		$this->set(compact('tiers','typeServices'));
-	}
-
-	function edit($id = null) {
-		if (!$id && empty($this->data)) {
-			$this->Session->setFlash(sprintf(__('Id pour %s incorrecte !', true), 'service'));
-			$this->redirect(array('action' => 'index'));
+		//json response array
+		$response=array('success'=>true,
+						'factureId'=>$factureId,
+						'factureNum'=>$factureNum,
+						'personnel_name'=>$this->Auth->user('name'),
+						'PU'=>$data['Service']['PU'],
+						'PT'=>$montant,
+						'montant'=>$facture['Facture']['montant'],
+						'reste'=>$facture['Facture']['reste'],
+						'date'=>$this->Product->formatDate($date),
+						'consoId'=>$consoId,
+						'original'=>$facture['Facture']['original'],
+						'reduction'=>$facture['Facture']['reduction'],
+						'avance_beneficiaire'=>$facture['Facture']['avance_beneficiaire'],
+						'printed'=>$printed,
+						);
+		if($this->data['Vente']['factureId']=='creation'){
+			$response['journal']=null;
 		}
-		else {
-			$serviceInfo=$this->Service->find('first',array('recursive'=>-1,
-																	'conditions'=>array('Service.id'=>$id)
-																	)
-													);
-			if(!empty($serviceInfo['Service']['facture_id'])){
-				$this->Session->setFlash('Enregistrement non modifiable !');
-				$this->redirect(array('action' => 'index'));
-			}
-		}
-		if (!empty($this->data)) {
-			if ($this->Service->save($this->data)) {
-				$this->Session->setFlash(sprintf(__('Informations enregistrées', true), 'service'));
-				$this->redirect(array('action' => 'index'));
-			} else {
-				$this->Session->setFlash(sprintf(__('Impossible d\'enregistrer. Réessayer S.V.P.', true), 'service'));
-			}
-		}
-		if (empty($this->data)) {
-			$this->data = $this->Service->read(null, $id);
-		}
-		$tiers = $this->Service->Tier->find('list',array('order'=>'Tier.name asc','conditions'=>array('Tier.actif'=>1)));
-		$factures = $this->Service->Facture->find('list');
-		$typeServices = $this->Service->TypeService->find('list');
-		$personnels = $this->Service->Personnel->find('list');
-		$this->set(compact('tiers', 'factures', 'typeServices', 'personnels'));
-	}
-
-	function delete($id = null) {
-		if (!$id) {
-			$this->Session->setFlash(sprintf(__('Id pour %s incorrecte !', true), 'service'));
-			$this->redirect(array('action'=>'index'));
-		}
-		else {
-			$serviceInfo=$this->Service->find('first',array('recursive'=>-1,
-																	'conditions'=>array('Service.id'=>$id)
-																	)
-													);
-			if(!empty($serviceInfo['Service']['facture_id'])){
-				$this->Session->setFlash('Enregistrement non effaçable !');
-				$this->redirect(array('action' => 'index'));
-			}
-		}
-		if ($this->Service->delete($id)) {
-			$this->Session->setFlash(sprintf(__('Enregistrement effacé', true), 'Service'));
-			$this->redirect(array('action'=>'index'));
-		}
-		$this->Session->setFlash(sprintf(__('Impossible d\'effacer !', true), 'Service'));
-		$this->redirect(array('action' => 'index'));
+		exit(json_encode($response));
 	}
 
 }

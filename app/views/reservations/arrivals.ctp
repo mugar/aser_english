@@ -40,7 +40,7 @@
 			<th>Company</th>
 			<th>Room N°</th>
 			<th>Arrival</th>
-			<th>Departureure</th>
+			<th>Departure</th>
 			<th>Unit Price</th>
 			<th>Total</th>
 			<th>State</th>
@@ -59,7 +59,7 @@
 			</td>
 			<td><?php echo  $reservation['Tier']['compagnie']; ?></td>
 			<td><?php echo  $reservation['Chambre']['name']; ?></td>
-			<td><?php echo  $this->MugTime->toFrench($reservation['Reservation']['arrivee']); ?></td>
+			<td><?php echo  $this->MugTime->toFrench($reservation['Reservation']['checked_in']); ?></td>
 			<td><?php echo  $this->MugTime->toFrench($reservation['Reservation']['depart']); ?></td>
 			<td><?php echo  $number->format($reservation['Reservation']['PU'],$formatting).' '.$reservation['Reservation']['monnaie']; ?></td>
 			<td><?php echo  $number->format($reservation['Reservation']['montant'],$formatting).' '.$reservation['Reservation']['monnaie']; ?></td>

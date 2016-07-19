@@ -99,13 +99,13 @@ class AppController extends Controller {
 			if(!empty($last)){
 				if(count($last)==2){
 					if($last[0]['CompteOperation']['op_num']!=$last[1]['CompteOperation']['op_num']){
-						$this->Session->setFlash('Comptes Désequilibrés!<br/> Vérifiez si vous avez créée la contre-partie.');
+						$this->Session->setFlash('Comptes Désequilibrés!<br/> Vérifiez si vous avez créée la contre-checked_out.');
 						$this->redirect(array('controller'=>'compte_operations',
 									  'action'=>'index'));
 					}
 				}
 				else {
-					$this->Session->setFlash('Comptes Désequilibré!<br/> Vérifiez si vous avez créée la compte partie');
+					$this->Session->setFlash('Comptes Désequilibré!<br/> Vérifiez si vous avez créée la compte checked_out');
 					$this->redirect(array('controller'=>'compte_operations',
 									  'action'=>'index'));
 				}
@@ -234,7 +234,7 @@ class AppController extends Controller {
 			$this->set(compact('personnels','personnels1'));
 		}	
 		//for sections & groupes stuff
-		if(in_array($this->params['controller'],array('produits','configs','ventes','pertes','entrees','sortis','mouvements'))){
+		if(in_array($this->params['controller'],array('produits','configs','ventes','pertes','historiques','sortis','mouvements'))){
 			$this->loadModel('Section');
 			$this->sections=$sections=$sections1=$this->Section->find('list',array('fields'=>array('Section.id','Section.name'),
 														'order'=>array('Section.name asc')
@@ -259,6 +259,7 @@ class AppController extends Controller {
 													'sortis',
 													'reservations',
 													'services',
+													'historiques',
 													'proformas',
 													'operations',
 													'locations',
@@ -366,9 +367,9 @@ class AppController extends Controller {
 		$typeDeProduits1=array(''=>'')+$typeDeProduits;
 		$this->monnaies=$monnaies;
 		$modePaiements=$this->modePaiements=array('cash'=>'Cash',
-							'visa'=>'Carte Visa',
-							'cheque'=>'Chèque',
-							'ov'=>'Ordre de virement'
+							'visa'=>'Visa Card',
+							'cheque'=>'Cheque',
+							'bank_transfert'=>'Bank Transfert'
 							);
 		$modePaiements1=array(''=>'')+$modePaiements;
 		$operations=array('ajout'=>'ajout','retrait'=>'retrait');
@@ -386,7 +387,7 @@ class AppController extends Controller {
 		$models=array(''=>'',
 					'Vente'=>'Restaurant',
 					'Location'=>'Conference Room',
-					'Reservation'=>'Bed Room',
+					'Reservation'=>'Bookings',
 					'Service'=>'Extras Services',
 					//'Proforma'=>'Proforma'
 					);
@@ -414,6 +415,12 @@ class AppController extends Controller {
 		$optionsForTypes=array('depense'=>'Expense','vente'=>'Deposit');
 		$optionsForType1s=array('')+$optionsForTypes;
 
+		$inventory_operation_types=array('Entree'=>'Entry',
+							'Sorti'=>'Consumption',
+							'Perte'=>'Loss'
+							);
+		$inventory_operation_types1=array(''=>'')+$inventory_operation_types;
+
 		//designed by message
 		//$designed_by='<div id="designed_by" style="margin: -5px auto 10px auto; font_size: 7px; color: #666">Système conçu par aser-technologies +25779853419</div>';
 		$this->set(compact('monnaies','monnaies1',
@@ -432,7 +439,8 @@ class AppController extends Controller {
 					'shifts',
 					'countries',
 					'pax',
-					'optionsForTypes','optionsForType1s'
+					'optionsForTypes','optionsForType1s',
+					'inventory_operation_types','inventory_operation_types1'
 				//	,'designed_by'
 					));
 	

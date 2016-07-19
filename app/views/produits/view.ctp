@@ -8,9 +8,10 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 <h3>
 <?php
 	if(!empty($produit['info'])){
-		echo 'Mouvements du produit : '.$produit['info']['name'];
-		echo  ' <small style="color:blue;">(PA: '.$produit['info']['PA'].', PV: '.$produit['info']['PV'].')</small>';
+		echo $produit['info']['name'].' Inventory History' ;
 		echo '<br/>';
+		echo  ' <small style="color:blue;">(Purchase Price: '.$produit['info']['PA'].', Sale Price: '.$produit['info']['PV'].')</small>';
+		echo '<br/> <br/>';
 		echo 'Stock';
 		echo (count($stocks)>0)?'s':'';
 		echo ' : ';
@@ -33,15 +34,15 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 <table cellpadding="0" cellspacing="0" id="recherche">
 	<tr class="border">
 			<th rowspan="2">Date</th>
-			<th rowspan="2">Stock Précédent</th>
-			<th rowspan="2">Libellé</th>
-			<th colspan="2">Mouvements</th>
-			<th rowspan="2">Stock Restant</th>
+			<th rowspan="2">Initial Qty</th>
+			<th rowspan="2">Description</th>
+			<th colspan="2">Movements</th>
+			<th rowspan="2">Final Qty</th>
 		
 	</tr>
 	<tr class="border">
-			<th>Entrée</th>
-			<th>Sortie</th>
+			<th>In</th>
+			<th>Out</th>
 	</tr>
 	<?php if(!empty($produit['ant'])):?>
 	<tr>
@@ -66,8 +67,10 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 				?>
 			</td>
 			<td></td>
-			<td><?php echo  $operation['Historique']['libelle'].', ';
-						echo $shifts[$operation['Historique']['shift']]; 
+			<td><?php 
+					$inventory_operation_types = $inventory_operation_types + array('Mouvement'=>'Transfer');
+					echo  $inventory_operation_types[$operation['Historique']['libelle']].', ';
+					echo $shifts[$operation['Historique']['shift']]; 
 				?>
 			</td>
 			<td><?php echo  $number->format($operation['Historique']['debit'],$formatting); ?></td>
@@ -95,7 +98,7 @@ $formatting=array('places'=>1,'before'=>'','escape'=>false,'decimal'=>'.','thous
 	<ul>
 		<li class="link"  onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Liste des Products', array('action' => 'index')); ?></li>
+		<li><?php echo $this->Html->link('Products Management', array('action' => 'index')); ?></li>
 		<li><?php echo $this->Html->link('Go back', $referer); ?></li>
 	</ul>
 </div>

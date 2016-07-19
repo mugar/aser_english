@@ -4,6 +4,7 @@ class TypeService extends AppModel {
 	var $order = 'TypeService.id desc';
 	var $recursive = 0;
 	var $displayField = 'name';
+	var $virtualFields = array('full_name' => "CONCAT(TypeService.name,'_',TypeService.montant)"); 
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $belongsTo = array(

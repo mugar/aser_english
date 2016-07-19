@@ -55,7 +55,7 @@
  	});
 		//state select
      	jQuery('#stateSelect').change(function(){
-     		if(jQuery(this).val()=='partie'){
+     		if(jQuery(this).val()=='checked_out'){
      			jQuery('select[id*="departureTime"]').removeAttr('disabled');
      		}
      		else
@@ -172,28 +172,28 @@
 			$options['tier_name']=$reservatio['tier_name'];
 			$options['facture_id']=$reservatio['facture_id'];
 			
-			if($month_first_day<=$reservatio['arrivee']) { 
-				$diff=$this->MugTime->diff($month_first_day,$reservatio['arrivee']); //the $diff will serve like a temp variable 
+			if($month_first_day<=$reservatio['checked_in']) { 
+				$diff=$this->MugTime->diff($month_first_day,$reservatio['checked_in']); //the $diff will serve like a temp variable 
 			//	$diff++;
 				if($diff<=$days) { //days contain the number of days for current month
 					$diff=$diff-$current_position;
-					$month_left_days=$month_left_days-$diff; //determing how many days are left for the current month after the reservation arrivee
+					$month_left_days=$month_left_days-$diff; //determing how many days are left for the current month after the reservation checked_in
 					$limit=$diff; //limit for the $i counter variable in which to use normal td css second 
 					$i=0;//determine where to start creating td cells for the current reservation
-					show(null,$current_position,$i,$limit);//display of the first part of td table cells before the reservation arrivee
-					$diff=$this->MugTime->diff($reservatio['arrivee'],$reservatio['depart']);
+					show(null,$current_position,$i,$limit);//display of the first part of td table cells before the reservation checked_in
+					$diff=$this->MugTime->diff($reservatio['checked_in'],$reservatio['depart']);
 					$diff++;
 					if($diff<=$month_left_days) {
 						$limit=$diff;
 						$i=0;
-						//display of the second part of td table cells after the reservation arrivee
+						//display of the second part of td table cells after the reservation checked_in
 						show($class,$current_position,$i,$limit,$options);
 						$month_left_days=$month_left_days-$diff;//contains now left days after the reservation depart
 					}
 					else {
 						$limit=$month_left_days;
 						$i=0;
-						//display of the second part of td table cells after the reservation arrivee
+						//display of the second part of td table cells after the reservation checked_in
 						show($class,$current_position,$i,$limit,$options);
 						$month_left_days=0;//contains now left days after the reservation depart
 					}	
@@ -279,9 +279,9 @@
 	<li class="igikorwa"><a href="#global">Show Global Invoice</a></li>
 	<li class="igikorwa"><a href="#facture">Create Invoice</a></li>
 	<?php 
-		$config['annulee']=Configure::read('aser.annulee');
-		if(empty($config['annulee'])||in_array($session->read('Auth.Personnel.id'),$config['annulee'])) :?>
-		<li class="igikorwa"><a href="#annulee">Cancel the booking</a></li>
+		$config['canceled']=Configure::read('aser.canceled');
+		if(empty($config['canceled'])||in_array($session->read('Auth.Personnel.id'),$config['canceled'])) :?>
+		<li class="igikorwa"><a href="#canceled">Cancel the booking</a></li>
 	<?php endif;?>
 	<?php if(Configure::read('aser.PU_reservation')||in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
 		<li class="igikorwa"><a href="#PU">Change the Rate</a></li>
@@ -292,12 +292,12 @@
 	<li class="igikorwa"><a href="#services">Create Service Invoice</a></li>
 	<li class="igikorwa"><a href="#demi">Add/Remove Late Checkout</a></li>
 <!--<li class="igikorwa"><a href="#rappels">Gestion des Rappels</a></li>-->
-	<li class="igikorwa"><a href="#confirmation">Generate Booking Confirmation</a></li>
+	<!-- <li class="igikorwa"><a href="#confirmation">Generate Booking Confirmation</a></li> -->
 	<li class="igikorwa"><a href="#trace">Show Logs</a></li>
 </ul>
 <!--ajax_add form -->
 
-<div id="booking_boxe" style="display:none" title='Booking of the room : <span id="room_number"></span> <br><strong>From : <span id="arrivee"></span> to : <span id="depart"></span>'>
+<div id="booking_boxe" style="display:none" title='Booking of the room : <span id="room_number"></span> <br><strong>From : <span id="checked_in"></span> to : <span id="depart"></span>'>
 
 <div class="dialog">
 <fieldset><legend>Customer Details</legend>
@@ -319,7 +319,7 @@
 			echo $this->Form->input('tier_id',array('id'=>'principal','label'=>'Customer','style'=>'width:200px;'));			
 			if(Configure::read('aser.PU_reservation')||in_array($session->read('Auth.Personnel.fonction_id'),array(4,3,5))){
 				echo $this->Form->input('PU',array('id'=>'disc','label'=>'Custom Rate'));
-				echo $this->Form->input('monnaie',array('id'=>'disc_mon','disabled'=>'disabled','label'=>'Currency','options'=>$facturationCurrencys));
+				echo $this->Form->input('monnaie',array('id'=>'disc_mon','disabled'=>'disabled','label'=>'Currency','options'=>$facturationMonnaies));
 				echo $this->Form->input('text',array('label'=>'Last Booking','type'=>'textarea','id'=>'last_reservation'));
 			}
 			?>
@@ -327,13 +327,13 @@
 	<span class="right">
 		<span id="single">
 		<?php	
-			echo $this->Form->input('autre_depart',array('label'=>'Custom Departureure Date','type'=>'text','id'=>'DateAutre'));
+			echo $this->Form->input('autre_depart',array('label'=>'Custom Departure Date','type'=>'text','id'=>'DateAutre'));
 		?>
 		</span>
 		<?php
-			echo $this->Form->input('etat',array('options'=>array('en_attente'=>'Pending',
-																'confirmee'=>'Confirmed',
-																'arrivee'=>'Checked IN',
+			echo $this->Form->input('etat',array('label'=>'State','options'=>array('pending'=>'Pending',
+																'confirmed'=>'Confirmed',
+																'checked_in'=>'Checked IN',
 																)));
 			echo $this->Form->input('mode_paiement',array('label'=>'Planned Payment mode'));
 			echo $this->Form->input('pax',array('label'=>'Number of people','options'=>$pax));
@@ -341,7 +341,7 @@
 	</span>
 	</form>
 </fieldset>
-<input type="submit" value="Créer la réservation" style="width:130px !important;" name="reservation" onclick="resAdd()" />
+<input type="submit" value="Create the Booking" style="width:130px !important;" name="reservation" onclick="resAdd()" />
 <div style="clear:both"></div>
 </div>
 <script>
@@ -351,11 +351,11 @@
    //decide what to show or hide based on payment selection
 	jQuery('#select_paiement_fact').change(function(){
 		var etat=jQuery('#select_paiement_fact option:selected').html();
- 		if(etat=='payee'){
+ 		if(etat=='paid'){
  			jQuery('input[class*="pyt"],select[class*="pyt"]').removeAttr('disabled');
  			jQuery('#PaiementMontant_fact').attr('disabled','disabled');
  		}
- 		else if(etat=='avance'){
+ 		else if(etat=='half_paid'){
  			jQuery('input[class*="pyt"],select[class*="pyt"]').removeAttr('disabled');
  			jQuery('#PaiementMontant_fact').removeAttr('disabled');
  		}
@@ -377,15 +377,15 @@
 	});
 </script>
 		<div class="dialog" style="display:none;" id="factureDiv">
-	<fieldset ><legend>Détails Facture</legend>
+	<fieldset ><legend>Invoice Details</legend>
 			<div id="message"></div>
 		<?php echo $this->Form->create('Facture',array('id'=>'facture_form_fact','action'=>'create_facture'));?>
 			<span class='left'>
 				<?php
 					echo $this->Form->input('Facture.date',array('type'=>'text','id'=>'DateFact'));
 					echo $this->Form->input('Facture.etat',array('options'=>array('credit'=>'credit',
-																				'avance'=>'advance',
-																				'payee'=>'paid',
+																				'half_paid'=>'half_paid',
+																				'paid'=>'paid',
 																				),
 																			'id'=>'select_paiement_fact'
 																		));
@@ -422,7 +422,7 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('departure',array('id'=>'DateOfDepartureure','type'=>'text','label'=>'New Departureure Date'));
+			echo $this->Form->input('departure',array('id'=>'DateOfDeparture','type'=>'text','label'=>'New Departure Date'));
 		?>
 	</form>
 <div style="clear:both"></div>
@@ -456,7 +456,7 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('monnaie',array('id'=>'currency','label'=>'Currency','selected'=>'USD','options'=>$facturationCurrencys));
+			echo $this->Form->input('monnaie',array('id'=>'currency','label'=>'Currency','selected'=>'USD','options'=>$facturationMonnaies));
 		?>
 	</span>
 	</form>
@@ -477,8 +477,8 @@
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('arrivee',array('id'=>'DateArrivee2','label'=>'Arrival Date','type'=>'text'));
-			echo $this->Form->input('depart',array('id'=>'DateDeparture2','type'=>'text','label'=>'Departureure Date'));
+			echo $this->Form->input('checked_in',array('id'=>'DateArrivee2','label'=>'Arrival Date','type'=>'text'));
+			echo $this->Form->input('depart',array('id'=>'DateDeparture2','type'=>'text','label'=>'Departure Date'));
 		?>
 	</span>
 	</form>
@@ -494,7 +494,7 @@
 	<span class='left'>
 		<?php
 			echo $this->Form->input('rooms',array('id'=>'rooms','label'=>'Available Room','options'=>array()));
-			echo $this->Form->input('arrivee',array('id'=>'DateCheckIn',
+			echo $this->Form->input('checked_in',array('id'=>'DateCheckIn',
 													'type'=>'text',
 													'label'=>'Date of the Switch',
 													'value'=>date('Y-m-d'),
@@ -528,7 +528,7 @@
 	<span class='left'>
 		<?php
 			echo $this->Form->input('etat',array('id'=>'stateSelect', 'label'=>'State','options'=>$etats));
-			echo $this->Form->input('heure_depart',array('id'=>'departureTime','label'=>'Departureure Time','disabled'=>'disabled'));
+			echo $this->Form->input('heure_depart',array('id'=>'departureTime','label'=>'Departure Time','disabled'=>'disabled'));
 		?>
 	</span>
 	</form>	

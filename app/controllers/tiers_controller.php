@@ -292,9 +292,9 @@ class TiersController extends AppController {
 			if(!empty($this->data['Tier']['chambre'])){
 				$tierid=$this->Tier->Reservation->find('first',array('fields'=>array('Reservation.tier_id'),
 																	'conditions'=>array('Chambre.name' =>$this->data['Tier']['chambre'],
-																						'Reservation.arrivee <='=>date('Y-m-d'),
+																						'Reservation.checked_in <='=>date('Y-m-d'),
 																						'Reservation.depart >='=>$this->Product->increase_date(date('Y-m-d'),-1),
-																						'Reservation.etat'=>'arrivee'
+																						'Reservation.etat'=>'checked_in'
 																						),
 																		)
 															);
@@ -335,7 +335,7 @@ class TiersController extends AppController {
 		$search=$this->Tier->find('first',array('conditions'=>$cond)
 							);
 		if (!empty($search)) {
-			$failureMsg='Cette Personne est déjà enregistrée!';
+			$failureMsg='This Customer exists';
 			if(($action=='edit')||(isset($data['Tier']['booking'])))
 				exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
 			else 

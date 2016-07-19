@@ -14,7 +14,7 @@
 		<td>&nbsp;</td>
 		<td><?php  echo  $number->format(
 							$res['Reservation']['PU_standard']*
-							($this->MugTime->diff($res['Reservation']['arrivee'],$res['Reservation']['depart'])+1)
+							($this->MugTime->diff($res['Reservation']['checked_in'],$res['Reservation']['depart'])+1)
 						); 
 		?></td>
 	</tr>

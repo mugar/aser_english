@@ -8,7 +8,7 @@
 			var etat_facture=jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text();
 			var classement=jQuery('table#list_factures tr[id="'+factureId+'"]').attr('name');
 			var printed=jQuery('table#list_factures tr[id="'+factureId+'"]').attr('printed');
-			 if((factureId!=0)&&(etat_facture!='annulee')&&(classement!='1')&&(printed!='1'))
+			 if((factureId!=0)&&(etat_facture!='canceled')&&(classement!='1')&&(printed!='1'))
   				 resto_create(factureId);
 		 }	
 	});
@@ -39,7 +39,7 @@
 		
 		if (((e.keyCode || e.which || e.charCode) ==80)||((e.keyCode || e.which || e.charCode) ==112)){
 			//sama stuff
-			 if(print&&key_press&&(factureId!=0)&&(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text()!='annulee')){
+			 if(print&&key_press&&(factureId!=0)&&(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text()!='canceled')){
   				//	 print_facture(factureId);
   			}
 		 }	

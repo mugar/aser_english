@@ -18,7 +18,7 @@ class AffectationsController extends AppController {
 		$affectations=array();
 		if(!empty($this->data)){
 			$affectations=$this->Affectation->find('all',array('fields'=>array('Chambre.name',
-																				'Reservation.arrivee',
+																				'Reservation.checked_in',
 																				'Reservation.depart',
 																				'Reservation.PU',
 																				'Reservation.montant',

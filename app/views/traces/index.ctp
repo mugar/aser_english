@@ -1,12 +1,12 @@
 <div id='view'>
 <div class="document">
-<h3>Historique : <?php if($model!='Reservation') echo $model; else echo 'Réservation';?></h3>
+<h3>History For : <?php  echo $models[$model];?></h3>
 <br />
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('Temps','created');?></th>
-			<th><?php echo $this->Paginator->sort('personnel_id');?></th>
-			<th><?php echo $this->Paginator->sort('Opération','operation');?></th>
+			<th><?php echo $this->Paginator->sort('Time','created');?></th>
+			<th><?php echo $this->Paginator->sort('Created By','personnel_id');?></th>
+			<th><?php echo $this->Paginator->sort('Action','operation');?></th>
 		</tr>
 	<?php
 	foreach ($traces as $trace):
