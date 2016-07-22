@@ -1,21 +1,19 @@
 <div id='view'>
 <div class="document">
-<h3>Rapport Des Products <?php if(!empty($stock)) echo '(Stock : '.ucfirst($stock['Stock']['name']).')';?></h3>
+<h3>Inventory Closing Report <?php if(!empty($stock)) echo '(Stock : '.ucfirst($stock['Stock']['name']).')';?></h3>
 <br />
-<h4><?php echo '(Pour La date du '.date('d/m/Y').' à '.date('H:i');
-		 echo '. '.count($datas).' produits au total';
+<h4><?php echo '(For '.date('d/m/Y').' at '.date('H:i');
+		 echo '. '.count($datas).' products in total';
 		echo ')';
 ?></h4>
 <br/>
 <br/>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Nom Du Product</th>
-			<th>Type De Product</th>
-			<th>Section</th>
-			<th>Groupe</th>
-			<th>Quantité</th>
-			<th>PA</th>
+			<th>Product Name</th>
+			<th>Group</th>
+			<th>Quantity</th>
+			<th>Purchase Price</th>
 			<th>Total</th>
 	</tr>
 		<?php
@@ -24,8 +22,6 @@
 	?>
 	<tr>
 			<td><?php echo  $data['Produit']; ?></td>
-			<td><?php echo  $data['Type']; ?></td>
-			<td><?php echo  $data['Section']; ?></td>
 			<td><?php echo  $data['Groupe']; ?></td>
 			<td><?php echo  $number->format($data['Quantité'],$formatting).' '.$data['Unité']; ?></td>
 			<td><?php echo  $number->format($data['PA'],$formatting); ?></td>
@@ -34,8 +30,6 @@
 <?php endforeach; ?>
 	<tr>
 		<td>TOTAL</td>
-		<td>&nbsp;</td>
-		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>

@@ -1,11 +1,11 @@
 <div class="sections index">
-	<h2><?php __('Gestion Des Sections');?></h2>
+	<h2><?php __('Section Management');?></h2>
 		<br>
 <div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	<tr>
-		<th>Nom De La Section</th>
+		<th>Section Name</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -23,7 +23,7 @@
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('Nom','name');?></th>
+			<th><?php echo $this->Paginator->sort('name');?></th>
 		</tr>
 	<?php
 	

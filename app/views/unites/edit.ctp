@@ -4,7 +4,7 @@
 	<span class="left">
 		<?php
 		echo $this->Form->input('id');
-		echo $this->Form->input('name',array('label'=>'Nom De L\'Unité'));
+		echo $this->Form->input('name',array('label'=>'Unit Name'));
 	?>
 	</span>
 	</form>

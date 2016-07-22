@@ -4,22 +4,22 @@
  	
  	<?php if(Configure::read('aser.ebenezer')==1):?>
  		function pv(){
- 			var pa=parseFloat(jQuery('#PA').val());
+ 			var pa=parseFloat(jQuery('#PU').val());
  			var pv=Math.round(pa*1.5);
  			jQuery('#PV').val(pv);
  		}
  		pv();
- 		jQuery('#PA').change(function(){
+ 		jQuery('#PU').change(function(){
 			pv();
  		})
  	<?php elseif(Configure::read('aser.ebenezer')==2):?>
  		function pv(){
- 			var pa=parseFloat(jQuery('#PA').val());
+ 			var pa=parseFloat(jQuery('#PU').val());
  			var pv=Math.round((pa/1.5)*1.4);
  			jQuery('#PV').val(pv);
  		}
  		pv();
- 		jQuery('#PA').change(function(){
+ 		jQuery('#PU').change(function(){
 			pv();
  		})
  	<?php endif;?>
@@ -29,7 +29,7 @@
 			url:getBase()+'historiques/pa/'+jQuery(this).val(),
 			dataType:'json',
 			success:function(ans){
-				jQuery('#PA').val(ans.PA);
+				jQuery('#PU').val(ans.PU);
 				<?php if(Configure::read('aser.ebenezer')):?>
 					pv();
 				<?php endif;?>
@@ -48,10 +48,10 @@
 	})
 	
 	//support only division
-	jQuery('#PA').change(function(){
+	jQuery('#PU').change(function(){
 		if(/\d+\/\d+/.test(jQuery(this).val())){
-			var PA=Math.round(parseFloat(jQuery(this).val().split('/')[0])/parseFloat(jQuery(this).val().split('/')[1]));
-			jQuery('#PA').val(PA);
+			var PU=Math.round(parseFloat(jQuery(this).val().split('/')[0])/parseFloat(jQuery(this).val().split('/')[1]));
+			jQuery('#PU').val(PU);
 		}
 	});
 });
@@ -77,7 +77,7 @@
 			<th>Batch N°</th>
 			<th>Expiration Date</th>
 		<?php endif;?>		
-		<th>Stock</th>	
+		<th>Store</th>	
 		<?php if (Configure::read('aser.shifts')):?>
 			<th>Shift</th>	
 		<?php endif;?>
@@ -101,7 +101,7 @@
 		<?php if (Configure::read('aser.shifts')):?>
 			<td><?php echo $this->Form->input('shift',array('label'=>'','options'=>$shifts));?></td>	
 		<?php endif;?>
-		<td><input type="submit" value="Envoyer"/></td>
+		<td><input type="submit" value="Save"/></td>
 		</form>
 		
 	</tr>
@@ -124,7 +124,7 @@
 				<th><?php echo $this->Paginator->sort('Batch N°','batch');?></th>
 				<th><?php echo $this->Paginator->sort('Expiration Date','date_expiration');?></th>
 			<?php endif;?>
-			<th><?php echo $this->Paginator->sort('stock_id');?></th>
+			<th><?php echo $this->Paginator->sort('Store','stock_id');?></th>
 			<?php if (Configure::read('aser.shifts')):?>
 				<th><?php echo $this->Paginator->sort('shift');?></th>	
 			<?php endif;?>

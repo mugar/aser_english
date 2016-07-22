@@ -9,8 +9,7 @@
 	</span>
 	<span class="right">
 		<?php
-		echo $this->Form->input('afficher',array('options'=>array('yes'=>'yes','no'=>'no')));
-		echo $this->Form->input('accompagnement',array('options'=>array('yes'=>'yes','no'=>'no')));
+		echo $this->Form->input('afficher',array('label'=>'Shown on POS interface','options'=>array('yes'=>'yes','no'=>'no')));
 		echo $this->Form->input('actif',array('options'=>array('yes'=>'yes','no'=>'no')));
 	?>
 	</span>

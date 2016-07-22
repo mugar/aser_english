@@ -9,6 +9,7 @@
 	
 	<tr>
 		<th>Product Name</th>
+		<th>Measuring Unit</th>
 		<th>Purchase Price</th>
 		<?php if(!Configure::read('aser.multi_pv')): ?>
 		<th>Sale Price</th>
@@ -16,7 +17,6 @@
 		<th>Section</th>
 		<th>Group</th>
 		<th>Product Type</th>
-		<th>Measuring Unit</th>
 		<?php if(Configure::read('aser.pharmacie')):?>
 			<th>Product expiration Date</th>
 		<?php endif;?>
@@ -37,6 +37,7 @@
 		<td><?php echo $ajax->autoComplete($i.'produit','/produits/autoComplete/actif',array('id'=>$i.'produit',
 																					'name'=>'data[Produit][name]'));?>
 		</td>
+		<td><?php echo $this->Form->input('unite_id',array('label'=>'','class'=>'nullable','selected'=>0));?></td>
 		<td><?php echo $this->Form->input('PA',array('id'=>'PA','label'=>'','value'=>0));?></td>
 		<?php if(!Configure::read('aser.multi_pv')): ?>
 			<td><?php echo $this->Form->input('PV',array('id'=>'PV','label'=>'','value'=>0));?></td>
@@ -52,12 +53,11 @@
 		<td><?php echo '<span id="groupe'.$i.'">'.$this->Form->input('groupe_id',array('label'=>'','selected'=>0)).'</span>';?></td>
 		<td><?php echo $this->Form->input('type',array('label'=>'',
 													'id'=>'type',
-													'selected'=>'stockable',
+													'selected'=>'storable',
 													'options'=>$typeDeProduits
 													)
 										);?>
 		</td>
-		<td><?php echo $this->Form->input('unite_id',array('label'=>'','class'=>'nullable','selected'=>0));?></td>
 		<?php if(Configure::read('aser.pharmacie')): ?>
 			<td><?php echo $this->Form->input('expiration',array('label'=>'','class'=>'nullable'));?></td>
 		<?php endif; ?>
@@ -89,9 +89,8 @@
 	<tr id="first">
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('section_id');?></th>
-			<th><?php echo $this->Paginator->sort('Group','groupe_id');?></th>
 			<th><?php echo $this->Paginator->sort('Product Name','name');?></th>
+		  <th><?php echo $this->Paginator->sort('Measuring Unit','unite_id');?></th>
 			<th><?php echo $this->Paginator->sort('Purchase Price','PA');?></th>
 		<?php if(!Configure::read('aser.multi_pv')): ?>
 			<th><?php echo $this->Paginator->sort('Sale Price','PV');?></th>
@@ -100,10 +99,11 @@
 				<th><?php echo $bar;?></th>
 			<?php endforeach;?>
 		<? endif;?>
+			<th><?php echo $this->Paginator->sort('section_id');?></th>
+			<th><?php echo $this->Paginator->sort('Group','groupe_id');?></th>
 		<?php if(Configure::read('aser.default_stock')>0):?>
 			<th><?php echo $this->Paginator->sort('Qty','quantite');?></th>
 		<? endif;?>
-		<th><?php echo $this->Paginator->sort('Measuring Unit','unite_id');?></th>
 		<th><?php echo $this->Paginator->sort('Product Type','type');?></th>
 		<?php if(Configure::read('aser.pharmacie')): ?>
 			<th><?php echo $this->Paginator->sort('Product\'s expiration','expiration');?></th>

@@ -1850,7 +1850,7 @@ if(goOn&&!locked){  // block new items to be added before the first order has re
  	}
  //*
  if((serveurId==0)&&(factureId=='creation')){
- 	alert('Sélectionné un serveur!');
+ 	alert('Select a waiter!');
  	goOn=false;
  }
  else if((factureId!='creation')&&(jQuery('#pos').attr('multi_serveur')==0)){

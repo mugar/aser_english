@@ -43,6 +43,10 @@ class HistoriquesController extends AppController {
 			if($data['Historique']['libelle']!='') {
 				$conditions['Historique.libelle']=$data['Historique']['libelle'];
 			}
+			else {
+				$conditions['Historique.libelle !=']='Mouvement';
+
+			}
 			if($data['Historique']['produit_id']!=0) {
 				$conditions['Historique.produit_id']=$data['Historique']['produit_id'];
 			}
@@ -82,13 +86,13 @@ class HistoriquesController extends AppController {
 	function index() {
 		$historiqueConditions=$this->Session->read('historiqueConditions');
 		if((empty($this->data))&&(empty($historiqueConditions))) {
-			$this->set('historiques', $this->paginate());
+			$this->set('historiques', $this->paginate(array('libelle !='=>'Mouvement')));
 		}
 		elseif(!empty($this->data)) {
 		//building conditions
 			$cond=$this-> _conditions($this->data);
 			$historiqueConditions=$cond['conditions'];
-			
+
 			$this->set('historiques', $this->paginate($historiqueConditions));
 			$this->Session->write('historiqueConditions',$historiqueConditions);
 		}

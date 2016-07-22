@@ -266,19 +266,19 @@ set_time_limit(240);    //4minutes
 		foreach($produits as $produit){
 			switch($produit['Produit']['type']){
 				case 'simple':
-					$produit['Produit']['type']='stockable';
+					$produit['Produit']['type']='storable';
 					break;
 				case 'figuratif':
-					$produit['Produit']['type']='non_stockable';
+					$produit['Produit']['type']='not_storable';
 					break;
 				case 'simple,composant':
-					$produit['Produit']['type']='stockable';
+					$produit['Produit']['type']='storable';
 					break;
 				case 'paquet_II':
 					$produit['Produit']['type']='composer';
 					break;
 				case 'default':
-					$produit['Produit']['type']='stockable';
+					$produit['Produit']['type']='storable';
 					break;
 			}
 			$this->Produit->save($produit);
@@ -328,7 +328,7 @@ set_time_limit(240);    //4minutes
 		$date2=(!empty($this->data['Produit']['date2']))?$this->data['Produit']['date2']:date('Y-m-d');
 		
 		$produits=$this->Produit->find('all',array('fields'=>array('Produit.id','Produit.name','Unite.name'),
-												'conditions'=>array('Produit.type'=>'stockable')
+												'conditions'=>array('Produit.type'=>'storable')
 												));	
 		foreach($produits as $key=>$produit){
 			$ventes=$this->Produit->Vente->find('all',array('fields'=>array('sum(Vente.quantite) as quantite'),
@@ -400,7 +400,7 @@ set_time_limit(240);    //4minutes
 			$produits=$this->Produit->find('all',array('fields'=>array('Produit.id',
 																		'Produit.name',
 																		),
-																	'conditions'=>array('Produit.type'=>'stockable'),
+																	'conditions'=>array('Produit.type'=>'storable'),
 																	'order'=>array('Produit.name')
 																	));
 			foreach($produits as $key=>$produit){
@@ -636,7 +636,7 @@ set_time_limit(240);    //4minutes
 		$stockId=null;
 		$stockInfo=array();
 		$conditions=array();
-		$cond['Produit.type']='stockable';
+		$cond['Produit.type']='storable';
 		$cond['Produit.actif']='yes';
 		
 		if(!empty($this->data)){
@@ -761,7 +761,7 @@ set_time_limit(240);    //4minutes
 		}
 		else {
 			$this->data=$data;
-			$produitCond['Produit.type']='stockable';
+			$produitCond['Produit.type']='storable';
 			$group=array('Historique.produit_id','Historique.date');
 		}	
 		if(!empty($this->data['Historique']['date1'])){
@@ -1207,7 +1207,7 @@ set_time_limit(240);    //4minutes
 			//setting the special return name
 			if(isset($this->data['Produit']['vente'])){
 				$this->data['Produit']['PV']=$this->Product->productPrice($this->Produit->id,$this->data['Produit']['PV']);
-				$string=(($this->data['Produit']['type']=='stockable')&&Configure::read('aser.connexion'))?
+				$string=(($this->data['Produit']['type']=='storable')&&Configure::read('aser.connexion'))?
 						($this->data['Produit']['name'].'_0_'.$this->data['Produit']['PV']):
 						($this->data['Produit']['name'].'_'.$this->data['Produit']['PV']);
 				exit(json_encode(array('success'=>true,
@@ -1450,7 +1450,7 @@ set_time_limit(240);    //4minutes
 					$produit['PA']= (!empty($row[4])) ? round($row[4]) : 0;
 					$produit['PV']=(!empty($row[5])) ? round($row[5]) : 0;
 					$produit['unite_id']= (!empty($row[6])) ? $this->_unite($row[6]): $this->_unite("pièce");
-					$produit['type']=	(!empty($row[7])) ? $row[7]: 'non_stockable';
+					$produit['type']=	(!empty($row[7])) ? $row[7]: 'not_storable';
 					$produit['description']=	(!empty($row[8])) ? $row[8]: '';
 					$this->Produit->save(array('Produit'=>$produit));
 					unset($this->Produit->id);
@@ -1492,7 +1492,7 @@ set_time_limit(240);    //4minutes
 		else if(empty($this->data)) {
 			$ingList=$this->Produit->find('list',array(
 													'conditions'=>array(
-													'Produit.type'=>'stockable'
+													'Produit.type'=>'storable'
 																		),
 													'order'=>array('Produit.name')
 														));

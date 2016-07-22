@@ -1,15 +1,12 @@
 <div class="groupes index">
-	<h2><?php __('Gestion Des Groupes');?></h2>
+	<h2><?php __('Groups Management');?></h2>
 	<div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	
-		<th>Section</th>			
-		<th>Nom Du Groupe</th>
-		<th>Afficher sur l'interface de vente</th>
-		<?php if(!Configure::read('aser.magasin')&&Configure::read('aser.advanced_stock')):?>
-		<th>Groupe pour les Accompagments</th>
-		<?php endif;?>
+		<th>Section Name</th>			
+		<th>Group Name</th>
+		<th>Show on POS interface</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -19,9 +16,6 @@
 		<td><?php echo $this->Form->input('section_id',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('name',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('afficher',array('label'=>'','options'=>array('yes'=>'yes','no'=>'no')));?></td>
-		<?php if(!Configure::read('aser.magasin')&&Configure::read('aser.advanced_stock')):?>
-			<td><?php echo $this->Form->input('accompagnement',array('label'=>'','options'=>array('no'=>'no','yes'=>'yes')));?></td>
-		<?php endif;?>
 		<td><input type="submit" value="Save"/></td>
 		</form>
 		
@@ -33,12 +27,9 @@
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('section_id');?></th>
-			<th><?php echo $this->Paginator->sort('Nom','name');?></th>
-			<th><?php echo $this->Paginator->sort('afficher');?></th>
-			<?php if(!Configure::read('aser.magasin')&&Configure::read('aser.advanced_stock')):?>
-				<th><?php echo $this->Paginator->sort('accompagnement');?></th>
-			<?php endif;?>
+			<th><?php echo $this->Paginator->sort('Section Name','section_id');?></th>
+			<th><?php echo $this->Paginator->sort('name');?></th>
+			<th><?php echo $this->Paginator->sort('Show on POS','afficher');?></th>
 			<th><?php echo $this->Paginator->sort('actif');?></th>
 		</tr>
 	<?php
@@ -70,13 +61,13 @@
 		<li class= "link" onclick = "edit()" >Edit</li>
 		<li class= "link" onclick = "mass_delete()" >Delete</li>
 		<?php if(Configure::read('aser.touchscreen')):?>
-			<li class="link"  onclick = "upload()" >Importer une image</li>
+			<li class="link"  onclick = "upload()" >Import a picture</li>
 		<?php endif;?>
 	</ul>
 </div>
 
 <!-- form for image upload-->
-<div id="upload_boxe" style="display:none" title="Importer une image">
+<div id="upload_boxe" style="display:none" title="Import a picture">
 <div class="dialog">
 	<div id="message_upload"></div>
 	<?php echo $this->Form->create('Groupe',array('id'=>'upload','action'=>'upload_img','type'=>'file'));?>

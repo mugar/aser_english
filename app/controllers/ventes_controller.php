@@ -124,8 +124,8 @@ class VentesController extends AppController {
 		}
 		foreach($sortis as $i=>$sorti){
 			//si l'ingredient n'a pas ete typee stockable we need to change it before 
-			if($sorti['Produit']['type']=='non_stockable'){
-				$sorti['Produit']['type']='stockable';
+			if($sorti['Produit']['type']=='not_storable'){
+				$sorti['Produit']['type']='storable';
 				$this->Sorti->Produit->save($sorti);
 			}
 			$sorti['Sorti']['historique_id']=null; //otherwise will the delete the previous record
@@ -192,15 +192,13 @@ class VentesController extends AppController {
 	
 	function beforeFilter(){
 		$pos_type = $this->Session->read('pos_type');
-		if(in_array($pos_type,array('services','magasin'))){
+		if(in_array($pos_type,array('services'))){
 			Configure::write('aser.magasin', 1);
 			Configure::write('aser.touchscreen', 0);
-			Configure::write('aser.connexion', 0);
 		}
 		else {
 			Configure::write('aser.magasin', 0);
 			Configure::write('aser.touchscreen', 1);
-			Configure::write('aser.connexion', 1);
 		}
 
 		if(in_array($this->params['action'],array('print_facture','journal'))){
@@ -823,7 +821,7 @@ class VentesController extends AppController {
 			$produit['Produit']['quantite']=(Configure::read('aser.default_stock')>0)? //if using one stock the qty is already set
 											$produit['Produit']['PV']:
 											$this->Product->productQty($produit['Produit']['id'],$stockId);
-			$list[$produit['Produit']['id']]=(($produit['Produit']['type']=='stockable')&&$connexion)?
+			$list[$produit['Produit']['id']]=(($produit['Produit']['type']=='storable')&&$connexion)?
 											ucwords($produit['Produit']['name']).'_'.$produit['Produit']['quantite'].'_'.$produit['Produit']['PV']:
 											ucwords($produit['Produit']['name']).'_'.$produit['Produit']['PV'];
 		}
@@ -1617,7 +1615,9 @@ class VentesController extends AppController {
 		exit(json_encode(array('success'=>true,'msg'=>'OK')));
 	}
 	
-	function touchscreen($table=1,$date=null){
+	function touchscreen($table=1,$date=null, $services = 'no'){
+		$this->_set_mode($services);
+		
 		$date=(is_null($date))?(date('Y-m-d')):($date);
 		$config=Configure::read('aser');
 		$fonction=$this->Auth->user('fonction_id');
@@ -1726,10 +1726,8 @@ class VentesController extends AppController {
 							));
 		}
 	}
-	
-	//*/
-	function index($date='null',$services='no') {
 
+	function _set_mode($services){
 		if($services == 'yes'){
 			Configure::write('aser.magasin', 1);
 			Configure::write('aser.touchscreen', 0);
@@ -1737,9 +1735,15 @@ class VentesController extends AppController {
 		}
 		else {
 			Configure::write('aser.magasin', 0);
-			Configure::write('aser.touchscreen', 0);
+			Configure::write('aser.touchscreen', 1);
 			$this->Session->write('pos_type','standard');
 		}
+	}
+	
+	//*/
+	function index($date='null',$services='no') {
+		$this->_set_mode($services);
+		
 
 		$date=($date=='null')?(date('Y-m-d')):($date);
 		$fonction=$this->Auth->user('fonction_id');
@@ -2875,6 +2879,7 @@ class VentesController extends AppController {
 				$this->Product->stock($acc,'credit');
 			}
 		}
+
 		$this->data['Vente']['id']=$consoId; //quand on ajoute to an existing vente
 		if(!$this->Vente->save($this->data)) exit(json_encode(array('success'=>false,'msg'=>$failToSaveMsg)));
 

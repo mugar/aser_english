@@ -63,7 +63,9 @@
 	<?php echo $this->Form->create('Paiement',array('id'=>$form,'name'=>$form,'action'=>$action));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('montant',array('id'=>$type.'Montant', 'label'=>'Amount','value'=>$reste));
+			if(!isset($hide_amount)){
+				echo $this->Form->input('montant',array('id'=>$type.'Montant', 'label'=>'Amount','value'=>$reste));
+			}
 			echo $this->Form->input('montant_equivalent',array('id'=>'equi', 'label'=>'Equivalent Amount',));
 			if(!isset($remboursement)){
 				echo $this->Form->input('monnaie',array('id'=>'monnaie','disabled'=>'disabled', 'label'=>'Currency',));

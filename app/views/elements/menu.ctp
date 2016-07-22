@@ -9,11 +9,11 @@
 				<?php if(Configure::read('aser.stock')):?>
 				<li><?php echo $html->link(__('Inventory Management', true), '#'); ?>
 					<ul>
-						<li class="folder"><?php echo $this->Html->link(__('Stocks Management', true), '/stocks/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Store Management', true), '/stocks/index'); ?></li>
 						<li class="folder"><?php echo $this->Html->link(__('Inventory Operations', true), '/historiques/index'); ?></li>
 						<li  class="folder"><?php echo $this->Html->link(__('Stock Movements', true), '/mouvements/index'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Products Movements Report', true), '/produits/balance'); ?></li>
-						<li class="rapport"><?php echo $this->Html->link(__('Inventory State Report', true), '/produits/rapport'); ?></li>
+						<li class="rapport"><?php echo $this->Html->link(__('Inventory Closing Report', true), '/produits/rapport'); ?></li>
 						<!-- <li class="rapport"><?php echo $this->Html->link(__('Evolution journalière', true), '/produits/monthly'); ?>
 						</li> -->
 						<!-- <li class="rapport"><?php echo $this->Html->link(__('State journalier', true), '/produits/shifts'); ?></li>
@@ -95,12 +95,9 @@
 				<?php if($config['POS']): ?>
 				<li><?php  echo $html->link(__('Point Of Sale', true), '#');?>
 						<ul>
-							<?php if(Configure::read('aser.touchscreen')):?>
-								<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/touchscreen'); ?></li>	
-							<?php elseif(Configure::read('aser.new_services')):?>
-								<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/index/null/yes'); ?></li>
-							<?php else : ?>
-								<li class="rapport"><?php echo $this->Html->link(__('Point Of Sale', true), '/ventes/index'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Restaurant POS', true), '/ventes/touchscreen'); ?></li>	
+							<?php if(Configure::read('aser.services')):?>
+								<li class="rapport"><?php echo $this->Html->link(__('Services POS', true), '/ventes/index/null/yes'); ?></li>
 							<?php endif; ?>
 							<?php if($config['pos_sales_report']):?>
 								<li class="rapport"><?php echo $this->Html->link(__('Sales Report', true), '/ventes/rapport'); ?></li>
@@ -158,7 +155,7 @@
 							</ul>
 						</li>
 						<?php endif; ?>
-				<?php if($config['services']): ?>
+				<?php if(false&&$config['services']): ?>
 				<li><?php echo $html->link(__('Services', true), '#'); ?>
 					<ul>
 						<li class="folder"><?php echo $this->Html->link(__('Service Types Management', true), '/type_services/index'); ?></li>
@@ -213,7 +210,7 @@
 					</ul>
 				</li>
 				<li><a href="/manual/Index.html">Aide</a></li>
-				<li><?php echo $this->Html->link('Déconnexion ('.$loggedUser.')', '/personnels/logout'); ?></li>
+				<li><?php echo $this->Html->link('Logout ('.$loggedUser.')', '/personnels/logout'); ?></li>
 			</ul>
 		</div>
 		<?php else: ?>
@@ -222,7 +219,7 @@
 				<?php if($config['POS']||$config['stock']): ?>
 					<li> Stock </li>
 				<?php endif; ?>
-				<li> Customers & Fournisseurs </li>
+				<li> Customers & Invoices </li>
 				<?php if($config['POS']): ?>
 					<li>Point De Vente </li>
 				<?php endif; ?>

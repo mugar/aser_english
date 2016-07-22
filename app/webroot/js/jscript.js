@@ -486,7 +486,7 @@ function getBase(){
  	if(factureId!=0){
  		var goOn=true;
  		if(moveOn==undefined){
- 			if(confirm('Do you really want to cancel this invoice?')){
+ 			if(confirm('Do you really want to close this invoice?')){
  				goOn=true;
  			}
  			else {
@@ -2286,25 +2286,48 @@ jQuery('#availability_boxe').dialog({
     				//*/
     				var cat=jQuery('#categorie option:selected').html();
     				var etage=jQuery('#etage').val();
-    				jQuery('form#dispo').ajaxSubmit({
-    					dataType:'json',
-						success:function(response){
-							if(response.success){
-								jQuery('#availability_boxe').dialog('close');
-								jQuery('div#alert').remove();
-								 jQuery('<div id="alert" title="Search Results"></div>')
-    	        	                              .dialog({modal:true, show:'slide',hide:'clip',position:'center',width:350,
-    							                       	buttons: { "Ok": function() { jQuery(this).dialog("close");
-								             						}
-								             				}
-    								                     });
-    							var msg=(cat!='')?' of type '+cat:'';
-    							msg=(etage!='')?msg+' on floor N°'+etage:msg+'';
-								jQuery('#alert').append('<div class="message">'+response.available+' room(s) '+msg+' are available.</div>');
-								jQuery('div.message').css({'margin-bottom':'10px','z-index':0});
-								jQuery('#alert').append('<label>List</label><select id="chambres_dispo"></select>');
+    				jQuery('form#dispo')
+            .ajaxSubmit({
+    				  dataType:'json',
+						  success:function(response){
+							 if(response.success){
+                jQuery('#availability_boxe').dialog("close");
+								jQuery('#search_results_boxe')
+                .dialog(
+                  {
+                    modal:true, 
+                    show:'slide',
+                    hide:'clip',
+                    position:'center',
+                    width:450,
+                    buttons: { 
+                      "Create Mass Booking": function() {
+                          jQuery("form#mass_booking").ajaxSubmit({
+                            dataType:'json',
+                            data: {'data[Reservation][checked_in]':jQuery("#DateArrivee2").val(),
+                                  'data[Reservation][depart]':jQuery("#DateDeparture2").val(),
+                                },
+                            success:function(response){
+                              //console.log(response);
+                              if(response.success){
+                                location.reload();
+                              }
+                              else {
+                                alert(response.msg);
+                              }
+                            }
+                        });
+
+                      },
+                      "Close": function() { jQuery(this).dialog("close");}
+								    }
+    							}
+                );
+    						var msg=(cat!='')?' of type '+cat:'';
+    						msg=(etage!='')?msg+' on floor N°'+etage:msg+'';
+								jQuery('#results_msg').text(response.available+' room(s) '+msg+' are available.');
 								jQuery.each(response.freeRooms, function(i, val) {
-     								jQuery("select#chambres_dispo").prepend('<option value="'+i+'">'+val+'</option>');
+     								jQuery("select#room_list").append('<option value="'+i+'">'+val+'</option>');
        							 });
        							 
     						}

@@ -24,8 +24,8 @@
 				echo $this->Form->input('date_expiration',array('label'=>'Expiration Date','type'=>'text','id'=>'DateExpEdit'));
 			}
 			// echo $this->Form->input('tier_id',array('options'=>$tiers1));
-			echo $this->Form->input('stock_id');
-			echo $this->Form->input('libelle',array('options'=>$inventory_operation_types));
+			echo $this->Form->input('stock_id',array('label'=>'Store'));
+			echo $this->Form->input('libelle',array('label'=>'Operation Type','options'=>$inventory_operation_types));
 			if (Configure::read('aser.shifts'))
 				echo $this->Form->input('shift',array('options'=>$shifts));
 			echo $this->Form->input('personnel_id',array('type'=>'hidden'));

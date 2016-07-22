@@ -995,7 +995,7 @@ class ProductComponent extends Object {
 																	'recursive'=>-1
 																	));	
 		}
-		if($produitInfo['Produit']['type']=='stockable'){		
+		if($produitInfo['Produit']['type']=='storable'){		
 			//determining the historique id to use if it not credit
 			$ignoreIds=array();
 			$historiqueId=null;

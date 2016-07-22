@@ -4,13 +4,10 @@
 		</td>
 		
 		<td><?php echo $produit['Produit']['id']; ?>&nbsp;</td>
-		<td>
-			<?php if(isset($sections[$produit['Groupe']['section_id']])) echo $sections[$produit['Groupe']['section_id']]; ?>
-		</td>
-		<td>
-			<?php echo $produit['Groupe']['name']; ?>
-		</td>
 		<td name="nom"><?php echo $produit['Produit']['name']; ?>&nbsp;</td>
+		<td>
+			<?php echo $produit['Unite']['name']; ?>
+		</td>
 		<td name="pa">
 			<?php echo $produit['Produit']['PA']; ?>
 		</td>
@@ -22,14 +19,17 @@
 				<td name="pv"><input style="width:80px;" onchange="change_pv(this);" type="text" bar="<?php echo $barCode; ?>"  value="<?php echo $produit['Produit'][$barCode]; ?>" id="<?php echo $produit['Produit']['id'];?>"/>&nbsp;</td>
 			<?php endforeach;?>
 		<? endif;?>
+			<td>
+			<?php if(isset($sections[$produit['Groupe']['section_id']])) echo $sections[$produit['Groupe']['section_id']]; ?>
+		</td>
+		<td>
+			<?php echo $produit['Groupe']['name']; ?>
+		</td>
 		<?php if(Configure::read('aser.default_stock')>0):?>
 			<td>
 			<?php echo $produit['Produit']['quantite']; ?>
 		</td>
 		<?php endif;?>
-		<td>
-			<?php echo $produit['Unite']['name']; ?>
-		</td>
 		<td><?php echo $produit['Produit']['type']; ?>&nbsp;</td>
 		<?php if(Configure::read('aser.pharmacie')):?>
 		<td><?php echo $produit['Produit']['expiration']; ?>&nbsp;</td>

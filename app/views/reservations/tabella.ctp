@@ -464,7 +464,7 @@
 </div>
 </div>
 <!-- availability  form -->
-<div id="availability_boxe" style="display:none" title='Verify Availability'>
+<div id="availability_boxe" style="display:none" title='Check Availability'>
 <div class="dialog" id="availabilityAdd">
 	<div id="message_availability"></div>
 	<div id="response"></div>
@@ -479,6 +479,28 @@
 		<?php
 			echo $this->Form->input('checked_in',array('id'=>'DateArrivee2','label'=>'Arrival Date','type'=>'text'));
 			echo $this->Form->input('depart',array('id'=>'DateDeparture2','type'=>'text','label'=>'Departure Date'));
+		?>
+	</span>
+	</form>
+<div style="clear:both"></div>
+</div>
+</div>
+
+<!-- mass booking form -->
+<div id="search_results_boxe" style="display:none" title='Search Results'>
+<div class="dialog">
+	<?php echo $this->Form->create('Reservation',array('id'=>'mass_booking','action'=>'mass_booking'));?>
+	<span class='left'>
+		<div id="results_msg"></div>
+		<?php
+			echo $this->Form->input('room_list',array('id'=>'room_list', 'multiple'=>true, 'label'=>'List of available rooms','options'=>array()));
+		?>
+	</span>
+	<span class="right">
+		<?php
+			echo $this->Form->input('tier_id',array('label'=>'Customer'));
+			echo $this->Form->input('etat',array('id'=>'booking_state','label'=>'Booking State','options'=>array('pending'=>'pending','confirmed'=>'confirmed')));
+
 		?>
 	</span>
 	</form>
@@ -562,7 +584,7 @@
 	<ul>
 		<li class="link"  onclick = "jQuery('#legend').slideToggle();" >Show/Hide the legend</li>
 		<!--<li class="link"  onclick = "single_add()" >Créer une réservation</li>-->
-		<li class="link" onclick = "availability()" >Verify the Availability</li>
+		<li class="link" onclick = "availability()" >Check the Availability</li>
 		<li><?php echo $this->Html->link('Monthly Report', array('controller' => 'reservations', 'action' => 'monthly')); ?>  
 		<li><?php echo $this->Html->link("Occupancy Report", array('controller' => 'reservations', 'action' => 'etat_occupation')); ?>
 		<li class="link" onclick = "goTo()" >Show a given month</li>  

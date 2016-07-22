@@ -309,12 +309,12 @@ class AppController extends Controller {
 				$platsGroupes=$this->Produit->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.id'),
 																		'conditions'=>array('Groupe.section_id'=>$plats_section)
 																		));
-				$cond['OR']=array(array('Produit.type'=>'stockable'),
+				$cond['OR']=array(array('Produit.type'=>'storable'),
 								array('Produit.groupe_id'=>$platsGroupes)
 								);
 			}
 			else {
-				$cond['Produit.type']='stockable';
+				$cond['Produit.type']='storable';
 			}
 			$produits_raw=$this->Produit->find('all',array('conditions'=>$cond,
 																		'order'=>array('Produit.name asc'),
@@ -363,7 +363,7 @@ class AppController extends Controller {
 			$monnaies['RWF']='RWF';			
 		}
 		$monnaies1=array(''=>'')+$monnaies;
-		$typeDeProduits=array('stockable'=>'stockable','non_stockable'=>'non_stockable');
+		$typeDeProduits=array('storable'=>'storable','not_storable'=>'not_storable');
 		$typeDeProduits1=array(''=>'')+$typeDeProduits;
 		$this->monnaies=$monnaies;
 		$modePaiements=$this->modePaiements=array('cash'=>'Cash',
@@ -460,7 +460,7 @@ class AppController extends Controller {
 																	),
 													'conditions'=>array('Produit.min >'=>0,
 																		'Produit.actif'=>'yes',
-																		'Produit.type'=>'stockable',
+																		'Produit.type'=>'storable',
 																		),
 													'group'=>array('Historique.produit_id')				
 													)

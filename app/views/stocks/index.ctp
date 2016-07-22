@@ -1,11 +1,11 @@
 <div class="stocks index">
-	<h2><?php __('Stocks Management');?></h2>
+	<h2><?php __('Stores Management');?></h2>
 		<br>
 <div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	<tr>
-		<th>Stock Name</th>
+		<th>Store Name</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>

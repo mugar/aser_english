@@ -3,6 +3,26 @@ class ReservationsController extends AppController {
 
 	var $name = 'Reservations';
 	var $uses = array('Reservation','Chambre');
+
+	function mass_booking(){
+		// set default values;
+		$this->data['Reservation']['pax'] = 1;
+		$this->data['Reservation']['mode_paiement']='cash';
+
+		//loop through the rooms
+		if(!empty($this->data['Reservation']['room_list'])){
+			foreach($this->data['Reservation']['room_list'] as $room_number){
+				$this->data['Reservation']['room']= $room_number;
+				$this->add($this->data);
+				$this->Reservation->id = null; //cleaning last created id.
+			}
+			exit(json_encode(array('success'=>true)));
+		}
+		else {
+			exit(json_encode(array('success'=>false, 'msg'=>'No rooms selected')));	
+		}
+
+	}
 	/**
 	* this function's job is fetch the details of the last 
 	* reservation made by a client.
@@ -1504,11 +1524,14 @@ class ReservationsController extends AppController {
 		return $return;
 	}
 	
-	function add() {
+	function add($data=null) {
+		$this->data = ($data) ? $data : $this->data; //incase of mass booking
+
 		if (!empty($this->data)) {
 			$this->Reservation->set($this->data);
 			if(!$this->Reservation->validates()){
-				exit(json_encode(array('success'=>false,'msg'=>'Impossible to save because of incorrect parameters !')));
+				if(!$data)
+					exit(json_encode(array('success'=>false,'msg'=>'Impossible to save because of incorrect parameters !')));
 			}
 			//expecting only single cad one by one booking not multi booking
 			$chambreDetails=$this->Chambre->find('first',array('fields'=>array('Chambre.id',
@@ -1528,7 +1551,8 @@ class ReservationsController extends AppController {
 												($this->Product->increase_date($this->data['Reservation']['autre_depart'],-1)):													
 												($this->data['Reservation']['depart']);
 			if($this->data['Reservation']['depart']<$this->data['Reservation']['checked_in']){
-				exit(json_encode(array('success'=>false,'msg'=>'Incorrect selected periode')));
+				if(!$data)
+					exit(json_encode(array('success'=>false,'msg'=>'Incorrect selected periode')));
 			}									
 			//check for conflict
 			if(!$this->_conflict($this->data)){
@@ -1545,14 +1569,17 @@ class ReservationsController extends AppController {
 				$trace['Trace']['model_id']=$this->Reservation->id;
 				$trace['Trace']['model']='Reservation';
 				$trace['Trace']['operation']='Creation of the booking with state : '.$this->data['Reservation']['etat'];
+				if(!$data)
+					$trace['Trace']['operation'].='Created during mass booking';
 				$this->Reservation->Trace->save($trace);
 					
-				exit(json_encode(array('id'=>$this->Reservation->id,'success'=>true)));
-									
+				if(!$data)
+					exit(json_encode(array('id'=>$this->Reservation->id,'success'=>true)));
 			}
-			else 
-				die(json_encode(array('success'=>false,'msg'=>'Insufficient resources for this booking!')));
-				
+			else {
+				if(!$data)
+					die(json_encode(array('success'=>false,'msg'=>'Insufficient resources for this booking!')));
+			}			
 		} 
 	}
 
