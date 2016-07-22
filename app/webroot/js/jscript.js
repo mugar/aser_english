@@ -2256,8 +2256,9 @@ function recherche(){
     	}
    } );
 }
-function availability(){
-jQuery('#availability_boxe').dialog({
+function availability(action){
+  action = (action == 'mass_book') ? 'mass_book': 'just_check';
+  jQuery('#availability_boxe').dialog({
   	 		 modal:true, 
     		width:390,
     		position:'top',
@@ -2291,45 +2292,55 @@ jQuery('#availability_boxe').dialog({
     				  dataType:'json',
 						  success:function(response){
 							 if(response.success){
-                jQuery('#availability_boxe').dialog("close");
-								jQuery('#search_results_boxe')
-                .dialog(
-                  {
-                    modal:true, 
-                    show:'slide',
-                    hide:'clip',
-                    position:'center',
-                    width:450,
-                    buttons: { 
-                      "Create Mass Booking": function() {
-                          jQuery("form#mass_booking").ajaxSubmit({
-                            dataType:'json',
-                            data: {'data[Reservation][checked_in]':jQuery("#DateArrivee2").val(),
-                                  'data[Reservation][depart]':jQuery("#DateDeparture2").val(),
-                                },
-                            success:function(response){
-                              //console.log(response);
-                              if(response.success){
-                                location.reload();
-                              }
-                              else {
-                                alert(response.msg);
-                              }
-                            }
-                        });
+                  var msg=(cat!='')?' of type '+cat:'';
+                  msg=(etage!='')?msg+' on floor N°'+etage:msg+'';
+                  msg = response.available+' room(s) '+msg+' are available.';
+          
+                  if(action == 'just_check') {
+                    msg += ' Here they are : ';
+                    jQuery.each(response.freeRooms, function(i, val) {
+                        msg += val;
+                     });
+                    alert(msg);
+                  }
+                  else {
+                    jQuery('#availability_boxe').dialog("close");
+    								jQuery('#search_results_boxe')
+                    .dialog(
+                      {
+                        modal:true, 
+                        show:'slide',
+                        hide:'clip',
+                        position:'center',
+                        width:450,
+                        buttons: { 
+                          "Create Multiple Bookings": function() {
+                              jQuery("form#mass_booking").ajaxSubmit({
+                                dataType:'json',
+                                data: {'data[Reservation][checked_in]':jQuery("#DateArrivee2").val(),
+                                      'data[Reservation][depart]':jQuery("#DateDeparture2").val(),
+                                    },
+                                success:function(response){
+                                  //console.log(response);
+                                  if(response.success){
+                                    location.reload();
+                                  }
+                                  else {
+                                    alert(response.msg);
+                                  }
+                                }
+                            });
 
-                      },
-                      "Close": function() { jQuery(this).dialog("close");}
-								    }
-    							}
-                );
-    						var msg=(cat!='')?' of type '+cat:'';
-    						msg=(etage!='')?msg+' on floor N°'+etage:msg+'';
-								jQuery('#results_msg').text(response.available+' room(s) '+msg+' are available.');
-								jQuery.each(response.freeRooms, function(i, val) {
-     								jQuery("select#room_list").append('<option value="'+i+'">'+val+'</option>');
-       							 });
-       							 
+                          },
+                          "Close": function() { jQuery(this).dialog("close");}
+    								    }
+        							}
+                    );
+                    jQuery('#results_msg').text(msg);
+    								jQuery.each(response.freeRooms, function(i, val) {
+         								jQuery("select#room_list").append('<option value="'+i+'">'+val+'</option>');
+           							 });
+           				 }			 
     						}
     						else { 
     							 jQuery('#availability_boxe').dialog("close");

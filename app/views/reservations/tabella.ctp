@@ -587,6 +587,7 @@
 		<li class="link"  onclick = "jQuery('#legend').slideToggle();" >Show/Hide the legend</li>
 		<!--<li class="link"  onclick = "single_add()" >Créer une réservation</li>-->
 		<li class="link" onclick = "availability()" >Check the Availability</li>
+		<li class="link" onclick = "availability('mass_book')" >Create Multiple Bookings</li>
 		<li><?php echo $this->Html->link('Monthly Report', array('controller' => 'reservations', 'action' => 'monthly')); ?>  
 		<li><?php echo $this->Html->link("Occupancy Report", array('controller' => 'reservations', 'action' => 'etat_occupation')); ?>
 		<li class="link" onclick = "goTo()" >Show a given month</li>  
