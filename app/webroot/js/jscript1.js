@@ -1639,22 +1639,22 @@ function table_state(table){
 		
 }
 
-function paiement_touch(factureId,moveOn){
- 	if(factureId!=0){
- 		if(displayed==0){
-			displayed=1;
-			jQuery('span[name="payment"]').attr('class','boutton'); //removing the selected button
-			jQuery('span[value="'+payed+'"]').attr('class','boutton_selected'); //assigning the payed button the selected class
+function paiement_touch(factureId,moveOn, hide_pyt_mode_boxe){
+    if(factureId!=0){
+ 	  if(displayed==0){
+		displayed=1;
+		jQuery('span[name="payment"]').attr('class','boutton'); //removing the selected button
+		jQuery('span[value="'+payed+'"]').attr('class','boutton_selected'); //assigning the payed button the selected class
 		
-			//reset list of clients
-			jQuery('select#tierId option').show();
-			jQuery('input#avance').val(parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text()));
-			jQuery('#paiement_form').show();
-			var goOn=false;
-		}
-		else {
-			var goOn=true;
-			displayed=0;
+		//reset list of clients
+		jQuery('select#tierId option').show();
+		jQuery('input#avance').val(parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text()));
+		jQuery('#paiement_form').show();
+		var goOn=false;
+	   }
+	   else {
+	       var goOn=true;
+		  displayed=0;
 		}
 
  		var tier_id=jQuery('#tierId').val();
@@ -1663,8 +1663,28 @@ function paiement_touch(factureId,moveOn){
  		reduction=(reduction>0)?reduction:-1;
  		var etat='credit';
  		
- 		
- 	if((moveOn==undefined)){
+ 	  if((moveOn==undefined)){
+        if(((payed==1)||(payed==4))&& (hide_pyt_mode_boxe == undefined)){
+            goOn=false;
+            jQuery('#pyt_boxe').dialog({
+                modal:true, 
+                width:400,
+                position:'top',
+                buttons: { 
+                    "Save": function() {
+                        goOn=true;
+                         mode=jQuery('#mode').val();
+                         ref=jQuery('#ref').val();
+                         equi=jQuery('#equi').val();
+                         if(equi!=''){
+                             monnaie=jQuery('#monnaie').val();
+                         }
+                        jQuery(this).dialog('close');
+                        paiement_touch(factureId,undefined, true);
+                    }
+                }
+            });
+        }
  		if((payed==2)||(payed==3)){
  			goOn=false;
  		 	jQuery('div#annulation').dialog({
@@ -1692,16 +1712,16 @@ function paiement_touch(factureId,moveOn){
  		
  		if((jQuery('input#avance').val()=='')&&(payed==1)){
  			
- 			alert('Le champ cash n\'est pas rempli!');
+ 			alert('the cash field is not completed!');
  			goOn=false;
  		}
  		else if((parseInt(jQuery('input#change').val())<0)&&(payed==1)){
  			
- 			alert('Cash insuffisant!');
+ 			alert('Insufficient Cash!');
  			goOn=false;
  		}
  		else if((payed==4)&&!((avance<montant)&&(avance>0))){
- 			alert('ce montant n\'est pas une avance correcte !');
+ 			alert('this amount is not a correct deposit!');
  			goOn=false;
  		}
  	}
@@ -1717,8 +1737,8 @@ function paiement_touch(factureId,moveOn){
  		}
  		goOn=true;
  	}
- 		if(goOn){
- 			jQuery.ajax({
+ 	if(goOn){
+ 		jQuery.ajax({
  			type:'POST',
  			url:getBase()+'ventes/paiement/',
  			data:{'data[Vente][factureId]':factureId,
@@ -1731,6 +1751,10 @@ function paiement_touch(factureId,moveOn){
  				'data[Vente][original]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(),
  				'data[Vente][date]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="date"]').text(),
  				'data[Vente][journal_id]':jQuery('table#list_factures tr[id="'+factureId+'"]').attr('journal'),
+                'data[Paiement][mode_paiement]':mode,
+                'data[Paiement][reference]':ref,
+                'data[Paiement][montant_equivalent]':equi,
+                'data[Paiement][monnaie]':monnaie,
  				},
  			dataType:'JSON',
  			success:function(response){
@@ -1759,7 +1783,7 @@ function paiement_touch(factureId,moveOn){
 					jQuery('span[name="payment"] [value="'+payed+'"]').attr('class','boutton_selected');
 					displayed=0;
 					
-					
+					mode=equi=monnaie=ref=''; //first initialized in the normal paiement in jscript
  				}
  				else {
  					alert(response.msg);

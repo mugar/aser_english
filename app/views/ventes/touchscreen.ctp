@@ -403,6 +403,10 @@
 }
 ?>
 <?php echo $this->element('../ventes/commande');?>
+
+<!-- form for paiement creation -->
+<?php echo $this->element('../paiements/edit',array('action'=>'add','hide_amount'=>true));?>
+
 <div id="annulation" style="display:none" title='Authorisation' action="effacer"
 <div class="dialog">
 	<span class="left">
