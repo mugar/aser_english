@@ -500,6 +500,8 @@
 		<?php
 			echo $this->Form->input('tier_id',array('label'=>'Customer'));
 			echo $this->Form->input('etat',array('id'=>'booking_state','label'=>'Booking State','options'=>array('pending'=>'pending','confirmed'=>'confirmed')));
+			echo $this->Form->input('PU',array('label'=>'Custom Rate'));
+			echo $this->Form->input('monnaie',array('label'=>'Currency','options'=>$facturationMonnaies));
 
 		?>
 	</span>
