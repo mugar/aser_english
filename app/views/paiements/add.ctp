@@ -5,12 +5,16 @@
 			</td>
 			<?php endif;?>
 			<td><?php echo  $this->MugTime->toFrench($paiement['Paiement']['date']); ?></td>
-			<?php if(isset($facture)):?>
+			<?php if(isset($facture) && !isset($customer)):?>
 				<td><?php echo $this->MugTime->toFrench($paiement['Facture']['date']); ?></td>
 				<td>
 					<?php echo $this->Html->link($paiement['Facture']['numero'], array('controller' => 'factures', 'action' => 'view', $paiement['Facture']['id'])); ?>
 				</td>
 				<td><?php echo $paiement['Facture']['operation']; ?></td>
+			<?php endif;?>
+			<?php if(isset($customer)):?>
+				<td><?php echo $paiement['Tier']['name']; ?></td>
+				<td><?php echo $paiement['Tier']['compagnie']; ?></td>
 			<?php endif;?>
 			<?php if(isset($chambre)):?>
 				<td>
@@ -21,8 +25,14 @@
 					<td><?php echo  $paiement['chambre']; ?></td>
 				<?php endif;?>
 			<?php endif;?>
-			<td><?php echo  $number->format($paiement['Paiement']['montant'],$formatting).' '.$paiement['Facture']['monnaie']; ?></td>
-			<td><?php if($paiement['Paiement']['montant_equivalent']) echo   $number->format($paiement['Paiement']['montant_equivalent'],$decimal).' '.$paiement['Paiement']['monnaie']; ?></td>
+			<?php if(isset($facture) && !isset($customer)):?>
+				<td><?php echo  $number->format($paiement['Paiement']['montant'],$formatting).' '.$paiement['Facture']['monnaie']; ?></td>
+			<?php elseif(isset($customer)):?>
+				<td><?php echo  $number->format($paiement['Paiement']['montant'],$formatting).' '.$paiement['Paiement']['monnaie']; ?></td>
+			<?php endif;?>
+			<?php if(!isset($customer)):?>
+				<td><?php if($paiement['Paiement']['montant_equivalent']) echo   $number->format($paiement['Paiement']['montant_equivalent'],$decimal).' '.$paiement['Paiement']['monnaie']; ?></td>
+			<?php endif;?>
 			<td><?php echo  $paiement['Paiement']['mode_paiement']; ?></td>
 			<td><?php echo  $paiement['Paiement']['reference']; ?></td>	
 			<td><?php echo  $paiement['Personnel']['name']; ?></td>	

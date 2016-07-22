@@ -23,7 +23,45 @@ class PaiementsController extends AppController {
 	function edit(){
 		
 	}
-	 function payment($chambre='yes',$date1=null,$monnaie='',$pyt='no',$mode='',$personnelId=null){
+	
+	function deposits(){
+		if(!empty($this->data)){
+			if(!empty($this->data['Paiement']['date1'])){
+		 		$cond['Paiement.date >=']=$this->data['Paiement']['date1'];
+			}
+		 	if(!empty($this->data['Paiement']['date2'])){
+		 		$cond['Paiement.date <=']=$this->data['Paiement']['date2'];
+			}
+
+			if(!empty($this->data['Paiement']['customer_id'])){
+		 		$cond['Paiement.customer_id']=$this->data['Paiement']['customer_id'];
+			}
+
+			if(!empty($this->data['Paiement']['monnaie'])){
+		 		$cond['Paiement.monnaie']=$this->data['Paiement']['monnaie'];
+			}
+		}
+		
+		$cond['Paiement.facture_id'] = null;
+	 	$pyts=$this->Paiement->Facture->Paiement->find('all',array('fields'=>array('Paiement.*',
+	 															'Personnel.name',
+	 															'Tier.*',
+	 															),
+	 											'conditions'=>$cond,
+	 											'order'=>array('Paiement.date'),
+	 											));
+	
+		$sumPyts=$this->Paiement->find('all',array('fields'=>array('sum(Paiement.montant) as montant',
+	 															'Paiement.monnaie'
+	 															),
+	 											'conditions'=>$cond,
+	 											'group'=>array('Paiement.monnaie')
+	 											));
+		$this->set(compact('pyts','date1','date2','sumPyts'));
+
+	} 
+
+	function payment($chambre='yes',$date1=null,$monnaie='',$pyt='no',$mode='',$personnelId=null){
 	 	if($date1!=null){
 			$cond['Paiement.date']=$date1;
 			if($mode!='all')
@@ -242,61 +280,70 @@ class PaiementsController extends AppController {
 			$data['Paiement']['montant']=$data['Paiement']['montant']*-1;
 			$data['Paiement']['mode_paiement']='remboursement';
 		}
-		//facture details
-		$facture=$this->Paiement->Facture->find('first',array('fields'=>array('Facture.id',
-																			'Facture.montant',
-																			'Facture.monnaie',
-																			'Facture.etat',
-																			'Facture.reste',
-																			'Facture.journal_id',
-																			'Facture.operation'
-																			),
-															'conditions'=>array('Facture.id'=>$data['Paiement']['facture_id']),
-															'recursive'=>0,
-													)
-											);
-		$reste=$facture['Facture']['montant']-$this->Paiement->Facture->pyts($data['Paiement']['facture_id']);
-		//exit(debug($reste));
-		if($single&&($data['Paiement']['montant']>$reste)){
-			if($exit)
-				exit(json_encode(array('success'=>false,'msg'=>'Paiement trop elevée!')));
-			else 
-				return false;
-		}
-		//journal stuff si c'est une caissiere qui fait l'operation
-		if(($this->Auth->user('fonction_id')==2)){
-			$journal=$this->Product->journal();
-			$data['Paiement']['journal_id']=$journal['id'];
-			$data['Paiement']['date']=$journal['date'];
-		}
-		else {
-			if(($facture['Facture']['operation']=='Vente')&&empty($facture['Facture']['journal_id'])){
-					exit(json_encode(array('success'=>false,'msg'=>'Seul un caissier peut classer cette facture')));
+		if($data['Paiement']['type'] !='deposit'){
+			//facture details
+			$facture=$this->Paiement->Facture->find('first',array('fields'=>array('Facture.id',
+																				'Facture.montant',
+																				'Facture.monnaie',
+																				'Facture.etat',
+																				'Facture.reste',
+																				'Facture.journal_id',
+																				'Facture.operation'
+																				),
+																'conditions'=>array('Facture.id'=>$data['Paiement']['facture_id']),
+																'recursive'=>0,
+														)
+												);
+			$reste=$facture['Facture']['montant']-$this->Paiement->Facture->pyts($data['Paiement']['facture_id']);
+			//exit(debug($reste));
+			if($single&&($data['Paiement']['montant']>$reste)){
+				if($exit)
+					exit(json_encode(array('success'=>false,'msg'=>'Paiement trop elevée!')));
+				else 
+					return false;
 			}
-			$data['Paiement']['journal_id']=$facture['Facture']['journal_id'];
+			//journal stuff si c'est une caissiere qui fait l'operation
+			if(($this->Auth->user('fonction_id')==2)){
+				$journal=$this->Product->journal();
+				$data['Paiement']['journal_id']=$journal['id'];
+				$data['Paiement']['date']=$journal['date'];
+			}
+			else {
+				if(($facture['Facture']['operation']=='Vente')&&empty($facture['Facture']['journal_id'])){
+						exit(json_encode(array('success'=>false,'msg'=>'Seul un caissier peut classer cette facture')));
+				}
+				$data['Paiement']['journal_id']=$facture['Facture']['journal_id'];
+			}
 		}
 		//saving ...
 		$data['Paiement']['id']=null;
 		if(!$this->Paiement->save($data)) exit(json_encode(array('success'=>false,'msg'=>'Failed to save the Payment')));
 
-
-		//updating bill state		
-		if($facture['Facture']['operation']!='Vente'){
-			$this->Product->update_facture($facture['Facture']['id'],$facture['Facture']['montant'],$facture['Facture']['etat'],null,false);
+		if($data['Paiement']['type'] !='deposit'){
+			//updating bill state		
+			if($facture['Facture']['operation']!='Vente'){
+				$this->Product->update_facture($facture['Facture']['id'],$facture['Facture']['montant'],$facture['Facture']['etat'],null,false);
+			}
 		}
 		
 		//saving the trace
 		$trace['Trace']['id']=NULL;
-		$trace['Trace']['model_id']=$facture['Facture']['id'];
-		$trace['Trace']['model']='Facture';
-		$trace['Trace']['operation']='Creation Paiement de ';
+		$trace['Trace']['model_id']=($data['Paiement']['type'] !='deposit') ? $facture['Facture']['id']:$this->Paiement->id;
+		$trace['Trace']['model']= ($data['Paiement']['type'] !='deposit') ? 'Facture': "Paiement";
+		$trace['Trace']['operation']='Payment creation of type '.$data['Paiement']['type'].' de ';
 
-		if($data['Paiement']['montant_equivalent']>0){
-			$trace['Trace']['operation'].=$data['Paiement']['montant_equivalent'].' '.((!empty($data['Paiement']['monnaie']))?$data['Paiement']['monnaie']:'');
+		if($data['Paiement']['type'] !='deposit'){
+			if($data['Paiement']['montant_equivalent']>0){
+				$trace['Trace']['operation'].=$data['Paiement']['montant_equivalent'].' '.((!empty($data['Paiement']['monnaie']))?$data['Paiement']['monnaie']:'');
+			}
+			else {
+					$trace['Trace']['operation'].=$data['Paiement']['montant'].' '.$facture['Facture']['monnaie'];
+			}
 		}
-		else {
-				$trace['Trace']['operation'].=$data['Paiement']['montant'].' '.$facture['Facture']['monnaie'];
+		else{
+				$trace['Trace']['operation'].=$data['Paiement']['montant'].' '.$data['Paiement']['monnaie'];
 		}
+		
 		$this->Paiement->Facture->Trace->save($trace);
 
 		if($single&&$exit){

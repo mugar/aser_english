@@ -903,7 +903,7 @@ div#resto_layout_touch label {
 	font-size: 11px !important;
 	margin-bottom: 3px;
 }
-table#journal_resume {
+table#journal_resume , .journal_resume{
 	width:500px;
 	border:2px solid #555;
 	-moz-border-radius:10px;

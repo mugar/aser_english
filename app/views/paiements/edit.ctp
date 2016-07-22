@@ -63,12 +63,21 @@
 	<?php echo $this->Form->create('Paiement',array('id'=>$form,'name'=>$form,'action'=>$action));?>
 	<span class="left">
 		<?php
+			if(isset($deposit)){
+				echo $this->Form->input('tier_id',array('label'=>'Customer Name'));
+			}
 			if(!isset($hide_amount)){
 				echo $this->Form->input('montant',array('id'=>$type.'Montant', 'label'=>'Amount','value'=>$reste));
 			}
-			echo $this->Form->input('montant_equivalent',array('id'=>'equi', 'label'=>'Equivalent Amount',));
+			if(!isset($deposit)){
+				echo $this->Form->input('montant_equivalent',array('id'=>'equi', 'label'=>'Equivalent Amount',));	
+			}
 			if(!isset($remboursement)){
-				echo $this->Form->input('monnaie',array('id'=>'monnaie','disabled'=>'disabled', 'label'=>'Currency',));
+					$monnaie_options = array('id'=>'monnaie','label'=>'Currency');
+				if(!isset($deposit)){
+						$monnaie_options += array('disabled'=>'disabled');
+				}
+				echo $this->Form->input('monnaie',$monnaie_options);
 			}
 		?>
 	</span>

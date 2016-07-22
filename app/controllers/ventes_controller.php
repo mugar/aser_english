@@ -1011,6 +1011,16 @@ class VentesController extends AppController {
 												);
 					$pyts[$key]['Tier']=$tierInfo['Tier'];
 			}
+
+			//all pyts for attached to this report/journal
+			$all_pyts=$this->Vente->Facture->Paiement->find('all',array('fields'=>array('Paiement.*',
+																																										'Facture.monnaie',
+																																		),
+																																		'conditions'=>array('Paiement.journal_id'=>$journalInfo['Journal']['id'])
+																													));
+			$synthesePyts=$this->Product->synthese_pyts($all_pyts);
+			
+
 			if($mensuelle&&Configure::read('aser.comptabilite')&&($this->data['Journal']['compta']=='yes')){
 				$this->loadModel('CompteOperation');
 				$caisseConds['Compte.numero >=']=56000000;
@@ -1122,7 +1132,8 @@ class VentesController extends AppController {
 								'model2',
 								'sums',
 								'journalData',
-								'other_people_pyts'
+								'other_people_pyts',
+								'synthesePyts'
 								)
 						);
 		if($mensuelle){

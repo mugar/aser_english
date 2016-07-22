@@ -1,5 +1,5 @@
 <?php unset($modePaiements['transfer']);?>
-<span class="titre"><? echo __('Synthèse des paiements des factures du client hébergé');?></span>
+<span class="titre"> <?php echo 'Payments Summary';?></span>
 <br />
 <br />
 <table cellpadding="0" cellspacing="0">
@@ -24,8 +24,5 @@
 		<?php endforeach;?>
 	</tr>
 </table>
-<br/>
-<br/>
-<br/>
-<br/>
-<? echo $this->element('signature');?>
+
+<? if(!isset($hide_signature)) echo $this->element('signature');?>

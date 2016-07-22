@@ -70,12 +70,10 @@
 		<td>TOTAL OF CREDITS</td>
 		<td><?php echo  $number->format($total_credits['resto']+0,$formatting); ?></td>
 	</tr>
-	<?php if(Configure::read('aser.bonus')):?>
 	<tr>
 		<td>TOTAL OF BONUS</td>
 		<td><?php echo  $number->format($bonus+0,$formatting); ?></td>
 	</tr>
-	<?php endif;?>
 	<tr>
 		<td>TOTAL OF PAIEMENTS</td>
 		<td><?php echo  $number->format($total_pyts['resto']+0,$formatting); ?></td>
@@ -113,29 +111,19 @@
 	<?php endif; ?>
 </table>
 
-<div id="journal_details">
+
+<div id="report_details">
 <br />
 <br />
-<br />
-<?php if(!empty($journals)): ?>
-	<span class="titre">Reports</span>
+<!-- synthese paiements -->
+<?php if($total_factures['resto']>0):?>
+<div id="synthese_pyts" class="journal_resume">
+<?php echo $this->element('../paiements/synthese_pyts',array('synthesePyts'=>$synthesePyts,'hide_signature'=>true));?>
+</div>
+<?php endif;?>
 <br>
-<table cellpadding="0" cellspacing="0" id="pytTab">
-	<tr>	
-			<th>Number</th>
-			<th>State</th>
-	</tr>
-	<?php
-		foreach ($journals as $journal):
-	?>
-	<tr>
-		<td><?php echo  $journal['Journal']['numero']; ?></td>
-		<td><?php if($journal['Journal']['closed']) echo 'Clôturée'; else echo 'Non clôturée' ; ?></td>
-	</tr>
-<?php endforeach; ?>
+<br>
 	
-</table>
-<?php endif; ?>
 <?php if(!$mensuelle) :?>
 <span class="titre">Invoices</span>
 <br>
@@ -251,7 +239,7 @@
 	
 </table>
 <?php endif; ?>
-<span class="titre">Dépenses</span>
+<span class="titre">Expenses</span>
 <br>
 <table cellpadding="0" cellspacing="0">
 	<tr>
@@ -277,11 +265,11 @@
 <?php endforeach; ?>
 </table>
 
-<span class="titre">Ajouts</span>
+<span class="titre">Deposits</span>
 <br>
 <table cellpadding="0" cellspacing="0">
 	<tr>
-			<th>Type of Expense</th>
+			<th>Type of Deposit</th>
 			<th>Amount</th>
 			<th>Description</th>
 			<th>Date</th>
@@ -344,7 +332,8 @@
 		<?php else : ?>
 			<li><?php echo $this->Html->link('Point Of Sale', array('controller' => 'ventes', 'action' => 'index')); ?> </li>
 		<?php endif; ?>
-		<li class="link"  onclick="jQuery('#journal_details').slideToggle()" >Show/Hide the Details</li>
+		<li class="link"  onclick="jQuery('#synthese_pyts').slideToggle()" >Show/Hide the Payments Details</li>
+		<li class="link"  onclick="jQuery('#report_details').slideToggle()" >Show/Hide the Report Details</li>
 		<?php if(Configure::read('aser.aserb')&&in_array($session->read('Auth.Personnel.fonction_id'),array(3,5))):?>
 			<li class="link"  onclick="copier_bills_dans_b(1)" >Save the invoices</li>
 			<li class="link"  onclick="copier_bills_dans_b(0)" >Remove the invoices</li>

@@ -264,7 +264,8 @@ class AppController extends Controller {
 													'operations',
 													'locations',
 													'buanderies',
-													'reductions'
+													'reductions',
+													'paiements'
 													)
 		)){
 			$this->loadModel('Tier');

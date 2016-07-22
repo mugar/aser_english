@@ -12,7 +12,7 @@ class Paiement extends AppModel {
 				'rule' => array('numeric'),
 				'message' => 'Valeurs numériques seulement !',
 				'allowEmpty' => false,
-				'required' => true,
+				'required' => false,
 				//'last' => false, // Stop validation after this rule
 				//'on' => 'create', // Limit validation to 'create' or 'update' operations
 			),
@@ -57,6 +57,10 @@ class Paiement extends AppModel {
 			'conditions' => '',
 			'fields' => '',
 			'order' => ''
+		),
+		'Tier' => array(
+			'className' => 'Tier',
+			'foreignKey' => 'tier_id',
 		),
 		'Journal' => array(
 			'className' => 'Journal',

@@ -1,6 +1,6 @@
 <?php
 
- if(!isset($chambre)):?>
+ if(!isset($chambre)&&!isset($hide_title)):?>
 <span class="titre">Paiements</span>
 <br/>
 <?php endif;?>
@@ -20,23 +20,28 @@ echo $this->Form->create('Paiement',array('name'=>'pyts','action'=>'delete'));
 				<th>Invoice N°</th>
 				<th>Invoice Type</th>
 			<?php endif;?>
-			<?php if(isset($chambre)):?>
+			<?php if(isset($chambre)||isset($customer)):?>
 				<th>Customer</th>
 				<th>Company</th>
-				<?php if($chambre=='yes'):?>
+				<?php if(isset($chambre)&& ($chambre=='yes')):?>
 					<th>Room N°</th>
 				<?php endif;?>
 			<?php endif;?>
 			<th width="150">Amount</th>
-			<th width="150">Equivalent Amount</th>
+			<?php if(!isset($customer)):?>
+				<th width="150">Equivalent Amount</th>
+			<?php endif;?>
 			<th>Payment Mode</th>
 			<th width="100">Reference</th>
 			<th>Created by</th>
 	</tr>
 		<?php
 		$options=array();
+
 		if(isset($facture))
 			$options['facture']=true;
+			if(isset($customer))
+			$options['customer']=true;
 		if(isset($chambre)){
 			$options['chambre']=$chambre;
 		}
@@ -60,15 +65,21 @@ echo $this->Form->create('Paiement',array('name'=>'pyts','action'=>'delete'));
 			<td>&nbsp;</td>	
 			<td>&nbsp;</td>	
 		<?php endif;?>
-		<?php if(isset($chambre)):?>
+		<?php if(isset($chambre)||(isset($customer))):?>
 			<td>&nbsp;</td>	
 			<td>&nbsp;</td>	
-			<?php if($chambre=='yes'):?>
+			<?php if(isset($chambre)&&($chambre=='yes')):?>
 				<td>&nbsp;</td>	
 			<?php endif;?>
 		<?php endif;?>
-		<td><?php echo $number->format($sumPyt['Paiement']['montant'],$formatting).' '.$sumPyt['Facture']['monnaie'];?></td>
-		<td><?php echo $number->format($sumPyt['Paiement']['montant_equivalent'],$decimal).' '.$sumPyt['Paiement']['monnaie'];?></td>
+		<?php if(isset($facture) && !isset($customer)):?>
+			<td><?php echo $number->format($sumPyt['Paiement']['montant'],$formatting).' '.$sumPyt['Facture']['monnaie'];?></td>	
+			<td><?php echo $number->format($sumPyt['Paiement']['montant_equivalent'],$decimal).' '.$sumPyt['Paiement']['monnaie'];?></td>
+		<?php elseif(isset($customer)): ?>
+			<td><?php echo $number->format($sumPyt['Paiement']['montant'],$formatting).' '.$sumPyt['Paiement']['monnaie'];?></td>
+			<td></td>
+		<?php endif;?>
+	
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>
 		<td>&nbsp;</td>

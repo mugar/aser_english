@@ -2175,13 +2175,13 @@ function pyt(factureId,type){
 		}
 	}
   // alert(type)
-	if(type==undefined || type=='standard' || type =='globale'){
+	if(type==undefined || type=='standard' || type =='globale' || type == 'deposit'){
 		var boxe='#pyt_boxe';
 		var form='#pytAdd';
     if(type=='globale'){
       action = getBase()+'paiements/globale_bill_pyt'
     }
-    else {
+    else if(type != 'deposit'){
       type='pyt';
     }
 	}
