@@ -20,8 +20,69 @@ class PaiementsController extends AppController {
 		$this->set('paiements', $this->paginate());
 	}
 	
-	function edit(){
-		
+	function edit($id = null,$edit='yes') {
+		if($edit=='yes'){
+			if (!empty($this->data)) {
+				$return_array = array('success'=>true,'msg'=>'Modification Enregistré');
+				if(!empty($this->data['Paiement']['facture_number'])&&!empty($this->data['Paiement']['tier_id'])){
+					$facture = $this->Paiement->Facture->find('first',array('fields'=>array('Facture.*'),
+																																'conditions'=>array('Facture.tier_id'=>$this->data['Paiement']['tier_id'],
+																																										'Facture.numero'=>$this->data['Paiement']['facture_number'],
+																																										'Facture.operation'=>$this->data['Paiement']['operation'],
+																																										'Facture.monnaie'=>$this->data['Paiement']['monnaie']
+																																										)
+																																		));
+
+					if(!empty($facture)){
+						$this->data['Paiement']['facture_id'] = $facture['Facture']['id']; 
+						$trace['Trace']['id']=NULL;
+						$trace['Trace']['model_id']=$facture['Facture']['id'];
+						$trace['Trace']['model']= 'Facture';
+						$trace['Trace']['operation']='Adding a deposit payment of '.$this->data['Paiement']['montant'].' '.$this->data['Paiement']['monnaie'].' created on '.$this->Product->formatDate($this->data['Paiement']['date']);
+						$return_array['reload'] = true;
+						//removing the monnaie field value as it no longer necessary
+						$this->data['Paiement']['monnaie'] = null; 
+					}
+				}
+				
+				$this->Paiement->save($this->data);
+				$this->Paiement->Facture->Trace->save($trace);
+
+				//update the bill
+				if(!empty($facture)){
+					$this->Product->update_facture($facture['Facture']['id'],$facture['Facture']['montant'],$facture['Facture']['etat'],null,false);
+				}
+				exit(json_encode($return_array));
+			}
+			else {
+				$this->data = $this->Paiement->find('first',array('fields'=>array('Paiement.*'),
+																		'conditions'=>array('Paiement.id'=>$id),
+																		'recursive'=>-1
+																		));
+				$action = 'edit';
+				$reste = $this->data['Paiement']['montant'];
+				if($this->data['Paiement']['type']=='deposit'){
+
+				}
+				$this->set(compact('action','reste'));
+			}
+			$this->render('deposit_edit');
+		}
+		else {
+			$this->set('paiement',$this->Paiement->find('first',array('fields'=>array('Paiement.*',
+																																								'Facture.*',
+																																								'Tier.*',
+																																								'Personnel.name'
+																																								),
+    														'conditions'=>array('Paiement.id'=>$id)
+															)
+											));
+			$this->layout="ajax";
+			$checkbox = true;
+			$customer = true;
+			$this->set(compact('checkbox','customer'));
+			$this->render('add');
+		}
 	}
 	
 	function deposits(){
@@ -276,10 +337,11 @@ class PaiementsController extends AppController {
 		
 		$this->_date_checker($this->data['Paiement']['date']);
 		
-		if($data['Paiement']['type']=='remboursement'){
+		if($data['Paiement']['type']=='refund'){
 			$data['Paiement']['montant']=$data['Paiement']['montant']*-1;
-			$data['Paiement']['mode_paiement']='remboursement';
+			$data['Paiement']['mode_paiement']='refund';
 		}
+		// exit(debug($this->data));
 		if($data['Paiement']['type'] !='deposit'){
 			//facture details
 			$facture=$this->Paiement->Facture->find('first',array('fields'=>array('Facture.id',
@@ -296,7 +358,7 @@ class PaiementsController extends AppController {
 												);
 			$reste=$facture['Facture']['montant']-$this->Paiement->Facture->pyts($data['Paiement']['facture_id']);
 			//exit(debug($reste));
-			if($single&&($data['Paiement']['montant']>$reste)){
+			if($single&&($data['Paiement']['montant']>$reste)&&($data['Paiement']['type']!='refund')){
 				if($exit)
 					exit(json_encode(array('success'=>false,'msg'=>'Paiement trop elevée!')));
 				else 

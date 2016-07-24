@@ -44,7 +44,7 @@
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Liste des Products', array('controller' => 'produits', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Inventory Operations', array('controller' => 'historiques', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 

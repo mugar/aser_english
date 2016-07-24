@@ -2250,7 +2250,7 @@ class VentesController extends AppController {
 		if(in_array($this->data['Vente']['etat'],array('paid','half_paid'))){
 			$amountPaid=$factureInfo['Facture']['montant'];
 			if($this->data['Vente']['etat']=='half_paid'){
-				$amountPaid=($factureInfo['Facture']['montant']>$this->data['Vente']['half_paid'])?$this->data['Vente']['half_paid']:$factureInfo['Facture']['montant'];
+				$amountPaid=($factureInfo['Facture']['montant']>$this->data['Vente']['avance'])?$this->data['Vente']['avance']:$factureInfo['Facture']['montant'];
 				$reste=$factureInfo['Facture']['montant']-$amountPaid;
 				$this->_checkMaxDette($tierInfo,$reste,$this->data['Vente']);
 			}
@@ -2290,7 +2290,7 @@ class VentesController extends AppController {
 		$facture['Facture']['original']=$totals['original'];
 		$facture['Facture']['montant']=$totals['montant'];
 
-		$facture['Facture']['half_paid']=($facture['Facture']['montant']>$this->data['Vente']['half_paid'])?$this->data['Vente']['half_paid']:$facture['Facture']['montant'];
+		$facture['Facture']['avance']=($facture['Facture']['montant']>$this->data['Vente']['avance'])?$this->data['Vente']['avance']:$facture['Facture']['montant'];
 		
 		//determining the reste
 		$facture['Facture']['etat']=$this->data['Vente']['etat'];
@@ -2301,7 +2301,7 @@ class VentesController extends AppController {
 			$facture['Facture']['reste']=$facture['Facture']['montant'];
 		}
 		elseif($this->data['Vente']['etat']=='half_paid'){
-			$facture['Facture']['reste']=$facture['Facture']['montant']-$facture['Facture']['half_paid'];
+			$facture['Facture']['reste']=$facture['Facture']['montant']-$facture['Facture']['avance'];
 		}
 	
 		//make sure the client is set if the bill is not fully paid
@@ -2358,7 +2358,7 @@ class VentesController extends AppController {
 		}
 										
 		// Paiement stuff
-		if(($facture['Facture']['half_paid']>0)&&in_array($facture['Facture']['etat'],array('paid','half_paid','excedent'))){
+		if(($facture['Facture']['avance']>0)&&in_array($facture['Facture']['etat'],array('paid','half_paid','excedent'))){
 			if(!isset($this->data['Paiement'])){
 				$this->data['Paiement']['mode_paiement']='cash';
 			}//else in case the paiement box is not shown like in touchscreen mode
@@ -2374,7 +2374,7 @@ class VentesController extends AppController {
 				}
 			}
 			$data['Paiement']=$this->data['Paiement'];
-			$data['Paiement']['montant']=$facture['Facture']['half_paid'];
+			$data['Paiement']['montant']=$facture['Facture']['avance'];
 			//*
 			//journal for paiement 
 			if(in_array($this->Auth->user('fonction_id'),array(2,4))){
@@ -2636,10 +2636,10 @@ class VentesController extends AppController {
 
 		$facture['Tier']['name']=(empty($facture['Tier']['name']))?'':$facture['Tier']['name'];
 		if(($facture['Facture']['classee']==0)&&Configure::read('aser.beneficiaires')){
-			$facture['half_paid']=$facture['Facture']['avance_beneficiaire'];
+			$facture['avance']=$facture['Facture']['avance_beneficiaire'];
 		}
 		else {
-			$facture['half_paid']=$facture['Facture']['montant']-$facture['Facture']['reste'];
+			$facture['avance']=$facture['Facture']['montant']-$facture['Facture']['reste'];
 		}
 		exit(json_encode($facture));
 	}

@@ -13,19 +13,19 @@
 });
 </script>
 <div class="personnels index" id="person" touch="<?php echo Configure::read('aser.touchscreen');?>">
-	<h2><?php __('Gestion du Personnel');?></h2>
+	<h2><?php __('Users Management');?></h2>
 	<div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">
 	
 	<tr>
-		<th>Nom & Prénom</th>
+		<th>Full Name</th>
 		<?php if(Configure::read('aser.touchscreen')||Configure::read('aser.swipe')):?>
-			<th>Code</th>
+			<th>POS Code</th>
 		<?php endif;?>
-		<th>Fonction</th>
-		<th>Identifiant</th>
-		<th>Mot de Passe</th>
-		<th>Confirmer</th>
+		<th>Role</th>
+		<th>Username</th>
+		<th>Password</th>
+		<th>Password Confirmation</th>
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -51,9 +51,9 @@
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('Nom & Prénom','name');?></th>
-			<th><?php echo $this->Paginator->sort('fonction_id');?></th>
-			<th><?php echo $this->Paginator->sort('identifiant');?></th>
+			<th><?php echo $this->Paginator->sort('Full Name','name');?></th>
+			<th><?php echo $this->Paginator->sort('Role','fonction_id');?></th>
+			<th><?php echo $this->Paginator->sort('Username','identifiant');?></th>
 			<th><?php echo $this->Paginator->sort('actif');?></th>
 		</tr>
 	<?php

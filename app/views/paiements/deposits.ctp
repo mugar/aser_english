@@ -37,7 +37,7 @@ $config=Configure::read('aser');
 </h3>
 <br>
 <?php 
-echo $this->element('../paiements/payments_table',array('pyts'=>$pyts, 'hide_title'=>true, 'customer'=>true,'sums'=>$sumPyts));
+echo $this->element('../paiements/payments_table',array('checkbox'=>true, 'pyts'=>$pyts, 'hide_title'=>true, 'customer'=>true,'sums'=>$sumPyts));
 ?>
 </div>
 </div>
@@ -47,7 +47,8 @@ echo $this->element('../paiements/payments_table',array('pyts'=>$pyts, 'hide_tit
     <li class="link" onclick = "print_documents()" >Print</li>  
     <li class="link" onclick = "pyt(null, 'deposit')" >Create Deposit Payment</li>
     <?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))) :?>
-      <li class="link" onclick = "remove_pyt('off')" >Delete a Deposit</li>
+      <li class= "link" onclick = "edit('pyts')" >Edit</li>
+      <li class="link" onclick = "remove_pyt('off')" >Delete a Deposit Payment</li>
     <?php endif;?>
     <li class="link"  onclick = "recherche()" >Search Options</li>
     <li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
@@ -56,3 +57,4 @@ echo $this->element('../paiements/payments_table',array('pyts'=>$pyts, 'hide_tit
 
 <!--paiement box-->
 <?php echo $this->element('../paiements/edit',array('reste'=>0,'action'=>'add','deposit'=>true));?>
+<div id="pyt_edit_boxe"></div>

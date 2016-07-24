@@ -655,66 +655,83 @@ class OperationsController extends AppController {
 		$conditions['Operation.model']='Type';
 
 	
-		$this->loadModel('Facture');
-		$this->loadModel('Section');
-		$this->loadModel('Vente');
+		// $this->loadModel('Facture');
+		// $this->loadModel('Section');
+		// $this->loadModel('Vente');
 		
-		$factures=$this->Facture->find('all',array('fields'=>array('Facture.montant',
-																	'Facture.operation',
-																	'Facture.monnaie'
-																	),
-													'conditions'=>array('Facture.Operation'=>array('Reservation','Service','Location'),
-																	    'Facture.etat'=>array('paid','credit','half_paid','excedent'),
-																		'Facture.monnaie !='=>'',
-																		'OR'=>array(
-																				array('Facture.date >='=>$date1,'Facture.date <='=>$date2),
-																				array('Facture.id'=>$this->Product->factures($date1, $date2))
-																				)
-																		),
-																));
-		$model['Reservation']=$model['Location']=$model['Service']=0;
+		// $factures=$this->Facture->find('all',array('fields'=>array('Facture.montant',
+		// 															'Facture.operation',
+		// 															'Facture.monnaie'
+		// 															),
+		// 											'conditions'=>array('Facture.Operation'=>array('Reservation','Service','Location'),
+		// 															    'Facture.etat'=>array('paid','credit','half_paid','excedent'),
+		// 																'Facture.monnaie !='=>'',
+		// 																'OR'=>array(
+		// 																		array('Facture.date >='=>$date1,'Facture.date <='=>$date2),
+		// 																		array('Facture.id'=>$this->Product->factures($date1, $date2))
+		// 																		)
+		// 																),
+		// 														));
+		// $model['Reservation']=$model['Location']=$model['Service']=0;
 		
-		foreach($factures as $facture){
-			if($facture['Facture']['operation']=='Reservation'){
-				$this->Product->extract_amount($facture,$date1,$date2);
-			}
-			$model[$facture['Facture']['operation']]+=$facture['Facture']['montant']*$devise[$facture['Facture']['monnaie']];	
-		}
+		// foreach($factures as $facture){
+		// 	if($facture['Facture']['operation']=='Reservation'){
+		// 		$this->Product->extract_amount($facture,$date1,$date2);
+		// 	}
+		// 	$model[$facture['Facture']['operation']]+=$facture['Facture']['montant']*$devise[$facture['Facture']['monnaie']];	
+		// }
 		
-		$total_ventes=0;
-		if(Configure::read('aser.hotel'))										
-			$total_ventes+=$model['Reservation'];
-		if(Configure::read('aser.conference'))
-			$total_ventes+=$model['Location'];
-		if(Configure::read('aser.services'))
-			$total_ventes+=$model['Service'];
+		// $total_ventes=0;
+		// if(Configure::read('aser.hotel'))										
+		// 	$total_ventes+=$model['Reservation'];
+		// if(Configure::read('aser.conference'))
+		// 	$total_ventes+=$model['Location'];
+		// if(Configure::read('aser.services'))
+		// 	$total_ventes+=$model['Service'];
 	
-		$sections=$this->Section->find('all',array('fields'=>array('Section.name','Section.id'),
-												));
-		foreach($sections as $j=>$section){
-			$groupes=$this->Section->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.id'),
-															'conditions'=>array('Groupe.section_id'=>$section['Section']['id'])
-												));
-			$ventes=$this->Vente->find('all',array('fields'=>array('Facture.reduction',
-																	'sum(Vente.montant) as montant'
-																	),
-														'conditions'=>array('Produit.groupe_id'=>$groupes, 
-																			'Facture.date >='=>$date1,
-																	    	'Facture.date <='=>$date2,
-																	    	'Facture.etat'=>array('paid','credit','half_paid','excedent'),
-																	    	'Facture.monnaie !='=>''
-																			),
-														'group'=>array('Facture.id')
-													));
-			$total=0;										
-			foreach($ventes as $vente){
-				$total+=$vente['Vente']['montant']-($vente['Vente']['montant']*$vente['Facture']['reduction']/100);
-			}
-			$sections[$j]['Section']['montant']=$total;
-			$total_ventes+=$total;
-		}
+		// $sections=$this->Section->find('all',array('fields'=>array('Section.name','Section.id'),
+		// 										));
+		// foreach($sections as $j=>$section){
+		// 	$groupes=$this->Section->Groupe->find('list',array('fields'=>array('Groupe.id','Groupe.id'),
+		// 													'conditions'=>array('Groupe.section_id'=>$section['Section']['id'])
+		// 										));
+		// 	$ventes=$this->Vente->find('all',array('fields'=>array('Facture.reduction',
+		// 															'sum(Vente.montant) as montant'
+		// 															),
+		// 												'conditions'=>array('Produit.groupe_id'=>$groupes, 
+		// 																	'Facture.date >='=>$date1,
+		// 															    	'Facture.date <='=>$date2,
+		// 															    	'Facture.etat'=>array('paid','credit','half_paid','excedent'),
+		// 															    	'Facture.monnaie !='=>''
+		// 																	),
+		// 												'group'=>array('Facture.id')
+		// 											));
+		// 	$total=0;										
+		// 	foreach($ventes as $vente){
+		// 		$total+=$vente['Vente']['montant']-($vente['Vente']['montant']*$vente['Facture']['reduction']/100);
+		// 	}
+		// 	$sections[$j]['Section']['montant']=$total;
+		// 	$total_ventes+=$total;
+		// }
 		
-	
+		$deposits=$this->Operation->find('all',array('fields'=>array('Operation.*','sum(Operation.credit) as credit','Type.name'),
+                                    'conditions'=>array(
+                                    										'Operation.model'=>'Type',
+                                    										'Operation.credit >'=>0,
+                                    										'Operation.date >='=>$date1,
+                                    										'Operation.date <='=>$date2,
+                                    									),
+                                    'group'=>array('Operation.element_id','Operation.monnaie'),
+                                    'order'=>array('Type.name')
+                                    )
+                                  );
+    $total_deposits=0;
+    foreach($deposits as $dkey => $deposit){
+    	$converted_amount = $deposit['Operation']['credit'] * $devise[$deposit['Operation']['monnaie']];
+      $total_deposits+=$converted_amount;
+      $deposits[$dkey]['Operation']['credit'] = $converted_amount;
+    } 
+
 		
 		$depenses=$this->Operation->Type->find('all',array('fields'=>array('Type.name','Type.id','Type.categorie'),
 													'order'=>array('Type.name'),
@@ -737,31 +754,38 @@ class OperationsController extends AppController {
 													'conditions'=>$conditions,
 													'group'=>array('Operation.monnaie')
 												));
-			$montantTotal=0;
 			foreach($sums as $sum){
 				$montant=(isset($sum['Operation']['debit']))?$sum['Operation']['debit']:0;
-				$montantTotal+=$montant*$devise[$sum['Operation']['monnaie']];
+				$converted_amount = $montant * $devise[$sum['Operation']['monnaie']];
+				$depenses_by_categories[$depense['Type']['categorie']]['depenses'][$i]['montant']=$converted_amount;
+
+				if($monnaie != $sum['Operation']['monnaie']){
+					$custom_name = $depenses[$i]['Type']['name'].'<span class="small_highlight"> (converted from '.$sum['Operation']['monnaie'].')</span>';
+					$depenses_by_categories[$depense['Type']['categorie']]['depenses'][$i]['name'] = $custom_name;
+				}
+				else {
+					$depenses_by_categories[$depense['Type']['categorie']]['depenses'][$i]['name'] = $depense['Type']['name'];
+				}
+				
+				$depenses_by_categories[$depense['Type']['categorie']]['montant']+=$converted_amount;
+				$total_depenses+=$depenses[$i]['Type']['montant']=$converted_amount;
 			}
-			$total_depenses+=$depenses[$i]['Type']['montant']=$montantTotal;
-			$depenses_by_categories[$depense['Type']['categorie']]['depenses'][$i]=$depenses[$i]['Type'];
-			$depenses_by_categories[$depense['Type']['categorie']]['montant']+=$montantTotal;
 		}
 		
-		$sortis=$this->Sorti->find('all',array('fields'=>array('sum(Sorti.montant) as montant'),
-																				'conditions'=>array('Sorti.date >='=>$date1,
-																													'Sorti.date <='=>$date2
-																														)
-																	));
+		// $sortis=$this->Sorti->find('all',array('fields'=>array('sum(Sorti.montant) as montant'),
+		// 																		'conditions'=>array('Sorti.date >='=>$date1,
+		// 																											'Sorti.date <='=>$date2
+		// 																												)
+		// 															));
 
-		$total_sortis = (!empty($sortis[0]))?$sortis[0]['Sorti']['montant']:0;
-		$depenses_by_categories[1]['montant']+=$total_sortis;
+		// $total_sortis = (!empty($sortis[0]))?$sortis[0]['Sorti']['montant']:0;
+		// $depenses_by_categories[1]['montant']+=$total_sortis;
 
-		$marge_brute=$total_ventes - $depenses_by_categories[1]['montant'];
-		$marge_exploitation = $marge_brute - $depenses_by_categories[2]['montant'] - $depenses_by_categories[3]['montant'];
-		$marge_net = $marge_exploitation - $depenses_by_categories[4]['montant'];
+		// $marge_brute=$total_deposits - $depenses_by_categories[1]['montant'];
+		// $marge_exploitation = $marge_brute - $depenses_by_categories[2]['montant'] - $depenses_by_categories[3]['montant'];
+		$marge_net = $total_deposits - $total_depenses;
 
-
-		$this->set(compact('model','sections','date1','date2','monnaie','total_ventes','taux',
+		$this->set(compact('total_depenses','model','sections','date1','date2','monnaie','total_ventes','taux','deposits','total_deposits',
 												'marge_brute','marge_exploitation','marge_net','total_sortis','depenses_by_categories'
 			));
 	}

@@ -7,7 +7,7 @@
 
 <?php 
 if(isset($checkbox))
-echo $this->Form->create('Paiement',array('name'=>'pyts','action'=>'delete'));
+echo $this->Form->create('Paiement',array('name'=>'pyts','action'=>'delete', 'id'=>'Paiement_paiements'));
 ?>
 <table cellpadding="0" cellspacing="0" id="pytTab">
 	<tr>

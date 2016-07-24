@@ -984,8 +984,8 @@ function quantites() {
 	}
 }
 
-function edit(){
-	var nom='checkbox';
+function edit(nom){
+	nom= (nom == undefined) ? 'checkbox' : nom;
 	//to get the model and the controller
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
 	controller= (info.split('_').length == 2) ? info.split('_')[1] : info.split('_')[1]+'_'+info.split('_')[2];
@@ -995,7 +995,7 @@ function edit(){
 		var tr =jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked').parents('tr');
 		jQuery('<div id="edit_boxe" title="Edit Form"></div>').insertAfter('body');
    		     		jQuery('#edit_boxe').dialog({ modal:true, 
-    		               width:400,
+    		               width:450,
     		               position:'center',
     		               global:false,
     		               buttons: { "Edit": function() {
@@ -1003,12 +1003,17 @@ function edit(){
 							            dataType:'json',
 							             success:function(ans){
 							             	if(ans.success){
+                                                if(ans.reload){
+                                                    location.reload();
+                                                }
 							             		jQuery.ajax({
 							             			type:'get',
 							             			url:getBase()+controller+"/edit/"+id+'/no',
 							             			success:function(ans){
 							             				jQuery(tr).replaceWith(ans);
 							             				jQuery('#edit_boxe').dialog("close");
+
+                                                        
 							             			}
 							             		});
 							             		
@@ -1641,21 +1646,23 @@ function table_state(table){
 
 function paiement_touch(factureId,moveOn, hide_pyt_mode_boxe){
     if(factureId!=0){
- 	  if(displayed==0){
-		displayed=1;
-		jQuery('span[name="payment"]').attr('class','boutton'); //removing the selected button
-		jQuery('span[value="'+payed+'"]').attr('class','boutton_selected'); //assigning the payed button the selected class
+ 	    if(displayed==0){
+            displayed=1;
+		    jQuery('span[name="payment"]').attr('class','boutton'); //removing the selected button
+		    jQuery('span[value="'+payed+'"]').attr('class','boutton_selected'); //assigning the payed button the selected class
 		
-		//reset list of clients
-		jQuery('select#tierId option').show();
-		jQuery('input#avance').val(parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text()));
-		jQuery('#paiement_form').show();
-		var goOn=false;
-	   }
-	   else {
-	       var goOn=true;
-		  displayed=0;
-		}
+    		//reset list of clients
+    		jQuery('select#tierId option').show();
+            if(hide_pyt_mode_boxe == undefined){
+    		  jQuery('input#avance').val(parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text()));
+            }
+    		jQuery('#paiement_form').show();
+    		var goOn=false;
+    	}
+    	else {
+    	   var goOn=true;
+    	   displayed=0;
+    	}
 
  		var tier_id=jQuery('#tierId').val();
  		var cash=parseInt(jQuery('input#avance').val());
@@ -1663,103 +1670,104 @@ function paiement_touch(factureId,moveOn, hide_pyt_mode_boxe){
  		reduction=(reduction>0)?reduction:-1;
  		var etat='credit';
  		
- 	  if((moveOn==undefined)){
-        if(((payed==1)||(payed==4))&& (hide_pyt_mode_boxe == undefined)){
-            goOn=false;
-            jQuery('#pyt_boxe').dialog({
-                modal:true, 
-                width:400,
-                position:'top',
-                buttons: { 
-                    "Save": function() {
-                        goOn=true;
-                         mode=jQuery('#mode').val();
-                         ref=jQuery('#ref').val();
-                         equi=jQuery('#equi').val();
-                         if(equi!=''){
-                             monnaie=jQuery('#monnaie').val();
-                         }
-                        jQuery(this).dialog('close');
-                        paiement_touch(factureId,undefined, true);
+ 	    if((moveOn==undefined)){
+            if(((payed==1)||(payed==4))&& (hide_pyt_mode_boxe == undefined)){
+                goOn=false;
+                jQuery('#pyt_boxe').dialog({
+                    modal:true, 
+                    width:400,
+                    position:'top',
+                    buttons: { 
+                        "Save": function() {
+                            goOn=true;
+                             mode=jQuery('#mode').val();
+                             ref=jQuery('#ref').val();
+                             equi=jQuery('#equi').val();
+                             if(equi!=''){
+                                 monnaie=jQuery('#monnaie').val();
+                             }
+                            jQuery(this).dialog('close');
+                            paiement_touch(factureId,undefined, true);
+                        }
                     }
-                }
-            });
-        }
- 		if((payed==2)||(payed==3)){
- 			goOn=false;
- 		 	jQuery('div#annulation').dialog({
-  	 			modal:true, 
-    			width:300,
-    			position:'top',
-	    		buttons: { 
-    				"Cancel": function() { jQuery(this).dialog("close"); 
-    									goOn=false;
-    					}
-    			}
-    		}).attr('action','paiement');;
- 		}
- 		else if(payed==1){
- 			var avance=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
- 			var etat='paid';
- 		}
- 		else {
-  			var avance=parseInt(jQuery('input#avance').val());
-  			var montant=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
-  			var etat='half_paid';
-  		}
+                });
+            }
+            else {
+                goOn= true
+            }
+ 		    if((payed==2)||(payed==3)){
+     			goOn=false;
+     		 	jQuery('div#annulation').dialog({
+      	 			modal:true, 
+        			width:300,
+        			position:'top',
+    	    		buttons: { 
+        				"Cancel": function() { jQuery(this).dialog("close"); 
+        									goOn=false;
+        					}
+        			}
+        		}).attr('action','paiement');;
+ 		    }    
+     		else if(payed==1){
+     			var avance=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
+     			var etat='paid';
+     		}
+     		else {
+      			var avance=parseInt(jQuery('input#avance').val());
+      			var montant=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
+      			var etat='half_paid';
+      		}
  		
- 		
- 		
- 		if((jQuery('input#avance').val()=='')&&(payed==1)){
- 			
- 			alert('the cash field is not completed!');
- 			goOn=false;
- 		}
- 		else if((parseInt(jQuery('input#change').val())<0)&&(payed==1)){
- 			
- 			alert('Insufficient Cash!');
- 			goOn=false;
- 		}
- 		else if((payed==4)&&!((avance<montant)&&(avance>0))){
- 			alert('this amount is not a correct deposit!');
- 			goOn=false;
- 		}
- 	}
- 	else {
- 		if(payed==2){
- 			jQuery('input#avance').val(0);
- 			var avance=0;
- 			var etat='credit';
- 		}
- 		else if(payed==3){
- 			var avance=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
- 			var etat='bonus';
- 		}
- 		goOn=true;
- 	}
- 	if(goOn){
- 		jQuery.ajax({
- 			type:'POST',
- 			url:getBase()+'ventes/paiement/',
- 			data:{'data[Vente][factureId]':factureId,
- 				'data[Vente][avance]':avance,
- 				'data[Vente][tier_id]':tier_id,
- 				'data[Vente][reduction]':reduction,
- 				'data[Vente][cash]':cash,
- 				'data[Vente][etat]':etat,
- 				'data[Vente][montant]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(),
- 				'data[Vente][original]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(),
- 				'data[Vente][date]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="date"]').text(),
- 				'data[Vente][journal_id]':jQuery('table#list_factures tr[id="'+factureId+'"]').attr('journal'),
-                'data[Paiement][mode_paiement]':mode,
-                'data[Paiement][reference]':ref,
-                'data[Paiement][montant_equivalent]':equi,
-                'data[Paiement][monnaie]':monnaie,
- 				},
- 			dataType:'JSON',
- 			success:function(response){
- 				if(response.success) {
- 					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text(response.etat);
+     		if((jQuery('input#avance').val()=='')&&(payed==1)){
+     			
+     			alert('the cash field is not completed!');
+     			goOn=false;
+     		}
+     		else if((parseInt(jQuery('input#change').val())<0)&&(payed==1)){
+     			
+     			alert('Insufficient Cash!');
+     			goOn=false;
+     		}
+     		else if((payed==4)&&!((avance<montant)&&(avance>0))){
+     			alert('this amount is not a correct deposit!');
+     			goOn=false;
+     		}
+     	}
+     	else {
+     		if(payed==2){
+     			jQuery('input#avance').val(0);
+     			var avance=0;
+     			var etat='credit';
+     		}
+     		else if(payed==3){
+     			var avance=parseInt(jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text());
+     			var etat='bonus';
+     		}
+     		goOn=true;
+     	}
+ 	    if(goOn){
+ 		    jQuery.ajax({
+     			type:'POST',
+     			url:getBase()+'ventes/paiement/',
+     			data:{'data[Vente][factureId]':factureId,
+     				'data[Vente][avance]':avance,
+     				'data[Vente][tier_id]':tier_id,
+     				'data[Vente][reduction]':reduction,
+     				'data[Vente][cash]':cash,
+     				'data[Vente][etat]':etat,
+     				'data[Vente][montant]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(),
+     				'data[Vente][original]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(),
+     				'data[Vente][date]':jQuery('table#list_factures tr[id="'+factureId+'"] td[id="date"]').text(),
+     				'data[Vente][journal_id]':jQuery('table#list_factures tr[id="'+factureId+'"]').attr('journal'),
+                    'data[Paiement][mode_paiement]':mode,
+                    'data[Paiement][reference]':ref,
+                    'data[Paiement][montant_equivalent]':equi,
+                    'data[Paiement][monnaie]':monnaie,
+     				},
+     			dataType:'JSON',
+     			success:function(response){
+     				if(response.success) {
+     					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="etat"]').text(response.etat);
  					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="montant"]').text(response.montant);
  					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="original"]').text(response.original);
  					jQuery('table#list_factures tr[id="'+factureId+'"] td[id="reduction"]').text(response.reduction);

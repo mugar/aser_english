@@ -1125,7 +1125,7 @@ class FacturesController extends AppController {
 																	),
 																	'conditions'=>array('Paiement.date'=>$date,
 																						'Facture.monnaie !='=>'',
-																						'NOT'=>array('Paiement.mode_paiement'=>array('','transfer','remboursement')),
+																						'NOT'=>array('Paiement.mode_paiement'=>array('','transfer','refund')),
 																						'Facture.etat'=>array('paid','credit','bonus','half_paid','excedent')
 																						),
 																	));

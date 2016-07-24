@@ -36,65 +36,76 @@
 		<?php 
 			
 				echo '<tr class="categorie">';
-				echo '<td colspan="2">INCOME</td>';
+				echo '<td colspan="2">DEPOSITS</td>';
 				echo '</tr>';
 				
-			foreach($sections as $section) {
-				if($section['Section']['montant']>0){
+				foreach($deposits as $deposit) {
 					echo '<tr>';
-					echo '<td>'.$this->Html->link($section['Section']['name'], array('controller' => 'ventes', 'action' => 'consommations', $section['Section']['id'],$date1,$date2),array('target'=>'blank')).'</td>';
-					echo '<td >'. $number->format($section['Section']['montant'],$formatting).'</td>';
+					echo '<td>'.$deposit['Type']['name'];
+					if($deposit['Operation']['monnaie'] != $monnaie){
+						echo ' <span class="small_highlight"> (converted from '.$deposit['Operation']['monnaie'].')</span>';
+					}
+					echo '</td>';
+					echo '<td >'. $number->format($deposit['Operation']['credit'],$formatting).' '.$monnaie.'</td>';
 					echo '</tr>';
 				}
-			}
-			if(Configure::read('aser.hotel')){
-				echo '<tr>';
-				echo '<td>'.$this->Html->link('ACCOMODATION', array('controller' => 'reservations', 'action' => 'monthly',$date1,$date2),array('target'=>'blank')).'</td>';
-				echo '<td >'. $number->format($model['Reservation'],$formatting).'</td>';
-				echo '</tr>';
-			}
-			if(Configure::read('aser.conference')){
-				echo '<tr>';
-				echo '<td>'.$this->Html->link('CONFERENCE ROOM', array('controller' => 'locations', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
-				echo '<td >'. $number->format($model['Location'],$formatting).'</td>';
-				echo '</tr>';
-			}
-			if(Configure::read('aser.services')){
-				echo '<tr>';
-				echo '<td>'.$this->Html->link('EXTRAS SERVICES', array('controller' => 'services', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
-				echo '<td >'. $number->format($model['Service'],$formatting).'</td>';
-				echo '</tr>';
-			}
+			
+			// foreach($sections as $section) {
+			// 	if($section['Section']['montant']>0){
+			// 		echo '<tr>';
+			// 		echo '<td>'.$this->Html->link($section['Section']['name'], array('controller' => 'ventes', 'action' => 'consommations', $section['Section']['id'],$date1,$date2),array('target'=>'blank')).'</td>';
+			// 		echo '<td >'. $number->format($section['Section']['montant'],$formatting).'</td>';
+			// 		echo '</tr>';
+			// 	}
+			// }
+			// if(Configure::read('aser.hotel')){
+			// 	echo '<tr>';
+			// 	echo '<td>'.$this->Html->link('ACCOMODATION', array('controller' => 'reservations', 'action' => 'monthly',$date1,$date2),array('target'=>'blank')).'</td>';
+			// 	echo '<td >'. $number->format($model['Reservation'],$formatting).'</td>';
+			// 	echo '</tr>';
+			// }
+			// if(Configure::read('aser.conference')){
+			// 	echo '<tr>';
+			// 	echo '<td>'.$this->Html->link('CONFERENCE ROOM', array('controller' => 'locations', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
+			// 	echo '<td >'. $number->format($model['Location'],$formatting).'</td>';
+			// 	echo '</tr>';
+			// }
+			// if(Configure::read('aser.services')){
+			// 	echo '<tr>';
+			// 	echo '<td>'.$this->Html->link('EXTRAS SERVICES', array('controller' => 'services', 'action' => 'rapport',$date1,$date2),array('target'=>'blank')).'</td>';
+			// 	echo '<td >'. $number->format($model['Service'],$formatting).'</td>';
+			// 	echo '</tr>';
+			// }
 				echo '<tr class="sous_total">';
-				echo '<td>SALES TOTAL</td>';
-				echo '<td >'. $number->format($total_ventes,$formatting).'</td>';
+				echo '<td>DEPOSITS TOTAL</td>';
+				echo '<td >'. $number->format($total_deposits,$formatting).' '.$monnaie.'</td>';
 				echo '</tr>';
 
 				echo '<tr class="categorie">';
 				echo '<td colspan="2">- '.Configure::read('categories.1').'</td>';
 				echo '</tr>';
 
-			if(Configure::read('aser.stock')){
-				echo '<tr>';
-				echo '<td>INVENTORY CONSUMPTIONS</td>';
-				echo '<td>'. $number->format($total_sortis,$formatting).'</td>';
-				echo '</tr>';
-			}
+			// if(Configure::read('aser.stock')){
+			// 	echo '<tr>';
+			// 	echo '<td>INVENTORY CONSUMPTIONS</td>';
+			// 	echo '<td>'. $number->format($total_sortis,$formatting).'</td>';
+			// 	echo '</tr>';
+			// }
 				
 			foreach($depenses_by_categories[1]['depenses'] as $depense) {
 				echo '<tr width="400">';
 				echo '<td>'.$depense['name'].'</td>'; 
-				echo '<td >'. $number->format($depense['montant'],$formatting).'</td>';
+				echo '<td >'. $number->format($depense['montant'],$formatting).' '.$monnaie.'</td>';
 				echo '</tr>';
 			}
 				echo '<tr class="sous_total">';
 				echo '<td>TOTAL '.strtoupper(Configure::read('categories.1')).'</td>';
-				echo '<td >'. $number->format($depenses_by_categories[1]['montant'],$formatting).'</td>';
+				echo '<td >'. $number->format($depenses_by_categories[1]['montant'],$formatting).' '.$monnaie.'</td>';
 				
-				echo '<tr class="strong">';
-				echo '<td >GROSS MARGIN</td>';
-				echo '<td >'. $number->format($marge_brute,$formatting).'</td>';
-				echo '</tr>';
+				// echo '<tr class="strong">';
+				// echo '<td >GROSS MARGIN</td>';
+				// echo '<td >'. $number->format($marge_brute,$formatting).'</td>';
+				// echo '</tr>';
 
 
 				echo '<tr class="categorie">';
@@ -103,12 +114,12 @@
 				foreach($depenses_by_categories[2]['depenses'] as $depense) {
 				echo '<tr width="400">';
 				echo '<td>'.$depense['name'].'</td>'; 
-				echo '<td >'. $number->format($depense['montant'],$formatting).'</td>';
+				echo '<td >'. $number->format($depense['montant'],$formatting).' '.$monnaie.'</td>';
 				echo '</tr>';
 			}
 				echo '<tr class="sous_total">';
 				echo '<td>TOTAL '.strtoupper(Configure::read('categories.2')).'</td>';
-				echo '<td >'. $number->format($depenses_by_categories[2]['montant'],$formatting).'</td>';
+				echo '<td >'. $number->format($depenses_by_categories[2]['montant'],$formatting).' '.$monnaie.'</td>';
 				echo '</tr>';
 				// echo '<tr class="strong">';
 				// echo '<td >TEMPORARY MARGIN</td>';
@@ -122,16 +133,16 @@
 				foreach($depenses_by_categories[3]['depenses'] as $depense) {
 				echo '<tr width="400">';
 				echo '<td>'.$depense['name'].'</td>'; 
-				echo '<td >'. $number->format($depense['montant'],$formatting).'</td>';
+				echo '<td >'. $number->format($depense['montant'],$formatting).' '.$monnaie.'</td>';
 				echo '</tr>';
 			}
 				echo '<tr class="sous_total">';
 				echo '<td>TOTAL '.strtoupper(Configure::read('categories.3')).'</td>';
-				echo '<td >'. $number->format($depenses_by_categories[3]['montant'],$formatting).'</td>';
+				echo '<td >'. $number->format($depenses_by_categories[3]['montant'],$formatting).' '.$monnaie.'</td>';
 				echo '<tr class="strong">';
-				echo '<td >OPERATING MARGIN</td>';
-				echo '<td >'. $number->format($marge_exploitation,$formatting).'</td>';
-				echo '</tr>';
+				// echo '<td >OPERATING MARGIN</td>';
+				// echo '<td >'. $number->format($marge_exploitation,$formatting).'</td>';
+				// echo '</tr>';
 
 				echo '<tr class="categorie">';
 				echo '<td colspan="2">- '.Configure::read('categories.4').'</td>';
@@ -140,15 +151,15 @@
 				foreach($depenses_by_categories[4]['depenses'] as $depense) {
 				echo '<tr width="400">';
 				echo '<td>'.$depense['name'].'</td>'; 
-				echo '<td >'. $number->format($depense['montant'],$formatting).'</td>';
+				echo '<td >'. $number->format($depense['montant'],$formatting).' '.$monnaie.'</td>';
 				echo '</tr>';
 			}
 				echo '<tr class="sous_total">';
 				echo '<td>TOTAL '.strtoupper(Configure::read('categories.4')).'</td>';
-				echo '<td>'. $number->format($depenses_by_categories[4]['montant'],$formatting).'</td>';
+				echo '<td>'. $number->format($depenses_by_categories[4]['montant'],$formatting).' '.$monnaie.'</td>';
 				echo '<tr class="strong">';
-				echo '<td >NET MARGIN</td>';
-				echo '<td >'. $number->format($marge_net,$formatting).'</td>';
+				echo '<td >MARGIN</td>';
+				echo '<td >'. $number->format($marge_net,$formatting).' '.$monnaie.' </td>';
 				echo '</tr>';
 		?>
 </table>

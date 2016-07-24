@@ -108,7 +108,8 @@ class Historique extends AppModel {
 	}
 
 	function beforeSave($options){
-		if($this->data['Historique']['libelle'] && $this->data['Historique']['quantite']){
+		// exit(debug($options));
+		if(!empty($this->data['Historique']['libelle']) && !empty($this->data['Historique']['quantite'])){
 			if(in_array($this->data['Historique']['libelle'], array('Sorti','Perte'))){
 				$this->data['Historique']['debit'] = null;
 				$this->data['Historique']['credit'] = $this->data['Historique']['quantite'];

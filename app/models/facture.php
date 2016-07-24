@@ -152,7 +152,7 @@ class Facture extends AppModel {
 		//calcul de l'etat
 		if($facture['reste']==0) $facture['etat']='paid';
 		elseif ($facture['reste']==$facture['montant']) $facture['etat']='credit';
-		elseif (($facture['reste']>0)&&($facture['reste']<$facture['montant'])) $facture['etat']='avance';
+		elseif (($facture['reste']>0)&&($facture['reste']<$facture['montant'])) $facture['etat']='half_paid';
 		elseif ($facture['reste']<0) {
 			$facture['etat']='excedent'; 
 		}

@@ -100,8 +100,8 @@
 				<th>Qty</th>
 			<?php endif; ?>
 			<th>Product</th>
-			<th>Unit P</th>
-			<th>Total P</th>
+			<th>UP</th>
+			<th>TP</th>
 		</tr>
 		<?php
 		foreach ($ventes as $vente):

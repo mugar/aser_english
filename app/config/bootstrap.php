@@ -68,7 +68,7 @@
 								 'beneficiaires'=>0, // a activer si l'entreprise accepte que des clients prennent des produits sur le compte des autres 
 								 'detailed_ben'=>0, // a activer pour les pharmacies qui travaillent les mutuelles d'assurance 
 								 'extras'=>0, //toujours desactiver
-								 'conference'=>1, //a activer pour le module de gestion des salles de conference
+								 'conference'=>0, //a activer pour le module de gestion des salles de conference
 								 'tva'=>1, // a activer si l'entreprise est soumise a la tva et mettre son taux.
 								 'name'=>'aser_english', // nom du dossier qui contient le logiciel ,
 								 'upload'=>0, // a activer pour ceux qui ulitise la version touchscreen du point de vente
@@ -124,7 +124,7 @@
 								 'disable_nembeteplus'=>0, //when managers want to force the closing of the report.
 								 'export_bills'=>1, //option payant of exporting bills to xls
 								 'belair'=>1,
-									'gestion_reduction'=>1,
+									'gestion_reduction'=>0,
 								//	'kcc'=>0, // to enable/disable Kings conference specific features
 									'xls_copy'=>0,
 									'all_company_info'=>1

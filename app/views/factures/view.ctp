@@ -132,7 +132,7 @@
 	<tr>
 		<?php if(Configure::read('aser.beneficiaires')&&!empty($facture['Facture']['beneficiaire'])):?>
 			<th>Date</th>
-			<th>Béneficiaire</th>
+			<th>Beneficiary</th>
 		<?php endif; ?>
 			<th>Product</th>
 			<th>Quantity</th>

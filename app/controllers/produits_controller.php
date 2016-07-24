@@ -110,7 +110,7 @@ class ProduitsController extends AppController {
 					$newPyt['id']=NULL;
 					$newPyt['montant']=$diff;
 					$newPyt['montant_equivalent']=NULL;
-					$newPyt['mode_paiement']=($diff>0)?'cash':'remboursement';
+					$newPyt['mode_paiement']=($diff>0)?'cash':'refund';
 					$newPyt['journal_id']=$paiement['Facture']['journal_id'];
 					$newPyt['facture_id']=$paiement['Facture']['id'];
 					$newPyt['reference']='ajustement';

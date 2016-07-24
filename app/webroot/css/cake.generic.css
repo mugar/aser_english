@@ -19,6 +19,11 @@
 
 /*** limits css ***/
 
+.small_highlight {
+	font-size: 10px;
+	color: blue;
+}
+
 .limit_table {
 	width: 150px;	
 }

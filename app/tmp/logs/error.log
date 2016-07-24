@@ -1447,3 +1447,22 @@ Aco: Historiques/index in [/var/www/aser_english/cake/libs/controller/components
 2016-07-22 19:28:55 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Tier.name' in 'field list'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
 2016-07-22 19:28:56 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/paiements/payments_table.ctp, line 46]
 2016-07-22 20:04:23 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1452: Cannot add or update a child row: a foreign key constraint fails (`aser_english`.`paiements`, CONSTRAINT `paiement_facture` FOREIGN KEY (`facture_id`) REFERENCES `factures` (`id`) ON UPDATE CASCADE)</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-23 16:00:10 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [actif] => yes
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Paiements/edit in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]

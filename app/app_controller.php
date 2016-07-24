@@ -387,9 +387,9 @@ class AppController extends Controller {
 		$natures1=array(''=>'')+$natures;
 		$models=array(''=>'',
 					'Vente'=>'Restaurant',
-					'Location'=>'Conference Room',
+					// 'Location'=>'Conference Room',
 					'Reservation'=>'Bookings',
-					'Service'=>'Extras Services',
+					// 'Service'=>'Extras Services',
 					//'Proforma'=>'Proforma'
 					);
 		if(!in_array($this->params['controller'],array('tiers','reductions'))){

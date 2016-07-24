@@ -11,7 +11,7 @@
 					<ul>
 						<li class="folder"><?php echo $this->Html->link(__('Store Management', true), '/stocks/index'); ?></li>
 						<li class="folder"><?php echo $this->Html->link(__('Inventory Operations', true), '/historiques/index'); ?></li>
-						<li  class="folder"><?php echo $this->Html->link(__('Stock Movements', true), '/mouvements/index'); ?></li>
+						<li  class="folder"><?php echo $this->Html->link(__('Store Transfers', true), '/mouvements/index'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Products Movements Report', true), '/produits/balance'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Inventory Closing Report', true), '/produits/rapport'); ?></li>
 						<!-- <li class="rapport"><?php echo $this->Html->link(__('Evolution journalière', true), '/produits/monthly'); ?>
@@ -188,58 +188,33 @@
 					</ul>
 				</li>
 				<?php endif;?>
-				<li><?php echo $this->Html->link(__('Configuration', true), '#'); ?>
+				<li><?php echo $this->Html->link(__('Settings', true), '#'); ?>
 					<ul>
-						<li class="rapport"><?php echo $this->Html->link(__('Paramétrage du logiciel', true), '/configs/index'); ?></li>
-						<li class="rapport"><?php echo $this->Html->link(__('Sauvergarder la base de données', true), '/configs/backup'); ?></li>
+						<li class="rapport"><?php echo $this->Html->link(__('General Settings', true), '/configs/index'); ?></li>
+						<li class="rapport"><?php echo $this->Html->link(__('Export the Database', true), '/configs/backup'); ?></li>
 						<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3))):?>
-							<li class="rapport"><?php echo $this->Html->link(__('Importer la base de données', true), '/configs/restore_db'); ?></li>
-							<li class="rapport"><?php echo $this->Html->link(__('Réparer la base de données', true), '/configs/repair_all_tables'); ?>
-
-							<li class="rapport"><?php echo $this->Html->link(__('Delete complétement la base de données', true), '/configs/reset_db/complete'); ?></li>
-							<li class="rapport"><?php echo $this->Html->link(__('Delete juste les opérations dans base de données', true), '/configs/reset_db/partial'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Import the Database', true), '/configs/restore_db'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Repair the Database', true), '/configs/repair_all_tables'); ?>
+							<li class="rapport"><?php echo $this->Html->link(__('Delete all the Database Operations', true), '/configs/reset_db/partial'); ?></li>
+							<li class="rapport"><?php echo $this->Html->link(__('Delete completely the Database', true), '/configs/reset_db/complete'); ?></li>
 						<?php endif;?>
 						</li>
 					</ul>	
 				</li>
-				<li><?php echo $this->Html->link(__('Accès', true), '#'); ?>
+				<li><?php echo $this->Html->link(__('Users Management', true), '#'); ?>
 					<ul>
-						<li class="group"><?php echo $this->Html->link(__('Gestion des Fonctions', true), '/fonctions/index'); ?></li>
-						<li class="personnel"><?php echo $this->Html->link(__('Gestion du Personnel', true), '/personnels/index'); ?></li>
-						<li class="home_min"><?php echo $this->Html->link(__('Page d\'accueil', true), '/'); ?></li>
+						<li class="personnel"><?php echo $this->Html->link(__('Users Management', true), '/personnels/index'); ?></li>
 					</ul>
 				</li>
-				<li><a href="/manual/Index.html">Aide</a></li>
+				<!-- <li><a href="/manual/Index.html">Aide</a></li> -->
+				<li><?php echo $this->Html->link(__('Home Page', true), '/'); ?></li>
 				<li><?php echo $this->Html->link('Logout ('.$loggedUser.')', '/personnels/logout'); ?></li>
 			</ul>
 		</div>
 		<?php else: ?>
-		<div id="menu">
+		<div id="menu" >
 			<ul id="nav1">
-				<?php if($config['POS']||$config['stock']): ?>
-					<li> Stock </li>
-				<?php endif; ?>
-				<li> Customers & Invoices </li>
-				<?php if($config['POS']): ?>
-					<li>Point De Vente </li>
-				<?php endif; ?>
-				<?php if($config['hotel']): ?>
-					<li>Hébergement </li>
-				<?php endif; ?>
-				<?php if($config['conference']): ?>
-					<li>Salles de Conférence </li>
-				<?php endif; ?>
-				<?php if($config['services']): ?>
-					<li>Services </li>
-				<?php endif; ?>
-				<?php if($config['tresorerie']): ?>
-				<li>Trésorerie </li>
-				<?php endif; ?>
-				<?php if(false&&$config['comptabilite']): ?>
-					<li>Comptabilité </li>
-				<?php endif; ?>
-				<li>Configuration </li>
-				<li>Accès </li>
+					<li> </li>
 			</ul>
 		</div>
 	<?php endif; ?>

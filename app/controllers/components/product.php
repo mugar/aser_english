@@ -300,7 +300,7 @@ class ProductComponent extends Object {
 			if($this->data['Operation']['model1']=='caisses'){
 
 				if(($this->Operation->soldeCaisse($this->data['Operation']['element1'])-$this->data['Operation']['montant'])<0){
-					exit('failure_Erreur! La caisse source n\'a pas assez d\'argent!');
+					exit('failure_Error! The account doesn\'t have enough money!');
 				}
 			}
 			//adding ...
@@ -2338,7 +2338,7 @@ class ProductComponent extends Object {
 				if(($pyt['Paiement']['mode_paiement']=='cheque')&&($pyt['Paiement']['monnaie']=='EUR')){
 					continue;
 				}
-				if($pyt['Paiement']['mode_paiement']=='remboursement'){
+				if($pyt['Paiement']['mode_paiement']=='refund'){
 					$remb[$pyt['Facture']['monnaie']]+=$pyt['Paiement']['montant'];
 				}
 				else if(!empty($pyt['Paiement']['montant_equivalent'])){
@@ -2705,7 +2705,7 @@ class ProductComponent extends Object {
 	}
 		
 	function synthese_pyts($pyts){
-		$this->Controller->modePaiements =$this->Controller->modePaiements+array('remboursement'=>'remboursement');
+		$this->Controller->modePaiements =$this->Controller->modePaiements+array('refund'=>'refund');
 		foreach($this->Controller->monnaies as $monnaie){
 			$total[$monnaie]=0;
 			foreach($this->Controller->modePaiements as $mode=>$modePaiement)

@@ -360,7 +360,7 @@ class ReservationsController extends AppController {
 																									'OR'=>array('Facture.operation'=>array('Reservation','Service','Location'),
 																												'Personnel.fonction_id'=>array('4'),
 																												),
-																									'NOT'=>array('Paiement.mode_paiement'=>array('remboursement','transfer'))
+																									'NOT'=>array('Paiement.mode_paiement'=>array('refund','transfer'))
 																						)
 																		));
 		$total['USD']=$total['RWF']=$total['EUR']=0;  

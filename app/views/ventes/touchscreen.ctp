@@ -161,7 +161,7 @@
 <div id="flashMessage" class="message" style="display:none; margin-bottom:-90px; cursor:pointer" onclick="jQuery(this).hide();" title="Cliquer pour fermer le message"></div>
 <div id="tables" style="display:block">
 	<?php if($this->Session->read('resto_stock') && $this->Session->read('pos')):?>
-	<h3 style="text-align: center;"> Caissier : <?php echo $this->Session->read('Auth.Personnel.name');?> | Stock : <?php echo $stocks[$this->Session->read('resto_stock')].' | Place : '.$bars[$this->Session->read('pos')];?></h3>
+	<h3 style="text-align: center;"> Cashier : <?php echo $this->Session->read('Auth.Personnel.name');?> | Store : <?php echo $stocks[$this->Session->read('resto_stock')].' | Place : '.$bars[$this->Session->read('pos')];?></h3>
 	<?php endif;?>
 	<?php if(Configure::read('aser.magasin')){
 		$display='display:block;';
@@ -186,7 +186,7 @@
      	setInterval(function(){
      		update_tables();
      	},
-     	5000
+     	10000
      	)
      });
      </script>

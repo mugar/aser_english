@@ -48,7 +48,7 @@
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
-		<li><?php echo $this->Html->link('Gestions Des Factures', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>
+		<li><?php echo $this->Html->link('Invoice Management', array('controller' => 'factures', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link('Go back', $referer); ?> </li>
 	</ul>
 </div>

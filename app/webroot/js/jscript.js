@@ -2164,6 +2164,7 @@ function mass_pyt(reservation){
     }
 }
 
+
 function pyt(factureId,type){
   var action = getBase()+'paiements/add';
 	if(factureId==undefined){
@@ -2190,10 +2191,10 @@ function pyt(factureId,type){
 		var form='#transferAdd';
 		type='transfer';
 	}
-	else if(type=='remboursement'){
+	else if(type=='refund'){
 		var boxe='#remb_boxe';
 		var form='#rembAdd';
-		type='remboursement';
+		type='refund';
 	}
 	jQuery(boxe).dialog({
   	 		 modal:true, 

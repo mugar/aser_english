@@ -1,5 +1,5 @@
 <div class="mouvements index">
-	<h2><?php __('Stocks Movements');?></h2>
+	<h2><?php __('Store Transfers');?></h2>
 	
 	
 <div id="recherche_boxe" style="display:none" title="Search Options">

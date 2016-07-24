@@ -135,9 +135,9 @@
 <?php endforeach; ?>
 <? else : ?>
 <tr>
-			<th><? echo __('Service Type');?></th>
+			<th><? echo __('Room');?></th>
 			<th><? echo __('Qty');?></th>
-			<th><? echo __('PU');?></th>
+			<th><? echo __('Unit Price');?></th>
 			<th><? echo __('Total Price');?></th>
 	</tr>
 	<?php
@@ -429,7 +429,7 @@ else {
 			<li class="link" onclick = "edit_facture()" >Edit the Invoice</li>
 		<?php endif;?>
 		<li class="link"  onclick ="mass_pyt('on')">Create a Payment</li>
-		<li class="link"  onclick ="pyt(undefined,'remboursement')">Create un Reimboursement</li>
+		<li class="link"  onclick ="pyt(undefined,'refund')">Create a Refund</li>
 		<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle();" >Show/Hide Payments</li>
 		<li class="link"  onclick = "jQuery('#synthese_pyts').slideToggle();jQuery('#signature_client').toggle()" title="Afficher ou masquer la synthese des paiements">Recap of Payments</li>
 		<span id="pyts_links" style="display:none;">
@@ -461,7 +461,7 @@ else {
 <!--paiement box-->
 <?php echo $this->element('../paiements/edit',array('reste'=>0,'action'=>'mass_payment'));?>
 <!--pyt refund box-->
-<?php echo $this->element('../paiements/edit',array('reste'=>0,'action'=>'add','remboursement'=>true));?>
+<?php echo $this->element('../paiements/edit',array('reste'=>0,'action'=>'add','refund'=>true));?>
 
 <!--edit facture box -->
 <?php echo $this->element('../factures/edit',array('facture'=>$reservation['Facture']));?>

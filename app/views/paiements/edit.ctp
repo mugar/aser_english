@@ -39,28 +39,30 @@
 	});
 </script>
 <?php 
+	//exit(debug($dipslay_boxe));
 	if(isset($transfer)){
 		$title='Transfer de paiement';
 		$boxe="transfer_boxe";
-		$form="transferAdd";
+		$form_name="transferAdd";
 		$type='Transfer';
 	}
-	else if(isset($remboursement)){
-		$title='Reimboursement';
+	else if(isset($refund)){
+		$title='Refund';
 		$boxe="remb_boxe";
-		$form="rembAdd";
-		$type='remboursement';
+		$form_name="rembAdd";
+		$type='refund';
 	}	
 	else {
 		$title='Payment';
 		$boxe="pyt_boxe";
-		$form="pytAdd";
+		$form_name="pytAdd";
 		$type='Paiement';
 	}
+	$boxe = ($action == 'edit')? 'pyt_edit_boxe' : $boxe;
 ?>
-<div id="<?php echo $boxe;?>" style="display:none" title="Creation of a <?php echo $title;?>">
+<div id="<?php echo $boxe;?>" style="display:none;" title="Creation of a <?php echo $title;?>">
 <div class="dialog">
-	<?php echo $this->Form->create('Paiement',array('id'=>$form,'name'=>$form,'action'=>$action));?>
+	<?php echo $this->Form->create('Paiement',array('id'=>$form_name,'name'=>$form_name,'action'=>$action));?>
 	<span class="left">
 		<?php
 			if(isset($deposit)){
@@ -72,7 +74,7 @@
 			if(!isset($deposit)){
 				echo $this->Form->input('montant_equivalent',array('id'=>'equi', 'label'=>'Equivalent Amount',));	
 			}
-			if(!isset($remboursement)){
+			if(!isset($refund)){
 					$monnaie_options = array('id'=>'monnaie','label'=>'Currency');
 				if(!isset($deposit)){
 						$monnaie_options += array('disabled'=>'disabled');
@@ -83,7 +85,7 @@
 	</span>
 	<span class="right">
 		<?php
-			if(!isset($remboursement)){
+			if(!isset($refund)){
 				
 				echo $this->Form->input('mode_paiement',array('id'=>'mode','label'=>'Payment Mode'));
 				//transfer part
