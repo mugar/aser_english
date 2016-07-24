@@ -433,6 +433,8 @@ else {
 		<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle();" >Show/Hide Payments</li>
 		<li class="link"  onclick = "jQuery('#synthese_pyts').slideToggle();jQuery('#signature_client').toggle()" title="Afficher ou masquer la synthese des paiements">Recap of Payments</li>
 		<span id="pyts_links" style="display:none;">
+
+			<li class="link" onclick = "view_pyt()" >Show Payment Receipt</li>
 			<li class="link" onclick = "remove_pyt('on')" >Delete a Payment</li>
 		</span>
 		<?php if($payee=='no'):?>

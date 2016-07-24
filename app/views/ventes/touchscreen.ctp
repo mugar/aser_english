@@ -161,8 +161,9 @@
 <div id="flashMessage" class="message" style="display:none; margin-bottom:-90px; cursor:pointer" onclick="jQuery(this).hide();" title="Cliquer pour fermer le message"></div>
 <div id="tables" style="display:block">
 	<?php if($this->Session->read('resto_stock') && $this->Session->read('pos')):?>
-	<h3 style="text-align: center;"> Cashier : <?php echo $this->Session->read('Auth.Personnel.name');?> | Store : <?php echo $stocks[$this->Session->read('resto_stock')].' | Place : '.$bars[$this->Session->read('pos')];?></h3>
-	<?php endif;?>
+	<h3 style="text-align: center;"> Cashier : <?php echo $this->Session->read('Auth.Personnel.name');?> | Store : <?php echo $stocks[$this->Session->read('resto_stock')].' | <button style="height: 35px;" onclick="parameters()"> Place : '.$bars[$this->Session->read('pos')].'</button>';?>
+	<?php endif;?> 
+	</h3>
 	<?php if(Configure::read('aser.magasin')){
 		$display='display:block;';
 		
@@ -266,7 +267,7 @@
 				</tr>
 			</table>
 		</fieldset>
-		<fieldset id="actions"><legend>Actions</legend>
+		<fieldset class="actions"><legend>Actions</legend>
 			<?php 
 					$pId=$session->read('Auth.Personnel.id'); //personnel id
 					if(($mode!='serveur')&&empty($config['canceled'])

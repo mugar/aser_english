@@ -770,7 +770,7 @@ div#resto_layout_touch  span#second {
 	padding:0px;
 }
 
-div#resto_layout_touch  fieldset#actions {
+div#resto_layout_touch  fieldset.actions {
 	width:100%;
 	height:auto;
 	padding:0;
@@ -789,7 +789,7 @@ div#resto_layout_touch  span.bouttons {
 	padding:0px;
 }
 
-fieldset#actions .boutton,fieldset#actions .boutton_disabled, span.bouttons .boutton,span.bouttons .boutton_selected,div.bouttons {
+.boutton, fieldset.actions .boutton,fieldset.actions .boutton_disabled, span.bouttons .boutton,span.bouttons .boutton_selected,div.bouttons {
 	display: block;
 	float: left;
 	cursor:pointer;
@@ -817,7 +817,7 @@ div.bouttons {
 	width:200px;
 	padding:5px;
 }
-fieldset#actions .boutton_disabled{
+fieldset.actions .boutton_disabled{
 	background-image: -moz-linear-gradient(top, #EDEDED, #ccc);
 	color:#999;
 	border:1px solid #999;
@@ -1120,14 +1120,14 @@ div#resto_layout  span#third {
 	margin-left:15px;
 	padding:0px;
 }
-div#resto_layout  fieldset#actions {
+div#resto_layout  fieldset.actions {
 	clear: both;
 	width:1180px;
 	height:auto;
 	padding:0 10px;
 	margin:5px 15px;
 }
-fieldset#actions .boutton,fieldset#actions .boutton_disabled{
+fieldset.actions .boutton,fieldset.actions .boutton_disabled{
 	display: block;
 	float: left;
 	cursor:pointer;
@@ -1143,7 +1143,7 @@ fieldset#actions .boutton,fieldset#actions .boutton_disabled{
 	border-radius:4px;
 	text-shadow: #fff 0px 1px 0px;
 }
-fieldset#actions .boutton_disabled{
+fieldset.actions .boutton_disabled{
 	background-image: -moz-linear-gradient(top, #EDEDED, #ccc);
 	color:#999;
 	border:1px solid #999;

@@ -1134,7 +1134,7 @@ class ReservationsController extends AppController {
 																'Reservation.id'
 																),
 													'conditions'=>array('Reservation.id'=>$id)));
-													
+		$old_state = $info['Reservation']['etat']; 
 		//prevent any modification if the customer has already left
 		$fonction=$this->Auth->user('fonction_id');
 		if((in_array($info['Reservation']['etat'],array('checked_out','credit')))&&(!in_array($fonction,array(3,5)))){
@@ -1181,7 +1181,7 @@ class ReservationsController extends AppController {
 		//tracing stuff
 		$trace['Trace']['model_id']=$id;
 		$trace['Trace']['model']='Reservation';
-		$trace['Trace']['operation']='Change of state from  '.$info['Reservation']['etat'].' to '.$state;
+		$trace['Trace']['operation']='Change of state from  '.$old_state.' to '.$state;
 		$this->Reservation->Trace->save($trace);
 		exit(json_encode(array('success'=>true,'state'=>$state)));
 	}

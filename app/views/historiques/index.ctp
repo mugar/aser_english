@@ -156,7 +156,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class= "link" onclick="edit('historiques')" >Edit</li>
+		<li class= "link" onclick="edit()" >Edit</li>
 		<li class="link" onclick="mass_delete()" >Delete</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Generate Report', array('action' => 'rapport')); ?></li>

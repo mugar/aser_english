@@ -158,8 +158,8 @@ class HistoriquesController extends AppController {
 		if(!$this->Historique->validates()){
 			$this->_error($action, 'Les champs Quantité & Date sont Obligatoires!');
 		}
-		if(($action=='edit')&&($this->Auth->user('id')!=$data['Historique']['personnel_id'])){
-		//	exit(json_encode(array('success'=>false,'msg'=>'Seul le créateur peut effectuer la modification!')));	
+		if(($action=='edit')&&!(($this->Auth->user('id')==$data['Historique']['personnel_id'])||($this->Auth->user('fonction_id')==3))){
+			exit(json_encode(array('success'=>false,'msg'=>'Only the one who created this operation or an admin can edit it!')));	
 		}
 		if($data['Historique']['date']>date('Y-m-d')){
 			$this->_error($action, 'Cette date est incorrecte!');	
@@ -245,8 +245,11 @@ class HistoriquesController extends AppController {
 		$notDeleted=0;
 		foreach($this->data['Id'] as $id){
 			if($id!=0) {
-				if($this->Historique->delete($id)){
-						$deleted[]=$id;
+
+				$historique = $this->Historique->find('first',array('conditions'=>array('Historique.id'=>$id)));
+				if(($this->Auth->user('id')==$historique['Historique']['personnel_id'])||($this->Auth->user('fonction_id')==3)){
+					$this->Historique->delete($id);
+					$deleted[]=$id;
 				}
 				else {
 						$notDeleted++;	
@@ -254,7 +257,7 @@ class HistoriquesController extends AppController {
 			}
 		}
 		$msg=($notDeleted>1)?"les":"l'";
-		exit(json_encode(array('success'=>true,'deleted'=>$deleted,'notDeleted'=>$notDeleted,'msg'=>"Only the creator of the operqtion can delete the records.")));
+		exit(json_encode(array('success'=>true,'deleted'=>$deleted,'notDeleted'=>$notDeleted,'msg'=>"Only the one who created this operation or an admin can delete that/those record(s).")));
 	}
 
 }

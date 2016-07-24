@@ -45,10 +45,11 @@ echo $this->element('../paiements/payments_table',array('checkbox'=>true, 'pyts'
   <h3><?php __('Actions'); ?></h3>
   <ul>
     <li class="link" onclick = "print_documents()" >Print</li>  
-    <li class="link" onclick = "pyt(null, 'deposit')" >Create Deposit Payment</li>
+    <li class="link" onclick = "pyt(null, 'deposit')" >Create Deposit</li>
     <?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))) :?>
-      <li class= "link" onclick = "edit('pyts')" >Edit</li>
-      <li class="link" onclick = "remove_pyt('off')" >Delete a Deposit Payment</li>
+      <li class= "link" onclick = "edit('pyts')" >Edit Deposit</li>
+        <li class="link" onclick = "view_pyt()" >Show Deposit Receipt</li>
+      <li class="link" onclick = "remove_pyt('off')" >Delete a Deposit</li>
     <?php endif;?>
     <li class="link"  onclick = "recherche()" >Search Options</li>
     <li><?php echo $this->Html->link('Bookings Management', array('controller' => 'reservations', 'action' => 'tabella')); ?> </li>

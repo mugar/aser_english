@@ -29,14 +29,32 @@
 <br />
 <br />
 <br/>
-<?php echo  $this->element('../paiements/payments',array('pyts'=>$pyts,'facture'=>true,'checkbox'=>false));?>
+<span class="titre">Receipt N° <?php echo $paiement['Facture']['numero'].'-'.$paiement['Paiement']['id'];?></span>
 <br />
 <br />
+<table cellpadding="0" cellspacing="0">
+	<tr class="strong">
+			<th>Date</th>
+			<th>Amount Paid</th>
+			<th>Description</th>
+			<th>Created By</th>
+	</tr>
+	<tr>
+		<td><?php echo $this->MugTime->toFrench($paiement['Paiement']['date']);?></td>
+		<td><?php echo $number->format(abs($paiement['Paiement']['montant'])).' '.$paiement['Paiement']['monnaie'];?></td>	
+		<td><?php echo ucfirst($paiement['Paiement']['type']).' payment';?></td>
+		<td><?php echo $paiement['Personnel']['name'];?></td>
+	</tr>
+</table>
+<br />
+<br/>
+<br />
+<br/>
 <div class="bas_page">
 	<div class="left">
 	</div>
 	<div class="right"><?php  
-		echo 'Signature Caissier <br/>';
+		echo 'Approved By <br/>';
 		echo $session->read('Auth.Personnel.name').'<br />';
 	?>
 	</div>

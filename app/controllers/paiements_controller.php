@@ -413,27 +413,40 @@ class PaiementsController extends AppController {
 		}
 	}
 	
-	function recu($ids,$clientId){
-		$ids=explode(',',$ids);
-		$pyts=$this->Paiement->find('all',array('fields'=>array('Paiement.*',
+	function recu($id,$clientId){
+		$paiement=$this->Paiement->find('first',array('fields'=>array('Paiement.*',
 																'Personnel.name',
-																'Facture.operation',
-																'Facture.numero',
-																'Facture.monnaie',
-																'Facture.id'
+																'Tier.*',
+																'Facture.*'
 																),
-												'conditions'=>array('Paiement.id'=>$ids),
-												'order'=>array('Paiement.date','Facture.id','Paiement.id')
+												'conditions'=>array('Paiement.id'=>$id),
 												)
 									);
-		$client=$this->Paiement->Facture->find('first',array('fields'=>array('Tier.*'),
-																		'conditions'=>array('Tier.id'=>$clientId),
-																		)
-														);
+		if($paiement['Paiement']['type']!='deposit'){
+			if($paiement['Paiement']['montant_equivalent']== null){
+				$paiement['Paiement']['monnaie'] = $paiement['Facture']['monnaie'];
+			}
+			else {
+				$paiement['Paiement']['montant'] = $paiement['Paiement']['montant_equivalent'];	
+			}
+		}
+		if(!in_array($paiement['Paiement']['type'], array('deposit','refund'))){
+			$paiement['Paiement']['type'] = 'Normal';
+		}
+		if(!empty($paiement['Tier'])){
+			$client = $this->Paiement->Tier->find('first',array('fields'=>array('Tier.*'),
+																													'conditions'=> array('Tier.id'=>$paiement['Facture']['tier_id'])
+																									));
+		}
+		else {
+			$client=$paiement['Tier'];
+		}
+	
+
 		$facture=$recu=true;
 		$this->Product->company_info();
 		$referer=$this->referer();
-		$this->set(compact('pyts','client','facture','recu','referer'));
+		$this->set(compact('paiement','client','facture','recu','referer'));
 	}
 	
 	function delete() {

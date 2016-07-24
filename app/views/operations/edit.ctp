@@ -19,6 +19,7 @@
 		echo '<span id="ajout-1">'.$this->Form->input('Operation.element2',array('label'=>'Préciser La Déstination','options'=>$elements2,'selected'=>$selected_element2)).'</span>';
 		echo $ajax->observeField('model2-1',array('url' => array('controller'=>'operations','action'=>'update/2'),'update' => 'ajout-1'));
 		echo $this->Form->input('op_num',array('type'=>'hidden'));
+			echo $this->Form->input('personnel_id',array('type'=>'hidden'));
 
 		?>
 	</span>

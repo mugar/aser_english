@@ -61,7 +61,7 @@
 								 'bon'=>1, //impression des bons par l'ordinateur
 								 'magasin'=>0, // a activer si c'est pas un restaurant
 								 'connexion'=>0, // a activer s'ils desirent une synchronisation entre le point de vente et le stock
-								 'multi_resto'=>0, //a activer pour les restaurants avec plusieurs point de vente
+								 'multi_resto'=>1, //a activer pour les restaurants avec plusieurs point de vente
 								 'company_info'=>1, // toujours activer
 								 'bon_num'=>0, // a toujours desactiver
 								 'TTC'=>0, // a activer s'il la direction desire afficher le "TTC" sur les factures resto (toutes taxes comprises)

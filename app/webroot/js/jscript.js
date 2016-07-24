@@ -222,10 +222,10 @@ function serveur_changer(factureId){
 function cloturer(id,personnel_id){
 	var closed=jQuery('#etat_journal').attr('closed');
 	if(id===''){
-		alert('Aucun Rapport séléctionné !');
+		alert('No report selected !');
 	}
 	else if(closed=='1'){
-		alert('Le Rapport est déjà clôturé !');
+		alert('The report is already closed!');
 	}
 	else {
 		var obs=jQuery('#obs').val();
@@ -242,7 +242,7 @@ function cloturer(id,personnel_id){
  			data:{'data':journalData},
  			success:function(response){
  				if(response.success){
- 					jQuery('#etat_journal').text('Clôturée').attr('closed',1);
+ 					jQuery('#etat_journal').text('Closed').attr('closed',1);
  					jQuery('#obs').attr('disabled','disabled');
  					jQuery('.cacher').remove();
  				}
@@ -2075,18 +2075,14 @@ function remove_pyt(){
 
 function view_pyt(){
 	var nom='pyts';
-	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
-    	jQuery('<div id="alert" title="message">Select au moins un Paiement !</div>')
+	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)!=1) {
+    	jQuery('<div id="alert" title="message">Select one payment !</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
     }
     else {
-    	
-    	var ids='';
-    	jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').each(function(i){
-    		 ids=ids+jQuery(this).val()+',';
-    	});
+    	var id = jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').val();
     	var clientId=jQuery('#clientDetails').attr('clientId');
-    	document.location.href=getBase()+'paiements/recu/'+ids+'/'+clientId;
+    	document.location.href=getBase()+'paiements/recu/'+id+'/'+clientId;
     }
 }
 

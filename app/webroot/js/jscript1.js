@@ -985,7 +985,7 @@ function quantites() {
 }
 
 function edit(nom){
-	nom= (nom == undefined) ? 'checkbox' : nom;
+	nom= (nom === undefined) ? 'checkbox' : nom;
 	//to get the model and the controller
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
 	controller= (info.split('_').length == 2) ? info.split('_')[1] : info.split('_')[1]+'_'+info.split('_')[2];
@@ -1308,9 +1308,9 @@ function dbclick(submit){
 }
 //*/
 function journal_msg(ans){
-    var buttons = { "Ok, je vais le clôturer": function() { jQuery(this).dialog("close");}}
+    var buttons = { "Ok, let me close it": function() { jQuery(this).dialog("close");}}
     if(!ans.disable_nembeteplus){
-        buttons["Ne m'embêté plus!"]= function(){ 
+        buttons["Don't bother me!"]= function(){ 
                                         jQuery(this).dialog("close");
                                         jQuery.ajax({
                                             type:'post',

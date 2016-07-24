@@ -507,6 +507,7 @@
 			<li class="link" onclick = "jQuery('#pyts').slideToggle();jQuery('#pyts_links').slideToggle()" >Show/Hide the Payments</li>
 			<li class="link" onclick = "pyt('<?php echo $this->params['pass'][0];?>','<?php echo $type;?>')" >New Payment</li>
 			<span id="pyts_links" style="display:none;">
+				<li class="link" onclick = "view_pyt()" >Show Payment Receipt</li>
 				<?php if(in_array($session->read('Auth.Personnel.fonction_id'),array(3,5,8))) :?>
 					<li class="link" onclick = "remove_pyt('off')" >Delete a Payment</li>
 				<?php endif;?>

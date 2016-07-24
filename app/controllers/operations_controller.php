@@ -902,6 +902,9 @@ class OperationsController extends AppController {
 	function edit($op = null,$edit='yes') {
 		if($edit=='yes'){
 			if (!empty($this->data)) {
+				if(!(($this->Auth->user('id')==$this->data['Operation']['personnel_id'])||($this->Auth->user('fonction_id')==3))){
+					exit(json_encode(array('success'=>false,'msg'=>'Only the one who created this operation or an admin can edit it!')));
+				}
 			//	exit(debug($this->data));
 				//set the common field used for search.
 				$this->data['Operation']['common']=$this->_set_common_field($this->data);
@@ -987,8 +990,8 @@ class OperationsController extends AppController {
 																			),
 															'order'=>array('Operation.id desc')						
 																			));
-			
-				if(($search[0]['Operation']['personnel_id']==$this->Auth->user('id'))&&(count($search)==2)){
+				
+				if((($this->Auth->user('id')==$search[0]['Operation']['personnel_id'])||($this->Auth->user('fonction_id')==3))&&(count($search)==2)){
 					$this->Operation->deleteAll(array('Operation.op_num'=>$value));
 					$deleted[]=$value;	
 					
@@ -1002,7 +1005,7 @@ class OperationsController extends AppController {
 			}
 		}
 		
-		$msg=($notDeleted>0)? 'Car c\'est pas vous leur créateur.':'';
+		$msg=($notDeleted>0)? 'Because only the one who created it or an admin can delete it.':'';
 		exit(json_encode(array('success'=>true,
 							'deleted'=>$deleted,
 							'notDeleted'=>$notDeleted,
@@ -1014,25 +1017,29 @@ class OperationsController extends AppController {
 		$this->autoRender=false;
 		if (!empty($this->data)) {
 			$i=0;
+
 			foreach($this->data['Id'] as $op_num){
 				if($op_num!=0) {
-					$ids=$this->Operation->find('all',array('fields'=>array('Operation.id'),
+					$ids=$this->Operation->find('all',array('fields'=>array('Operation.*'),
 												'conditions'=>array('Operation.op_num'=>$op_num),
 												));
 					foreach($ids as $id){
-						if($this->data['Operation']['mode_paiement']!=''){
-							$id['Operation']['mode_paiement']=$this->data['Operation']['mode_paiement'];
-						}
-						if($this->data['Operation']['monnaie']!=''){
-							$id['Operation']['monnaie']=$this->data['Operation']['monnaie'];
-						}
-						if($this->data['Operation']['date']!=''){
-							$id['Operation']['date']=$this->data['Operation']['date'];
-						}
-						$this->Operation->save($id);
-						unset($this->Operation->id);
+						if(($this->Auth->user('id')==$id['Operation']['personnel_id'])||($this->Auth->user('fonction_id')==3)){
+							if($this->data['Operation']['mode_paiement']!=''){
+								$id['Operation']['mode_paiement']=$this->data['Operation']['mode_paiement'];
+							}
+							if($this->data['Operation']['monnaie']!=''){
+								$id['Operation']['monnaie']=$this->data['Operation']['monnaie'];
+							}
+							if($this->data['Operation']['date']!=''){
+								$id['Operation']['date']=$this->data['Operation']['date'];
+							}
+							$this->Operation->save($id);
+							unset($this->Operation->id);
+							$i++;
+						}	
 					}
-					$i++;
+					
 				}
 			}
 			$this->Session->setFlash($i.' opérations ont été modifiées');

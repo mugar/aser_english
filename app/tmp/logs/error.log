@@ -1466,3 +1466,5 @@ Aro: Array
 )
 
 Aco: Paiements/edit in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]
+2016-07-24 17:05:59 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/paiements/payments_table.ctp, line 57]
+2016-07-24 17:06:02 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/paiements/payments_table.ctp, line 57]
