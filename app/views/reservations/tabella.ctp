@@ -62,7 +62,7 @@
      			jQuery('select[id*="departureTime"]').attr('disabled','disabled');
      	});
 		//filter list of client
-	/*	
+	//*	
 	jQuery('#principal').selectFilter({
   		'clearInputOnEscape': true,
     	'disableRegex': true,
@@ -71,13 +71,13 @@
     	'inputPlaceholder': 'Taper pour filtrer',
     	'minimumCharacters': 1,
     	'minimumSelectElementSize': 3,
+    	'inputLocation': 'above',
     	// Amount of time to delay filtering (in ms) after a key is pressed.
     	'searchDelay':0,
     	'searchFromBeginning':false,
     	// The width for the select element and its input filter box.
     	// If -1, both the select element and its filter box have their size set to the width of
     	// the select element before any filtering occurs.
-    	'width': 200
   	});
   	//*/
   	//logic for filtering clients and showing the client creation form only if the customer has not been found
@@ -585,7 +585,6 @@
 	<?php echo $this->element('../reservations/legend',array('model'=>'Réservation'));?>
 	<ul>
 		<li class="link"  onclick = "jQuery('#legend').slideToggle();" >Show/Hide the legend</li>
-		<!--<li class="link"  onclick = "single_add()" >Créer une réservation</li>-->
 		<li class="link" onclick = "availability()" >Check the Availability</li>
 		<li class="link" onclick = "availability('mass_book')" >Create Multiple Bookings</li>
 		<li><?php echo $this->Html->link('Monthly Report', array('controller' => 'reservations', 'action' => 'monthly')); ?>  

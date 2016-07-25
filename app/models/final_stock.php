@@ -1,21 +1,11 @@
 <?php
-class Entree extends AppModel {
-	var $name = 'Entree';
-	var $order = array('Entree.date desc','Entree.id desc');
+class FinalStock extends AppModel {
+	var $name = 'FinalStock';
+	var $order = array('FinalStock.date desc','FinalStock.id desc');
 	var $recursive = 1;
 	//The Associations below have been created with all possible keys, those that are not needed can be removed
 
 	var $validate = array(
-		'historique_id' => array(
-			'numeric' => array(
-				'rule' => array('numeric'),
-				'message' => 'Valeurs numériques seulement !',
-				'allowEmpty' => false,
-				'required' => false,
-				//'last' => false, // Stop validation after this rule
-				//'on' => 'create', // Limit validation to 'create' or 'update' operations
-			),
-		),
 		'stock_id' => array(
 			'numeric' => array(
 				'rule' => array('numeric'),
@@ -58,9 +48,9 @@ class Entree extends AppModel {
 	);
 	var $belongsTo = array(
 		
-		'Tier' => array(
-			'className' => 'Tier',
-			'foreignKey' => 'tier_id',
+		'StockManager' => array(
+			'className' => 'Personnel',
+			'foreignKey' => 'stock_manager_id',
 			'conditions' => '',
 			'order' => ''
 		),
@@ -76,14 +66,28 @@ class Entree extends AppModel {
 			'conditions' => '',
 			'order' => ''
 		),
-		'Personnel' => array(
+		'Controler' => array(
 			'className' => 'Personnel',
-			'foreignKey' => 'personnel_id',
+			'foreignKey' => 'controler_id',
 			'conditions' => '',
 			'order' => ''
 		)
 	);
-
+	var $hasMany = array(
+		'Historique' => array(
+			'className' => 'Historique',
+			'foreignKey' => 'final_stock_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' =>'',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		)
+	);
 	
 }
 ?>

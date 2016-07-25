@@ -26,7 +26,7 @@
  	jQuery('#produit').change(function(){
 		jQuery.ajax({
 			type:'GET',
-			url:getBase()+'entrees/pa/'+jQuery(this).val(),
+			url:getBase()+'final_stocks/pa/'+jQuery(this).val(),
 			dataType:'json',
 			success:function(ans){
 				jQuery('#PA').val(ans.PA);
@@ -50,17 +50,17 @@
 	//support only division
 	jQuery('#PA').change(function(){
 		if(/\d+\/\d+/.test(jQuery(this).val())){
-			var PA=Math.round(parseFloat(jQuery(this).val().split('/')[0])/parseFloat(jQuery(this).val().split('/')[1]));
+			var PA=Math.round(parseInt(jQuery(this).val().split('/')[0])/parseInt(jQuery(this).val().split('/')[1]));
 			jQuery('#PA').val(PA);
 		}
 	});
 });
 </script>
-<div class="entrees index">
+<div class="final_stocks index">
 	<h2>Gestion Des Entrées</h2>
 	
 <!--recherche form -->
-<?php echo $this->element('../entrees/recherche',array('action'=>'index'));?>
+<?php echo $this->element('../final_stocks/recherche',array('action'=>'index'));?>
 		<br>
 <div id="quick_add">
 	<table cellpadding="0" cellspacing="0" class="advanced1">
@@ -87,7 +87,7 @@
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
 	<tr name="<?php echo $i?>">
-		<?php echo $this->Form->create('Entree',array('action'=>'add'));?>
+		<?php echo $this->Form->create('FinalStock',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('date',array('label'=>'','type'=>'text'));?></td>
 		<td><?php echo $this->Form->input('quantite',array('id'=>'quantite','label'=>''));?></td>
 		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','label'=>'','options'=>$produits));?></td>
@@ -112,7 +112,7 @@
 	<?php endfor; ?>
 </table>
 </div>
-	<?php echo $this->Form->create('Entree',array('name'=>'checkbox','id'=>'Entree_entrees'));?>	
+	<?php echo $this->Form->create('FinalStock',array('name'=>'checkbox','id'=>'FinalStock_final_stocks'));?>	
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 		<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
@@ -134,8 +134,8 @@
 			<th><?php echo $this->Paginator->sort('personnel_id');?></th>
 		</tr>
 	<?php
-	foreach ($entrees as $entree){
-		echo $this->element('../entrees/add',array('entree'=>$entree));
+	foreach ($final_stocks as $final_stock){
+		echo $this->element('../final_stocks/add',array('final_stock'=>$final_stock));
 	}
 		
 	?>
@@ -159,7 +159,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li class= "link" onclick="edit('entrees')" >Edit</li>
+		<li class= "link" onclick="edit('final_stocks')" >Edit</li>
 		<li class="link" onclick="mass_delete()" >Delete</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
 		<li><?php echo $this->Html->link('Edition De Rapport', array('action' => 'rapport')); ?></li>

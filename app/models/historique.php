@@ -79,6 +79,13 @@ class Historique extends AppModel {
 			'conditions' => '',
 			'order' => ''
 		),
+
+		'FinalStock' => array(
+			'className' => 'FinalStock',
+			'foreignKey' => 'final_stock_id',
+			'conditions' => '',
+			'order' => ''
+		),
 		
 		
 	);	
@@ -109,6 +116,10 @@ class Historique extends AppModel {
 
 	function beforeSave($options){
 		// exit(debug($options));
+		if(!empty($this->data['Historique']['PU']) && !empty($this->data['Historique']['quantite'])){	
+			$this->data['Historique']['montant'] = $this->data['Historique']['PU'] * $this->data['Historique']['quantite'];
+		}
+		
 		if(!empty($this->data['Historique']['libelle']) && !empty($this->data['Historique']['quantite'])){
 			if(in_array($this->data['Historique']['libelle'], array('Sorti','Perte'))){
 				$this->data['Historique']['debit'] = null;

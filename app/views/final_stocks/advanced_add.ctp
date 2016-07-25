@@ -19,7 +19,7 @@
 	</tr>
 	<?php for($i=0;$i<5;$i++): ?>
 	<tr name="<?php echo $i?>">
-		<?php echo $this->Form->create('Entree',array('action'=>'add'));?>
+		<?php echo $this->Form->create('FinalStock',array('action'=>'add'));?>
 		
 		<td><?php echo $this->Form->input('caiss_id',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('tier_id',array('label'=>''));?></td>
@@ -56,7 +56,7 @@
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
 
-		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Entrees', true)), array('action' => 'index'));?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('FinalStocks', true)), array('action' => 'index'));?></li>
 		<li><?php echo $this->Html->link(sprintf(__('Show %s', true), __('Caisses', true)), array('controller' => 'caisses', 'action' => 'index')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Caiss', true)), array('controller' => 'caisses', 'action' => 'add')); ?> </li>
 		<li><?php echo $this->Html->link(sprintf(__('Lister / Créer  %s', true), __('Products', true)), array('controller' => 'produits', 'action' => 'index')); ?> </li>

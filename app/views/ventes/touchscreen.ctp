@@ -26,6 +26,23 @@
 		 }	
 	});
 	
+	jQuery('#tierId').selectFilter({
+  		'clearInputOnEscape': true,
+    	'disableRegex': true,
+    	// The class to apply to the filter bar.
+    	'filterClass': 'filter-select',
+    	'inputPlaceholder': 'Taper pour filtrer',
+    	'minimumCharacters': 1,
+    	'minimumSelectElementSize': 3,
+    	'inputLocation': 'above',
+    	// Amount of time to delay filtering (in ms) after a key is pressed.
+    	'searchDelay':0,
+    	'searchFromBeginning':false,
+    	// The width for the select element and its input filter box.
+    	// If -1, both the select element and its filter box have their size set to the width of
+    	// the select element before any filtering occurs.
+  	});
+
 	var key_press=true;
 	
 	jQuery('input,select,textarea').focus(function(){
@@ -267,7 +284,7 @@
 				</tr>
 			</table>
 		</fieldset>
-		<fieldset class="actions"><legend>Actions</legend>
+		<fieldset id="actions"><legend>Actions</legend>
 			<?php 
 					$pId=$session->read('Auth.Personnel.id'); //personnel id
 					if(($mode!='serveur')&&empty($config['canceled'])

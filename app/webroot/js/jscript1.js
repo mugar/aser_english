@@ -577,6 +577,23 @@ function aserb(){
                        
 	
 }
+
+/*
+ * set the exit quantity
+ */
+
+function create_consumption(p){
+    //first make sure the total of consumptions do not exits the total.
+    jQuery.ajax({
+        url:getBase()+'final_stocks/create_consumption/'+jQuery(p).attr('id')+'/'+jQuery(p).val()+'/'+jQuery(p).attr('exit_type'),
+        dataType:'json',
+        success:function(r){ 
+            if(!r.success){
+                alert(r.msg);
+            }
+        }
+    });
+}
 /*
  * this function has been created in a night club
  *  

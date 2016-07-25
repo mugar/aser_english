@@ -1,6 +1,6 @@
 <div id='view'>
 <div class="document">
-<h3>Rapport des Entrees</h3>
+<h3>Rapport des FinalStocks</h3>
 <br />
 <h4><?php echo $periode=(!is_null($date1)&&!is_null($date2))?
 						('(From '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' )'):
@@ -18,17 +18,17 @@
 		<th>Stock</th>
 	</tr>
 		<?php
-	foreach ($entrees as $entree):
+	foreach ($final_stocks as $final_stock):
 		
 	?>
 	<tr>
-		<td><?php echo $entree['Entree']['quantite'].' ';
-				if(isset($unites[$entree['Produit']['unite_id']])) echo $unites[$entree['Produit']['unite_id']];?>&nbsp;</td>
-		<td><?php echo  $entree['Produit']['name']; ?></td>
-		<td><?php echo  $entree['Entree']['PA']; ?></td>
-		<td><?php echo  $number->format($entree['Entree']['montant'],$formatting); ?></td>
-		<td><?php echo  $entree['Entree']['type']; ?></td>
-		<td><?php echo  $entree['Stock']['name']; ?></td>
+		<td><?php echo $final_stock['FinalStock']['quantite'].' ';
+				if(isset($unites[$final_stock['Produit']['unite_id']])) echo $unites[$final_stock['Produit']['unite_id']];?>&nbsp;</td>
+		<td><?php echo  $final_stock['Produit']['name']; ?></td>
+		<td><?php echo  $final_stock['FinalStock']['PA']; ?></td>
+		<td><?php echo  $number->format($final_stock['FinalStock']['montant'],$formatting); ?></td>
+		<td><?php echo  $final_stock['FinalStock']['type']; ?></td>
+		<td><?php echo  $final_stock['Stock']['name']; ?></td>
 	</tr>
 <?php endforeach; ?>
 	<tr class="strong">
@@ -48,9 +48,9 @@
 	<ul>
 		<li class="link" onclick = "print_documents()" >Print</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Lister Entrees', array('controller' => 'entrees', 'action' => 'index')); ?> </li>
+		<li><?php echo $this->Html->link('Lister FinalStocks', array('controller' => 'final_stocks', 'action' => 'index')); ?> </li>
 	</ul>
 </div>
 
 <!--recherche form -->
-<?php echo $this->element('../entrees/recherche',array('action'=>'rapport'));?>
+<?php echo $this->element('../final_stocks/recherche',array('action'=>'rapport'));?>

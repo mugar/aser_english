@@ -53,7 +53,7 @@
       		echo $html->script('plugins/jqplot.canvasAxisTickRenderer.min');
       		echo $html->script('plugins/jqplot.trendline.min');
       		echo $html->script('plugins/jqplot.pointLabels.min');
-      		echo $html->script('jquery.select-filter.min');
+      		echo $html->script('jquery.select-filter');
 		}
 
 		echo $scripts_for_layout;

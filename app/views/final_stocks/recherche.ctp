@@ -2,7 +2,7 @@
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Entree',array('id'=>'recherche'));?>
+	<?php echo $this->Form->create('FinalStock',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
 			echo $this->element('combobox',array('n°'=>0));

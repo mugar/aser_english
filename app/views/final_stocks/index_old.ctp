@@ -1,7 +1,7 @@
-<div class="entrees index">
-	<h2><?php __('Entrees');?></h2>
+<div class="final_stocks index">
+	<h2><?php __('FinalStocks');?></h2>
 <!--form the checkbox stuff-->
-	<?php echo $this->Form->create('Entree',array('name'=>'checkbox','action'=>'deleteAll','id'=>'Entree_entrees'));?>
+	<?php echo $this->Form->create('FinalStock',array('name'=>'checkbox','action'=>'deleteAll','id'=>'FinalStock_final_stocks'));?>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><input type="checkbox" name="master" value="" onclick="checkAll(document.checkbox)"></th>
@@ -20,7 +20,7 @@
 	<?php
 	$i = 0;
 	$j=0;
-	foreach ($entrees as $entree):
+	foreach ($final_stocks as $final_stock):
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="altrow"';
@@ -28,25 +28,25 @@
 	?>
 	<tr<?php echo $class;?>>
 		<td>
-		<?php echo $this->Form->input('Id.'.$j.'',array('label'=>'','type'=>'checkbox','value'=>$entree['Entree']['id'])); ?>
+		<?php echo $this->Form->input('Id.'.$j.'',array('label'=>'','type'=>'checkbox','value'=>$final_stock['FinalStock']['id'])); ?>
 		</td>
-		<td><?php echo $entree['Entree']['id']; ?>&nbsp;</td>
+		<td><?php echo $final_stock['FinalStock']['id']; ?>&nbsp;</td>
 		<td>
-			<?php echo $this->Html->link($entree['Caiss']['name'], array('controller' => 'caisses', 'action' => 'view', $entree['Caiss']['id'])); ?>
-		</td>
-		<td>
-			<?php echo $this->Html->link($entree['Tier']['name'], array('controller' => 'tiers', 'action' => 'view', $entree['Tier']['id'])); ?>
+			<?php echo $this->Html->link($final_stock['Caiss']['name'], array('controller' => 'caisses', 'action' => 'view', $final_stock['Caiss']['id'])); ?>
 		</td>
 		<td>
-			<?php echo $this->Html->link($entree['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $entree['Produit']['id'])); ?>
+			<?php echo $this->Html->link($final_stock['Tier']['name'], array('controller' => 'tiers', 'action' => 'view', $final_stock['Tier']['id'])); ?>
 		</td>
-		<td><?php echo $entree['Entree']['quantite']; ?>&nbsp;</td>
-		<td><?php echo $entree['Entree']['montant']; ?>&nbsp;</td>
-		<td><?php echo $entree['Entree']['paiement']; ?>&nbsp;</td>
-		<td><?php echo $entree['Entree']['livrer']; ?>&nbsp;</td>
-		<td><?php echo $entree['Entree']['vidange']; ?>&nbsp;</td>
-		<td><?php echo $entree['Entree']['date']; ?>&nbsp;</td>
-		<td><?php echo $entree['Entree']['modified']; ?>&nbsp;</td>
+		<td>
+			<?php echo $this->Html->link($final_stock['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $final_stock['Produit']['id'])); ?>
+		</td>
+		<td><?php echo $final_stock['FinalStock']['quantite']; ?>&nbsp;</td>
+		<td><?php echo $final_stock['FinalStock']['montant']; ?>&nbsp;</td>
+		<td><?php echo $final_stock['FinalStock']['paiement']; ?>&nbsp;</td>
+		<td><?php echo $final_stock['FinalStock']['livrer']; ?>&nbsp;</td>
+		<td><?php echo $final_stock['FinalStock']['vidange']; ?>&nbsp;</td>
+		<td><?php echo $final_stock['FinalStock']['date']; ?>&nbsp;</td>
+		<td><?php echo $final_stock['FinalStock']['modified']; ?>&nbsp;</td>
 	</tr>
 <?php $j++; endforeach; ?>
 	</table>
@@ -70,7 +70,7 @@
 <div class="actions">
 	<h3><?php __('Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('Entree', true)), array('action' => 'add')); ?></li>
+		<li><?php echo $this->Html->link(sprintf(__('Create %s', true), __('FinalStock', true)), array('action' => 'add')); ?></li>
 		<li class= "link" onclick = "actions('checkbox','edit')" >Edit</li>
 		<li class="link"  onclick="actions('checkbox','view')" >Afficher</li>
 		<li class="link" onclick="actions('checkbox','delete')" >Delete</li>

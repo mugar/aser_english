@@ -203,7 +203,7 @@ class AppController extends Controller {
 		//stocks list
 		if(in_array($this->params['controller'],
 			array('produits',
-					'entrees',
+					'final_stocks',
     			'historiques',
 					'sortis',
 					'pertes',
@@ -225,7 +225,7 @@ class AppController extends Controller {
 		}
 		//personnels list
 		if(in_array($this->params['controller'],
-			array('operations'
+			array('operations','final_stocks'
 				)))
 			{
 			$this->loadModel('Personnel');
@@ -302,7 +302,7 @@ class AppController extends Controller {
 		}
 		
 		//pour les produits where they are needed
-		if(in_array($this->params['controller'],array('historiques','sortis','pertes','mouvements','ventes','reductions'))){
+		if(in_array($this->params['controller'],array('historiques','final_stocks','pertes','mouvements','ventes','reductions'))){
 			$this->loadModel('Produit');
 			$cond['Produit.actif']='yes';
 			if(!Configure::read('aser.magasin')&&($this->params['controller']=='pertes')){
@@ -331,7 +331,7 @@ class AppController extends Controller {
 		}
 		
 		//pour les unites de type client
-		if(in_array($this->params['controller'],array('produits','historiques','sortis','pertes','mouvements'))){
+		if(in_array($this->params['controller'],array('produits','historiques','final_stocks','pertes','mouvements'))){
 			$this->loadModel('Unite');
 			$unites=$this->Unite->find('list',array('order'=>array('Unite.name asc')));
 			$unites[0]='';
@@ -418,6 +418,7 @@ class AppController extends Controller {
 
 		$inventory_operation_types=array('Entree'=>'Entry',
 							'Sorti'=>'Consumption',
+							'Vente'=>"Sale",
 							'Perte'=>'Loss'
 							);
 		$inventory_operation_types1=array(''=>'')+$inventory_operation_types;
