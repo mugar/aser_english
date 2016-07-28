@@ -1518,3 +1518,57 @@ Aco: Paiements/edit in [/var/www/aser_english/cake/libs/controller/components/ac
 2016-07-25 01:34:50 Warning: Warning (2): Missing argument 3 for FinalStocksController::create_consumption() in [/var/www/aser_english/app/controllers/final_stocks_controller.php, line 83]
 2016-07-25 01:34:50 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1048: Column 'libelle' cannot be null</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
 2016-07-25 01:39:42 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1062: Duplicate entry 'Vente-1' for key 'libelle'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-25 15:42:35 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-25 15:42:35 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/tiers/auto_complete.ctp, line 2]
+2016-07-25 15:42:36 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-25 15:42:36 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/tiers/auto_complete.ctp, line 2]
+2016-07-25 15:42:37 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'distinct Tier.compagnie' in 'field list'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-25 15:42:37 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/tiers/auto_complete.ctp, line 2]
+2016-07-28 10:45:51 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [actif] => yes
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Recouvrements/index in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]
+2016-07-28 10:45:59 Warning: Warning (512): DbAcl::check() - Failed ARO/ACO node lookup in permissions check.  Node references:
+Aro: Array
+(
+    [Personnel] => Array
+        (
+            [id] => 11
+            [name] => armand
+            [code] => 200
+            [fonction_id] => 3
+            [identifiant] => armand
+            [last_action] => 2015-05-20 10:41:39
+            [actif] => yes
+            [created] => 2011-12-12 18:02:25
+            [modified] => 2015-05-20 10:41:39
+        )
+
+)
+
+Aco: Recouvrements/index in [/var/www/aser_english/cake/libs/controller/components/acl.php, line 273]
+2016-07-28 10:53:47 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Sorti.date' in 'order clause'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-28 10:53:47 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/recouvrements/index.ctp, line 56]
+2016-07-28 10:53:49 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Sorti.date' in 'order clause'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-28 10:53:49 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/recouvrements/index.ctp, line 56]
+2016-07-28 10:54:08 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Recouvrement.produit_id' in 'on clause'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-28 10:54:08 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/recouvrements/index.ctp, line 56]
+2016-07-28 10:54:10 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Recouvrement.produit_id' in 'on clause'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-28 10:54:10 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/app/views/recouvrements/index.ctp, line 56]
+2016-07-28 11:08:36 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Produit.id' in 'field list'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
+2016-07-28 11:09:50 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Produit.id' in 'field list'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]

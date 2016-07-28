@@ -3368,7 +3368,11 @@ function validator(){
 								'data[Operation][piece]':jQuery("tr[name='"+i+"'] #piece").val(),
 								'data[Operation][piece_type]':jQuery("tr[name='"+i+"'] #piece_type").val(),
 								'data[Produit][sous_groupe_id]':jQuery("tr[name='"+i+"'] select[name='data[Produit][sous_groupe_id]']").val(),
-								'data[Facture][tier_id]':jQuery("tr[name='"+i+"'] select[name='data[Facture][tier_id]']").val()
+								'data[Facture][tier_id]':jQuery("tr[name='"+i+"'] select[name='data[Facture][tier_id]']").val(),
+                'data[Historique][quantite]':jQuery("tr[name='"+i+"'] #quantite").val(),
+                'data[FinalStock][quantite]':jQuery("tr[name='"+i+"'] #quantite").val(),
+                'data[Historique][PU]':jQuery("tr[name='"+i+"'] #PU").val(),
+                'data[Historique][comments]':jQuery("tr[name='"+i+"'] #comments").val()
 							},
 							success:function(responseText){
 								if(responseText.match('failure')) {

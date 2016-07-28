@@ -36,6 +36,7 @@
 	});
 </script>
 <?php 
+		$formatting=array('places'=>0,'before'=>'','escape'=>false,'decimal'=>'.','thousands'=>'');
 		$config=Configure::read('aser');
 		$id=($thermal!='no')?('resto_print_thermal'):('resto_print');
 		echo '<div style="display:none;" id="touch">'.$thermal.'</div>';
@@ -100,8 +101,8 @@
 				<th>Qty</th>
 			<?php endif; ?>
 			<th>Product</th>
-			<th>Unit P</th>
-			<th>Total P</th>
+			<th>U.Price</th>
+			<th>T.Price</th>
 		</tr>
 		<?php
 		foreach ($ventes as $vente):
@@ -109,23 +110,23 @@
 		<tr >
 			<td><?php echo $vente['Vente']['quantite']; ?>&nbsp;</td>
 			<td><?php echo ucwords($vente['Produit']['name']); ?>&nbsp;</td>
-			<td><?php echo $vente['Vente']['PU']; ?>&nbsp;</td>
-			<td><?php echo $vente['Vente']['montant']; ?>&nbsp;</td>
+			<td><?php echo $number->format($vente['Vente']['PU'],$formatting); ?>&nbsp;</td>
+			<td><?php echo $number->format($vente['Vente']['montant'],$formatting); ?>&nbsp;</td>
 		</tr>
 		<?php endforeach; ?>
 		<?php if($facture['Facture']['reduction']!=0):?>
 		<tr>
 			<td colspan="3">SUB TOTAL</td>
-			<td><?php echo $facture['Facture']['original']; ?></th>
+			<td><?php echo $number->format($facture['Facture']['original'],$formatting); ?></th>
 		</tr>
 		<tr>
 			<td colspan="3">DISCOUNT</td>
-			<td><?php echo ' - '.($facture['Facture']['original']-$facture['Facture']['montant']); ?></th>
+			<td><?php echo ' - '.$number->format($facture['Facture']['original']-$facture['Facture']['montant'],$formatting); ?></th>
 		</tr>
 		<?php endif; ?>
 		<tr>
 			<td colspan="3">TOTAL <?php if($config['TTC']) echo 'TTC'; ?></td>
-			<td><?php echo $facture['Facture']['montant']; ?></th>
+			<td><?php echo $number->format($facture['Facture']['montant'],$formatting); ?></th>
 		</tr>
 		<?php if($facture['Facture']['classee']):?>
 			<tr>
@@ -135,7 +136,7 @@
 			<?php if($facture['Facture']['etat']!='payee'):?>
 			<tr>
 				<td colspan="3">LEFT TO PAY</td>
-				<td><?php echo strtoupper($facture['Facture']['reste']); ?></th>
+				<td><?php echo $number->format($facture['Facture']['reste'],$formatting); ?></th>
 			</tr>
 			<tr height="80">
 				<td colspan="4">SIGNATURE</td>
@@ -143,11 +144,11 @@
 			<?php elseif(!empty($facture['Facture']['cash'])) : ?>
 				<tr>
 					<td colspan="3">CASH</td>
-					<td><?php echo strtoupper($facture['Facture']['cash']); ?></th>
+					<td><?php echo $number->format($facture['Facture']['cash'],$formatting); ?></th>
 				</tr>
 				<tr>
 					<td colspan="3">CHANGE</td>
-					<td><?php echo strtoupper($facture['Facture']['cash']-$facture['Facture']['montant']); ?></th>
+					<td><?php echo $number->format(($facture['Facture']['cash']-$facture['Facture']['montant']),$formatting); ?></th>
 				</tr>
 			<?php endif; ?>
 		<?php endif; ?>

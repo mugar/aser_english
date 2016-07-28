@@ -1,3 +1,26 @@
+<script>
+ jQuery.noConflict();
+ jQuery(document).ready(function(){
+	 
+		jQuery('#produit').selectFilter({
+  		'clearInputOnEscape': true,
+    	'disableRegex': true,
+    	// The class to apply to the filter bar.
+    	'filterClass': 'filter-select',
+    	'inputPlaceholder': 'Type to filter',
+    	'minimumCharacters': 1,
+    	'minimumSelectElementSize': 3,
+    	'inputLocation': 'above',
+    	// Amount of time to delay filtering (in ms) after a key is pressed.
+    	'searchDelay':0,
+    	'searchFromBeginning':false,
+    	'width': -1
+    	// The width for the select element and its input filter box.
+    	// If -1, both the select element and its filter box have their size set to the width of
+    	// the select element before any filtering occurs.
+  	});
+});
+</script>
 <div class="final_stocks index">
 	<h2>Final Stocks Management</h2>
 	
@@ -21,7 +44,7 @@
 		<td><?php echo $this->Form->input('date',array('label'=>'','type'=>'text'));?></td>
 		<td><?php echo $this->Form->input('stock_id',array('id'=>$i.'StockId','label'=>'','options'=>$stocks));?></td>
 		<td><?php echo $this->Form->input('stock_manager_id',array('label'=>'','options'=>$personnels,'selected'=>0));?></td>
-		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','label'=>'','options'=>$produits));?></td>
+		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','class'=>'produit_filtered','label'=>'','options'=>$produits));?></td>
 		<td><?php echo $this->Form->input('quantite',array('id'=>'quantite','label'=>''));?></td>
 		<td><input type="submit" value="Save"/></td>
 		</form>

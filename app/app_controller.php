@@ -256,7 +256,7 @@ class AppController extends Controller {
 		//pour les tiers de type client
 		if(in_array($this->params['controller'],array('factures',
 													'ventes',
-													'sortis',
+													'recouvrements',
 													'reservations',
 													'services',
 													'historiques',

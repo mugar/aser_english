@@ -365,7 +365,7 @@ class PaiementsController extends AppController {
 					return false;
 			}
 			//journal stuff si c'est une caissiere qui fait l'operation
-			if(($this->Auth->user('fonction_id')==2)){
+			if(in_array($this->Auth->user('fonction_id'),array(2,4))){
 				$journal=$this->Product->journal();
 				$data['Paiement']['journal_id']=$journal['id'];
 				$data['Paiement']['date']=$journal['date'];

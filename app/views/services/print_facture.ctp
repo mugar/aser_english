@@ -36,6 +36,8 @@
 	});
 </script>
 <?php 
+		
+		$formatting=array('places'=>0,'before'=>'','escape'=>false,'decimal'=>'.','thousands'=>'');
 		$config=Configure::read('aser');
 		$id=($thermal!='no')?('resto_print_thermal'):('resto_print');
 		echo '<div style="display:none;" id="touch">'.$thermal.'</div>';

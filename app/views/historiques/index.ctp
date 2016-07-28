@@ -2,27 +2,7 @@
  jQuery.noConflict();
  jQuery(document).ready(function(){
  	
- 	<?php if(Configure::read('aser.ebenezer')==1):?>
- 		function pv(){
- 			var pa=parseFloat(jQuery('#PU').val());
- 			var pv=Math.round(pa*1.5);
- 			jQuery('#PV').val(pv);
- 		}
- 		pv();
- 		jQuery('#PU').change(function(){
-			pv();
- 		})
- 	<?php elseif(Configure::read('aser.ebenezer')==2):?>
- 		function pv(){
- 			var pa=parseFloat(jQuery('#PU').val());
- 			var pv=Math.round((pa/1.5)*1.4);
- 			jQuery('#PV').val(pv);
- 		}
- 		pv();
- 		jQuery('#PU').change(function(){
-			pv();
- 		})
- 	<?php endif;?>
+ 
  	jQuery('#produit').change(function(){
 		jQuery.ajax({
 			type:'GET',
@@ -30,9 +10,6 @@
 			dataType:'json',
 			success:function(ans){
 				jQuery('#PU').val(ans.PU);
-				<?php if(Configure::read('aser.ebenezer')):?>
-					pv();
-				<?php endif;?>
 			}
 		})
 	})
@@ -54,6 +31,24 @@
 			jQuery('#PU').val(PU);
 		}
 	});
+
+		jQuery('#produit').selectFilter({
+  		'clearInputOnEscape': true,
+    	'disableRegex': true,
+    	// The class to apply to the filter bar.
+    	'filterClass': 'filter-select',
+    	'inputPlaceholder': 'Type to filter',
+    	'minimumCharacters': 1,
+    	'minimumSelectElementSize': 3,
+    	'inputLocation': 'above',
+    	// Amount of time to delay filtering (in ms) after a key is pressed.
+    	'searchDelay':0,
+    	'searchFromBeginning':false,
+    	'width': -1
+    	// The width for the select element and its input filter box.
+    	// If -1, both the select element and its filter box have their size set to the width of
+    	// the select element before any filtering occurs.
+  	});
 });
 </script>
 <div class="historiques index">
@@ -70,14 +65,15 @@
 		<th>Operation Type</th>
 		<th>Supplier</th>
 		<th>Invoice N°</th>
-		<th>Quantity</th>
 		<th>Product</th>
+		<th>Quantity</th>
 		<th>Unit Price</th>	
 		<?php if(Configure::read('aser.pharmacie')):?>
 			<th>Batch N°</th>
 			<th>Expiration Date</th>
 		<?php endif;?>		
-		<th>Store</th>	
+		<th>Store</th>		
+		<th>Comment</th>	
 		<?php if (Configure::read('aser.shifts')):?>
 			<th>Shift</th>	
 		<?php endif;?>
@@ -90,14 +86,16 @@
 		<td><?php echo $this->Form->input('libelle',array('label'=>'','options'=>$inventory_operation_types));?></td>
 		<td><?php echo $this->Form->input('supplier',array('label'=>''));?></td>
 		<td><?php echo $this->Form->input('invoice_no',array('label'=>''));?></td>
+		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','label'=>'','class'=>'produit_filtered','options'=>$produits));?></td>
+		<?php echo $this->Form->input('bug_fixer',array('type'=>'hidden','label'=>''));?>
 		<td><?php echo $this->Form->input('quantite',array('id'=>'quantite','label'=>''));?></td>
-		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','label'=>'','options'=>$produits));?></td>
 		<td><?php echo $this->Form->input('PU',array('label'=>'','value'=>$pa,'id'=>'PU'));?></td>
 		<?php if(Configure::read('aser.pharmacie')):?>
 			<td><?php echo $this->Form->input('batch',array('label'=>''));?></td>
 			<td><?php echo $this->Form->input('date_expiration',array('label'=>'','type'=>'text'));?></td>
 		<?php endif;?>
 		<td><?php echo $this->Form->input('stock_id',array('id'=>$i.'StockId','label'=>'','options'=>$stocks));?></td>
+		<td><?php echo $this->Form->input('comments',array('id'=>'comments','label'=>''));?></td>
 		<?php if (Configure::read('aser.shifts')):?>
 			<td><?php echo $this->Form->input('shift',array('label'=>'','options'=>$shifts));?></td>	
 		<?php endif;?>
@@ -116,8 +114,8 @@
 			<th><?php echo $this->Paginator->sort('Operation Type','libelle');?></th>
 			<th><?php echo $this->Paginator->sort('supplier');?></th>
 			<th><?php echo $this->Paginator->sort('invoice_no');?></th>
-			<th><?php echo $this->Paginator->sort('Quantity','quantite');?></th>
 			<th><?php echo $this->Paginator->sort('Product','produit_id');?></th>
+			<th><?php echo $this->Paginator->sort('Quantity','quantite');?></th>
 			<th><?php echo $this->Paginator->sort('Unit Price','PU');?></th>
 			<th><?php echo $this->Paginator->sort('Total Price','montant');?></th>
 			<?php if(Configure::read('aser.pharmacie')):?>
@@ -125,6 +123,7 @@
 				<th><?php echo $this->Paginator->sort('Expiration Date','date_expiration');?></th>
 			<?php endif;?>
 			<th><?php echo $this->Paginator->sort('Store','stock_id');?></th>
+				<th><?php echo $this->Paginator->sort('comments');?></th>
 			<?php if (Configure::read('aser.shifts')):?>
 				<th><?php echo $this->Paginator->sort('shift');?></th>	
 			<?php endif;?>

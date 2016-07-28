@@ -1,3 +1,27 @@
+<script>
+ jQuery.noConflict();
+ jQuery(document).ready(function(){
+ 	
+		jQuery('#produit').selectFilter({
+  		'clearInputOnEscape': true,
+    	'disableRegex': true,
+    	// The class to apply to the filter bar.
+    	'filterClass': 'filter-select',
+    	'inputPlaceholder': 'Type to filter',
+    	'minimumCharacters': 1,
+    	'minimumSelectElementSize': 3,
+    	'inputLocation': 'above',
+    	// Amount of time to delay filtering (in ms) after a key is pressed.
+    	'searchDelay':0,
+    	'searchFromBeginning':false,
+    	'width': -1
+    	// The width for the select element and its input filter box.
+    	// If -1, both the select element and its filter box have their size set to the width of
+    	// the select element before any filtering occurs.
+  	});
+});
+</script>
+
 <div class="mouvements index">
 	<h2><?php __('Store Transfers');?></h2>
 	
@@ -8,7 +32,7 @@
 	<?php echo $this->Form->create('Mouvement',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('produit_id',array('label'=>'Product','selected'=>0,'options'=>$produits1));
+			echo $this->Form->input('produit_id',array('label'=>'Product', 'selected'=>0,'options'=>$produits1));
 			echo $this->Form->input('stock_sortant_id',array('label'=>'From','selected'=>0,'options'=>$stocks1));
 			echo $this->Form->input('stock_entrant_id',array('label'=>'To','selected'=>0,'options'=>$stocks1));
 		?>
@@ -51,7 +75,7 @@
 		<?php echo $this->Form->create('Mouvement',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('date',array('label'=>'','type'=>'text'));?></td>
 		<td><?php echo $this->Form->input('quantite',array('label'=>''));?></td>
-		<td><?php echo $this->Form->input('produit_id',array('label'=>'','selected'=>0));?></td>
+		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit', 'class'=>'produit_filtered','label'=>'','selected'=>0));?></td>
 		<td><?php echo $this->Form->input('stock_sortant_id',array('options'=>$stocks,'label'=>''));?></td>
 		<td><?php echo $this->Form->input('stock_entrant_id',array('options'=>$stocks,'label'=>''));?></td>
 		<?php if (Configure::read('aser.shifts')):?>

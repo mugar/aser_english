@@ -2,18 +2,16 @@
 <div id="recherche_boxe" style="display:none" title="Search Options">
 <div class="dialog">
 	<div id="message_recherche"></div>
-	<?php echo $this->Form->create('Sorti',array('id'=>'recherche'));?>
+	<?php echo $this->Form->create('Recouvrement',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->element('combobox',array('n°'=>0));
-			echo $this->Form->input('stock_id',array('selected'=>0,'id'=>'stockId','options'=>$stocks1));
-			echo $this->Form->input('produit_id',array('selected'=>0,'id'=>'produits','options'=>$produits1));
+			echo $this->Form->input('tier_id',array('label'=>'Customer','selected'=>0,'options'=>$tiers1));
+			echo $this->Form->input('done_by_id',array('label'=>'Done By','selected'=>0,'options'=>$collectors1));
 			
 		?>
 	</span>
 	<span class="right">
 		<?php
-			echo $this->Form->input('tier_id',array('label'=>'Customer','selected'=>0,'options'=>$tiers1));
 			echo $this->Form->input('date1',array('label'=>'Start Date','type'=>'text'));				
 			echo $this->Form->input('date2',array('label'=>'End Date','type'=>'text'));	
 			if($action=='index')

@@ -1,4 +1,4 @@
-<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Recouvrements pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 <br>
 <table cellpadding="0" cellspacing="0">
 	<tr>
@@ -10,30 +10,30 @@
 	</tr>
 		<?php
 	$i = 0;
-	foreach ($sortiSsd as $sorti):
+	foreach ($recouvrementSsd as $recouvrement):
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="altrow"';
 		}
 	?>
 	<tr<?php echo $class;?>>
-		<td><?php echo $sorti['Produit']['name']; ?></td>
-		<td><?php echo $sorti['Tier']['name']; ?></td>
-		<td><?php echo $sorti['Sorti']['pleins']; ?></td>
-		<td><?php echo $sorti['Sorti']['transport']; ?></td>
+		<td><?php echo $recouvrement['Produit']['name']; ?></td>
+		<td><?php echo $recouvrement['Tier']['name']; ?></td>
+		<td><?php echo $recouvrement['Recouvrement']['pleins']; ?></td>
+		<td><?php echo $recouvrement['Recouvrement']['transport']; ?></td>
 	</tr>
 <?php endforeach; ?>
 	<tr>
 		<td>TOTAL</td>
 		<td>&nbsp;</td>
-		<td><?php echo $ssd[0]['Sorti']['pleins']+0; ?></td>
-		<td><?php echo $ssd[0]['Sorti']['transport']+0; ?></td>
+		<td><?php echo $ssd[0]['Recouvrement']['pleins']+0; ?></td>
+		<td><?php echo $ssd[0]['Recouvrement']['transport']+0; ?></td>
 	</tr>
 </table>
 <br>
 
 <br>
-<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Recouvrements pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Product</th>
@@ -43,7 +43,7 @@
 	</tr>
 		<?php
 	$i = 0;
-	foreach ($sortiTier as $tier):
+	foreach ($recouvrementTier as $tier):
 		$class = null;
 		if ($i++ % 2 == 0) {
 			$class = ' class="altrow"';
@@ -52,18 +52,18 @@
 	<tr<?php echo $class;?>>
 		<td><?php echo $tier['Produit']['name']; ?></td>
 		<td><?php echo $tier['Tier']['name']; ?></td>
-		<td><?php echo $tier['Sorti']['pleins']; ?></td>
+		<td><?php echo $tier['Recouvrement']['pleins']; ?></td>
 	</tr>
 <?php endforeach; ?>
 	<tr>
 		<td>TOTAL</td>
 		<td>&nbsp;</td>
-		<td><?php echo $tiers[0]['Sorti']['pleins']+0; ?></td>
+		<td><?php echo $tiers[0]['Recouvrement']['pleins']+0; ?></td>
 	</tr>
 </table>
 	
 <br>
-<h3><?php __('Sortis pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
+<h3><?php __('Recouvrements pour ceux qui paient le transport de la période entre le '.$this->MugTime->toFrench($date1).' to '.$this->MugTime->toFrench($date2).' ');?></h3>
 <table cellpadding="0" cellspacing="0">
 	<tr>
 			<th>Product</th>
@@ -94,7 +94,7 @@
 <br>
 <i>TOTAL de l'argent pour les manutentiers (tiers) </i>:<strong><?php echo $tiers['manu'];?></strong>
 
-	<?php echo $this->Form->create('Sorti');?>
+	<?php echo $this->Form->create('Recouvrement');?>
 		<?php
 		echo $this->Form->input('date1',array('label'=>'Start Date',
 												'type'=>'date',

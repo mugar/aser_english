@@ -155,18 +155,20 @@ class HistoriquesController extends AppController {
 		$alert=false;
 		//validating first
 		$this->Historique->set($data);
-		if(!$this->Historique->validates()){
-			$this->_error($action, 'Les champs Quantité & Date sont Obligatoires!');
+		if(!$this->Historique->validates() ||empty($data['Historique']['quantite'])){
+			$this->_error($action, 'Date, Quantity, and Store fields are mandatory');
 		}
 		if(($action=='edit')&&!(($this->Auth->user('id')==$data['Historique']['personnel_id'])||($this->Auth->user('fonction_id')==3))){
 			exit(json_encode(array('success'=>false,'msg'=>'Only the one who created this operation or an admin can edit it!')));	
 		}
+		$data['Historique']['PU'] = empty($data['Historique']['PU'])?0:$data['Historique']['PU'];
 		if($data['Historique']['date']>date('Y-m-d')){
 			$this->_error($action, 'Cette date est incorrecte!');	
 		}
 		if($action == 'add'){
 			$data['Historique']['personnel_id']=$this->Auth->user('id');	
 		}
+		// exit(debug($data));
 		$data['Historique']['montant']=$data['Historique']['quantite']*$data['Historique']['PU'];
 		
 		//updating the product with the new PU = PUMP

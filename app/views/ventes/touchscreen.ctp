@@ -31,7 +31,7 @@
     	'disableRegex': true,
     	// The class to apply to the filter bar.
     	'filterClass': 'filter-select',
-    	'inputPlaceholder': 'Taper pour filtrer',
+    	'inputPlaceholder': 'Type to filter',
     	'minimumCharacters': 1,
     	'minimumSelectElementSize': 3,
     	'inputLocation': 'above',

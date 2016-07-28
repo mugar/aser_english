@@ -126,8 +126,12 @@
 			echo $this->element('combobox',array('n°'=>0));
 			echo $this->Form->input('produit_id',array('selected'=>0,'id'=>'produits', 'label'=>'Product','options'=>$produits1));
 			echo $this->Form->input('stock_id',array('selected'=>0,'id'=>'stockId', 'label'=>'Stock','options'=>$stocks1));
-			if(Configure::read('aser.comptabilite'))
+			if(Configure::read('aser.comptabilite')){
 				echo $this->Form->input('Produit.groupe_comptable_id',array('selected'=>0,'multiple'=>true,'options'=>$groupeComptables1));
+			}
+			if(Configure::read('aser.multi_resto')){
+				echo $this->Form->input('Facture.pos',array('options'=>$bars1,'label'=>'Place'));
+			}
 		?>
 	</span>
 	<span class="right">

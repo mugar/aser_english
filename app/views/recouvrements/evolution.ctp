@@ -6,7 +6,7 @@ $ydata =$Yaxis;
 // Create the graph. These two calls are always required
 $graph = new Graph(1000,700);
 $graph->SetScale('textlin');
-$graph->title->Set ('Courbe de croissance des sortis par jour');
+$graph->title->Set ('Courbe de croissance des recouvrements par jour');
 $graph->img-> SetMargin(60,20 ,60,60); 
 $graph->xaxis-> SetTickLabels($Xaxis);
 $graph->xaxis-> title->Set("Jours" );

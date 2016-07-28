@@ -36,7 +36,7 @@ $graph->title->Set('Comparaison de l\'an '.$year1.' et '.$year2.'');
 $graph->xaxis->title->Set("mois");
 // Specify X-labels
 $graph->xaxis->SetTickLabels($percentage);
-$graph->yaxis->title->Set("sortis");
+$graph->yaxis->title->Set("recouvrements");
 $graph->yaxis->scale->SetGrace(20);
 $graph->title->SetFont(FF_FONT1,FS_BOLD);
 $graph->yaxis->title->SetFont(FF_FONT1,FS_BOLD);

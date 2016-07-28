@@ -7,10 +7,11 @@
 		<div id="menu">
 			<ul id="nav">
 				<?php if(Configure::read('aser.stock')):?>
-				<li><?php echo $html->link(__('Inventory Management', true), '#'); ?>
+				<li><?php echo $html->link(__('Inventory', true), '#'); ?>
 					<ul>
 						<li class="folder"><?php echo $this->Html->link(__('Store Management', true), '/stocks/index'); ?></li>
 						<li class="folder"><?php echo $this->Html->link(__('Inventory Operations', true), '/historiques/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Final Stock Controls', true), '/final_stocks/index'); ?></li>
 						<li  class="folder"><?php echo $this->Html->link(__('Store Transfers', true), '/mouvements/index'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Products Movements Report', true), '/produits/balance'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Inventory Closing Report', true), '/produits/rapport'); ?></li>
@@ -22,7 +23,7 @@
 					<?endif;?>
 				</li>
 				<?php if(Configure::read('aser.POS')):?>
-					<li><?php echo $html->link(__('Products Management', true), '#'); ?>
+					<li><?php echo $html->link(__('Products', true), '#'); ?>
 								<ul>	
 									<?php if(Configure::read('aser.stock')):?>
 										
@@ -88,7 +89,8 @@
 						<?php if($config['ebenezer']):?>
 							<li class="folder"><?php echo $this->Html->link(__('Gestion des Dettes', true), '/dettes/index'); ?></li>
 						<?php endif;?>
-						
+							<li class="folder"><?php echo $this->Html->link('Bills Collections', '/recouvrements/index'); ?></li>
+							<li class="folder"><?php echo $this->Html->link('Deposits Payments', '/paiements/deposits'); ?></li>
 					</ul>
 				</li>
 				
@@ -170,7 +172,7 @@
 				<?php endif; ?>
 				
 				<?php if(Configure::read('aser.tresorerie')):?>
-				<li><?php echo $this->Html->link(__('Cash Management', true), '#'); ?>
+				<li><?php echo $this->Html->link(__('Cash', true), '#'); ?>
 					<ul>
 						<li class="money"><?php echo $this->Html->link(__('Accounts Management', true), '/caisses/index'); ?>
 							<ul>
@@ -201,7 +203,7 @@
 						</li>
 					</ul>	
 				</li>
-				<li><?php echo $this->Html->link(__('Users Management', true), '#'); ?>
+				<li><?php echo $this->Html->link(__('Users', true), '#'); ?>
 					<ul>
 						<li class="personnel"><?php echo $this->Html->link(__('Users Management', true), '/personnels/index'); ?></li>
 					</ul>

@@ -20,13 +20,21 @@
 	<div class="left">
 		<div class="text">
 		<?php
-			
+			echo 'PREPARED BY : '.$session->read('Auth.Personnel.name');
+			echo '<br/>';
+			echo 'VERIFIED BY :';
+			echo '<br/>';
+			echo 'APPROVED BY :';
+
 		?>
 		
 		</div>
 	</div>
 	<div class="right"><?php  
-		echo __('Cashier Signature');	
+		echo __('Received By :');	
+		for($i=0; $i<30; $i++){
+			echo '&nbsp;';
+		}
 	?>
 	</div>
 	<? elseif($modele==2):?>

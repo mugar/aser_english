@@ -17,6 +17,10 @@
  * @license       MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
 
+.produit_filtered {
+	height: 70px !important;
+	 width: 200px !important;
+}
 /*** limits css ***/
 
 .small_highlight {

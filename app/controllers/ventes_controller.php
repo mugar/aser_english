@@ -210,6 +210,13 @@ class VentesController extends AppController {
 																));
 			$this->set('caissiers',$caissiers);
 		}
+		if(Configure::read('aser.multi_resto')){
+			foreach(Configure::read('bars') as $name=>$plage){
+				$bars[$name]=$name;
+			}
+			$bars1 = array(''=>'')+$bars;
+			$this->set(compact('bars','bars1'));
+		} 
 		parent::beforeFilter();
 	} 
 	
@@ -813,7 +820,7 @@ class VentesController extends AppController {
 	
 	function _product_list($produits){
 		$list=array();
-		$pos=(Configure::read('aser.multi_pv'))?$this->Session->read('pos'):'';
+		$pos=(Configure::read('aser.multi_resto'))?$this->Session->read('pos'):'';
 		$stockId=$this->Session->read('resto_stock');
 		$connexion=Configure::read('aser.connexion');
 		foreach($produits as $produit){
@@ -1099,7 +1106,7 @@ class VentesController extends AppController {
 			$journalData['Journal']['montant_for_caisse']=$versement+$total_depenses-$total_ajouts;
 			
 			
-			$condPers['Personnel.fonction_id']=array(2);
+			$condPers['Personnel.fonction_id']=array(2,4);
 			$condPers['Personnel.actif']='yes';
 			if($this->Auth->user('fonction_id')==2){
 			//	$condPers['Personnel.id']=$this->Auth->user('id');
@@ -1403,6 +1410,9 @@ class VentesController extends AppController {
 			
 			if(isset($this->data['Vente']['stock_id'])&&($this->data['Vente']['stock_id']!=0)){
 				$conditions['Vente.stock_id']=$this->data['Vente']['stock_id'];
+			}
+			if(isset($this->data['Facture']['pos'])&&($this->data['Facture']['pos']!='')){
+				$conditions['Facture.pos']=$this->data['Facture']['pos'];
 			}
 			if(isset($this->data['Vente']['produit_id'])&&($this->data['Vente']['produit_id']!=0)){
 				$conditions['Vente.produit_id']=$this->data['Vente']['produit_id'];
@@ -1803,7 +1813,7 @@ class VentesController extends AppController {
 				$cond3['Produit.groupe_id']=$groupeIds[0];
 			}
 
-			if(Configure::read('aser.multi_pv')||(Configure::read('aser.default_stock')<1)){
+			if(Configure::read('aser.multi_resto')||(Configure::read('aser.default_stock')<1)){
 				$produits = $this->Vente->Produit->find('all',array( 'fields'=>array('Produit.id',
    																				'Produit.name',
    																				'Produit.PV',
@@ -1825,11 +1835,7 @@ class VentesController extends AppController {
 			}
 			$thermal=$this->Conf->find('thermal');
 			$change=$this->Conf->find('change');
-			if(Configure::read('aser.multi_resto')){
-				foreach(Configure::read('bars') as $name=>$plage){
-					$bars[$name]=$name;
-				}
-			} 
+			
 			
 			$stock=$this->_find_stock(); //to set the stock to use
 			
@@ -2127,7 +2133,7 @@ class VentesController extends AppController {
 	}
 	function _checkJournal(&$factureInfo){
 		$journal=array();
-		if(in_array($this->Auth->user('fonction_id'),array(2))){
+		if(in_array($this->Auth->user('fonction_id'),array(2,4))){
 			$journal=$this->Product->journal();
 			
 			if($factureInfo['Facture']['journal_id']!=$journal['id']){
@@ -2668,7 +2674,7 @@ class VentesController extends AppController {
 	
 	function _addCheckings(&$data){
 		//stop add users from creating bills except caissiers and serveurs.
-		if(!in_array($this->Auth->user('fonction_id'),array(1,2))&&($data['Vente']['factureId']=='creation')){
+		if(!in_array($this->Auth->user('fonction_id'),array(1,2,4,5))&&($data['Vente']['factureId']=='creation')){
 			exit(json_encode(array('success'=>false,
 			'msg'=>'Only cashiers can create invoices!')));	
 		}
@@ -2695,7 +2701,7 @@ class VentesController extends AppController {
 		//handle this only when creating a new bill.
 		if($data['Vente']['factureId']=='creation'){
 			//if it is a cassier creating the bill.
-			if($this->Auth->user('fonction_id')==2){
+			if(in_array($this->Auth->user('fonction_id'), array(2,4))){
 				//the nembeteplus variable is true if the user has chosen to use an old journal/report.
 				//exit(debug($nembeteplus));
 				if($nembeteplus==1){
@@ -2735,7 +2741,7 @@ class VentesController extends AppController {
 		//initializing some variables.
 		$failToSaveMsg="Failed to save this sale.";
 		//find the Point of sale we are working on.
-		$pos=(!empty($pos))?($pos):null;
+		$pos=(Configure::read('aser.multi_resto'))?$this->Session->read('pos'):null;
 		//date for beneficiaire
 		$this->data['Vente']['date']=(Configure::read('aser.beneficiaires'))?$journal['date']:null;
 		//setting up the reduction in vente array. this will force the bill when updated 
