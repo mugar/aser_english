@@ -132,9 +132,8 @@
         var filteringStarted = false;
         var oldSearchText = null;
 
-        $('#input_' + name).on('keyup', function() {
+        $('#input_' + name).live('keyup', function() {
             clearTimeout(keyDelayTimeout);
-
             var searchText = $(this).val();
             if (!filteringStarted && searchText.length < options.minimumCharacters) {
                 return;

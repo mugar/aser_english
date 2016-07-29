@@ -151,9 +151,23 @@ class Produit extends AppModel {
 			'finderQuery' => '',
 			'counterQuery' => ''
 		),
+
+		'FinalStock' => array(
+			'className' => 'FinalStock',
+			'foreignKey' => 'produit_id',
+			'dependent' => false,
+			'conditions' => '',
+			'fields' =>'',
+			'order' => '',
+			'limit' => '',
+			'offset' => '',
+			'exclusive' => '',
+			'finderQuery' => '',
+			'counterQuery' => ''
+		),
 		'Historique' => array(
 			'className' => 'Historique',
-			'foreignKey' => 'historique_id',
+			'foreignKey' => 'produit_id',
 			'dependent' => false,
 			'conditions' => '',
 			'fields' =>'',

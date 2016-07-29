@@ -1010,7 +1010,152 @@ set_time_limit(240);    //4minutes
 		}
 	}
 
+	/** 
+	* functions to help in easing the inventory management
+	*/
+
+	function _getInitialQty($produitId,$initial_quantities){
+		$produit_initial_quantity = 0;
+		foreach ($initial_quantities as $initial_quantity) {
+			if($initial_quantity['Historique']['produit_id'] == $produitId){
+				$produit_initial_quantity = $initial_quantity['Historique']['debit'] - $initial_quantity['Historique']['credit'];
+				break;
+			}
+		}
+		return $produit_initial_quantity;
+	}
+
+	function inventory(){
+		$show_data = false; 
+		//get params 
+		if(
+				!empty($this->data['Produit']['date'])&&
+				!empty($this->data['Produit']['stock_id'])
+			)
+		{
+			$stock_id = $this->data['Produit']['stock_id'];
+			$date = $this->data['Produit']['date'];
+			$show_data = true;
+
+			//get initial quantity
+			$initial_quantities_cond['Historique.stock_id'] = $stock_id;
+			$initial_quantities_cond['Historique.date <'] = $date;
+
+			$initial_quantities = $this->Produit->Historique->find('all',array('fields'=>array('Historique.produit_id',
+																																												'sum(Historique.debit) as debit',
+																																												'sum(Historique.credit) as credit'
+																																												),
+																																				'group'=>array('Historique.stock_id',
+																																												'Historique.produit_id'
+																																											),
+																																				'conditions'=>$initial_quantities_cond
+
+																																				)
+																														);
+			//get movement
+			//movements conditions 
+			$mouvements = $this->Produit->find('all',array('fields'=>array('Produit.*'),
+																										'conditions'=>array('Produit.type'=>'storable',
+																																			'Produit.actif'=>'yes'
+																																			),
+																										'order'=>array("Produit.name"),
+																										'contain'=>array(
+																											'Historique'=>array('fields'=> array('Historique.libelle',
+																																													'sum(Historique.debit) as debit',
+																																												  'sum(Historique.credit) as credit'
+																																												 ),
+																																					'conditions'=>array('Historique.date'=>$date,
+																																															'Historique.stock_id'=>$stock_id
+																																															)
+																																				),
+
+																											'FinalStock'=>array('fields'=> array('FinalStock.quantite',
+																																													'FinalStock.exit_quantite'
+																																												 ),
+																																					'conditions'=>array('FinalStock.date'=>$date,
+																																															'FinalStock.stock_id'=>$stock_id
+																																														)
+																																				),
+																														)
+																											)
+																				);
+
+			//arrange the all thing in a proper array
+			foreach ($mouvements as $key => $mouvement) {
+				//put the initial quantity
+				$mouvements[$key]['Produit']['initial_quantity'] = $this->_getInitialQty($mouvement['Produit']['id'],$initial_quantities);
+				//initialize variables
+				$types = array('Entry','Sale','Transfer_in','Transfer_out','Consumption','Loss');
+				foreach ($types as $value) {
+					$mouvements[$key]['Produit'][$value] = 0;
+				}
+				//fill types
+				foreach ($mouvement['Historique'] as $historique) {
+					if($historique['libelle'] == 'Entree'){
+						$mouvements[$key]['Produit']['Entry'] += $historique['debit'];
+					}
+					else if($historique['libelle'] == 'Mouvement'){
+						$mouvements[$key]['Produit']['Transfer_in'] += $historique['debit'];
+						$mouvements[$key]['Produit']['Transfer_out'] += $historique['credit'];
+					}
+					elseif($historique['libelle'] == 'Vente'){
+						$mouvements[$key]['Produit']['Sale'] += !empty($historique['credit']) ? $historique['credit']: 0;
+					}
+					elseif($historique['libelle'] == 'Sorti'){
+						$mouvements[$key]['Produit']['Consumption'] += $historique['credit'];
+					}
+					elseif($historique['libelle'] == 'Perte'){
+						$mouvements[$key]['Produit']['Loss'] += $historique['credit'];
+					}
+				}
+				//set the final quantity
+				if(!empty($mouvement['FinalStock'][0]['quantite'])){
+					$mouvements[$key]['Produit']['final_quantity'] = $mouvement['FinalStock'][0]['quantite'];
+					$mouvements[$key]['Produit']['exit_quantity'] = $mouvement['FinalStock'][0]['exit_quantite'];
+				}
+				else {
+					$mouvements[$key]['Produit']['final_quantity'] = 0;
+					$mouvements[$key]['Produit']['exit_quantity'] = 0;	
+				}
+
+			}
+
+			$this->set(compact('date','stock_id','mouvements'));
+		}
+		$this->set(compact('show_data'));
+	}
 	
+	/** part of the inventory functions. this one
+	* helps to create the different inventory operations
+	*/
+
+	function inventory_operation($id, $quantite, $type){
+		
+		if(in_array($type,array('Entree','Sorti','Vente','Perte'))){
+			$this->Produit->Historique->deleteAll(array('Historique.final_stock_id'=>$id, 'Historique.libelle'=>$type));
+			if($quantite>0){
+				$historique['id'] = null;
+				$historique['final_stock_id'] = $id;
+				$historique['stock_id'] = $final_stock['FinalStock']['stock_id'];
+				$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
+				$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
+				$historique['PU'] = $final_stock['Produit']['PA'];
+				$historique['quantite'] = $quantite;
+				$historique['libelle'] = $type;
+				$historique['date'] = $final_stock['FinalStock']['date'];
+				$historique['personnel_id'] = $final_stock['FinalStock']['controler_id'];
+				if($this->FinalStock->Historique->save(array("Historique"=>$historique))){
+						exit(json_encode(array('success'=>true)));	
+				}
+			}
+		}
+		else if(in_array($type,array('transfer_in','transfer_out'))){
+		}
+		else {
+			exit(json_encode(array('success'=>true)));	
+		}
+	}
+
 	function index() {
 		$this->paginate['order']=array('Produit.id desc');
 		$produitConditions=$this->Session->read('produitConditions');

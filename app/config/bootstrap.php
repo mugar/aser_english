@@ -119,7 +119,7 @@
 								 'ebenezer'=>0, //if on enables features of pharmacie eben ezer
 								 'gouvernance'=>0, //if on enables features related to housekeeping
 								 'groupes_on_index'=>1, //if on enables the grouping of products on the vente index
-								 'disable_transfer'=>1, //to disable transfer of bills from on journal to another.
+								 'disable_transfer'=>0, //to disable transfer of bills from on journal to another.
 								 'deny_caishier_to_make_credit'=>1,
 								 'disable_nembeteplus'=>0, //when managers want to force the closing of the report.
 								 'export_bills'=>1, //option payant of exporting bills to xls

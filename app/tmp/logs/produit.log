@@ -3119,3 +3119,31 @@
     [Produit] => 
 )
 
+2016-07-29 22:53:04 Produit: Array
+(
+    [Action] => MODIFICATION BY ARMAND
+    [Produit] => Array
+        (
+            [id] => 1
+            [name] => AADA
+            [PV] => 10
+            [type] => not_storable
+            [actif] => yes
+        )
+
+)
+
+2016-07-29 22:53:04 Produit: Array
+(
+    [Action] => MODIFICATION BY ARMAND
+    [Produit] => Array
+        (
+            [id] => 4
+            [name] => ACCESS POINT D LINK DAP-1360
+            [PV] => 100000
+            [type] => not_storable
+            [actif] => yes
+        )
+
+)
+

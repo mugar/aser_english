@@ -35,7 +35,7 @@
 		<th>Store</th>	
 		<th>Store Manager</th>
 		<th>Product</th>
-		<th>Quantity</th>	
+		<th>Final Quantity</th>	
 		<th>Actions</th>
 	</tr>
 	<?php for($i=0;$i<1;$i++): ?>
@@ -43,7 +43,7 @@
 		<?php echo $this->Form->create('FinalStock',array('action'=>'add'));?>
 		<td><?php echo $this->Form->input('date',array('label'=>'','type'=>'text'));?></td>
 		<td><?php echo $this->Form->input('stock_id',array('id'=>$i.'StockId','label'=>'','options'=>$stocks));?></td>
-		<td><?php echo $this->Form->input('stock_manager_id',array('label'=>'','options'=>$personnels,'selected'=>0));?></td>
+		<td><?php echo $this->Form->input('stock_manager_id',array('label'=>'','options'=>$waiters,'selected'=>0));?></td>
 		<td><?php echo $this->Form->input('produit_id',array('id'=>'produit','class'=>'produit_filtered','label'=>'','options'=>$produits));?></td>
 		<td><?php echo $this->Form->input('quantite',array('id'=>'quantite','label'=>''));?></td>
 		<td><input type="submit" value="Save"/></td>
@@ -97,6 +97,6 @@
 		<li class= "link" onclick="edit()" >Edit</li>
 		<li class="link" onclick="mass_delete()" >Delete</li>
 		<li class="link"  onclick = "recherche()" >Search Options</li>
-		<li><?php echo $this->Html->link('Edition De Rapport', array('action' => 'rapport')); ?></li>
+		<!-- <li><?php echo $this->Html->link('Edition De Rapport', array('action' => 'rapport')); ?></li> -->
 	</ul>
 </div>

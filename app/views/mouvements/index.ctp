@@ -19,6 +19,23 @@
     	// If -1, both the select element and its filter box have their size set to the width of
     	// the select element before any filtering occurs.
   	});
+  	jQuery('#produits').selectFilter({
+  		'clearInputOnEscape': true,
+    	'disableRegex': true,
+    	// The class to apply to the filter bar.
+    	'filterClass': 'filter-select',
+    	'inputPlaceholder': 'Type to filter',
+    	'minimumCharacters': 1,
+    	'minimumSelectElementSize': 3,
+    	'inputLocation': 'above',
+    	// Amount of time to delay filtering (in ms) after a key is pressed.
+    	'searchDelay':0,
+    	'searchFromBeginning':false,
+    	'width': -1
+    	// The width for the select element and its input filter box.
+    	// If -1, both the select element and its filter box have their size set to the width of
+    	// the select element before any filtering occurs.
+  	});
 });
 </script>
 
@@ -32,7 +49,7 @@
 	<?php echo $this->Form->create('Mouvement',array('id'=>'recherche'));?>
 	<span class="left">
 		<?php
-			echo $this->Form->input('produit_id',array('label'=>'Product', 'selected'=>0,'options'=>$produits1));
+			echo $this->Form->input('produit_id',array('label'=>'Product', 'id'=>'produits', 'class'=>'produit_filtered', 'selected'=>0,'options'=>$produits1));
 			echo $this->Form->input('stock_sortant_id',array('label'=>'From','selected'=>0,'options'=>$stocks1));
 			echo $this->Form->input('stock_entrant_id',array('label'=>'To','selected'=>0,'options'=>$stocks1));
 		?>

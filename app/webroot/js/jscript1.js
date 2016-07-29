@@ -1001,7 +1001,7 @@ function quantites() {
 	}
 }
 
-function edit(nom){
+function edit(nom,reload){
 	nom= (nom === undefined) ? 'checkbox' : nom;
 	//to get the model and the controller
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
@@ -1020,7 +1020,7 @@ function edit(nom){
 							            dataType:'json',
 							             success:function(ans){
 							             	if(ans.success){
-                                                if(ans.reload){
+                                                if(ans.reload || reload === true){
                                                     location.reload();
                                                 }
 							             		jQuery.ajax({
@@ -1044,7 +1044,7 @@ function edit(nom){
     					            "Close": function() { jQuery(this).dialog("close"); }
     					           }
                        });
-    		           jQuery('#edit_boxe').load(getBase()+controller+"/edit/"+id,function(){date();});
+    		          jQuery('#edit_boxe').load(getBase()+controller+"/edit/"+id,function(){date();});
 	}
 	else {
 		jQuery(document).ready(function(){
@@ -1055,6 +1055,48 @@ function edit(nom){
     	});
 	}
 }
+
+function subscription(){
+    if((factureId > 0 ) && (consoId > 0)){
+        var start = jQuery('#DateStart1').val();
+        var end = jQuery('#DateStart2').val();
+        jQuery('#subscription_boxe').dialog({
+                modal:true, 
+                width:390,
+                position:'top',
+                buttons: 
+                    { "Create": function() {
+                        jQuery('#edit_form').attr('action',getBase()+'subscriptions/add').ajaxSubmit({
+                            dataType:'json',
+                            data: {
+                                "data[Subscription][produit_id]":consoId,
+                                "data[Subscription][facture_id]":factureId,
+                                "data[remote]": true
+                            },
+                            success:function(res){
+                                if(res.success){
+                                    jQuery('#subscription_boxe').dialog("close");
+                                    alert("Subscription created successfully!");
+                                }
+                                else {
+                                    alert(res.msg);
+                                }
+                            },
+                            error: function(){
+                                alert("That service has already a registered subscription");
+                            }
+                    
+                        });
+                        },
+                        "Cancel": function() { jQuery(this).dialog("close"); }
+                    }
+            });
+    }
+    else {
+        alert('Please Select a Service to attach the subscription');
+    }
+}
+
 
 function chambre(controller,chambre){
 	controller=(controller==undefined)?'ventes':controller;controller=(controller==undefined)?'ventes':controller;
@@ -1212,7 +1254,7 @@ function table_changer(factureId){
 function mass_delete(){
 	var nom='checkbox';
 	var	info=jQuery('form[name="'+nom+'"]').attr('id');
-	info=info.split('_')[1];//to get the model and the controller
+    info= (info.split('_').length == 2) ? info.split('_')[1] : info.split('_')[1]+'_'+info.split('_')[2];
 	if((jQuery('form[name="'+nom+'"] input[type="checkbox"]:checked:not(input[name="master"]):not(input[name="master"])').length)==0) {
     	jQuery('<div id="alert" title="message">Select one element!</div>')
     	.dialog({modal:true, show:'slide',hide:'clip',buttons: { "Ok": function() { jQuery(this).dialog("close"); } }});
@@ -1902,7 +1944,7 @@ if(goOn&&!locked){  // block new items to be added before the first order has re
  	alert('Select a waiter!');
  	goOn=false;
  }
- else if((factureId!='creation')&&(jQuery('#pos').attr('multi_serveur')==0)){
+ else if((factureId=='creation')&&(jQuery('#pos').attr('multi_serveur')==0)){
  	var currentServeur=jQuery('table#list_factures tr[id="'+factureId+'"] td[id="waiter"]').text();
  	if((currentServeur!='')&&(serveur!=currentServeur)){
  		alert('The waiter must be the same as the one who started serving!');

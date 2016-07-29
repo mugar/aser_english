@@ -49,6 +49,7 @@
     	// If -1, both the select element and its filter box have their size set to the width of
     	// the select element before any filtering occurs.
   	});
+  	
 });
 </script>
 <div class="historiques index">

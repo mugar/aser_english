@@ -1,3 +1,26 @@
+<script>
+ jQuery.noConflict();
+ jQuery(document).ready(function(){
+ 	
+		jQuery('#produit_edit').selectFilter({
+  		'clearInputOnEscape': true,
+    	'disableRegex': true,
+    	// The class to apply to the filter bar.
+    	'filterClass': 'filter-select',
+    	'inputPlaceholder': 'Type to filter',
+    	'minimumCharacters': 1,
+    	'minimumSelectElementSize': 3,
+    	'inputLocation': 'above',
+    	// Amount of time to delay filtering (in ms) after a key is pressed.
+    	'searchDelay':0,
+    	'searchFromBeginning':false,
+    	'width': -1
+    	// The width for the select element and its input filter box.
+    	// If -1, both the select element and its filter box have their size set to the width of
+    	// the select element before any filtering occurs.
+  	});
+});
+</script>
 <div class="dialog">
 <?php echo $this->Form->create('Historique',array('id'=>'edit_form'));?>
 	<span class="left">
@@ -7,7 +30,7 @@
 			echo $this->Form->input('quantite',array('label'=>'Qty'));
 			echo $this->Form->input('Produit.unite_id',array('label'=>'Measuring Unit'));
 			echo $this->Form->input('Produit.id',array('type'=>'hidden'));
-			echo $this->Form->input('produit_id',array('label'=>'Product'));
+			echo $this->Form->input('produit_id',array('id'=>'produit_edit','class'=>'produit_filtered','label'=>'Product'));
 			echo $this->Form->input('PU',array('label'=>'Unit Price'));
 		?>
 	</span>

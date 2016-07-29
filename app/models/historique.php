@@ -121,7 +121,7 @@ class Historique extends AppModel {
 		}
 		
 		if(!empty($this->data['Historique']['libelle']) && !empty($this->data['Historique']['quantite'])){
-			if(in_array($this->data['Historique']['libelle'], array('Sorti','Perte'))){
+			if(in_array($this->data['Historique']['libelle'], array('Vente','Sorti','Perte'))){
 				$this->data['Historique']['debit'] = null;
 				$this->data['Historique']['credit'] = $this->data['Historique']['quantite'];
 			}

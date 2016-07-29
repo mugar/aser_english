@@ -11,7 +11,10 @@ class FinalStocksController extends AppController {
 							'Perte'=>'Loss'
 							);
 		$exits1=array(''=>'')+$exits;
-
+		$this->loadModel('Personnel');
+		$waiters = $this->Personnel->find('list',array('conditions'=>array('Personnel.fonction_id'=>array(1,2))));
+		$waiters1 = array(''=>'')+ $waiters;
+		$this->set(compact('waiters','waiters1'));
 		$this->exits = $exits;
 		$this->set(compact('exits','exits1'));
 	}
@@ -23,12 +26,7 @@ class FinalStocksController extends AppController {
 		$conditions=array();
 		$date1=$date2=null;
 		if(!empty($data)) {
-			if($data['FinalStock']['type']!='') {
-				$conditions['FinalStock.type']=$data['FinalStock']['type'];
-			}
-			if($data['FinalStock']['final_stock_id']!=0) {
-				$conditions['FinalStock.final_stock_id']=$data['FinalStock']['final_stock_id'];
-			}
+		
 			if($data['Produit']['groupe_id']!=0) {
 				$conditions['Produit.groupe_id']=$data['Produit']['groupe_id'];
 			}
@@ -39,8 +37,11 @@ class FinalStocksController extends AppController {
 																						)
 																			);
 			}
-			if($data['FinalStock']['tier_id']!=0) {
-				$conditions['FinalStock.tier_id']=$data['FinalStock']['tier_id'];
+			if($data['FinalStock']['stock_manager_id']!=0) {
+				$conditions['FinalStock.stock_manager_id']=$data['FinalStock']['stock_manager_id'];
+			}
+				if($data['FinalStock']['produit_id']!=0) {
+				$conditions['FinalStock.produit_id']=$data['FinalStock']['produit_id'];
 			}
 			if($this->data['FinalStock']['stock_id']!=0){
 				$conditions['FinalStock.stock_id']=$data['FinalStock']['stock_id'];
@@ -98,21 +99,26 @@ class FinalStocksController extends AppController {
 		$this->FinalStock->Historique->deleteAll(array('Historique.final_stock_id'=>$id, 'Historique.libelle'=>$type));
 
 			// exit(debug($current_total));
-		$historique['id'] = null;
-		$historique['final_stock_id'] = $id;
-		$historique['stock_id'] = $final_stock['FinalStock']['stock_id'];
-		$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
-		$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
-		$historique['PU'] = $final_stock['Produit']['PA'];
-		$historique['quantite'] = $quantite;
-		$historique['libelle'] = $type;
-		$historique['date'] = $final_stock['FinalStock']['date'];
-		$historique['personnel_id'] = $final_stock['FinalStock']['controler_id'];
-		if($this->FinalStock->Historique->save(array("Historique"=>$historique))){
-				exit(json_encode(array('success'=>true)));	
+		if($quantite>0){
+			$historique['id'] = null;
+			$historique['final_stock_id'] = $id;
+			$historique['stock_id'] = $final_stock['FinalStock']['stock_id'];
+			$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
+			$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
+			$historique['PU'] = $final_stock['Produit']['PA'];
+			$historique['quantite'] = $quantite;
+			$historique['libelle'] = $type;
+			$historique['date'] = $final_stock['FinalStock']['date'];
+			$historique['personnel_id'] = $final_stock['FinalStock']['controler_id'];
+			if($this->FinalStock->Historique->save(array("Historique"=>$historique))){
+					exit(json_encode(array('success'=>true)));	
+			}
+			else {
+				exit(json_encode(array('success'=>false, 'msg'=>'A saving error happened.')));
+			}
 		}
 		else {
-			exit(json_encode(array('success'=>false, 'msg'=>'A saving error happened.')));
+			exit(json_encode(array('success'=>true)));	
 		}
 	}
 
@@ -200,7 +206,8 @@ class FinalStocksController extends AppController {
 			$this->_error($action, 'this date is incorrect!');	
 		}		
 		//get yesterday last stock or initial stock
-		$yesterday = $this->Product->increase_date($data['FinalStock']['date'],-1);
+		// $yesterday = $this->Product->increase_date($data['FinalStock']['date']);
+		$yesterday = $data['FinalStock']['date'];
 		$stock_initiale = $this->Product->ProductQty($data['FinalStock']['produit_id'],$data['FinalStock']['stock_id'],array(),$yesterday);
 
 		//get today entry
@@ -265,20 +272,11 @@ class FinalStocksController extends AppController {
 		$deleted=array();
 		$notDeleted=0;
 		foreach($this->data['Id'] as $id){
-			if($id!=0) {
-				
-				$appro=$this->FinalStock->find('first',array('fields'=>array('FinalStock.historique_id',
-																		'FinalStock.personnel_id'),
-																		'conditions'=>array('FinalStock.id'=>$id)
-																));
+			if($id!=0) {	
 				if(true){
-					if($this->Product->productHistoryDelete($appro['FinalStock']['historique_id'],'Historique')){
+						$this->FinalStock->Historique->deleteAll(array('Historique.final_stock_id'=>$id));
 						$this->FinalStock->delete($id);
 						$deleted[]=$id;
-					}
-					else {
-						$notDeleted++;	
-					}
 				}
 				else {
 					$notDeleted++;	

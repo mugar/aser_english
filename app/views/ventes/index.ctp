@@ -296,6 +296,9 @@
 			<span class="boutton" onclick="resto_tier()" title="Créer un nouveau client">Customer</span>
 		<?php endif;?>
 		<span class="boutton" onclick="document.location.href=getBase()+'ventes/journal'" title="Rapport Caisse">Report</span>
+		<?php if($config['services']): ?>
+			<span class="boutton" onclick="subscription()" title="Create a subscription">Subscription</span>
+		<?php endif;?>
 	</fieldset>
 </div>
 </div>
@@ -343,5 +346,9 @@
 
 <!-- form for paiement creation -->
 <?php echo $this->element('../paiements/edit',array('action'=>'add','hide_amount'=>true));?>
+<!-- form for subscription creation -->
+<div id="subscription_boxe" style="display:none" title='Create a subscription'>
+	<?php echo $this->element('../subscriptions/edit',array('action'=>'add'));?>
+</div>
 <!--printing iframe -->
 <iframe id="printPage" name="printPage" src='' style="position:absolute;top:0px; left:0px;width:0px; height:0px;border:0px;overfow:none; z-index:-1"></iframe>

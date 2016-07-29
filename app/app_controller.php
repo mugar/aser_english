@@ -234,7 +234,7 @@ class AppController extends Controller {
 			$this->set(compact('personnels','personnels1'));
 		}	
 		//for sections & groupes stuff
-		if(in_array($this->params['controller'],array('produits','configs','ventes','pertes','historiques','sortis','mouvements'))){
+		if(in_array($this->params['controller'],array('produits','configs','ventes','pertes','historiques','final_stocks','mouvements'))){
 			$this->loadModel('Section');
 			$this->sections=$sections=$sections1=$this->Section->find('list',array('fields'=>array('Section.id','Section.name'),
 														'order'=>array('Section.name asc')
