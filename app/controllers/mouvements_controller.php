@@ -70,17 +70,18 @@ class MouvementsController extends AppController {
 		$failureMsg='Vérifiez s\'il les champs Date & Quantité sont Obligatoire!';
 		$this->Mouvement->set($data);
 		if(!$this->Mouvement->validates()){
-			if($action=='edit')
+			if(($action=='edit')||isset($data['remote'])){
 				exit(json_encode(array('success'=>false,'msg'=>$failureMsg)));
+			}
 			else 
 				exit('failure_'.$failureMsg);
 		}
 		if($data['Mouvement']['date']>date('Y-m-d')){
 			$this->_error($action, 'Cette date est incorrecte!');	
 		}
-		$stockIdentiqueMsg='Les Stocks sélectionnés sont identiques!';
+		$stockIdentiqueMsg='The stores are identical!';
 		if($data['Mouvement']['stock_sortant_id']==$data['Mouvement']['stock_entrant_id']){
-			if($action=='edit')
+			if(($action=='edit')||isset($data['remote']))
 				exit(json_encode(array('success'=>false,'msg'=>$stockIdentiqueMsg)));
 			else 
 				exit('failure_'.$stockIdentiqueMsg);
@@ -88,30 +89,52 @@ class MouvementsController extends AppController {
 		if(($action=='edit')&&($this->Auth->user('id')!=$data['Mouvement']['personnel_id'])){
 		//	exit(json_encode(array('success'=>false,'msg'=>'Seul le créateur peut effectuer la modification!')));	
 		}
-		//treating edit like a new add
-		if($action=='edit'){
-			$this->Product->productHistoryDelete($data['Mouvement']['historique1'],'Historique');
-			$this->Product->productHistoryDelete($data['Mouvement']['historique2'],'Historique');
-			$data['Mouvement']['historique2']=$data['Mouvement']['historique2']=null;
+
+		//if called remotely from the produit inventory delete the previous records.
+		if(isset($data['remote'])){
+			$old_records = $this->Mouvement->find('all', array('conditions'=>array('Mouvement.produit_id'=>$data['Mouvement']['produit_id'],
+																				'Mouvement.stock_entrant_id'=>$data['Mouvement']['stock_entrant_id'],
+																				'Mouvement.stock_sortant_id'=>$data['Mouvement']['stock_sortant_id'],
+																				'Mouvement.date'=>$data['Mouvement']['date']
+																	)));
+			foreach ($old_records as $old_record) {
+				$this->Product->productHistoryDelete($old_record['Mouvement']['historique1'],'Historique');
+				$this->Product->productHistoryDelete($old_record['Mouvement']['historique2'],'Historique');
+				$this->Mouvement->delete($old_record['Mouvement']['id']);
+			}
 		}
-		//for stock sortant
-		$return=$this->Product->stock($data,'credit'); 
-		if(!$return['success']){
-			if($action=='edit')
-				exit(json_encode($return));
-			else 
-				exit('failure_'.$return['msg']);
+
+		if(!(isset($data['remote'])&&($data['Mouvement']['quantite']<=0))){
+			//treating edit like a new add
+			if($action=='edit'){
+				$this->Product->productHistoryDelete($data['Mouvement']['historique1'],'Historique');
+				$this->Product->productHistoryDelete($data['Mouvement']['historique2'],'Historique');
+				$data['Mouvement']['historique2']=$data['Mouvement']['historique2']=null;
+			}
+			//for stock sortant
+			$return=$this->Product->stock($data,'credit'); 
+			if(!$return['success']){
+				if(($action=='edit')||isset($data['remote']))
+					exit(json_encode($return));
+				else 
+					exit('failure_'.$return['msg']);
+			}
+			
+			//saving
+			$this->Mouvement->save($data); 
+			$this->Mouvement->Produit->save($data);
 		}
-		
-		//saving
-		$this->Mouvement->save($data); 
-		$this->Mouvement->Produit->save($data); 
 	}
 	
 	function add() {
 		if (!empty($this->data)) {
 			$this->_logic($this->data, 'add');
-			$this->_show($this->Mouvement->id);
+			if(isset($this->data['remote'])){
+				exit(json_encode(array('success'=>'true')));
+			}
+			else {
+				$this->_show($this->Mouvement->id);
+			}
 		}	
 	}
 	

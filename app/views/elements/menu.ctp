@@ -11,6 +11,7 @@
 					<ul>
 						<li class="folder"><?php echo $this->Html->link(__('Store Management', true), '/stocks/index'); ?></li>
 						<li class="folder"><?php echo $this->Html->link(__('Inventory Operations', true), '/historiques/index'); ?></li>
+						<li class="folder"><?php echo $this->Html->link(__('Inventory Interface', true), '/produits/inventory'); ?></li>
 						<li class="folder"><?php echo $this->Html->link(__('Final Stock Controls', true), '/final_stocks/index'); ?></li>
 						<li  class="folder"><?php echo $this->Html->link(__('Store Transfers', true), '/mouvements/index'); ?></li>
 						<li class="rapport"><?php echo $this->Html->link(__('Products Movements Report', true), '/produits/balance'); ?></li>

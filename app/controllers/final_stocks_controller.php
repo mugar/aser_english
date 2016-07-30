@@ -192,8 +192,6 @@ class FinalStocksController extends AppController {
 	
 	
 	function _logic(&$data,$action){
-		//setting the alert variable need by eben ezer
-		$alert=false;
 		//validating first
 		$this->FinalStock->set($data);
 		if(!$this->FinalStock->validates()){
@@ -205,29 +203,43 @@ class FinalStocksController extends AppController {
 		if($data['FinalStock']['date']>date('Y-m-d')){
 			$this->_error($action, 'this date is incorrect!');	
 		}		
-		//get yesterday last stock or initial stock
-		// $yesterday = $this->Product->increase_date($data['FinalStock']['date']);
-		$yesterday = $data['FinalStock']['date'];
-		$stock_initiale = $this->Product->ProductQty($data['FinalStock']['produit_id'],$data['FinalStock']['stock_id'],array(),$yesterday);
+		//if called remotely from produits inventory. delete any previous record.
+		if(isset($data['remote'])){
+			$this->FinalStock->deleteAll(array('FinalStock.produit_id'=>$data['FinalStock']['produit_id'],
+																				'FinalStock.stock_id'=>$data['FinalStock']['stock_id'],
+																				'FinalStock.date'=>$data['FinalStock']['date']
+																				)
+																	);
+		}
 
-		//get today entry
-		$historiques = $this->FinalStock->Historique->find('all',array('fields'=>array('sum(Historique.quantite) as quantite'),
-																								'conditions'=>array("Historique.produit_id"=>$data['FinalStock']['produit_id'],
-																																	"Historique.stock_id"=>$data['FinalStock']['stock_id'],
-																																	"Historique.date"=>$data['FinalStock']['date'],
-																																	"Historique.libelle"=>'Entree',
-																									)
-																								));
-		$stock_entry = (!empty($historiques[0]['Historique']['quantite'])) ? $historiques[0]['Historique']['quantite']:0;
+		if(isset($data['remote'])&&($data['FinalStock']['quantite'] < 0)){
+			$data['FinalStock']['exit_quantite'] = 0;
+		}
+		else {
+			//get yesterday last stock or initial stock
+			// $yesterday = $this->Product->increase_date($data['FinalStock']['date']);
+			$yesterday = $data['FinalStock']['date'];
+			$stock_initiale = $this->Product->ProductQty($data['FinalStock']['produit_id'],$data['FinalStock']['stock_id'],array(),$yesterday);
 
-		//set la difference ou exit quantity
-		$data['FinalStock']['exit_quantite'] = $stock_initiale + $stock_entry - $data['FinalStock']['quantite'];
-		$data['FinalStock']['controler_id'] = $this->Auth->user('id');
-		$this->FinalStock->save($data);
+			//get today entry
+			$historiques = $this->FinalStock->Historique->find('all',array('fields'=>array('sum(Historique.quantite) as quantite'),
+																									'conditions'=>array("Historique.produit_id"=>$data['FinalStock']['produit_id'],
+																																		"Historique.stock_id"=>$data['FinalStock']['stock_id'],
+																																		"Historique.date"=>$data['FinalStock']['date'],
+																																		"Historique.libelle"=>'Entree',
+																										)
+																									));
+			$stock_entry = (!empty($historiques[0]['Historique']['quantite'])) ? $historiques[0]['Historique']['quantite']:0;
 
+			//set la difference ou exit quantity
+			$data['FinalStock']['exit_quantite'] = $stock_initiale + $stock_entry - $data['FinalStock']['quantite'];
+			$data['FinalStock']['controler_id'] = $this->Auth->user('id');
+			$this->FinalStock->save($data);
+		}
+		return $data;
 	}
 
-	function _show($id,$alert=false){
+	function _show($id){
 		$final_stock=$this->FinalStock->find('first',array('fields'=>array(
     																				'StockManager.name','StockManager.id',
    																					'Controler.name','Controler.id',
@@ -239,15 +251,20 @@ class FinalStocksController extends AppController {
 																			)
 																);
 		$this->_setExit($final_stock);
-		$this->set(compact('final_stock','alert'));
+		$this->set(compact('final_stock'));
 		$this->layout="ajax";
 		$this->render('add');
 	}
 	
 	function add() {
 		if (!empty($this->data)) {
-			$alert=$this->_logic($this->data,'add');	
-    		$this->_show($this->FinalStock->id,$alert);
+			$data=$this->_logic($this->data,'add');	
+			if(isset($this->data['remote'])){
+				exit(json_encode(array('success'=>true)+$data['FinalStock']));
+			}
+			else {
+				$this->_show($this->FinalStock->id);	
+			}
 		}
 	}
 

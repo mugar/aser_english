@@ -774,7 +774,7 @@ class ProductComponent extends Object {
 					);
 			if(($quantite<0)&&($params['page']!='edit')){
 				if($this->RequestHandler->isAjax()){
-						die(json_encode(array('success'=>false,'msg'=>'Quantite non disponible')));
+						die(json_encode(array('success'=>false,'msg'=>'Quantity not available')));
 					}
 					else {
 						$this->Session->setFlash('la quantité n\'est pas disponible <br> pour le produit '.$composant['DeuxiemeProduit']['name'].' !');
@@ -1117,7 +1117,7 @@ class ProductComponent extends Object {
 				else {
 					//return a failing status
 					$return['success']=false;
-					$return['msg']='Quantité non disponible!';
+					$return['msg']='Quantity not available!';
 					return $return;
 				} 
 			}
@@ -1602,7 +1602,7 @@ class ProductComponent extends Object {
 		$trace['Trace']['operation']='Annulation de la Facture. Motif : "'.$obs.'".';
 		$trace['Trace']['id']=null;
 		$this->Model->Facture->Trace->save($trace);
-		exit(json_encode(array('success'=>true,'msg'=>'Facture annulée')));
+		exit(json_encode(array('success'=>true,'msg'=>'Invoice canceled')));
 	}
 	
 
@@ -1813,7 +1813,7 @@ class ProductComponent extends Object {
 															)
 														);
 				if(empty($modelInfo)){
-					exit(json_encode(array('success'=>false,'msg'=>'Aucun élément sélectionné!')));
+					exit(json_encode(array('success'=>false,'msg'=>'Nothing selected!')));
 				}
 				//calcul du montant total
 				$montantTotal+=$modelInfo[$model]['montant'];
@@ -1900,7 +1900,7 @@ class ProductComponent extends Object {
 		}
 		
 		exit(json_encode(array('success'=>true,
-							'msg'=>'Facture enregistré !',
+							'msg'=>'Invoice Saved !',
 							'client_id'=>$modelInfo[$model]['tier_id'],
 							'facture_id'=>$factureId,
 							)
@@ -1927,7 +1927,7 @@ class ProductComponent extends Object {
 							$this->Model->save($update);
 						}
 					}
-					exit(json_encode(array('success'=>true,'msg'=>'Commande enregistrée !')));
+					exit(json_encode(array('success'=>true,'msg'=>'Order saved !')));
 					break;
 	}
 			

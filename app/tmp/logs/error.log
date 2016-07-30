@@ -1644,3 +1644,4 @@ Aco: Produits/inventory in [/var/www/aser_english/cake/libs/controller/component
 2016-07-29 22:25:46 Warning: Warning (512): Model "Historique" is not associated with model "" in [/var/www/aser_english/cake/libs/model/behaviors/containable.php, line 343]
 2016-07-29 22:25:46 Warning: Warning (512): <span style="color:Red;text-align:left"><b>SQL Error:</b> 1054: Unknown column 'Historique.group' in 'field list'</span> in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 684]
 2016-07-29 22:25:46 Warning: Warning (2): Invalid argument supplied for foreach() in [/var/www/aser_english/cake/libs/model/datasources/dbo_source.php, line 1104]
+2016-07-30 00:54:53 Warning: Warning (2): Missing argument 5 for ProduitsController::create_inventory_operation() in [/var/www/aser_english/app/controllers/produits_controller.php, line 1132]

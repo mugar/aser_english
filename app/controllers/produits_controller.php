@@ -1061,8 +1061,8 @@ set_time_limit(240);    //4minutes
 																										'order'=>array("Produit.name"),
 																										'contain'=>array(
 																											'Historique'=>array('fields'=> array('Historique.libelle',
-																																													'sum(Historique.debit) as debit',
-																																												  'sum(Historique.credit) as credit'
+																																													'Historique.debit',
+																																												  'Historique.credit'
 																																												 ),
 																																					'conditions'=>array('Historique.date'=>$date,
 																																															'Historique.stock_id'=>$stock_id
@@ -1079,7 +1079,7 @@ set_time_limit(240);    //4minutes
 																														)
 																											)
 																				);
-
+			// exit(debug($mouvements));
 			//arrange the all thing in a proper array
 			foreach ($mouvements as $key => $mouvement) {
 				//put the initial quantity
@@ -1092,17 +1092,17 @@ set_time_limit(240);    //4minutes
 				//fill types
 				foreach ($mouvement['Historique'] as $historique) {
 					if($historique['libelle'] == 'Entree'){
-						$mouvements[$key]['Produit']['Entry'] += $historique['debit'];
+						$mouvements[$key]['Produit']['Entry'] += !empty($historique['debit'])? $historique['debit']:0;
 					}
 					else if($historique['libelle'] == 'Mouvement'){
-						$mouvements[$key]['Produit']['Transfer_in'] += $historique['debit'];
-						$mouvements[$key]['Produit']['Transfer_out'] += $historique['credit'];
+						$mouvements[$key]['Produit']['Transfer_in'] += !empty($historique['debit'])?$historique['debit']:0;
+						$mouvements[$key]['Produit']['Transfer_out'] += !empty($historique['credit'])?$historique['credit']:0;
 					}
 					elseif($historique['libelle'] == 'Vente'){
 						$mouvements[$key]['Produit']['Sale'] += !empty($historique['credit']) ? $historique['credit']: 0;
 					}
 					elseif($historique['libelle'] == 'Sorti'){
-						$mouvements[$key]['Produit']['Consumption'] += $historique['credit'];
+						$mouvements[$key]['Produit']['Consumption'] += !empty($historique['credit'])? $historique['credit']:0;
 					}
 					elseif($historique['libelle'] == 'Perte'){
 						$mouvements[$key]['Produit']['Loss'] += $historique['credit'];
@@ -1119,8 +1119,8 @@ set_time_limit(240);    //4minutes
 				}
 
 			}
-
-			$this->set(compact('date','stock_id','mouvements'));
+			$transfer_stores = $this->Stock->find('list',array('conditions'=>array('Stock.id !='=>$stock_id)));
+			$this->set(compact('date','stock_id','mouvements','transfer_stores'));
 		}
 		$this->set(compact('show_data'));
 	}
@@ -1129,31 +1129,32 @@ set_time_limit(240);    //4minutes
 	* helps to create the different inventory operations
 	*/
 
-	function inventory_operation($id, $quantite, $type){
+	function create_inventory_operation($stock_id, $date,$produit_id, $quantite, $type){
 		
 		if(in_array($type,array('Entree','Sorti','Vente','Perte'))){
-			$this->Produit->Historique->deleteAll(array('Historique.final_stock_id'=>$id, 'Historique.libelle'=>$type));
+			$this->Produit->Historique->deleteAll(array('Historique.stock_id'=>$stock_id, 
+																									'Historique.produit_id'=>$produit_id, 
+																									'Historique.date'=>$date, 
+																									'Historique.libelle'=>$type));
 			if($quantite>0){
 				$historique['id'] = null;
-				$historique['final_stock_id'] = $id;
-				$historique['stock_id'] = $final_stock['FinalStock']['stock_id'];
-				$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
-				$historique['produit_id'] = $final_stock['FinalStock']['produit_id'];
-				$historique['PU'] = $final_stock['Produit']['PA'];
+				$historique['stock_id'] = $stock_id;
+				$historique['produit_id'] = $produit_id;
+				$historique['PU'] = 0;
 				$historique['quantite'] = $quantite;
 				$historique['libelle'] = $type;
-				$historique['date'] = $final_stock['FinalStock']['date'];
-				$historique['personnel_id'] = $final_stock['FinalStock']['controler_id'];
-				if($this->FinalStock->Historique->save(array("Historique"=>$historique))){
+				$historique['date'] = $date;
+				$historique['personnel_id'] = $this->Auth->user('id');
+				if($this->Produit->Historique->save(array("Historique"=>$historique))){
 						exit(json_encode(array('success'=>true)));	
 				}
+				else {
+					exit(json_encode(array('success'=>false,'msg'=>"Problem while saving the $type")));		
+				}
 			}
-		}
-		else if(in_array($type,array('transfer_in','transfer_out'))){
-		}
-		else {
 			exit(json_encode(array('success'=>true)));	
 		}
+		exit(json_encode(array('success'=>true)));	
 	}
 
 	function index() {

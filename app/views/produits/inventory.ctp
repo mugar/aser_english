@@ -1,22 +1,44 @@
 <script>
  jQuery.noConflict();
      jQuery(document).ready(function(){
-      
+      jQuery( "#Date" ).datepicker( "option", "maxDate", new Date() );
     
   });
 </script>
 <div id='view'>
 <div class="document">
+<!--recherche form -->
+<div id="recherche_boxe" style="display:none" title="Search Options">
+<div class="dialog">
+  <div id="message_recherche"></div>
+  <?php echo $this->Form->create('Produit',array('id'=>'recherche','action'=>'inventory'));?>
+  <span class="left">
+    <?php
+      echo $this->Form->input('stock_id',array('label'=>"Store"));
+      // echo $this->element('combobox',array('n°'=>1));
+      // echo $this->Form->input('produit_id',array('options'=>$list,'selected'=>0,'id'=>'produits'));
+    ?>
+  </span>
+  <span class="right">
+    <?php
+       echo $this->Form->input('date',array('label'=>'Date','id'=>'Date'));
+      // echo $this->Form->input('export',array('label'=>'Export to excel','type'=>'checkbox'));
+    ?>
+  </span>
+  </form>
+<div style="clear:both"></div>
+</div>
+</div>
 
 <?php if(!$show_data):?>
-<h3 id="inventory_interface" 
+<h3 id="inventory" 
     stock_id="0" 
     date="null" 
 >
 Please use the search options on right menu to select a store and a date to show.
 </h3>
 <?php else:?>
-<h3 id="inventory_interface" 
+<h3 id="inventory" 
     stock_id="<?php echo $stock_id;?>" 
     date="<?php echo $date;?>" 
 >
@@ -61,13 +83,13 @@ Please use the search options on right menu to select a store and a date to show
       <?php echo $this->Html->link($mouvement['Produit']['name'], array('controller' => 'produits', 'action' => 'view', $mouvement['Produit']['id'],$stock_id)); ?>
     </td>
       <td><?php echo  $mouvement['Produit']['initial_quantity']; ?></td>
-      <td name="Entree"  ><input style="width:40px;" onchange="create_inventory_movement(this);" type="text" value="<?php echo $mouvement['Produit']['Entry']; ?>"/></td>
-      <td name="Transfer_in"><input style="width:40px;" onchange="create_inventory_movement(this);" type="text" value="<?php echo $mouvement['Produit']['Transfer_in']; ?>"/></td>
-      <td name="transfer_out"  ><input style="width:40px;" onchange="create_inventory_movement(this);" type="text" value="<?php echo $mouvement['Produit']['Transfer_out']; ?>"/></td>
-      <td name="Vente"  ><input style="width:40px;" onchange="create_inventory_movement(this);" type="text" value="<?php echo $mouvement['Produit']['Sale']; ?>"/></td>
-      <td name="Sorti"  ><input style="width:40px;" onchange="create_inventory_movement(this);" type="text" value="<?php echo $mouvement['Produit']['Consumption']; ?>"/></td>
-      <td name="Perte"  ><input style="width:40px;" onchange="create_inventory_movement(this);" type="text" value="<?php echo $mouvement['Produit']['Consumption']; ?>"/></td>
-      <td name="FinalStock"><input style="width:40px;" onchange="create_inventory_movement(this);" type="text" value="<?php echo $mouvement['Produit']['final_quantity']; ?>"/></td>
+      <td name="Entree"  ><input style="width:40px;" onchange="create_inventory_operation(this);" type="text" value="<?php echo $mouvement['Produit']['Entry']; ?>"/></td>
+      <td name="transfer_in"><input style="width:40px;" onchange="create_inventory_operation(this);" type="text" value="<?php echo $mouvement['Produit']['Transfer_in']; ?>"/></td>
+      <td name="transfer_out"  ><input style="width:40px;" onchange="create_inventory_operation(this);" type="text" value="<?php echo $mouvement['Produit']['Transfer_out']; ?>"/></td>
+      <td name="Vente"  ><input style="width:40px;" onchange="create_inventory_operation(this);" type="text" value="<?php echo $mouvement['Produit']['Sale']; ?>"/></td>
+      <td name="Sorti"  ><input style="width:40px;" onchange="create_inventory_operation(this);" type="text" value="<?php echo $mouvement['Produit']['Consumption']; ?>"/></td>
+      <td name="Perte"  ><input style="width:40px;" onchange="create_inventory_operation(this);" type="text" value="<?php echo $mouvement['Produit']['Consumption']; ?>"/></td>
+      <td name="FinalStock"><input style="width:40px;" onchange="create_inventory_operation(this);" type="text" value="<?php echo $mouvement['Produit']['final_quantity']; ?>"/></td>
       <td name="exit_quantity"><?php echo  $mouvement['Produit']['exit_quantity']; ?></td>
   </tr>
 <?php endforeach; ?>
@@ -110,22 +132,21 @@ Please use the search options on right menu to select a store and a date to show
   </ul>
 </div>
 
-<!--recherche form -->
-<div id="recherche_boxe" style="display:none" title="Search Options">
+
+
+<!-- transfer form -->
+<div id="transfer_boxe" style="display:none" title="Transfer Boxe">
 <div class="dialog">
   <div id="message_recherche"></div>
-  <?php echo $this->Form->create('Produit',array('id'=>'recherche'));?>
+  <?php echo $this->Form->create('Produit');?>
   <span class="left">
     <?php
-      echo $this->Form->input('stock_id',array('label'=>"Store"));
-      // echo $this->element('combobox',array('n°'=>1));
-      // echo $this->Form->input('produit_id',array('options'=>$list,'selected'=>0,'id'=>'produits'));
+      echo '<label id="transfer_label"></label>';
+      echo $this->Form->input('stock_id',array('id'=>'transfer_stock','label'=>"",'options'=>$transfer_stores));
     ?>
   </span>
   <span class="right">
     <?php
-       echo $this->Form->input('date',array('label'=>'Date'));
-      // echo $this->Form->input('export',array('label'=>'Export to excel','type'=>'checkbox'));
     ?>
   </span>
   </form>

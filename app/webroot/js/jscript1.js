@@ -578,6 +578,107 @@ function aserb(){
 	
 }
 
+
+/*
+ * create an inventory operation
+ */
+
+function create_inventory_operation(p){
+    //first make sure the total of consumptions do not exits the total.
+    var produit_id = jQuery(p).parents('tr').attr('id');
+    var stock_id = jQuery("#inventory").attr('stock_id');
+    var date = jQuery("#inventory").attr('date');
+    var qty = parseFloat(jQuery(p).val());
+    var type = jQuery(p).parent('td').attr('name');
+    console.log(produit_id+" "+stock_id+" "+date+" "+qty+" "+type);
+    //*
+    if(type =='FinalStock'){
+        jQuery.ajax({
+            url:getBase()+'final_stocks/add',
+            type: "POST",
+            data:{
+                "data[FinalStock][stock_id]":stock_id,
+                "data[FinalStock][produit_id]":produit_id,
+                "data[FinalStock][quantite]":qty,
+                "data[FinalStock][date]":date,
+                "data[remote]": true
+                },
+            dataType:'json',
+            success:function(r){ 
+                if(r.success){
+                   jQuery(p).parents('tr').children('td[name=exit_quantity]').text(r.exit_quantite);
+                   if(qty < 0){
+                     jQuery(p).val(0);
+                   }
+                }
+                else {
+                  alert(r.msg);   
+                }
+            }
+        });
+    }
+    else if((type == 'transfer_in')||(type == 'transfer_out')){
+        var transfer_stock_id = jQuery('#transfer_stock option:selected').val();
+        var from_id, to_id = null;
+        if(type == 'transfer_in'){
+            from_id = transfer_stock_id;
+            to_id = stock_id;
+            jQuery("#transfer_label").text('From Store : ');
+        }
+        else {
+            to_id = transfer_stock_id;
+            from_id = stock_id;
+            jQuery("#transfer_label").text('To Store : ');
+        }
+        jQuery('#transfer_boxe')
+        .dialog({
+            modal:true, 
+            position:'top',
+            //  show:'bounce',
+            buttons: { "Save Transfer": function() {
+                
+
+                jQuery.ajax({
+                    global:true,
+                    type: 'POST',
+                    dataType:'json',
+                    url: getBase()+'mouvements/add',
+                    data:{
+                        'data[Mouvement][date]': date,
+                        'data[Mouvement][produit_id]': produit_id,
+                        'data[Mouvement][quantite]': qty,
+                        'data[Mouvement][stock_sortant_id]': from_id,
+                        'data[Mouvement][stock_entrant_id]': to_id,
+                        'data[remote]':true
+                        },
+                    success:function(ans){
+                         jQuery('#transfer_boxe').dialog('close');
+                        if(!ans.success){
+                            jQuery(p).val(0);
+                            alert(ans.msg);
+                        }
+
+                    },
+                });
+                },
+                "Cancel": function() { jQuery(this).dialog("close");}
+                }
+            });
+    }
+    else {
+        jQuery.ajax({
+            url:getBase()+'produits/create_inventory_operation/'+stock_id+'/'+date+'/'+produit_id+'/'+qty+'/'+type,
+            dataType:'json',
+            success:function(r){ 
+                if(!r.success){
+                    alert(r.msg);
+                }
+            }
+        });
+    }
+    //*/
+}
+
 /*
  * set the exit quantity
  */
